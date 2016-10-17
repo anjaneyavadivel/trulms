@@ -38,43 +38,12 @@
         <!--/ modernizr -->
 
 
-
-
     </head>
-
-
-
-
-
     <body id="minovate" class="appWrapper">
-
-
-
-
-
-
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-
-
-
-
-
-
-
-
-
-
-
-
         <!-- ====================================================
         ================= Application Content ===================
         ===================================================== -->
         <div id="wrap" class="animsition">
-
-
-
 
             <div class="page page-core page-login">
 
@@ -94,11 +63,11 @@
                     <?php }?>
                     <?=form_open_multipart(base_url().'login',array('id'=>'form-login','class'=>'form-validation mt-20','data-parsley-validate'=>''));?>
                         <div class="form-group">
-                            <input type="username" id="username" class="form-control underline-input" required placeholder="Email ID / Phone No" data-parsley-email-phone="#username">
+                            <input type="text" name="username" id="username" class="form-control underline-input" required placeholder="Email ID / Phone No" data-parsley-email-phone="#username">
                         </div>
 
                         <div class="form-group">
-                            <input type="password" placeholder="Password" required class="form-control underline-input">
+                            <input type="password" name="password" placeholder="Password" required class="form-control underline-input">
                         </div>
 
                         <div class="form-group text-left mt-20">
@@ -155,7 +124,7 @@
 <!--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="<?= base_url(); ?>assets/js/vendor/jquery/jquery-1.11.2.min.js"><\/script>')</script>-->
 
-        <script src="<?= base_url(); ?>assets/js/vendor/jquery/jquery-1.11.2.min.js"><\/script>
+        <script src="<?= base_url(); ?>assets/js/vendor/jquery/jquery-1.11.2.min.js"></script>
         <script src="<?= base_url(); ?>assets/js/vendor/bootstrap/bootstrap.min.js"></script>
 
         <script src="<?= base_url(); ?>assets/js/vendor/jRespond/jRespond.min.js"></script>

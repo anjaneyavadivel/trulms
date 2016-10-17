@@ -14,10 +14,15 @@ if (!defined('BASEPATH'))
  *  */
 if (!function_exists('insertTable')) {
 
-    function insertTable($tableName, $tableData) {
+    function insertTable($tableName, $tableData, $isStoreMod=0, $modIdName='') {
         $CI = & get_instance();
         $CI->load->model('commonsql_model');
-        return $insertid = $CI->commonsql_model->insert_table($tableName, $tableData);
+        $insertid = $CI->commonsql_model->insert_table($tableName, $tableData);
+        if($insertid>0 && $isStoreMod==1){
+            $tableData[$modIdName]=$insertid;
+            $insertmodid = $CI->commonsql_model->insert_table($tableName.'_mod', $tableData);
+        }
+        return $insertid;
     }
 
 }
@@ -52,10 +57,15 @@ if (!function_exists('selectTable')) {
  *  */
 if (!function_exists('updateTable')) {
 
-    function updateTable($tableName, $whereData = array(), $updateData = array()) {
+    function updateTable($tableName, $whereData = array(), $updateData = array(), $isStoreMod=0, $modIdName='', $modId='') {
         $CI = & get_instance();
         $CI->load->model('commonsql_model');
-        return $resultData = $CI->commonsql_model->updateTable($tableName, $whereData, $updateData);
+        $resultData = $CI->commonsql_model->updateTable($tableName, $whereData, $updateData);
+        if($resultData>0 && $isStoreMod==1){
+            $updateData[$modIdName]=$modId;
+            $insertmodid = $CI->commonsql_model->insert_table($tableName.'_mod', $updateData);
+        }
+        return $resultData;
     }
 
 }
@@ -114,7 +124,9 @@ if (!function_exists('get_joins')) {
         if ($order != '') {
             $CI->db->order_by($order);
         }
-        if (isset($limit[0])) {
+        if (isset($limit[1])) {
+            $CI->db->limit($limit[0],$limit[1]); //example $limit[0] = "0,10" where  0 is for offset and 10 for limit
+        }else if (isset($limit[0])) {
             $CI->db->limit($limit[0]); //example $limit[0] = "0,10" where  0 is for offset and 10 for limit
         }
         $query = $CI->db->get();

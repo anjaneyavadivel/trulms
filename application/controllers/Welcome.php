@@ -7,19 +7,28 @@ class Welcome extends CI_Controller {
    
     function __construct() {
         parent::__construct();
-        $this->load->model('Commonsql_model');
+        //$this->load->model('Commonsql_model');
     }
     
     function index() {
-        if ($this->session->userdata('login_id')) {
+        if ($this->session->userdata('userId')) {
             redirect(base_url() . "dashboard");
         } else {
             redirect(base_url() . "login");
         }
     }
+    function dashboard() {
+        if (!$this->session->userdata('userId')) {
+            redirect(base_url() . "login");
+        }
+        $headerData['pageTitle']='Dashboard';
+        $this->load->view('admin/header',$headerData);
+        $this->load->view('admin/dashboard');
+        $this->load->view('admin/footer');
+    }
 
     function login() {
-        if ($this->session->userdata('login_id')) {
+        if ($this->session->userdata('userId')) {
             redirect(base_url() . "dashboard");
         }
 
@@ -34,17 +43,16 @@ class Welcome extends CI_Controller {
                 $this->load->library('encrypt');
                 $username = TRIM($this->input->post('username', true));
                 $password = TRIM($this->input->post('password', true));
-                $whereData = array('username' => $username, 'password' => do_hash(do_hash($password)), 'tl.active' => 1, 'tl.isUserLocked' => 0);
-                
+                $whereData = array('username' => $username, 'password' => do_hash(do_hash(do_hash($password))), 'tlog.active' => 1, 'tlog.isUserLocked' => 0);
                 $joins = array(
                     array(
-                    'table' => 'tblemployee AS te',
-                    'condition' => 'te.empID = tl.empID',
+                    'table' => 'tblemployee AS temp',
+                    'condition' => 'temp.empID = tlog.empID',
                     'jointype' => 'LEFT'
                     ),
                 );
-                $columns ='lb.*';
-                $user_list = get_joins('tbllogin AS tl', $columns, $joins, $whereData);
+                $columns ='temp.*,tlog.lastLoginOn,tlog.invalidPassAttemptCount';
+                $user_list = get_joins('tbllogin AS tlog', $columns, $joins, $whereData);
                 
                 if ($user_list->num_rows() == 1) {
                     $userlist = $user_list->result_array();
@@ -54,7 +62,7 @@ class Welcome extends CI_Controller {
                     $this->session->set_userdata('userName', $userview['empname']);
                     $this->session->set_userdata('userBranchID', $userview['branchID']);
                     $this->session->set_userdata('userPic', $userview['photo']);
-                    redirect(base_url() . "admin/dashboard");
+                    redirect(base_url() . "dashboard");
                 } else {
                     $data['error'] = 1;
                     $data['error_msg'] = '<strong>Sorry!</strong> Your login information is incorrect';
@@ -66,16 +74,16 @@ class Welcome extends CI_Controller {
 
     //forgot_password
     function forgot_password() {
-        if ($this->session->userdata('login_id')) {
+        if ($this->session->userdata('userId')) {
             redirect(base_url() . "dashboard");
         }
         
-        $this->load->view('admin/forgotPassword');
+        $this->load->view('forgotPassword');
     }
     //logout
     function logout() {
         $this->session->sess_destroy();
-        redirect(base_url() . "admin");
+        redirect(base_url() . "login");
     }
 
 }
