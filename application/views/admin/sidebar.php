@@ -395,7 +395,51 @@
                                                 <a href="#"><i class="fa fa-envelope-o"></i> <span>Department</span> </a>
                                                 <ul>
                                                     <li><a href="<?= base_url()?>manage"><i class="fa fa-caret-right"></i> Manage</a></li>
-                                                    <li><a href="<?= base_url()?>manage/dept_add"><i class="fa fa-caret-right"></i> Add Table</a></li>
+                                                    <li><a href="<?= base_url()?>manage/add_department"><i class="fa fa-caret-right"></i> Add Table</a></li>
+                                                   
+                                                </ul>
+                                            </li>
+											
+											
+											<li>
+                                                <a href="#"><i class="fa fa-envelope-o"></i> <span>Designation</span> </a>
+                                                <ul>
+                                                    <li><a href="<?= base_url()?>designation"><i class="fa fa-caret-right"></i> Designation</a></li>
+                                                    <li><a href="<?= base_url()?>manage/add_designation"><i class="fa fa-caret-right"></i> Add Designation</a></li>
+                                                   
+                                                </ul>
+                                            </li>
+											
+											<li>
+                                                <a href="#"><i class="fa fa-envelope-o"></i> <span>Role</span> </a>
+                                                <ul>
+                                                    <li><a href="<?= base_url()?>role"><i class="fa fa-caret-right"></i> Role</a></li>
+                                                    <li><a href="<?= base_url()?>manage/add_role"><i class="fa fa-caret-right"></i> Add Role</a></li>
+                                                   
+                                                </ul>
+                                            </li>
+											
+											<li>
+                                                <a href="#"><i class="fa fa-envelope-o"></i> <span>Payment Mode</span> </a>
+                                                <ul>
+                                                    <li><a href="<?= base_url()?>payment_mode"><i class="fa fa-caret-right"></i> Payment Mode</a></li>
+                                                    <li><a href="<?= base_url()?>manage/add_payment_mode"><i class="fa fa-caret-right"></i> Add Payment Mode</a></li>
+                                                   
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#"><i class="fa fa-envelope-o"></i> <span>Payment Status</span> </a>
+                                                <ul>
+                                                    <li><a href="<?= base_url()?>payment_mode"><i class="fa fa-caret-right"></i> Payment Status</a></li>
+                                                    <li><a href="<?= base_url()?>manage/add_payment_status"><i class="fa fa-caret-right"></i> Add Payment Status</a></li>
+                                                   
+                                                </ul>
+                                            </li>
+											<li>
+                                                <a href="#"><i class="fa fa-envelope-o"></i> <span>Employee Types</span> </a>
+                                                <ul>
+                                                    <li><a href="<?= base_url()?>payment_mode"><i class="fa fa-caret-right"></i> Employee Types</a></li>
+                                                    <li><a href="<?= base_url()?>manage/add_employee_types"><i class="fa fa-caret-right"></i> Add Employee Types</a></li>
                                                    
                                                 </ul>
                                             </li>
