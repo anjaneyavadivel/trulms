@@ -27,7 +27,7 @@
                                     <a href="<?= base_url()?>department">Department</a>
                                 </li>
                                 <li>
-                                    <a href="javascript::">Add Department</a>
+                                    <a href="javascript::">Edit Department</a>
                                 </li>
                             </ul>
                             
@@ -39,6 +39,7 @@
                     <!-- row -->
                     <div class="row">
 
+                      <?php if(isset($view) && $view->num_rows()>0){ $v=$view->row();?>
                       
                         <div class="col-md-12">
 
@@ -47,7 +48,7 @@
 
                                 <!-- tile header -->
                                 <div class="tile-header dvd dvd-btm">
-                                    <h1 class="custom-font"><strong>ADD</strong> Department</h1>
+                                    <h1 class="custom-font"><strong>Edit</strong> Department</h1>
                                     
                                 </div>
                                 <!-- /tile header -->
@@ -56,14 +57,14 @@
                                 <div class="tile-body">
 
 
-                                    <form action="<?= base_url()?>manage/add_department" method="post" class="form-horizontal" name="form4" role="form" id="form4" data-parsley-validate>
+                                    <form action="<?= base_url()?>edit_department/<?php echo $v->deptID?>" method="post" class="form-horizontal" name="form4" role="form" id="form4" data-parsley-validate>
 
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Department Name</label>
                                             <div class="col-sm-9">
                                                 <input type="text" name="department" class="form-control" placeholder="Department Name"
                                                        data-parsley-trigger="change"
-                                                       required>
+                                                       required value="<?= $v->department?>">
                                             </div>
                                         </div>
 
@@ -74,7 +75,10 @@
                                             <div class="col-sm-9">
                                                 <input type="text" name="description" class="form-control" placeholder="Department Description"
                                                        data-parsley-trigger="change"
-                                                       required>
+                                                       required value="<?=$v->description?>">
+                                                       
+                                                       <input type="hidden" name="deptID" class="form-control" 
+                                                        value="<?=$v->deptID?>">
                                             </div>
                                         </div>
 
@@ -99,7 +103,10 @@
                         </div>
                         <!-- /col -->
 
-
+						<?php } else { ?>
+                        
+                        No Records Found
+                        <?php }?>
 
                     </div>
                     <!-- /row -->
