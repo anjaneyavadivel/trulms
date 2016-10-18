@@ -15,7 +15,7 @@
 
                     <div class="pageheader">
 
-                        <h2>Department </h2>
+                        <h2>Employee Types </h2>
 
                         <div class="page-bar">
 
@@ -23,11 +23,13 @@
                                 <li>
                                     <a href="<?= base_url()?>"><i class="fa fa-home"></i> HOME</a>
                                 </li>
-                                <li>
-                                    <a href="<?= base_url()?>department">Department</a>
+                                
+                                 <li>
+                                    <a href="<?= base_url()?>employee_types">Employee Types</a>
                                 </li>
+                                
                                 <li>
-                                    <a href="javascript::">Add Department</a>
+                                    <a href="javascript::">Edit Employee Types</a>
                                 </li>
                             </ul>
                             
@@ -39,15 +41,21 @@
                     <!-- row -->
                     <div class="row">
 
-                      
+ <?php if(isset($view) && $view->num_rows()>0){ $v=$view->row();?>
+                        <!-- col -->
                         <div class="col-md-12">
+<?php $this->load->view('admin/msg')?>
+                            <!-- tile -->
+                            
+                            <!-- /tile -->
 
-                           <?php $this->load->view('admin/msg')?>
+
+                            <!-- tile -->
                             <section class="tile">
 
                                 <!-- tile header -->
                                 <div class="tile-header dvd dvd-btm">
-                                    <h1 class="custom-font"><strong>ADD</strong> Department</h1>
+                                    <h1 class="custom-font"><strong>Edit</strong> Employee Types</h1>
                                     
                                 </div>
                                 <!-- /tile header -->
@@ -56,25 +64,25 @@
                                 <div class="tile-body">
 
 
-                                    <form action="<?= base_url()?>manage/add_department" method="post" class="form-horizontal" name="form4" role="form" id="form4" data-parsley-validate>
+                                    <form action="<?= base_url()?>edit_employee_types/<?=$v->employetypeID?>" method="post" class="form-horizontal" name="form4" role="form" id="form4" data-parsley-validate>
 
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Department Name</label>
+                                            <label class="col-sm-3 control-label">Employee Types Name</label>
                                             <div class="col-sm-9">
-                                                <input type="text" name="department" class="form-control" placeholder="Department Name"
+                                                <input type="text" name="typename" class="form-control" placeholder="Employee Types Name"
                                                        data-parsley-trigger="change"
-                                                       required>
+                                                       required value="<?=$v->typename?>">
                                             </div>
                                         </div>
-
+<input type="hidden" value="<?=$v->employetypeID?>" name="employetypeID" />
                                         <hr class="line-dashed line-full" />
 
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Department Description</label>
+                                            <label class="col-sm-3 control-label">Employee Types Description</label>
                                             <div class="col-sm-9">
-                                                <input type="text" name="description" class="form-control" placeholder="Department Description"
+                                                <input type="text" name="description" class="form-control" placeholder="Employee Types Description"
                                                        data-parsley-trigger="change"
-                                                       required>
+                                                       required value="<?=$v->description?>">
                                             </div>
                                         </div>
 
@@ -100,14 +108,27 @@
                         <!-- /col -->
 
 
+						<?php } else { ?>
+                        
+                        No Records Found
+                        <?php }?>
 
                     </div>
                     <!-- /row -->
+
+
+
+
                 </div>
                 
             </section>
             <!--/ CONTENT -->
+
+
+
+
+
+
         </div>
         <!--/ Application Content -->
-
-  <?php $this->load->view('admin/footer')?>
+<?php $this->load->view('admin/footer')?>

@@ -259,6 +259,21 @@ class Commonsql_model extends CI_Model {
             $this->db->insert('unread_order', $array);
         }
     }
+	function select_all($table)
+	{
+		$this->db->select('*');
+		$this->db->from($table);
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select($table,$condtion)
+	{
+		$this->db->select('*');
+		$this->db->from($table);
+		$this->db->where($condtion);
+		$query	=	$this->db->get();
+		return $query;
+	}
 
 }
 
