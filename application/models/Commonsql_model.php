@@ -39,7 +39,7 @@ class Commonsql_model extends CI_Model {
      * $showField -> Array -> what are the fields need to show
      *  */
 
-    public function selectTable($tableName, $whereData = array(), $showField = array('*'), $orWhereData = array(), $group = array(), $order = '', $having = '', $limit = array(), $result_way = 'all', $echo = 0) {
+    public function selectTable($tableName, $whereData = array(), $showField = array('*'), $orWhereData = array(),$inWhereData = array(),$notInWhereData = array(), $group = array(), $order = '', $having = '', $limit = array(), $result_way = 'all', $echo = 0) {
         //print_r($limit);echo $limit[0];exit();
         
         
@@ -47,6 +47,12 @@ class Commonsql_model extends CI_Model {
         $this->db->from($tableName);
         if (!empty($whereData) > 0) {
             $this->db->where($whereData);
+        }
+        if (isset($orWhereData) && !empty($orWhereData)) {
+            $this->db->or_where($orWhereData);
+        }
+        if (isset($inWhereData) && !empty($inWhereData)) {
+            $this->db->where_in($inWhereData[0],$inWhereData[1]);
         }
         if (!empty($group)) {
             $this->db->group_by($group);

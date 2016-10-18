@@ -11,16 +11,21 @@ class Welcome extends CI_Controller {
     }
     
     function index() {
-        if ($this->session->userdata('userId')) {
+        if ($this->session->userdata('SESS_userId')) {
             redirect(base_url() . "dashboard");
         } else {
             redirect(base_url() . "login");
         }
     }
     function dashboard() {
-        if (!$this->session->userdata('userId')) {
+        if (!$this->session->userdata('SESS_userId')) {
             redirect(base_url() . "login");
         }
+//        print_r($this->session->userdata('SESS_userRole'));
+//        $SESS_userRole = $this->session->userdata('SESS_userRole');
+//        $pageroleaccessmap = pageroleaccessmap($SESS_userRole, 2);
+//        print_r($pageroleaccessmap);
+//        exit();
         $headerData['pageTitle']='Dashboard';
         $this->load->view('admin/header',$headerData);
         $this->load->view('admin/dashboard');
@@ -28,7 +33,7 @@ class Welcome extends CI_Controller {
     }
 
     function login() {
-        if ($this->session->userdata('userId')) {
+        if ($this->session->userdata('SESS_userId')) {
             redirect(base_url() . "dashboard");
         }
 
@@ -57,11 +62,30 @@ class Welcome extends CI_Controller {
                 if ($user_list->num_rows() == 1) {
                     $userlist = $user_list->result_array();
                     $userview = $userlist[0];
-                    $this->session->set_userdata('userId', $userview['empID']);
-                    $this->session->set_userdata('userCode', $userview['empCode']);
-                    $this->session->set_userdata('userName', $userview['empname']);
-                    $this->session->set_userdata('userBranchID', $userview['branchID']);
-                    $this->session->set_userdata('userPic', $userview['photo']);
+                    //Store user Info to session
+                    $this->session->set_userdata('SESS_userId', $userview['empID']);
+                    $this->session->set_userdata('SESS_userCode', $userview['empCode']);
+                    $this->session->set_userdata('SESS_userName', $userview['empname']);
+                    $this->session->set_userdata('SESS_userBranchID', $userview['branchID']);
+                    $this->session->set_userdata('SESS_userPic', $userview['photo']);
+                    // Check user role for login user and set in session
+                    $role=array();
+                    if($userview['branchID']==0){
+                        $role[]=1; // 1 - Super Admin
+                    }else{
+                        $whereData = array('empID' => $userview['empID'], 'dbentrystateID' => 3, 'active' => 1);
+                        $showField = array('roleID');
+                        // Get user record
+                        $emprolemaps = selectTable('tblemprolemap', $whereData, $showField);
+                        if (isset($emprolemaps) && $emprolemaps->num_rows() > 0) {
+                            $emprolemaps = $emprolemaps->result();
+                            foreach ($emprolemaps as $emprolemap) {
+                                $role[]=$emprolemap->roleID;
+                            }
+                        }
+                    }
+                    // set role array format in session 
+                    $this->session->set_userdata('SESS_userRole', $role);
                     redirect(base_url() . "dashboard");
                 } else {
                     $data['error'] = 1;
@@ -74,7 +98,7 @@ class Welcome extends CI_Controller {
 
     //forgot_password
     function forgot_password() {
-        if ($this->session->userdata('userId')) {
+        if ($this->session->userdata('SESS_userId')) {
             redirect(base_url() . "dashboard");
         }
         

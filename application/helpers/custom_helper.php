@@ -3,6 +3,109 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
+
+if (!function_exists('pageroleaccessmap')) {
+    /*
+     * This function will return all parents of a user. 
+     * This includes children and input level users.
+     * $role_arr - array() role id for login user
+     * $pageID  - which page to access to check
+     * $final_accessmap  - return  page role access following format array(0=>'create',1=>'view',2=>'modify',3=>'approve',4=>'delete');
+     */
+
+    function pageroleaccessmap($role_arr=array(), $pageID='') {
+        $CI = & get_instance();
+        $final_accessmap = array(0);
+        // check vaild input
+        if(empty($role_arr) && $pageID==''){return $final_accessmap;}
+        // check super admin role 
+        if(in_array(1, $role_arr)){
+            $final_accessmap = array(0=>'create',1=>'view',2=>'modify',3=>'approve',4=>'delete');
+            return $final_accessmap;
+        }else{
+            $whereData = array('pageID' => $pageID, 'dbentrystateID' => 3, 'active' => 1);
+            $showField = array('*');
+            $inWhereData = array('roleID',$role_arr);
+            // Get user record
+            $pageroleaccessmaps = selectTable('tblpageroleaccessmap', $whereData, $showField, $orWhereData = array(),$inWhereData);
+            if (isset($pageroleaccessmaps) && $pageroleaccessmaps->num_rows() > 0) {
+                $pageroleaccessmaps = $pageroleaccessmaps->result();
+                foreach ($pageroleaccessmaps as $pageroleaccessmap) {
+                    if($pageroleaccessmap->createEnabled){$final_accessmap[]='create';}
+                    if($pageroleaccessmap->viewEnabled){$final_accessmap[]='view';}
+                    if($pageroleaccessmap->modifyEnabled){$final_accessmap[]='modify';}
+                    if($pageroleaccessmap->approveEnabled){$final_accessmap[]='approve';}
+                    if($pageroleaccessmap->deleteEnabled){$final_accessmap[]='delete';}
+                }
+            }
+            $final_accessmap = array_unique($final_accessmap);
+        }
+        return $final_accessmap;
+    }
+
+}
+
+//
+//if (!function_exists('pageroleaccessmap')) {
+//    /*
+//     * This function will return all parents of a user. 
+//     * This includes children and input level users.
+//     * @src_arr  total user_groups table
+//     * @currentid  id of the user whose parent are to be found
+//     *  
+//     */
+//
+//    function pageroleaccessmap($role_arr=array(), $pageID='') {
+//        $CI = & get_instance();
+//        $final_accessmap = array(0);
+//        $childs1 = array();
+//        $childs2 = array();
+//        
+//        //Stage-1
+//        $toal_users1 = 0;
+//        $CI->db->select('parent_id')->from('users_groups')->where('user_id', $user_id)->where_in('status', $status);
+//        $users_list1 = $CI->db->get();
+//        $toal_users1 = $users_list1->num_rows();
+//        if ($toal_users1 > 0) {
+//            foreach ($users_list1->result() as $row1) {
+//                $childs1[] = $row1->parent_id;
+//            }
+//            $final_users = $childs1;
+//            $childs2 = $childs1;
+//        }
+//
+//        //Stage-2
+//        while (count($childs2) > 0) {
+//            $toal_users2 = 0;
+//            $CI->db->select('parent_id')->from('users_groups')->where_in('user_id', $childs2)->where_in('status', $status);
+//            $users_list2 = $CI->db->get();
+//            $toal_users2 = $users_list2->num_rows();
+//            if ($toal_users2 > 0) {
+//                $childs2 = array();
+//                foreach ($users_list2->result() as $row2) {
+//                    $childs2[] = $row2->parent_id;
+//                }
+//                $final_users = array_merge($final_users, $childs2);
+//            } else {
+//                $childs2 = array();
+//            }
+//        }
+//
+//        //Stage-3 IF Parent Found
+//        if ($parentfound == TRUE) {
+//            $parent[] = $user_id;
+//            $final_users = array_merge($final_users, $parent);
+//        }
+//
+//        $CI->db->select()->from('users_groups')->where_in('user_id', $final_users)->where_in('status', $status);
+//        if ($group_id > 0) {
+//            $CI->db->where('group_id', $group_id);
+//        }
+//        $res = $CI->db->get();
+//        return $res->result_array();
+//    }
+//
+//}
 /**
  * token dynamic value generator
  *
@@ -14,7 +117,6 @@ if (!function_exists('token')) {
     function token() {
         $CI = & get_instance();
         $token = md5(uniqid(rand(), true));
-        $CI->session->set_userdata('token', $token);
         return $token;
     }
 
@@ -232,6 +334,26 @@ if (!function_exists('formatarray')) {
     }
 
 }
+if (!function_exists('formatarrayvalue')) {
+    /*
+     * This function will returns an formatted array
+     * $array  array to be formatted
+     *  
+     */
+
+    function formatarrayvalue($array) {
+        $results = array();
+
+        if (is_array($array)) {
+            foreach ($array as $value) {
+                    $results[] = $value;
+            }
+        }
+
+        return $results;
+    }
+
+}
 
 if (!function_exists('formatdate')) {
     /*
@@ -242,7 +364,7 @@ if (!function_exists('formatdate')) {
 
     function formatdate($date, $format = 'd-m-Y', $placeholder = "") {
         //echo $date;
-        if ($date != "0000-00-00 00:00:00" && $date != "1970-01-01 00:00:00" && $date != "") {
+        if (trim($date) != "0000-00-00 00:00:00" && trim($date) != "1970-01-01 00:00:00" && trim($date) != "") {
             return date($format, strtotime($date));
         } else if ($placeholder != "") {
             return $placeholder;

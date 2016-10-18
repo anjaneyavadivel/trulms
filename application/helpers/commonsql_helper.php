@@ -43,10 +43,10 @@ if (!function_exists('insertTable')) {
  *  */
 if (!function_exists('selectTable')) {
 
-    function selectTable($tableName, $whereData = array(), $showField = array('*'), $orWhereData = array(), $group = array(), $order = '', $having = '', $limit = array(), $result_way = 'all', $echo = 0,$inWhereData = array(),$notInWhereData = array()) {
+    function selectTable($tableName, $whereData = array(), $showField = array('*'), $orWhereData = array(),$inWhereData = array(),$notInWhereData = array(), $group = array(), $order = '', $having = '', $limit = array(), $result_way = 'all', $echo = 0) {
         $CI = & get_instance();
         $CI->load->model('commonsql_model');
-        return $resultData = $CI->commonsql_model->selectTable($tableName, $whereData, $showField, $orWhereData, $group, $order, $having, $limit, $result_way, $echo,$inWhereData,$notInWhereData);
+        return $resultData = $CI->commonsql_model->selectTable($tableName, $whereData, $showField, $orWhereData,$inWhereData,$notInWhereData, $group, $order, $having, $limit, $result_way, $echo);
     }
 
 }
