@@ -91,7 +91,3 @@ $route['add_employee_types'] 			=		'manage/add_employee_types';
 $route['edit_employee_types'] 			=		'manage/edit_employee_types';
 
 
-
-
-
-
