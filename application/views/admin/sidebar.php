@@ -438,7 +438,7 @@
 											<li>
                                                 <a href="#"><i class="fa fa-envelope-o"></i> <span>Employee Types</span> </a>
                                                 <ul>
-                                                    <li><a href="<?= base_url()?>employee_types"><i class="fa fa-caret-right"></i> Employee Types</a></li>
+                                                    <li><a href="<?= base_url()?>manage/employee_types"><i class="fa fa-caret-right"></i> Employee Types</a></li>
                                                     <li><a href="<?= base_url()?>add_employee_types"><i class="fa fa-caret-right"></i> Add Employee Types</a></li>
                                                    
                                                 </ul>
