@@ -136,6 +136,21 @@
                     ],
                     "dom": 'Rlfrtip'
                 });
+				<?php }else if($segment1=='view_department'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/view_department_json/<?php echo $this->uri->segment(2)?>',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+                        { "data": "description" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+                    "dom": 'Rlfrtip'
+                });
 					<?php }else{?>
 						
                 var table = $('#basic-usage').DataTable({

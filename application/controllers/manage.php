@@ -65,7 +65,8 @@ class Manage extends CI_Controller {
 			{
 				$active	=	"<a href='".base_url()."manage/department/".$value->deptID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
 			}
-			$vaules['Action'] 			=	"<a href='".base_url()."edit_department/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			$edit			 			=	"<a href='".base_url()."view_department/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+			$vaules['Action'] 			=	$edit."<a href='".base_url()."edit_department/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
 			
 			$output[] =$vaules;
 		}
@@ -129,6 +130,142 @@ class Manage extends CI_Controller {
 		$data['pageTitle']	=	"Edit Department";
 		$data['view']		=	$this->Commonsql_model->select('tbldept',array('deptID'=>$this->uri->segment(2)));
 		$this->load->view('admin/dept/edit_department',$data);
+	}
+	function view_department()
+	{
+		if($this->input->post('save'))
+		{
+			
+			$check 	=	$this->Commonsql_model->select('tbldept',array('deptID'	=>	$this->input->post('deptID'),'department'		=>	$this->input->post('department'),
+							'description'		=>	$this->input->post('description')));
+			if($check->num_rows()==0)
+			{
+					$values_mod=array('department'		=>	$this->input->post('department'),
+								'description'		=>	$this->input->post('description'),
+								'dbentrystateID'	=>	0,
+								'createby'			=>	$this->session->userdata('SESS_userId'),
+								'active'			=>	1);
+								
+				$whereData	=	array('deptID'	=>	$this->input->post('deptID'));
+				
+				$query		= updateTable('tbldept', $whereData, $values_mod , 1,'deptID', $this->input->post('deptID'));
+				
+				if($query)
+				{
+					$this->session->set_userdata('suc','Department Successfully  Updated...!');
+					redirect('view_department/'.$this->input->post('deptID'));
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('view_department/'.$this->input->post('deptID'));
+				}
+			}
+			else
+			{
+				$this->session->set_userdata('err','No Changes Found..!');
+				redirect('view_department/'.$this->input->post('deptID'));
+			}
+		}
+		if($this->uri->segment(4))
+		{
+			$whereData	=	array('dept_modID'	=>	$this->uri->segment(4));
+			$updateData	=	array('active'	=>	$this->uri->segment(5));
+			$upt	=	$this->Commonsql_model->updateTable('tbldept_mod', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','Department Status Successfully  Changed...!');
+				redirect('view_department/'.$this->uri->segment(3));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('view_department/'.$this->uri->segment(3));
+			}
+		}
+		else if($this->uri->segment(3))
+		{
+			$data['pageTitle']	=	"View Department";
+			$data['table']		=	"Designation";
+			$data['view']		=	$this->Commonsql_model->select('tbldept_mod',array('dept_modID'=>$this->uri->segment(3)));
+			$this->load->view('admin/dept/view_department',$data);
+		}
+		else
+		{
+			$data['pageTitle']	=	"View Department";
+			$data['table']		=	"Designation";
+			$data['view']		=	$this->Commonsql_model->select('tbldept',array('deptID'=>$this->uri->segment(2)));
+			$this->load->view('admin/dept/view_department',$data);
+		}
+	}
+	function view_department_json()
+	{
+		$result	=	$this->Commonsql_model->select('tbldept_mod',array('deptID'=>1));
+		//echo $this->db->last_query();
+		$output = array();
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['ID']				=	$value->deptID;
+			$vaules['name'] 			= 	$value->department;
+			$vaules['description'] 		= 	$value->description;
+			if($value->active==1)
+			{
+				$active	=	"<a href='".base_url()."manage/view_department/".$value->deptID.'/'.$value->dept_modID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+			}
+			else
+			{
+				$active	=	"<a href='".base_url()."manage/view_department/".$value->deptID.'/'.$value->dept_modID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+			}
+			$edit			 			=	"<a href='".base_url()."manage/department_mod_approve/".$value->dept_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approve</a>";
+			$vaules['Action'] 			=	$edit."<a href='".base_url()."view_department/".$value->deptID.'/'.$value->dept_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			
+			$output[] =$vaules;
+		}
+
+		 echo json_encode(array('data'=>$output), true);
+	}
+	function department_mod_approve()
+	{
+		$mod_id	=	$this->uri->segment(3);
+		$data	=	$this->Commonsql_model->select('tbldept_mod',array('dept_modID'=>$mod_id));
+		if($data->num_rows()>0)
+		{
+			$val	=	$data->row();
+			
+				$values		=array('department'		=>	$val->department,
+								'description'		=>	$val->description,
+								'dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond		=	array('deptID'	=>	$val->deptID);
+				
+				$values_mod	=	array('dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond_mod	=	array('dept_modID'	=>	$mod_id);
+				$upt		=	$this->Commonsql_model->updateTable('tbldept', $cond , $values);
+				$upt_m		=	$this->Commonsql_model->updateTable('tbldept_mod', $cond_mod , $values_mod);
+				//echo $this->db->last_query();exit;
+				if($upt)
+				{
+					$this->session->set_userdata('suc','Approved Successfully  Finished...!');
+					redirect('view_department/'.$val->deptID);
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('view_department/'.$val->deptID);
+				}
+							
+							
+						
+		}
 	}
 	/***********************************************************************************************************************************/
 	function designation()
