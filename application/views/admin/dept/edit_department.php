@@ -41,7 +41,7 @@
 
                       <?php if(isset($view) && $view->num_rows()>0){ $v=$view->row();?>
                       
-                        <div class="col-md-12">
+                        <div class="col-md-4 add_forms">
 
                            <?php $this->load->view('admin/msg')?>
                             <section class="tile">
@@ -56,8 +56,8 @@
                                 <!-- tile body -->
                                 <div class="tile-body">
 
-
-                                    <form action="<?= base_url()?>edit_department/<?php echo $v->deptID?>" method="post" class="form-horizontal" name="form4" role="form" id="form4" data-parsley-validate>
+  <?=form_open_multipart(base_url().'edit_department/'.$v->deptID,array('class'=>'form-horizontal','id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
+                                   
 
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Department Name</label>
@@ -89,7 +89,7 @@
                                 </div>
                                 <!-- /tile footer -->
 
-                                    </form>
+                                  <?php echo form_close(); ?> 
 
                                 </div>
                                 <!-- /tile body -->

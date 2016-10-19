@@ -41,7 +41,7 @@
  <?php if(isset($view) && $view->num_rows()>0){ $v=$view->row();?>
  
                         <!-- col -->
-                        <div class="col-md-12">
+                        <div class="col-md-4 add_forms">
 
                          
                          <?php $this->load->view('admin/msg')?>   <!-- tile -->
@@ -63,26 +63,27 @@
                                 <div class="tile-body">
 
 
-                                    <form action="<?= base_url()?>edit_payment_status/<?=$v->payStatusID?>" method="post" class="form-horizontal" name="form4" role="form" id="form4" data-parsley-validate>
+                                   
+                                     <?=form_open_multipart(base_url().'edit_payment_status/'.$v->payStatusID,array('class'=>'form-horizontal','id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
 
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Payment Status Name</label>
-                                            <div class="col-sm-9">
+                                            <label class="control-label">Payment Status Name</label>
+                                           
                                                 <input type="text" name="payStatus" class="form-control" placeholder="Payment Status Name"
                                                        data-parsley-trigger="change"
                                                        required value="<?=$v->payStatus?>">
-                                            </div>
+                                           
                                         </div>
 <input type="hidden" value="<?=$v->payStatusID?>" name="payStatusID" />
-                                        <hr class="line-dashed line-full" />
+                                      
 
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Payment Status Description</label>
-                                            <div class="col-sm-9">
+                                            <label class="control-label">Payment Status Description</label>
+                                           
                                                 <input type="text" name="description" class="form-control" placeholder="Payment Status Description"
                                                        data-parsley-trigger="change"
                                                        required value="<?=$v->description?>">
-                                            </div>
+                                            
                                         </div>
 
                                        <!-- tile footer -->
@@ -92,7 +93,7 @@
                                 </div>
                                 <!-- /tile footer -->
 
-                                    </form>
+                                   <?php echo form_close(); ?> 
 
                                 </div>
                                 <!-- /tile body -->

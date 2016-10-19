@@ -27,8 +27,8 @@ class Welcome extends CI_Controller {
 //        print_r($pageroleaccessmap);
 //        exit();
         $headerData['pageTitle']='Dashboard';
-        $this->load->view('admin/header',$headerData);
-        $this->load->view('admin/dashboard');
+       // $this->load->view('admin/header',$headerData);
+        $this->load->view('admin/dashboard', $headerData);
         $this->load->view('admin/footer');
     }
 

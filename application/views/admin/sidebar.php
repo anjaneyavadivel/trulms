@@ -36,7 +36,7 @@
                                         ================= NAVIGATION Content ===================
                                         ==================================================== -->
                                         <ul id="navigation">
-                                            <li><a href="index.html"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+                                            <li><a href="<?= base_url()?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
                                             <li>
                                                 <a href="#"><i class="fa fa-envelope-o"></i> <span>Master</span> </a>
                                                 <ul>

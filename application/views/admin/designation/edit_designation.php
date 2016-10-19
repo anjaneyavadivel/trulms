@@ -44,7 +44,7 @@
 
 
                         <!-- col -->
-                        <div class="col-md-12">
+                        <div class="col-md-4 add_forms">
 
                             <!-- tile -->
                             
@@ -65,26 +65,26 @@
                                 <div class="tile-body">
 
 
-                                    <form action="<?= base_url()?>edit_designation/<?=$v->desigID?>" method="post" class="form-horizontal" name="form4" role="form" id="form4" data-parsley-validate>
-
+                                
+ <?=form_open_multipart(base_url().'edit_designation/'.$v->desigID,array('class'=>'form-horizontal','id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Designation Name</label>
-                                            <div class="col-sm-9">
+                                            <label class="control-label">Designation Name</label>
+                                           
                                                 <input type="text" name="name" class="form-control" placeholder="Designation Name"
                                                        data-parsley-trigger="change"
                                                        required value="<?=$v->name?>">
-                                            </div>
+                                           
                                         </div>
 <input type="hidden" value="<?=$v->desigID?>" name="desigID" />
-                                        <hr class="line-dashed line-full" />
+                                       
 
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Designation Description</label>
-                                            <div class="col-sm-9">
+                                            <label class="control-label">Designation Description</label>
+                                            
                                                 <input type="text" name="description" class="form-control" placeholder="Designation Description"
                                                        data-parsley-trigger="change"
                                                        required value="<?=$v->description?>">
-                                            </div>
+                                          
                                         </div>
 
                                        <!-- tile footer -->
@@ -94,7 +94,7 @@
                                 </div>
                                 <!-- /tile footer -->
 
-                                    </form>
+                                   <?php echo form_close(); ?> 
 
                                 </div>
                                 <!-- /tile body -->

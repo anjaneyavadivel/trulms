@@ -44,7 +44,7 @@
 
 
                         <!-- col -->
-                        <div class="col-md-6 add_forms">
+                        <div class="col-md-4 add_forms">
 
                             <!-- tile -->
                             
@@ -64,8 +64,8 @@
                                 <!-- tile body -->
                                 <div class="tile-body">
 
-
-                                    <form action="<?= base_url()?>manage/add_designation" method="post" class="form-horizontal" name="form4" role="form" id="form4" data-parsley-validate>
+ <?=form_open_multipart(base_url().'add_designation',array('class'=>'form-horizontal','id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
+ 
 
                                         <div class="form-group">
                                             <label class=" control-label">Designation Name</label>
@@ -94,7 +94,7 @@
                                 </div>
                                 <!-- /tile footer -->
 
-                                    </form>
+                                   <?php echo form_close(); ?> 
 
                                 </div>
                                 <!-- /tile body -->

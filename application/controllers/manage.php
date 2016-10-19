@@ -37,6 +37,12 @@ class Manage extends CI_Controller {
 		}
 		else
 		{
+			/*print_r($this->session->userdata('SESS_userRole'));
+			$SESS_userRole = $this->session->userdata('SESS_userRole');
+			$pageroleaccessmap = pageroleaccessmap($SESS_userRole, 'designation');
+			print_r($pageroleaccessmap);
+			exit();*/
+			
 			$data['pageTitle']	=	"Department";
 			$data['table']		=	"Department";
 			$this->load->view('admin/dept/department',$data);
@@ -76,7 +82,7 @@ class Manage extends CI_Controller {
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$query	=	insertTable('tbldept', $values,0);
+			$query	=	insertTable('tbldept', $values,1,'deptID');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Department Successfully  Added...!');
@@ -97,26 +103,17 @@ class Manage extends CI_Controller {
 		if($this->input->post('save'))
 		{
 			
-			if(MOD_STATUS==1)
-			{
-				$values_mod=array('deptID'		=>	$this->input->post('deptID'),
-							'department'		=>	$this->input->post('department'),
+			
+				$values_mod=array('department'		=>	$this->input->post('department'),
 							'description'		=>	$this->input->post('description'),
 							'dbentrystateID'	=>	0,
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-				$query	=	insertTable('tbldept_mod', $values_mod,0);
-			}
-			if(MOD_STATUS==0)
-			{
-				$values=array('department'			=>	$this->input->post('department'),
-							'description'		=>	$this->input->post('description'),
-							);
-							
-				$whereData	=	array('deptID'	=>	$this->input->post('deptID'));
-				$query		=	$this->Commonsql_model->updateTable('tbldept', $whereData , $values);
-			}
+			$whereData	=	array('deptID'	=>	$this->input->post('deptID'));
+			
+			$query		= updateTable('tbldept', $whereData, $values_mod , 1,'deptID', $this->input->post('deptID'));
+			
 			if($query)
 			{
 				$this->session->set_userdata('suc','Department Successfully  Updated...!');
@@ -126,7 +123,7 @@ class Manage extends CI_Controller {
 			else
 			{
 				$this->session->set_userdata('err','Error Please try again..!');
-				redirect('add_department/'.$this->input->post('deptID'));
+				redirect('edit_department/'.$this->input->post('deptID'));
 			}
 		}
 		$data['pageTitle']	=	"Edit Department";
@@ -215,25 +212,14 @@ class Manage extends CI_Controller {
 	{
 		if($this->input->post('save'))
 		{
-			if(MOD_STATUS==1)
-			{
 				$values=array('name'			=>	$this->input->post('name'),
-							'desigID'			=>	$this->input->post('desigID'),
 							'description'		=>	$this->input->post('description'),
 							'dbentrystateID'	=>	0,
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-				$query	=	insertTable('tbldesignation_mod', $values_mod,0);
-			}
-			if(MOD_STATUS==0)
-			{
-				$values=array('name'				=>	$this->input->post('name'),
-								'description'		=>	$this->input->post('description'),
-								);
-				$whereData	=	array('desigID'	=>	$this->input->post('desigID'));
-				$query		=	$this->Commonsql_model->updateTable('tbldesignation', $whereData , $values);
-			}
+			$whereData	=	array('desigID'	=>	$this->input->post('desigID'));
+			$query		= updateTable('tbldesignation', $whereData, $values , 1,'desigID', $this->input->post('desigID'));
 			if($query)
 			{
 				$this->session->set_userdata('suc','Designation Successfully  Added...!');
@@ -332,26 +318,14 @@ class Manage extends CI_Controller {
 	{
 		if($this->input->post('save'))
 		{
-			if(MOD_STATUS==1)
-			{
 				$values=array('roleName'			=>	$this->input->post('roleName'),
 								'description'		=>	$this->input->post('description'),
-								'roleID'			=>	$this->input->post('roleID'),
 								'dbentrystateID'	=>	0,
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
-								
-				$query	=	insertTable('tblrole_mod', $values,0);
-			}
-			if(MOD_STATUS==0)
-			{
-				$values=array('roleName'				=>	$this->input->post('roleName'),
-									'description'		=>	$this->input->post('description'),
-								);
-								
-				$whereData	=	array('roleID'	=>	$this->input->post('roleID'));
-				$query		=	$this->Commonsql_model->updateTable('tblrole', $whereData , $values);
-			}
+			
+			$whereData	=	array('roleID'	=>	$this->input->post('roleID'));
+			$query		= updateTable('tblrole', $whereData, $values , 1,'roleID', $this->input->post('roleID'));
 			if($query)
 			{
 				$this->session->set_userdata('suc','Role Successfully  Updated...!');
@@ -450,8 +424,6 @@ class Manage extends CI_Controller {
 	{
 		if($this->input->post('save'))
 		{
-			if(MOD_STATUS==1)
-			{
 				$values=array('paymentMode'				=>	$this->input->post('paymentMode'),
 								'description'		=>	$this->input->post('description'),
 								'paymentModeID'	=>	$this->input->post('paymentModeID'),
@@ -459,17 +431,8 @@ class Manage extends CI_Controller {
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
-				$query	=	insertTable('tblpaymentmode_mod', $values,0);
-			}
-			if(MOD_STATUS==0)
-			{
-				$values=array('paymentMode'				=>	$this->input->post('paymentMode'),
-									'description'		=>	$this->input->post('description'),
-								);
-								
-				$whereData	=	array('paymentModeID'	=>	$this->input->post('paymentModeID'));
-				$query		=	$this->Commonsql_model->updateTable('tblpaymentmode', $whereData , $values);
-			}
+			$whereData	=	array('paymentModeID'	=>	$this->input->post('paymentModeID'));
+			$query		= updateTable('tblpaymentmode', $whereData, $values , 1,'paymentModeID', $this->input->post('paymentModeID'));
 			if($query)
 			{
 				$this->session->set_userdata('suc','Payment Mode Successfully  Updated...!');
@@ -569,26 +532,14 @@ class Manage extends CI_Controller {
 	{
 		if($this->input->post('save'))
 		{
-			if(MOD_STATUS==1)
-			{
 				$values=array('payStatus'				=>	$this->input->post('payStatus'),
 								'description'		=>	$this->input->post('description'),
-								'payStatusID'		=>	$this->input->post('payStatusID'),
 								'dbentrystateID'	=>	0,
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
-				$query	=	insertTable('tblpaymentstatus_mod', $values,0);
-			}
-			if(MOD_STATUS==0)
-			{
-				$values=array('payStatus'				=>	$this->input->post('payStatus'),
-									'description'		=>	$this->input->post('description'),
-								);
-								
-				$whereData	=	array('payStatusID'	=>	$this->input->post('payStatusID'));
-				$query		=	$this->Commonsql_model->updateTable('tblpaymentstatus', $whereData , $values);
-			}
+			$whereData	=	array('payStatusID'	=>	$this->input->post('payStatusID'));
+			$query		= updateTable('tblpaymentstatus', $whereData, $values , 1,'payStatusID', $this->input->post('payStatusID'));
 			if($query)
 			{
 				$this->session->set_userdata('suc','Payment Status Successfully  Updated...!');
@@ -688,8 +639,6 @@ class Manage extends CI_Controller {
 	{
 		if($this->input->post('save'))
 		{
-			if(MOD_STATUS==1)
-			{
 				$values=array('typename'				=>	$this->input->post('typename'),
 								'description'		=>	$this->input->post('description'),
 								'employetypeID'		=>	$this->input->post('employetypeID'),
@@ -697,17 +646,8 @@ class Manage extends CI_Controller {
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
-				$query	=	insertTable('tblemployetypes_mod', $values,0);
-			}
-			if(MOD_STATUS==0)
-			{
-				$values=array('typename'				=>	$this->input->post('typename'),
-									'description'		=>	$this->input->post('description'),
-								);
-								
-				$whereData	=	array('employetypeID'	=>	$this->input->post('employetypeID'));
-				$query		=	$this->Commonsql_model->updateTable('tblemployetypes', $whereData , $values);
-			}
+			$whereData	=	array('employetypeID'	=>	$this->input->post('employetypeID'));
+			$query		= updateTable('tblemployetypes', $whereData, $values , 1,'employetypeID', $this->input->post('employetypeID'));
 			if($query)
 			{
 				$this->session->set_userdata('suc','Employee Types Successfully  Updated...!');
