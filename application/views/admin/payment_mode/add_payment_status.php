@@ -26,7 +26,7 @@
     <div class="row"> 
       
       <!-- col -->
-      <div class="col-md-12">
+      <div class="col-md-6 add_forms">
         <?php $this->load->view('admin/msg')?>
         <!-- tile --> 
         
@@ -45,21 +45,21 @@
           <div class="tile-body">
             <form action="<?= base_url()?>manage/add_payment_status" method="post" class="form-horizontal" name="form4" role="form" id="form4" data-parsley-validate>
               <div class="form-group">
-                <label class="col-sm-3 control-label">Payment Status Name</label>
-                <div class="col-sm-9">
+                <label class=" control-label">Payment Status Name</label>
+               
                   <input type="text" name="payStatus" class="form-control" placeholder="Payment Status Name"
                                                        data-parsley-trigger="change"
                                                        required>
-                </div>
+               
               </div>
-              <hr class="line-dashed line-full" />
+             
               <div class="form-group">
-                <label class="col-sm-3 control-label">Payment Status Description</label>
-                <div class="col-sm-9">
+                <label class="control-label">Payment Status Description</label>
+               
                   <input type="text" name="description" class="form-control" placeholder="Payment Status Description"
                                                        data-parsley-trigger="change"
                                                        required>
-                </div>
+               
               </div>
               
               <!-- tile footer -->

@@ -44,7 +44,7 @@
 
 
                         <!-- col -->
-                        <div class="col-md-12">
+                        <div class="col-md-6 add_forms">
 
                             <!-- tile -->
                             
@@ -68,23 +68,23 @@
                                     <form action="<?= base_url()?>manage/add_designation" method="post" class="form-horizontal" name="form4" role="form" id="form4" data-parsley-validate>
 
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Designation Name</label>
-                                            <div class="col-sm-9">
+                                            <label class=" control-label">Designation Name</label>
+                                            
                                                 <input type="text" name="name" class="form-control" placeholder="Designation Name"
                                                        data-parsley-trigger="change"
                                                        required>
-                                            </div>
+                                           
                                         </div>
 
-                                        <hr class="line-dashed line-full" />
+                                      
 
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Designation Description</label>
-                                            <div class="col-sm-9">
+                                            <label class=" control-label">Designation Description</label>
+                                           
                                                 <input type="text" name="description" class="form-control" placeholder="Designation Description"
                                                        data-parsley-trigger="change"
                                                        required>
-                                            </div>
+                                           
                                         </div>
 
                                        <!-- tile footer -->

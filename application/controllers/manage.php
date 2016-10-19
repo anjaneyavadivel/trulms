@@ -73,7 +73,7 @@ class Manage extends CI_Controller {
 			$values=array('department'			=>	$this->input->post('department'),
 							'description'		=>	$this->input->post('description'),
 							'dbentrystateID'	=>	0,
-							'createby'			=>	$this->session->userdata('userId'),
+							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
 			$query	=	insertTable('tbldept', $values,0);
@@ -103,7 +103,7 @@ class Manage extends CI_Controller {
 							'department'		=>	$this->input->post('department'),
 							'description'		=>	$this->input->post('description'),
 							'dbentrystateID'	=>	0,
-							'createby'			=>	$this->session->userdata('userId'),
+							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
 				$query	=	insertTable('tbldept_mod', $values_mod,0);
@@ -192,7 +192,7 @@ class Manage extends CI_Controller {
 			$values=array('name'				=>	$this->input->post('name'),
 							'description'		=>	$this->input->post('description'),
 							'dbentrystateID'	=>	0,
-							'createby'			=>	$this->session->userdata('userId'),
+							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
 			$query	=	insertTable('tbldesignation', $values,0);
@@ -221,7 +221,7 @@ class Manage extends CI_Controller {
 							'desigID'			=>	$this->input->post('desigID'),
 							'description'		=>	$this->input->post('description'),
 							'dbentrystateID'	=>	0,
-							'createby'			=>	$this->session->userdata('userId'),
+							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
 				$query	=	insertTable('tbldesignation_mod', $values_mod,0);
@@ -309,7 +309,7 @@ class Manage extends CI_Controller {
 			$values=array('roleName'				=>	$this->input->post('roleName'),
 							'description'		=>	$this->input->post('description'),
 							'dbentrystateID'	=>	0,
-							'createby'			=>	$this->session->userdata('userId'),
+							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
 			$query	=	insertTable('tblrole', $values,0);
@@ -338,7 +338,7 @@ class Manage extends CI_Controller {
 								'description'		=>	$this->input->post('description'),
 								'roleID'			=>	$this->input->post('roleID'),
 								'dbentrystateID'	=>	0,
-								'createby'			=>	$this->session->userdata('userId'),
+								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
 				$query	=	insertTable('tblrole_mod', $values,0);
@@ -427,7 +427,7 @@ class Manage extends CI_Controller {
 			$values=array('paymentMode'				=>	$this->input->post('paymentMode'),
 							'description'		=>	$this->input->post('description'),
 							'dbentrystateID'	=>	0,
-							'createby'			=>	$this->session->userdata('userId'),
+							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
 			$query	=	insertTable('tblpaymentmode', $values,0);
@@ -456,7 +456,7 @@ class Manage extends CI_Controller {
 								'description'		=>	$this->input->post('description'),
 								'paymentModeID'	=>	$this->input->post('paymentModeID'),
 								'dbentrystateID'	=>	0,
-								'createby'			=>	$this->session->userdata('userId'),
+								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
 				$query	=	insertTable('tblpaymentmode_mod', $values,0);
@@ -546,7 +546,7 @@ class Manage extends CI_Controller {
 			$values=array('payStatus'				=>	$this->input->post('payStatus'),
 							'description'		=>	$this->input->post('description'),
 							'dbentrystateID'	=>	0,
-							'createby'			=>	$this->session->userdata('userId'),
+							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
 			$query	=	insertTable('tblpaymentstatus', $values,0);
@@ -575,7 +575,7 @@ class Manage extends CI_Controller {
 								'description'		=>	$this->input->post('description'),
 								'payStatusID'		=>	$this->input->post('payStatusID'),
 								'dbentrystateID'	=>	0,
-								'createby'			=>	$this->session->userdata('userId'),
+								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
 				$query	=	insertTable('tblpaymentstatus_mod', $values,0);
@@ -665,7 +665,7 @@ class Manage extends CI_Controller {
 			$values=array('typename'				=>	$this->input->post('typename'),
 							'description'		=>	$this->input->post('description'),
 							'dbentrystateID'	=>	0,
-							'createby'			=>	$this->session->userdata('userId'),
+							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
 			$query	=	insertTable('tblemployetypes', $values,0);
@@ -694,7 +694,7 @@ class Manage extends CI_Controller {
 								'description'		=>	$this->input->post('description'),
 								'employetypeID'		=>	$this->input->post('employetypeID'),
 								'dbentrystateID'	=>	0,
-								'createby'			=>	$this->session->userdata('userId'),
+								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
 				$query	=	insertTable('tblemployetypes_mod', $values,0);

@@ -42,7 +42,7 @@
 
 
                         <!-- col -->
-                        <div class="col-md-12">
+                        <div class="col-md-6 add_forms">
 
 <?php $this->load->view('admin/msg')?>
                             <!-- tile -->
@@ -67,23 +67,23 @@
                                     <form action="<?= base_url()?>manage/add_payment_mode" method="post" class="form-horizontal" name="form4" role="form" id="form4" data-parsley-validate>
 
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Payment Mode Name</label>
-                                            <div class="col-sm-9">
+                                            <label class="control-label">Payment Mode Name</label>
+                                            
                                                 <input type="text" name="paymentMode" class="form-control" placeholder="Payment Mode Name"
                                                        data-parsley-trigger="change"
                                                        required>
-                                            </div>
+                                           
                                         </div>
 
-                                        <hr class="line-dashed line-full" />
+                                    
 
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Payment Mode Description</label>
-                                            <div class="col-sm-9">
+                                            <label class="control-label">Payment Mode Description</label>
+                                           
                                                 <input type="text" name="description" class="form-control" placeholder="Payment Mode Description"
                                                        data-parsley-trigger="change"
                                                        required>
-                                            </div>
+                                         
                                         </div>
 
                                        <!-- tile footer -->

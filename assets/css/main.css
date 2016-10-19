@@ -17595,3 +17595,14 @@ hr.line-full {
     opacity: 1;
   }
 }
+/*karthi*/
+
+.col-md-6.add_forms {
+    float: none;
+    margin: 0px auto;
+    display: block;
+}
+.add_forms .form-horizontal .form-group{
+	margin-right: 0px;
+    margin-left: 0px;
+}

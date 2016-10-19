@@ -1,5 +1,6 @@
 
             <?php $this->load->view('admin/sidebar')?>
+            
                 <!-- =================================================
                 ================= RIGHTBAR Content ===================
                 ================================================== -->
@@ -40,7 +41,7 @@
                     <div class="row">
 
                       
-                        <div class="col-md-12">
+                        <div class="col-md-6 add_forms">
 
                            <?php $this->load->view('admin/msg')?>
                             <section class="tile">
@@ -54,28 +55,28 @@
 
                                 <!-- tile body -->
                                 <div class="tile-body">
-
+								
 
                                     <form action="<?= base_url()?>manage/add_department" method="post" class="form-horizontal" name="form4" role="form" id="form4" data-parsley-validate>
 
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Department Name</label>
-                                            <div class="col-sm-9">
+                                            <label class="control-label">Department Name</label>
+                                            
                                                 <input type="text" name="department" class="form-control" placeholder="Department Name"
                                                        data-parsley-trigger="change"
                                                        required>
-                                            </div>
+                                            
                                         </div>
 
-                                        <hr class="line-dashed line-full" />
+                                      
 
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Department Description</label>
-                                            <div class="col-sm-9">
+                                            <label class="control-label">Department Description</label>
+                                           
                                                 <input type="text" name="description" class="form-control" placeholder="Department Description"
                                                        data-parsley-trigger="change"
                                                        required>
-                                            </div>
+                                            
                                         </div>
 
                                        <!-- tile footer -->
@@ -86,8 +87,8 @@
                                 <!-- /tile footer -->
 
                                     </form>
-
-                                </div>
+</div>
+                               
                                 <!-- /tile body -->
 
                                 
