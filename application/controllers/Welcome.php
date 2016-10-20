@@ -25,7 +25,12 @@ class Welcome extends CI_Controller {
 //        print_r($SESS_userRole);
 //        $SESS_accessmap = $this->session->userdata('SESS_accessmap');
 //        print_r($SESS_accessmap);
-//        $finalaccessmap = checkpageaccess(1,'create');
+//        
+//        
+//        
+//        echo $finalaccessmap = checkpageaccess(2,'','array');
+//        exit();
+        
         $headerData['pageTitle']='Dashboard';
        // $this->load->view('admin/header',$headerData);
         $this->load->view('admin/dashboard', $headerData);
