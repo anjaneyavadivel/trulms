@@ -38,7 +38,7 @@
                                         <ul id="navigation">
                                             <li><a href="<?= base_url()?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
                                             <li>
-                                                <a href="#"><i class="fa fa-envelope-o"></i> <span>Master</span> </a>
+                                                <a href="#"><i class="fa fa-cubes"></i> <span>Master</span> </a>
                                                 <ul>
                                                     <li><a href="<?= base_url()?>department"><i class="fa fa-caret-right"></i> Department</a></li>
                                                    <li><a href="<?= base_url()?>designation"><i class="fa fa-caret-right"></i> Designation</a></li>
@@ -47,6 +47,12 @@
                                                      <li><a href="<?= base_url()?>payment_status"><i class="fa fa-caret-right"></i> Payment Status</a></li>
                                                     <li><a href="<?= base_url()?>employee_types"><i class="fa fa-caret-right"></i> Employee Types</a></li>
                                                 </ul>
+                                            </li>
+					<li>
+                                                <a href="#"><i class="fa  fa-gear"></i> <span>Setup</span> </a>
+                                                <ul>
+                                                    <li><a href="<?= base_url()?>page_master"><i class="fa fa-caret-right"></i> Page</a></li>
+                                                 </ul>
                                             </li>
 											
 										
