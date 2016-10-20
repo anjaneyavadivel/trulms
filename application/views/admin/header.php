@@ -22,7 +22,7 @@
         <link rel="stylesheet" href="<?= base_url(); ?>assets/css/vendor/font-awesome.min.css">
         <link rel="stylesheet" href="<?= base_url(); ?>assets/js/vendor/animsition/css/animsition.min.css">
 		 <?php $segment1	=	$this->uri->segment(1);
-        if($segment1=='department')
+        if(isset($table))
 		{
 			?>
         <link rel="stylesheet" href="<?= base_url()?>assets/js/vendor/animsition/css/animsition.min.css">

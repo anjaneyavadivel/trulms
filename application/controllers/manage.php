@@ -37,11 +37,11 @@ class Manage extends CI_Controller {
 		}
 		else
 		{
-			/*print_r($this->session->userdata('SESS_userRole'));
+			print_r($this->session->userdata('SESS_userRole'));
 			$SESS_userRole = $this->session->userdata('SESS_userRole');
 			$pageroleaccessmap = pageroleaccessmap($SESS_userRole, 'designation');
 			print_r($pageroleaccessmap);
-			exit();*/
+			exit();
 			
 			$data['pageTitle']	=	"Department";
 			$data['table']		=	"Department";
@@ -50,11 +50,11 @@ class Manage extends CI_Controller {
 	}
 	function department_json()
 	{
-		$result	=	$this->Commonsql_model->select_all('tbldept');
-		$output = array();
+		$result	=	$this->Commonsql_model->select_all('tbldept','deptID');
+		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['deptID']			=	$value->deptID;
+			$vaules['deptID']			=	$i++;
 			$vaules['department'] 		= 	$value->department;
 			$vaules['description'] 		= 	$value->description;
 			if($value->active==1)
@@ -65,7 +65,8 @@ class Manage extends CI_Controller {
 			{
 				$active	=	"<a href='".base_url()."manage/department/".$value->deptID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
 			}
-			$vaules['Action'] 			=	"<a href='".base_url()."edit_department/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			$edit			 			=	"<a href='".base_url()."view_department/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+			$vaules['Action'] 			=	$edit."<a href='".base_url()."edit_department/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
 			
 			$output[] =$vaules;
 		}
@@ -130,6 +131,142 @@ class Manage extends CI_Controller {
 		$data['view']		=	$this->Commonsql_model->select('tbldept',array('deptID'=>$this->uri->segment(2)));
 		$this->load->view('admin/dept/edit_department',$data);
 	}
+	function view_department()
+	{
+		if($this->input->post('save'))
+		{
+			
+			$check 	=	$this->Commonsql_model->select('tbldept',array('deptID'	=>	$this->input->post('deptID'),'department'		=>	$this->input->post('department'),
+							'description'		=>	$this->input->post('description')));
+			if($check->num_rows()==0)
+			{
+					$values_mod=array('department'		=>	$this->input->post('department'),
+								'description'		=>	$this->input->post('description'),
+								'dbentrystateID'	=>	0,
+								'createby'			=>	$this->session->userdata('SESS_userId'),
+								'active'			=>	1);
+								
+				$whereData	=	array('deptID'	=>	$this->input->post('deptID'));
+				
+				$query		= updateTable('tbldept', $whereData, $values_mod , 1,'deptID', $this->input->post('deptID'));
+				
+				if($query)
+				{
+					$this->session->set_userdata('suc','Department Successfully  Updated...!');
+					redirect('view_department/'.$this->input->post('deptID'));
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('view_department/'.$this->input->post('deptID'));
+				}
+			}
+			else
+			{
+				$this->session->set_userdata('err','No Changes Found..!');
+				redirect('view_department/'.$this->input->post('deptID'));
+			}
+		}
+		if($this->uri->segment(4))
+		{
+			$whereData	=	array('dept_modID'	=>	$this->uri->segment(4));
+			$updateData	=	array('active'	=>	$this->uri->segment(5));
+			$upt	=	$this->Commonsql_model->updateTable('tbldept_mod', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','Department Status Successfully  Changed...!');
+				redirect('view_department/'.$this->uri->segment(3));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('view_department/'.$this->uri->segment(3));
+			}
+		}
+		else if($this->uri->segment(3))
+		{
+			$data['pageTitle']	=	"View Department";
+			$data['table']		=	"Designation";
+			$data['view']		=	$this->Commonsql_model->select('tbldept_mod',array('dept_modID'=>$this->uri->segment(3)));
+			$this->load->view('admin/dept/view_department',$data);
+		}
+		else
+		{
+			$data['pageTitle']	=	"View Department";
+			$data['table']		=	"Designation";
+			$data['view']		=	$this->Commonsql_model->select('tbldept',array('deptID'=>$this->uri->segment(2)));
+			$this->load->view('admin/dept/view_department',$data);
+		}
+	}
+	function view_department_json()
+	{
+		$result	=	$this->Commonsql_model->select_desc('tbldept_mod',array('deptID'=>$this->uri->segment(3)),'dept_modID');
+		//echo $this->db->last_query();
+		$output = array();$i=1;
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['ID']				=	$i++;
+			$vaules['name'] 			= 	$value->department;
+			$vaules['description'] 		= 	$value->description;
+			if($value->active==1)
+			{
+				$active	=	"<a href='".base_url()."manage/view_department/".$value->deptID.'/'.$value->dept_modID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+			}
+			else
+			{
+				$active	=	"<a href='".base_url()."manage/view_department/".$value->deptID.'/'.$value->dept_modID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+			}
+			$edit			 			=	"<a href='".base_url()."manage/department_mod_approve/".$value->dept_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approve</a>";
+			$vaules['Action'] 			=	$edit."<a href='".base_url()."view_department/".$value->deptID.'/'.$value->dept_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			
+			$output[] =$vaules;
+		}
+
+		 echo json_encode(array('data'=>$output), true);
+	}
+	function department_mod_approve()
+	{
+		$mod_id	=	$this->uri->segment(3);
+		$data	=	$this->Commonsql_model->select('tbldept_mod',array('dept_modID'=>$mod_id));
+		if($data->num_rows()>0)
+		{
+			$val	=	$data->row();
+			
+				$values		=array('department'		=>	$val->department,
+								'description'		=>	$val->description,
+								'dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond		=	array('deptID'	=>	$val->deptID);
+				
+				$values_mod	=	array('dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond_mod	=	array('dept_modID'	=>	$mod_id);
+				$upt		=	$this->Commonsql_model->updateTable('tbldept', $cond , $values);
+				$upt_m		=	$this->Commonsql_model->updateTable('tbldept_mod', $cond_mod , $values_mod);
+				//echo $this->db->last_query();exit;
+				if($upt)
+				{
+					$this->session->set_userdata('suc','Approved Successfully  Finished...!');
+					redirect('view_department/'.$val->deptID);
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('view_department/'.$val->deptID);
+				}
+							
+							
+						
+		}
+	}
 	/***********************************************************************************************************************************/
 	function designation()
 	{
@@ -160,11 +297,11 @@ class Manage extends CI_Controller {
 	}
 	function designation_json()
 	{
-		$result	=	$this->Commonsql_model->select_all('tbldesignation');
-		$output = array();
+		$result	=	$this->Commonsql_model->select_all('tbldesignation','desigID');
+		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']			=	$value->desigID;
+			$vaules['ID']				=	$i++;
 			$vaules['name'] 			= 	$value->name;
 			$vaules['description'] 		= 	$value->description;
 			if($value->active==1)
@@ -175,7 +312,8 @@ class Manage extends CI_Controller {
 			{
 				$active	=	"<a href='".base_url()."manage/designation/".$value->desigID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
 			}
-			$vaules['Action'] 			=	"<a  href='".base_url()."edit_designation/".$value->desigID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			$edit			 			=	"<a href='".base_url()."view_designation/".$value->desigID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+			$vaules['Action'] 			=	$edit."<a  href='".base_url()."edit_designation/".$value->desigID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
 			
 			$output[] =$vaules;
 		}
@@ -236,6 +374,142 @@ class Manage extends CI_Controller {
 		$data['view']		=	$this->Commonsql_model->select('tbldesignation',array('desigID'=>$this->uri->segment(2)));
 		$this->load->view('admin/designation/edit_designation',$data);
 	}
+	function view_designation()
+	{
+		if($this->input->post('save'))
+		{
+			
+			$check 	=	$this->Commonsql_model->select('tbldesignation',array('desigID'	=>	$this->input->post('desigID'),'name'		=>	$this->input->post('name'),
+							'description'		=>	$this->input->post('description')));
+			if($check->num_rows()==0)
+			{
+					$values_mod=array('name'		=>	$this->input->post('name'),
+								'description'		=>	$this->input->post('description'),
+								'dbentrystateID'	=>	0,
+								'createby'			=>	$this->session->userdata('SESS_userId'),
+								'active'			=>	1);
+								
+				$whereData	=	array('desigID'	=>	$this->input->post('desigID'));
+				
+				$query		= updateTable('tbldesignation', $whereData, $values_mod , 1,'desigID', $this->input->post('desigID'));
+				
+				if($query)
+				{
+					$this->session->set_userdata('suc','designation Successfully  Updated...!');
+					redirect('view_designation/'.$this->input->post('desigID'));
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('view_designation/'.$this->input->post('desigID'));
+				}
+			}
+			else
+			{
+				$this->session->set_userdata('err','No Changes Found..!');
+				redirect('view_designation/'.$this->input->post('desigID'));
+			}
+		}
+		if($this->uri->segment(4))
+		{
+			$whereData	=	array('desig_modID'	=>	$this->uri->segment(4));
+			$updateData	=	array('active'	=>	$this->uri->segment(5));
+			$upt	=	$this->Commonsql_model->updateTable('tbldesignation_mod', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','Designation Status Successfully  Changed...!');
+				redirect('view_designation/'.$this->uri->segment(3));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('view_designation/'.$this->uri->segment(3));
+			}
+		}
+		else if($this->uri->segment(3))
+		{
+			$data['pageTitle']	=	"View designation";
+			$data['table']		=	"Designation";
+			$data['view']		=	$this->Commonsql_model->select('tbldesignation_mod',array('desig_modID'=>$this->uri->segment(3)));
+			$this->load->view('admin/designation/view_designation',$data);
+		}
+		else
+		{
+			$data['pageTitle']	=	"View designation";
+			$data['table']		=	"Designation";
+			$data['view']		=	$this->Commonsql_model->select('tbldesignation',array('desigID'=>$this->uri->segment(2)));
+			$this->load->view('admin/designation/view_designation',$data);
+		}
+	}
+	function view_designation_json()
+	{
+		$result	=	$this->Commonsql_model->select_desc('tbldesignation_mod',array('desigID'=>$this->uri->segment(3)),'desig_modID');
+		//echo $this->db->last_query();
+		$output = array();$i=1;
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['ID']				=	$i++;
+			$vaules['name'] 			= 	$value->name;
+			$vaules['description'] 		= 	$value->description;
+			if($value->active==1)
+			{
+				$active	=	"<a href='".base_url()."manage/view_designation/".$value->desigID.'/'.$value->desig_modID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+			}
+			else
+			{
+				$active	=	"<a href='".base_url()."manage/view_designation/".$value->desigID.'/'.$value->desig_modID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+			}
+			$edit			 			=	"<a href='".base_url()."manage/designation_mod_approve/".$value->desig_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approve</a>";
+			$vaules['Action'] 			=	$edit."<a href='".base_url()."view_designation/".$value->desigID.'/'.$value->desig_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			
+			$output[] =$vaules;
+		}
+
+		 echo json_encode(array('data'=>$output), true);
+	}
+	function designation_mod_approve()
+	{
+		$mod_id	=	$this->uri->segment(3);
+		$data	=	$this->Commonsql_model->select('tbldesignation_mod',array('desig_modID'=>$mod_id));
+		if($data->num_rows()>0)
+		{
+			$val	=	$data->row();
+			
+				$values		=array('name'		=>	$val->name,
+								'description'		=>	$val->description,
+								'dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond		=	array('desigID'	=>	$val->desigID);
+				
+				$values_mod	=	array('dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond_mod	=	array('desig_modID'	=>	$mod_id);
+				$upt		=	$this->Commonsql_model->updateTable('tbldesignation', $cond , $values);
+				$upt_m		=	$this->Commonsql_model->updateTable('tbldesignation_mod', $cond_mod , $values_mod);
+				//echo $this->db->last_query();exit;
+				if($upt)
+				{
+					$this->session->set_userdata('suc','Approved Successfully  Finished...!');
+					redirect('view_designation/'.$val->desigID);
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('view_designation/'.$val->desigID);
+				}
+							
+							
+						
+		}
+	}
 	/***********************************************************************************************************************************/
 	function role()
 	{
@@ -266,11 +540,11 @@ class Manage extends CI_Controller {
 	}
 	function role_json()
 	{
-		$result	=	$this->Commonsql_model->select_all('tblrole');
-		$output = array();
+		$result	=	$this->Commonsql_model->select_all('tblrole','roleID');
+		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$value->roleID;
+			$vaules['ID']				=	$i++;
 			$vaules['roleName'] 		= 	$value->roleName;
 			$vaules['description'] 		= 	$value->description;
 			if($value->active==1)
@@ -281,7 +555,8 @@ class Manage extends CI_Controller {
 			{
 				$active	=	"<a href='".base_url()."manage/role/".$value->roleID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
 			}
-			$vaules['Action'] 			=	"<a href='".base_url()."edit_role/".$value->roleID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			$edit			 			=	"<a href='".base_url()."view_role/".$value->roleID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+			$vaules['Action'] 			=	$edit."<a href='".base_url()."edit_role/".$value->roleID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
 			
 			$output[] =$vaules;
 		}
@@ -342,6 +617,142 @@ class Manage extends CI_Controller {
 		$data['view']		=	$this->Commonsql_model->select('tblrole',array('roleID'=>$this->uri->segment(2)));
 		$this->load->view('admin/role/edit_role',$data);
 	}
+	function view_role()
+	{
+		if($this->input->post('save'))
+		{
+			
+			$check 	=	$this->Commonsql_model->select('tblrole',array('roleID'	=>	$this->input->post('roleID'),'roleName'		=>	$this->input->post('roleName'),
+							'description'		=>	$this->input->post('description')));
+			if($check->num_rows()==0)
+			{
+					$values_mod=array('roleName'		=>	$this->input->post('roleName'),
+								'description'		=>	$this->input->post('description'),
+								'dbentrystateID'	=>	0,
+								'createby'			=>	$this->session->userdata('SESS_userId'),
+								'active'			=>	1);
+								
+				$whereData	=	array('roleID'	=>	$this->input->post('roleID'));
+				
+				$query		= updateTable('tblrole', $whereData, $values_mod , 1,'roleID', $this->input->post('roleID'));
+				
+				if($query)
+				{
+					$this->session->set_userdata('suc','role Successfully  Updated...!');
+					redirect('view_role/'.$this->input->post('roleID'));
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('view_role/'.$this->input->post('roleID'));
+				}
+			}
+			else
+			{
+				$this->session->set_userdata('err','No Changes Found..!');
+				redirect('view_role/'.$this->input->post('roleID'));
+			}
+		}
+		if($this->uri->segment(4))
+		{
+			$whereData	=	array('role_modID'	=>	$this->uri->segment(4));
+			$updateData	=	array('active'	=>	$this->uri->segment(5));
+			$upt	=	$this->Commonsql_model->updateTable('tblrole_mod', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','role Status Successfully  Changed...!');
+				redirect('view_role/'.$this->uri->segment(3));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('view_role/'.$this->uri->segment(3));
+			}
+		}
+		else if($this->uri->segment(3))
+		{
+			$data['pageTitle']	=	"View role";
+			$data['table']		=	"role";
+			$data['view']		=	$this->Commonsql_model->select('tblrole_mod',array('role_modID'=>$this->uri->segment(3)));
+			$this->load->view('admin/role/view_role',$data);
+		}
+		else
+		{
+			$data['pageTitle']	=	"View role";
+			$data['table']		=	"role";
+			$data['view']		=	$this->Commonsql_model->select('tblrole',array('roleID'=>$this->uri->segment(2)));
+			$this->load->view('admin/role/view_role',$data);
+		}
+	}
+	function view_role_json()
+	{
+		$result	=	$this->Commonsql_model->select_desc('tblrole_mod',array('roleID'=>$this->uri->segment(3)),'role_modID');
+		//echo $this->db->last_query();
+		$output = array();$i=1;
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['ID']				=	$i++;
+			$vaules['name'] 			= 	$value->roleName;
+			$vaules['description'] 		= 	$value->description;
+			if($value->active==1)
+			{
+				$active	=	"<a href='".base_url()."manage/view_role/".$value->roleID.'/'.$value->role_modID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+			}
+			else
+			{
+				$active	=	"<a href='".base_url()."manage/view_role/".$value->roleID.'/'.$value->role_modID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+			}
+			$edit			 			=	"<a href='".base_url()."manage/role_mod_approve/".$value->role_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approve</a>";
+			$vaules['Action'] 			=	$edit."<a href='".base_url()."view_role/".$value->roleID.'/'.$value->role_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			
+			$output[] =$vaules;
+		}
+
+		 echo json_encode(array('data'=>$output), true);
+	}
+	function role_mod_approve()
+	{
+		$mod_id	=	$this->uri->segment(3);
+		$data	=	$this->Commonsql_model->select('tblrole_mod',array('role_modID'=>$mod_id));
+		if($data->num_rows()>0)
+		{
+			$val	=	$data->row();
+			
+				$values		=array('roleName'		=>	$val->roleName,
+								'description'		=>	$val->description,
+								'dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond		=	array('roleID'	=>	$val->roleID);
+				
+				$values_mod	=	array('dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond_mod	=	array('role_modID'	=>	$mod_id);
+				$upt		=	$this->Commonsql_model->updateTable('tblrole', $cond , $values);
+				$upt_m		=	$this->Commonsql_model->updateTable('tblrole_mod', $cond_mod , $values_mod);
+				//echo $this->db->last_query();exit;
+				if($upt)
+				{
+					$this->session->set_userdata('suc','Approved Successfully  Finished...!');
+					redirect('view_role/'.$val->roleID);
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('view_role/'.$val->roleID);
+				}
+							
+							
+						
+		}
+	}
 	/***********************************************************************************************************************************/
 	function payment_mode()
 	{
@@ -372,11 +783,11 @@ class Manage extends CI_Controller {
 	}
 	function payment_mode_json()
 	{
-		$result	=	$this->Commonsql_model->select_all('tblpaymentmode');
-		$output = array();
+		$result	=	$this->Commonsql_model->select_all('tblpaymentmode','paymentModeID');
+		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$value->paymentModeID;
+			$vaules['ID']				=	$i++;
 			$vaules['paymentMode'] 		= 	$value->paymentMode;
 			$vaules['description'] 		= 	$value->description;
 			if($value->active==1)
@@ -387,7 +798,8 @@ class Manage extends CI_Controller {
 			{
 				$active	=	"<a href='".base_url()."manage/payment_mode/".$value->paymentModeID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
 			}
-			$vaules['Action'] 			=	"<a href='".base_url()."edit_payment_mode/".$value->paymentModeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			$edit			 			=	"<a href='".base_url()."view_payment_mode/".$value->paymentModeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+			$vaules['Action'] 			=	$edit."<a href='".base_url()."edit_payment_mode/".$value->paymentModeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
 			
 			$output[] =$vaules;
 		}
@@ -449,7 +861,142 @@ class Manage extends CI_Controller {
 		$data['view']		=	$this->Commonsql_model->select('tblpaymentmode',array('paymentModeID'=>$this->uri->segment(2)));
 		$this->load->view('admin/payment_mode/edit_payment_mode',$data);
 	}
-	
+	function view_payment_mode()
+	{
+		if($this->input->post('save'))
+		{
+			
+			$check 	=	$this->Commonsql_model->select('tblpaymentmode',array('paymentModeID'	=>	$this->input->post('paymentModeID'),'paymentMode'		=>	$this->input->post('paymentMode'),
+							'description'		=>	$this->input->post('description')));
+			if($check->num_rows()==0)
+			{
+					$values_mod=array('paymentMode'		=>	$this->input->post('paymentMode'),
+								'description'		=>	$this->input->post('description'),
+								'dbentrystateID'	=>	0,
+								'createby'			=>	$this->session->userdata('SESS_userId'),
+								'active'			=>	1);
+								
+				$whereData	=	array('paymentModeID'	=>	$this->input->post('paymentModeID'));
+				
+				$query		= updateTable('tblpaymentmode', $whereData, $values_mod , 1,'paymentModeID', $this->input->post('paymentModeID'));
+				
+				if($query)
+				{
+					$this->session->set_userdata('suc','payment_mode Successfully  Updated...!');
+					redirect('view_payment_mode/'.$this->input->post('paymentModeID'));
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('view_payment_mode/'.$this->input->post('paymentModeID'));
+				}
+			}
+			else
+			{
+				$this->session->set_userdata('err','No Changes Found..!');
+				redirect('view_payment_mode/'.$this->input->post('paymentModeID'));
+			}
+		}
+		if($this->uri->segment(4))
+		{
+			$whereData	=	array('paymentMode_modID'	=>	$this->uri->segment(4));
+			$updateData	=	array('active'	=>	$this->uri->segment(5));
+			$upt	=	$this->Commonsql_model->updateTable('tblpaymentmode_mod', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','payment mode Status Successfully  Changed...!');
+				redirect('view_payment_mode/'.$this->uri->segment(3));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('view_payment_mode/'.$this->uri->segment(3));
+			}
+		}
+		else if($this->uri->segment(3))
+		{
+			$data['pageTitle']	=	"View Payment Mode";
+			$data['table']		=	"payment_mode";
+			$data['view']		=	$this->Commonsql_model->select('tblpaymentmode_mod',array('paymentMode_modID'=>$this->uri->segment(3)));
+			$this->load->view('admin/payment_mode/view_payment_mode',$data);
+		}
+		else
+		{
+			$data['pageTitle']	=	"View payment_mode";
+			$data['table']		=	"payment_mode";
+			$data['view']		=	$this->Commonsql_model->select('tblpaymentmode',array('paymentModeID'=>$this->uri->segment(2)));
+			$this->load->view('admin/payment_mode/view_payment_mode',$data);
+		}
+	}
+	function view_payment_mode_json()
+	{
+		$result	=	$this->Commonsql_model->select_desc('tblpaymentmode_mod',array('paymentModeID'=>$this->uri->segment(3)),'paymentMode_modID');
+		//echo $this->db->last_query();
+		$output = array();$i=1;
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['ID']				=	$i++;
+			$vaules['name'] 			= 	$value->paymentMode;
+			$vaules['description'] 		= 	$value->description;
+			if($value->active==1)
+			{
+				$active	=	"<a href='".base_url()."manage/view_payment_mode/".$value->paymentModeID.'/'.$value->paymentMode_modID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+			}
+			else
+			{
+				$active	=	"<a href='".base_url()."manage/view_payment_mode/".$value->paymentModeID.'/'.$value->paymentMode_modID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+			}
+			$edit			 			=	"<a href='".base_url()."manage/payment_mode_mod_approve/".$value->paymentMode_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approve</a>";
+			$vaules['Action'] 			=	$edit."<a href='".base_url()."view_payment_mode/".$value->paymentModeID.'/'.$value->paymentMode_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			
+			$output[] =$vaules;
+		}
+
+		 echo json_encode(array('data'=>$output), true);
+	}
+	function payment_mode_mod_approve()
+	{
+		$mod_id	=	$this->uri->segment(3);
+		$data	=	$this->Commonsql_model->select('tblpaymentmode_mod',array('paymentMode_modID'=>$mod_id));
+		if($data->num_rows()>0)
+		{
+			$val	=	$data->row();
+			
+				$values		=array('paymentMode'		=>	$val->paymentMode,
+								'description'			=>	$val->description,
+								'dbentrystateID'		=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond		=	array('paymentModeID'	=>	$val->paymentModeID);
+				
+				$values_mod	=	array('dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond_mod	=	array('paymentMode_modID'	=>	$mod_id);
+				$upt		=	$this->Commonsql_model->updateTable('tblpaymentmode', $cond , $values);
+				$upt_m		=	$this->Commonsql_model->updateTable('tblpaymentmode_mod', $cond_mod , $values_mod);
+				//echo $this->db->last_query();exit;
+				if($upt)
+				{
+					$this->session->set_userdata('suc','Approved Successfully  Finished...!');
+					redirect('view_payment_mode/'.$val->paymentModeID);
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('view_payment_mode/'.$val->paymentModeID);
+				}
+							
+							
+						
+		}
+	}
 	/***********************************************************************************************************************************/
 	function payment_status()
 	{
@@ -480,11 +1027,11 @@ class Manage extends CI_Controller {
 	}
 	function payment_status_json()
 	{
-		$result	=	$this->Commonsql_model->select_all('tblpaymentstatus');
-		$output = array();
+		$result	=	$this->Commonsql_model->select_all('tblpaymentstatus','payStatusID');
+		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$value->payStatusID;
+			$vaules['ID']				=	$i++;
 			$vaules['name'] 			= 	$value->payStatus;
 			$vaules['description'] 		= 	$value->description;
 			if($value->active==1)
@@ -495,7 +1042,8 @@ class Manage extends CI_Controller {
 			{
 				$active	=	"<a href='".base_url()."manage/payment_status/".$value->payStatusID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
 			}
-			$vaules['Action'] 			=	"<a href='".base_url()."edit_payment_status/".$value->payStatusID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			$edit			 			=	"<a href='".base_url()."view_payment_status/".$value->payStatusID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+			$vaules['Action'] 			=	$edit."<a href='".base_url()."edit_payment_status/".$value->payStatusID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
 			
 			$output[] =$vaules;
 		}
@@ -556,7 +1104,142 @@ class Manage extends CI_Controller {
 		$data['view']		=	$this->Commonsql_model->select('tblpaymentstatus',array('payStatusID'=>$this->uri->segment(2)));
 		$this->load->view('admin/payment_mode/edit_payment_status',$data);;
 	}
-	
+	function view_payment_status()
+	{
+		if($this->input->post('save'))
+		{
+			
+			$check 	=	$this->Commonsql_model->select('tblpaymentstatus',array('payStatusID'	=>	$this->input->post('payStatusID'),'payStatus'		=>	$this->input->post('payStatus'),
+							'description'		=>	$this->input->post('description')));
+			if($check->num_rows()==0)
+			{
+					$values_mod=array('payStatus'		=>	$this->input->post('payStatus'),
+								'description'		=>	$this->input->post('description'),
+								'dbentrystateID'	=>	0,
+								'createby'			=>	$this->session->userdata('SESS_userId'),
+								'active'			=>	1);
+								
+				$whereData	=	array('payStatusID'	=>	$this->input->post('payStatusID'));
+				
+				$query		= updateTable('tblpaymentstatus', $whereData, $values_mod , 1,'payStatusID', $this->input->post('payStatusID'));
+				
+				if($query)
+				{
+					$this->session->set_userdata('suc','role Successfully  Updated...!');
+					redirect('view_payment_status/'.$this->input->post('payStatusID'));
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('view_payment_status/'.$this->input->post('payStatusID'));
+				}
+			}
+			else
+			{
+				$this->session->set_userdata('err','No Changes Found..!');
+				redirect('view_payment_status/'.$this->input->post('payStatusID'));
+			}
+		}
+		if($this->uri->segment(4))
+		{
+			$whereData	=	array('payStatus_modID'	=>	$this->uri->segment(4));
+			$updateData	=	array('active'	=>	$this->uri->segment(5));
+			$upt	=	$this->Commonsql_model->updateTable('tblpaymentstatus_mod', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','role Status Successfully  Changed...!');
+				redirect('view_payment_status/'.$this->uri->segment(3));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('view_payment_status/'.$this->uri->segment(3));
+			}
+		}
+		else if($this->uri->segment(3))
+		{
+			$data['pageTitle']	=	"View role";
+			$data['table']		=	"role";
+			$data['view']		=	$this->Commonsql_model->select('tblpaymentstatus_mod',array('payStatus_modID'=>$this->uri->segment(3)));
+			$this->load->view('admin/payment_mode/view_payment_status',$data);
+		}
+		else
+		{
+			$data['pageTitle']	=	"View role";
+			$data['table']		=	"role";
+			$data['view']		=	$this->Commonsql_model->select('tblpaymentstatus',array('payStatusID'=>$this->uri->segment(2)));
+			$this->load->view('admin/payment_mode/view_payment_status',$data);
+		}
+	}
+	function view_payment_status_json()
+	{
+		$result	=	$this->Commonsql_model->select_desc('tblpaymentstatus_mod',array('payStatusID'=>$this->uri->segment(3)),'payStatus_modID');
+		//echo $this->db->last_query();
+		$output = array();$i=1;
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['ID']				=	$i++;
+			$vaules['name'] 			= 	$value->payStatus;
+			$vaules['description'] 		= 	$value->description;
+			if($value->active==1)
+			{
+				$active	=	"<a href='".base_url()."manage/view_payment_status/".$value->payStatusID.'/'.$value->payStatus_modID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+			}
+			else
+			{
+				$active	=	"<a href='".base_url()."manage/view_payment_status/".$value->payStatusID.'/'.$value->payStatus_modID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+			}
+			$edit			 			=	"<a href='".base_url()."manage/payment_statu_mod_approve/".$value->payStatus_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approve</a>";
+			$vaules['Action'] 			=	$edit."<a href='".base_url()."view_payment_status/".$value->payStatusID.'/'.$value->payStatus_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			
+			$output[] =$vaules;
+		}
+
+		 echo json_encode(array('data'=>$output), true);
+	}
+	function payment_statu_mod_approve()
+	{
+		$mod_id	=	$this->uri->segment(3);
+		$data	=	$this->Commonsql_model->select('tblpaymentstatus_mod',array('payStatus_modID'=>$mod_id));
+		if($data->num_rows()>0)
+		{
+			$val	=	$data->row();
+			
+				$values		=array('payStatus'		=>	$val->payStatus,
+								'description'		=>	$val->description,
+								'dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond		=	array('payStatusID'	=>	$val->payStatusID);
+				
+				$values_mod	=	array('dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond_mod	=	array('payStatus_modID'	=>	$mod_id);
+				$upt		=	$this->Commonsql_model->updateTable('tblpaymentstatus', $cond , $values);
+				$upt_m		=	$this->Commonsql_model->updateTable('tblpaymentstatus_mod', $cond_mod , $values_mod);
+				//echo $this->db->last_query();exit;
+				if($upt)
+				{
+					$this->session->set_userdata('suc','Approved Successfully  Finished...!');
+					redirect('view_payment_status/'.$val->payStatusID);
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('view_payment_status/'.$val->payStatusID);
+				}
+							
+							
+						
+		}
+	}
 	/***********************************************************************************************************************************/
 	function employee_types()
 	{
@@ -587,11 +1270,11 @@ class Manage extends CI_Controller {
 	}
 	function employee_types_json()
 	{
-		$result	=	$this->Commonsql_model->select_all('tblemployetypes');
-		$output = array();
+		$result	=	$this->Commonsql_model->select_all('tblemployetypes','employetypeID');
+		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$value->employetypeID;
+			$vaules['ID']				=	$i++;
 			$vaules['name'] 			= 	$value->typename;
 			$vaules['description'] 		= 	$value->description;
 			if($value->active==1)
@@ -602,7 +1285,8 @@ class Manage extends CI_Controller {
 			{
 				$active	=	"<a href='".base_url()."manage/employee_types/".$value->employetypeID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
 			}
-			$vaules['Action'] 			=	"<a  href='".base_url()."edit_employee_types/".$value->employetypeID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			$edit			 			=	"<a href='".base_url()."view_employee_types/".$value->employetypeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+			$vaules['Action'] 			=	$edit."<a  href='".base_url()."edit_employee_types/".$value->employetypeID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
 			
 			$output[] =$vaules;
 		}
@@ -663,6 +1347,141 @@ class Manage extends CI_Controller {
 		$data['pageTitle']	=	"Edit Emplyee Types";
 		$data['view']		=	$this->Commonsql_model->select('tblemployetypes',array('employetypeID'=>$this->uri->segment(2)));
 		$this->load->view('admin/employee_types/edit_employee_types',$data);
+	}
+	function view_employee_types()
+	{
+		if($this->input->post('save'))
+		{
+			
+			$check 	=	$this->Commonsql_model->select('tblemployetypes',array('employetypeID'	=>	$this->input->post('employetypeID'),'typename'		=>	$this->input->post('typename'),
+							'description'		=>	$this->input->post('description')));
+			if($check->num_rows()==0)
+			{
+					$values_mod=array('typename'		=>	$this->input->post('typename'),
+								'description'		=>	$this->input->post('description'),
+								'dbentrystateID'	=>	0,
+								'createby'			=>	$this->session->userdata('SESS_userId'),
+								'active'			=>	1);
+								
+				$whereData	=	array('employetypeID'	=>	$this->input->post('employetypeID'));
+				
+				$query		= updateTable('tblemployetypes', $whereData, $values_mod , 1,'employetypeID', $this->input->post('employetypeID'));
+				
+				if($query)
+				{
+					$this->session->set_userdata('suc','employee_types Successfully  Updated...!');
+					redirect('view_employee_types/'.$this->input->post('employetypeID'));
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('view_employee_types/'.$this->input->post('employetypeID'));
+				}
+			}
+			else
+			{
+				$this->session->set_userdata('err','No Changes Found..!');
+				redirect('view_employee_types/'.$this->input->post('employetypeID'));
+			}
+		}
+		if($this->uri->segment(4))
+		{
+			$whereData	=	array('employetype_modID'	=>	$this->uri->segment(4));
+			$updateData	=	array('active'	=>	$this->uri->segment(5));
+			$upt	=	$this->Commonsql_model->updateTable('tblemployetypes_mod', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','employee_types Status Successfully  Changed...!');
+				redirect('view_employee_types/'.$this->uri->segment(3));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('view_employee_types/'.$this->uri->segment(3));
+			}
+		}
+		else if($this->uri->segment(3))
+		{
+			$data['pageTitle']	=	"View employee_types";
+			$data['table']		=	"Designation";
+			$data['view']		=	$this->Commonsql_model->select('tblemployetypes_mod',array('employetype_modID'=>$this->uri->segment(3)));
+			$this->load->view('admin/employee_types/view_employee_types',$data);
+		}
+		else
+		{
+			$data['pageTitle']	=	"View employee_types";
+			$data['table']		=	"Designation";
+			$data['view']		=	$this->Commonsql_model->select('tblemployetypes',array('employetypeID'=>$this->uri->segment(2)));
+			$this->load->view('admin/employee_types/view_employee_types',$data);
+		}
+	}
+	function view_employee_types_json()
+	{
+		$result	=	$this->Commonsql_model->select_desc('tblemployetypes_mod',array('employetypeID'=>$this->uri->segment(3)),'employetype_modID');
+		//echo $this->db->last_query();
+		$output = array();
+		$i=1;
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['ID']				=	$i++;
+			$vaules['name'] 			= 	$value->typename;
+			$vaules['description'] 		= 	$value->description;
+			if($value->active==1)
+			{
+				$active	=	"<a href='".base_url()."manage/view_employee_types/".$value->employetypeID.'/'.$value->employetype_modID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+			}
+			else
+			{
+				$active	=	"<a href='".base_url()."manage/view_employee_types/".$value->employetypeID.'/'.$value->employetype_modID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+			}
+			$edit			 			=	"<a href='".base_url()."manage/employee_types_mod_approve/".$value->employetype_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approve</a>";
+			$vaules['Action'] 			=	$edit."<a href='".base_url()."view_employee_types/".$value->employetypeID.'/'.$value->employetype_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			
+			$output[] =$vaules;
+		}
+
+		 echo json_encode(array('data'=>$output), true);
+	}
+	function employee_types_mod_approve()
+	{
+		$mod_id	=	$this->uri->segment(3);
+		$data	=	$this->Commonsql_model->select('tblemployetypes_mod',array('employetype_modID'=>$mod_id));
+		if($data->num_rows()>0)
+		{
+			$val	=	$data->row();
+			
+				$values		=array('typename'		=>	$val->typename,
+								'description'		=>	$val->description,
+								'dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond		=	array('employetypeID'	=>	$val->employetypeID);
+				
+				$values_mod	=	array('dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond_mod	=	array('employetype_modID'	=>	$mod_id);
+				$upt		=	$this->Commonsql_model->updateTable('tblemployetypes', $cond , $values);
+				$upt_m		=	$this->Commonsql_model->updateTable('tblemployetypes_mod', $cond_mod , $values_mod);
+				//echo $this->db->last_query();exit;
+				if($upt)
+				{
+					$this->session->set_userdata('suc','Approved Successfully  Finished...!');
+					redirect('view_employee_types/'.$val->employetypeID);
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('view_employee_types/'.$val->employetypeID);
+				}
+						
+		}
 	}
    
    

@@ -15,7 +15,7 @@
 
                     <div class="pageheader">
 
-                        <h2>Department </h2>
+                        <h2>Department Approve </h2>
 
                         <div class="page-bar">
 
@@ -27,7 +27,7 @@
                                     <a href="<?= base_url()?>department">Department</a>
                                 </li>
                                 <li>
-                                    <a href="javascript::">Edit Department</a>
+                                    <a href="javascript::">Approve Department</a>
                                 </li>
                             </ul>
                             
@@ -38,17 +38,58 @@
 
                     <!-- row -->
                     <div class="row">
-
+					<div class="col-md-12">
+					<?php $this->load->view('admin/msg')?>
+                    </div>
                       <?php if(isset($view) && $view->num_rows()>0){ $v=$view->row();?>
-                      
-                        <div class="col-md-4 add_forms">
+                      <div class="col-md-8">
 
-                           <?php $this->load->view('admin/msg')?>
+
+                            <!-- tile -->
                             <section class="tile">
 
                                 <!-- tile header -->
                                 <div class="tile-header dvd dvd-btm">
-                                    <h1 class="custom-font"><strong>Edit</strong> Department</h1>
+                                    <h1 class="custom-font"><strong>Department</strong> Manage Edit/Approve</h1>
+                                    
+                                    <ul class="controls">
+                                        
+                                        <li><a href="<?= base_url()?>add_department" title="Add Department" role="button" tabindex="0" class="tile-close">Add New  <i class="fa fa-plus"></i></a></li>
+                                    </ul>
+                                </div>
+                                <!-- /tile header -->
+
+                                <!-- tile body -->
+                                <div class="tile-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-custom" id="basic-usage">
+                                            <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- /tile body -->
+
+                            </section>
+                            <!-- /tile -->
+
+
+                        </div>
+                        <div class="col-md-4 add_forms">
+
+                         
+                            <section class="tile">
+
+                                <!-- tile header -->
+                                <div class="tile-header dvd dvd-btm">
+                                    <h1 class="custom-font"><strong>Edit </strong> Department</h1>
                                     
                                 </div>
                                 <!-- /tile header -->
@@ -56,7 +97,7 @@
                                 <!-- tile body -->
                                 <div class="tile-body">
 
-  <?=form_open_multipart(base_url().'edit_department/'.$v->deptID,array('class'=>'form-horizontal','id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
+  <?=form_open_multipart(base_url().'view_department/'.$v->deptID,array('class'=>'form-horizontal','id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
                                    
 
                                         <div class="form-group">
@@ -68,18 +109,18 @@
                                             
                                         </div>
 
-                                        <hr class="line-dashed line-full" />
+                                      
 
                                         <div class="form-group">
                                             <label class="control-label">Department Description</label>
-                                            
+                                           
                                                 <input type="text" name="description" class="form-control" placeholder="Department Description"
                                                        data-parsley-trigger="change"
                                                        required value="<?=$v->description?>">
                                                        
                                                        <input type="hidden" name="deptID" class="form-control" 
                                                         value="<?=$v->deptID?>">
-                                          
+                                           
                                         </div>
 
                                        <!-- tile footer -->
@@ -108,6 +149,12 @@
                         No Records Found
                         <?php }?>
 
+                    </div>
+                    <!-- /row -->
+					<div class="row">
+                        <!-- col -->
+                        
+                        <!-- /col -->
                     </div>
                     <!-- /row -->
                 </div>
