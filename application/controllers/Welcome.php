@@ -21,11 +21,11 @@ class Welcome extends CI_Controller {
         if (!$this->session->userdata('SESS_userId')) {
             redirect(base_url() . "login");
         }
-//        print_r($this->session->userdata('SESS_userRole'));
 //        $SESS_userRole = $this->session->userdata('SESS_userRole');
-//        $pageroleaccessmap = pageroleaccessmap($SESS_userRole, 2);
-//        print_r($pageroleaccessmap);
-//        exit();
+//        print_r($SESS_userRole);
+//        $SESS_accessmap = $this->session->userdata('SESS_accessmap');
+//        print_r($SESS_accessmap);
+//        $finalaccessmap = checkpageaccess(1,'create');
         $headerData['pageTitle']='Dashboard';
        // $this->load->view('admin/header',$headerData);
         $this->load->view('admin/dashboard', $headerData);
@@ -86,6 +86,10 @@ class Welcome extends CI_Controller {
                     }
                     // set role array format in session 
                     $this->session->set_userdata('SESS_userRole', $role);
+                    // set session for page role access
+                    $pageroleaccessmap = pageroleaccessmap($role);
+                    $this->session->set_userdata('SESS_accessmap', $pageroleaccessmap);
+                    
                     redirect(base_url() . "dashboard");
                 } else {
                     $data['error'] = 1;

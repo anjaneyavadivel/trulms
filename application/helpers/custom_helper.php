@@ -6,41 +6,91 @@ if (!defined('BASEPATH'))
 
 if (!function_exists('pageroleaccessmap')) {
     /*
-     * This function will return all parents of a user. 
-     * This includes children and input level users.
+     * This function will return all page permission of a user. 
      * $role_arr - array() role id for login user
-     * $pageID  - which page to access to check
      * $final_accessmap  - return  page role access following format array(0=>'create',1=>'view',2=>'modify',3=>'approve',4=>'delete');
      */
 
-    function pageroleaccessmap($role_arr=array(), $pageID='') {
+    function pageroleaccessmap($role_arr=array()) {
         $CI = & get_instance();
-        $final_accessmap = array(0);
+        $finalaccessmap = array();
         // check vaild input
-        if(empty($role_arr) && $pageID==''){return $final_accessmap;}
+        if(empty($role_arr)){return $final_accessmap;}
         // check super admin role 
-        if(in_array(1, $role_arr)){
-            $final_accessmap = array(0=>'create',1=>'view',2=>'modify',3=>'approve',4=>'delete');
-            return $final_accessmap;
-        }else{
-            $whereData = array('pageID' => $pageID, 'dbentrystateID' => 3, 'active' => 1);
-            $showField = array('*');
-            $inWhereData = array('roleID',$role_arr);
-            // Get user record
-            $pageroleaccessmaps = selectTable('tblpageroleaccessmap', $whereData, $showField, $orWhereData = array(),$inWhereData);
-            if (isset($pageroleaccessmaps) && $pageroleaccessmaps->num_rows() > 0) {
-                $pageroleaccessmaps = $pageroleaccessmaps->result();
-                foreach ($pageroleaccessmaps as $pageroleaccessmap) {
-                    if($pageroleaccessmap->createEnabled){$final_accessmap[]='create';}
-                    if($pageroleaccessmap->viewEnabled){$final_accessmap[]='view';}
-                    if($pageroleaccessmap->modifyEnabled){$final_accessmap[]='modify';}
-                    if($pageroleaccessmap->approveEnabled){$final_accessmap[]='approve';}
-                    if($pageroleaccessmap->deleteEnabled){$final_accessmap[]='delete';}
+        
+        $whereData = array('dbentrystateID' => 3, 'active' => 1);
+        $showField = array('pageID','menuCaption');
+        // Get user record
+        $tblpages = selectTable('tblpages', $whereData, $showField);
+
+        if ($tblpages->num_rows() >0) {
+            $pageslists = $tblpages->result();
+             foreach ($pageslists as $pageslist) {
+                $final_accessmap = array();
+                if(in_array(1, $role_arr)){
+                    $final_accessmap = array(0=>'create',1=>'view',2=>'modify',3=>'approve',4=>'delete');
+                }else{
+                    $whereData = array('pageID' => $pageslist->pageID,'dbentrystateID' => 3, 'active' => 1);
+                    $showField = array('*');
+                    $inWhereData = array('roleID',$role_arr);
+                    // Get user record
+                    $pageroleaccessmaps = selectTable('tblpageroleaccessmap', $whereData, $showField, $orWhereData = array(),$inWhereData);
+                    if (isset($pageroleaccessmaps) && $pageroleaccessmaps->num_rows() > 0) {
+                        $pageroleaccessmaps = $pageroleaccessmaps->result();
+                        foreach ($pageroleaccessmaps as $pageroleaccessmap) {
+                            if($pageroleaccessmap->createEnabled){$final_accessmap[]='create';}
+                            if($pageroleaccessmap->viewEnabled){$final_accessmap[]='view';}
+                            if($pageroleaccessmap->modifyEnabled){$final_accessmap[]='modify';}
+                            if($pageroleaccessmap->approveEnabled){$final_accessmap[]='approve';}
+                            if($pageroleaccessmap->deleteEnabled){$final_accessmap[]='delete';}
+                        }
+                    }
+                    $final_accessmap = array_unique($final_accessmap);
+                }
+                $finalaccessmap[$pageslist->pageID]=$final_accessmap;
+            }
+
+        }
+        return $roleaccessmap = json_encode($finalaccessmap, true);
+        //return $final_accessmap;
+    }
+
+}
+
+if (!function_exists('checkpageaccess')) {
+    /*
+     * This function will return all parents of a user. 
+     * $pageID -  which page need to access for login user
+     * $access -  check page access permission for login user (like : create,view,modify,approve,delete)
+     * $format - json , array
+     * $final_accessmap  - return  page role access following format array(0=>'create',1=>'view',2=>'modify',3=>'approve',4=>'delete');
+     */
+
+    function checkpageaccess($pageID='',$access='',$format='json') {
+        $CI = & get_instance();
+        $finalaccessmap = array();
+        // check vaild input
+        if($pageID==''){return FALSE;}
+        $SESS_accessmap = $CI->session->userdata('SESS_accessmap');
+        $json = json_decode($SESS_accessmap, true);
+        print_r($SESS_accessmap);
+        // check particular page acess
+        if($access==''){
+            if(isset($json[$pageID])){
+                if($format=='json'){
+                    return $finalaccessmap = json_encode($json[$pageID], true);
+                }else{
+                    return $json[$pageID];
                 }
             }
-            $final_accessmap = array_unique($final_accessmap);
+            return FALSE;
+        }else{ 
+            if(isset($json[$pageID]) && in_array($access, $json[$pageID])){
+                return TRUE;
+            }
+            return FALSE;
         }
-        return $final_accessmap;
+         return FALSE;
     }
 
 }
