@@ -60,26 +60,26 @@
                                    
 
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Department Name</label>
-                                            <div class="col-sm-9">
+                                            <label class="control-label">Department Name</label>
+                                            
                                                 <input type="text" name="department" class="form-control" placeholder="Department Name"
                                                        data-parsley-trigger="change"
                                                        required value="<?= $v->department?>">
-                                            </div>
+                                            
                                         </div>
 
                                         <hr class="line-dashed line-full" />
 
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Department Description</label>
-                                            <div class="col-sm-9">
+                                            <label class="control-label">Department Description</label>
+                                            
                                                 <input type="text" name="description" class="form-control" placeholder="Department Description"
                                                        data-parsley-trigger="change"
                                                        required value="<?=$v->description?>">
                                                        
                                                        <input type="hidden" name="deptID" class="form-control" 
                                                         value="<?=$v->deptID?>">
-                                            </div>
+                                          
                                         </div>
 
                                        <!-- tile footer -->

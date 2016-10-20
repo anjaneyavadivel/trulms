@@ -81,21 +81,25 @@ $route['view_designation/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/
 $route['role'] 										=		'manage/role';
 $route['add_role'] 									=		'manage/add_role';
 $route['edit_role/([a-zA-Z0-9---_%])+'] 			=		'manage/edit_role/$1';
-$route['view_designation/([a-zA-Z0-9---_%])+'] 		=		'manage/view_designation/$1';
+$route['view_role/([a-zA-Z0-9---_%])+'] 			=		'manage/view_role/$1';
+$route['view_role/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/view_role/$1/$1';
 
 $route['payment_mode'] 								=		'manage/payment_mode';
 $route['add_payment_mode'] 							=		'manage/add_payment_mode';
 $route['edit_payment_mode/([a-zA-Z0-9---_%])+'] 	=		'manage/edit_payment_mode/$1';
-$route['view_designation/([a-zA-Z0-9---_%])+'] 		=		'manage/view_designation/$1';
+$route['view_payment_mode/([a-zA-Z0-9---_%])+'] 	=		'manage/view_payment_mode/$1';
+$route['view_payment_mode/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/view_payment_mode/$1/$1';
 
 $route['payment_status'] 							=		'manage/payment_status';
 $route['add_payment_status'] 						=		'manage/add_payment_status';
 $route['edit_payment_status/([a-zA-Z0-9---_%])+'] 	=		'manage/edit_payment_status/$1';
-$route['view_designation/([a-zA-Z0-9---_%])+'] 		=		'manage/view_designation/$1';
+$route['view_payment_status/([a-zA-Z0-9---_%])+'] 	=		'manage/view_payment_status/$1';
+$route['view_payment_status/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/view_payment_status/$1/$1';
 
 $route['employee_types'] 							=		'manage/employee_types';
 $route['add_employee_types'] 						=		'manage/add_employee_types';
 $route['edit_employee_types/([a-zA-Z0-9---_%])+'] 	=		'manage/edit_employee_types/$1';
-$route['view_designation/([a-zA-Z0-9---_%])+'] 		=		'manage/view_designation/$1';
+$route['view_employee_types/([a-zA-Z0-9---_%])+'] 	=		'manage/view_employee_types/$1';
+$route['view_employee_types/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/view_employee_types/$1/$1';
 
 

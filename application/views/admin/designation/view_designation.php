@@ -15,7 +15,7 @@
 
                     <div class="pageheader">
 
-                        <h2>Department Approve </h2>
+                        <h2>Designation Approve</h2>
 
                         <div class="page-bar">
 
@@ -24,10 +24,10 @@
                                     <a href="<?= base_url()?>"><i class="fa fa-home"></i> HOME</a>
                                 </li>
                                 <li>
-                                    <a href="<?= base_url()?>department">Department</a>
+                                    <a href="<?= base_url()?>designation">Designation</a>
                                 </li>
                                 <li>
-                                    <a href="javascript::">Approve Department</a>
+                                    <a href="javascript::">Approve Designation</a>
                                 </li>
                             </ul>
                             
@@ -38,23 +38,24 @@
 
                     <!-- row -->
                     <div class="row">
-					<div class="col-md-12">
+
+	<div class="col-md-12">
 					<?php $this->load->view('admin/msg')?>
                     </div>
                       <?php if(isset($view) && $view->num_rows()>0){ $v=$view->row();?>
-                      <div class="col-md-8">
 
+<div class="col-md-8">
 
                             <!-- tile -->
                             <section class="tile">
 
                                 <!-- tile header -->
                                 <div class="tile-header dvd dvd-btm">
-                                    <h1 class="custom-font"><strong>Department</strong> Manage Edit/Approve</h1>
+                                    <h1 class="custom-font"><strong>Designation</strong> Manage Approve/Edit</h1>
                                     
                                     <ul class="controls">
                                         
-                                        <li><a href="<?= base_url()?>add_department" title="Add Department" role="button" tabindex="0" class="tile-close">Add New  <i class="fa fa-plus"></i></a></li>
+                                        <li><a href="<?= base_url()?>add_designation" title="Add Department" role="button" tabindex="0" class="tile-close">Add New  <i class="fa fa-plus"></i></a></li>
                                     </ul>
                                 </div>
                                 <!-- /tile header -->
@@ -66,8 +67,8 @@
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
+                                                <th>Name</th>
+                                                <th>Description</th>
                                                 <th>Action</th>
                                             </tr>
                                             </thead>
@@ -82,14 +83,20 @@
 
 
                         </div>
+                        <!-- col -->
                         <div class="col-md-4 add_forms">
 
-                         
+                            <!-- tile -->
+                            
+                            <!-- /tile -->
+
+
+                            <!-- tile -->
                             <section class="tile">
 
                                 <!-- tile header -->
                                 <div class="tile-header dvd dvd-btm">
-                                    <h1 class="custom-font"><strong>Edit </strong> Department</h1>
+                                    <h1 class="custom-font"><strong>Edit</strong> Designation</h1>
                                     
                                 </div>
                                 <!-- /tile header -->
@@ -97,30 +104,27 @@
                                 <!-- tile body -->
                                 <div class="tile-body">
 
-  <?=form_open_multipart(base_url().'view_department/'.$v->deptID,array('class'=>'form-horizontal','id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
-                                   
 
+                                
+ <?=form_open_multipart(base_url().'view_designation/'.$v->desigID,array('class'=>'form-horizontal','id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
                                         <div class="form-group">
-                                            <label class="control-label">Department Name</label>
-                                            
-                                                <input type="text" name="department" class="form-control" placeholder="Department Name"
-                                                       data-parsley-trigger="change"
-                                                       required value="<?= $v->department?>">
-                                            
-                                        </div>
-
-                                      
-
-                                        <div class="form-group">
-                                            <label class="control-label">Department Description</label>
+                                            <label class="control-label">Designation Name</label>
                                            
-                                                <input type="text" name="description" class="form-control" placeholder="Department Description"
+                                                <input type="text" name="name" class="form-control" placeholder="Designation Name"
+                                                       data-parsley-trigger="change"
+                                                       required value="<?=$v->name?>">
+                                           
+                                        </div>
+<input type="hidden" value="<?=$v->desigID?>" name="desigID" />
+                                       
+
+                                        <div class="form-group">
+                                            <label class="control-label">Designation Description</label>
+                                            
+                                                <input type="text" name="description" class="form-control" placeholder="Designation Description"
                                                        data-parsley-trigger="change"
                                                        required value="<?=$v->description?>">
-                                                       
-                                                       <input type="hidden" name="deptID" class="form-control" 
-                                                        value="<?=$v->deptID?>">
-                                           
+                                          
                                         </div>
 
                                        <!-- tile footer -->
@@ -130,7 +134,7 @@
                                 </div>
                                 <!-- /tile footer -->
 
-                                  <?php echo form_close(); ?> 
+                                   <?php echo form_close(); ?> 
 
                                 </div>
                                 <!-- /tile body -->
@@ -144,24 +148,27 @@
                         </div>
                         <!-- /col -->
 
-						<?php } else { ?>
+<?php } else { ?>
                         
                         No Records Found
                         <?php }?>
 
                     </div>
                     <!-- /row -->
-					<div class="row">
-                        <!-- col -->
-                        
-                        <!-- /col -->
-                    </div>
-                    <!-- /row -->
+
+
+
+
                 </div>
                 
             </section>
             <!--/ CONTENT -->
+
+
+
+
+
+
         </div>
         <!--/ Application Content -->
-
-  <?php $this->load->view('admin/footer')?>
+<?php $this->load->view('admin/footer')?>
