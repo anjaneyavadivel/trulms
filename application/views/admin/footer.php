@@ -151,6 +151,82 @@
                     ],
                     "dom": 'Rlfrtip'
                 });
+				<?php }else if($segment1=='view_designation'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/view_designation_json/<?php echo $this->uri->segment(2)?>',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+                        { "data": "description" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+                    "dom": 'Rlfrtip'
+                });
+				<?php }else if($segment1=='view_role'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/view_role_json/<?php echo $this->uri->segment(2)?>',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+                        { "data": "description" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+                    "dom": 'Rlfrtip'
+                });
+				<?php }else if($segment1=='view_payment_mode'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/view_payment_mode_json/<?php echo $this->uri->segment(2)?>',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+                        { "data": "description" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+                    "dom": 'Rlfrtip'
+                });
+				
+				<?php }else if($segment1=='view_payment_status'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/view_payment_status_json/<?php echo $this->uri->segment(2)?>',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+                        { "data": "description" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+                    "dom": 'Rlfrtip'
+                });
+				<?php }else if($segment1=='view_employee_types'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/view_employee_types_json/<?php echo $this->uri->segment(2)?>',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+                        { "data": "description" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+                    "dom": 'Rlfrtip'
+                });
 					<?php }else{?>
 						
                 var table = $('#basic-usage').DataTable({

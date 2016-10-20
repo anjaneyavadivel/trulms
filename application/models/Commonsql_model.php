@@ -135,10 +135,12 @@ class Commonsql_model extends CI_Model {
         return false;
     }
 
-	function select_all($table)
+	function select_all($table,$feild='')
 	{
 		$this->db->select('*');
 		$this->db->from($table);
+		if($feild !='')
+		$this->db->order_by($feild,'desc');
 		$query	=	$this->db->get();
 		return $query;
 	}
@@ -147,6 +149,15 @@ class Commonsql_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->from($table);
 		$this->db->where($condtion);
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_desc($table,$condtion,$feild)
+	{
+		$this->db->select('*');
+		$this->db->from($table);
+		$this->db->where($condtion);
+		$this->db->order_by($feild,'desc');
 		$query	=	$this->db->get();
 		return $query;
 	}

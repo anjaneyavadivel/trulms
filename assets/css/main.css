@@ -17597,11 +17597,7 @@ hr.line-full {
 }
 /*karthi*/
 
-.col-md-4.add_forms {
-    float: none;
-    margin: 0px auto;
-    display: block;
-}
+
 .add_forms .form-horizontal .form-group{
 	margin-right: 0px;
     margin-left: 0px;
