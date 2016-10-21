@@ -40,12 +40,12 @@
                                             <li>
                                                 <a href="#"><i class="fa fa-cubes"></i> <span>Master</span> </a>   
                                                 <ul>
-                                                    <li><a href="<?= base_url()?>company"><i class="fa fa-caret-right"></i> Company</a></li>
-                                                    <li><a href="<?= base_url()?>branch"><i class="fa fa-caret-right"></i> Branch</a></li>
+                                                    <li><a href="<?= base_url()?>company"><i class="fa fa-caret-right"></i> Company(later)</a></li>
+                                                    <li><a href="<?= base_url()?>branch"><i class="fa fa-caret-right"></i> Branch(later)</a></li>
                                                     <li><a href="<?= base_url()?>bank"><i class="fa fa-caret-right"></i> Bank Details (later)</a></li>
                                                     <li><a href="<?= base_url()?>employee"><i class="fa fa-caret-right"></i> Employee</a></li>
                                                     <li><a href="<?= base_url()?>consignee"><i class="fa fa-caret-right"></i> Consignee(later)</a></li>
-                                                    <li><a href="<?= base_url()?>contract"><i class="fa fa-caret-right"></i> Contract / Consignor</a></li>
+                                                    <li><a href="<?= base_url()?>contract-consignor"><i class="fa fa-caret-right"></i> Contract / Consignor</a></li>
                                                     <li><a href="<?= base_url()?>vehicleagent"><i class="fa fa-caret-right"></i> Vehicle Agent(later)</a></li>
                                                     <li><a href="<?= base_url()?>vehicleowner"><i class="fa fa-caret-right"></i> Vehicle / Owner(later)</a></li>
                                                     <li><a href="<?= base_url()?>driver"><i class="fa fa-caret-right"></i> Driver</a></li>
