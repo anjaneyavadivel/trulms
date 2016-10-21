@@ -44,7 +44,7 @@
 
 
                         <!-- col -->
-                        <div class="col-md-4 add_forms">
+                        <div class="col-md-4 insert_forms add_forms">
 
                             <!-- tile -->
                             

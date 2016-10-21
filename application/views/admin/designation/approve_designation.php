@@ -15,7 +15,7 @@
 
                     <div class="pageheader">
 
-                        <h2>View Designation</h2>
+                        <h2>Designation Approve</h2>
 
                         <div class="page-bar">
 
@@ -27,7 +27,7 @@
                                     <a href="<?= base_url()?>designation">Designation</a>
                                 </li>
                                 <li>
-                                    <a href="javascript::">View Designation</a>
+                                    <a href="javascript::">Approve Designation</a>
                                 </li>
                             </ul>
                             
@@ -44,9 +44,47 @@
                     </div>
                       <?php if(isset($view) && $view->num_rows()>0){ $v=$view->row();?>
 
+<div class="col-md-8">
 
+                            <!-- tile -->
+                            <section class="tile">
+
+                                <!-- tile header -->
+                                <div class="tile-header dvd dvd-btm">
+                                    <h1 class="custom-font"><strong>Designation Master</strong> </h1>
+                                    
+                                    <ul class="controls">
+                                        
+                                        <li><a href="<?= base_url()?>add_designation" title="Add Department" role="button" tabindex="0" class="tile-close">Add New  <i class="fa fa-plus"></i></a></li>
+                                    </ul>
+                                </div>
+                                <!-- /tile header -->
+
+                                <!-- tile body -->
+                                <div class="tile-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-custom" id="basic-usage">
+                                            <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- /tile body -->
+
+                            </section>
+                            <!-- /tile -->
+
+
+                        </div>
                         <!-- col -->
-                        <div class="col-md-4 insert_forms add_forms">
+                        <div class="col-md-4 add_forms">
 
                             <!-- tile -->
                             
@@ -58,7 +96,7 @@
 
                                 <!-- tile header -->
                                 <div class="tile-header dvd dvd-btm">
-                                    <h1 class="custom-font"><strong>View</strong> Designation</h1>
+                                    <h1 class="custom-font"><strong>Edit</strong> Designation</h1>
                                     
                                 </div>
                                 <!-- /tile header -->
@@ -68,12 +106,13 @@
 
 
                                 
+ <?=form_open_multipart(base_url().'approve_designation/'.$v->desigID,array('class'=>'form-horizontal','id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
                                         <div class="form-group">
                                             <label class="control-label">Designation Name</label>
                                            
                                                 <input type="text" name="name" class="form-control" placeholder="Designation Name"
                                                        data-parsley-trigger="change"
-                                                       required value="<?=$v->name?>" disabled="disabled">
+                                                       required value="<?=$v->name?>">
                                            
                                         </div>
 <input type="hidden" value="<?=$v->desigID?>" name="desigID" />
@@ -84,14 +123,18 @@
                                             
                                                 <input type="text" name="description" class="form-control" placeholder="Designation Description"
                                                        data-parsley-trigger="change"
-                                                       required value="<?=$v->description?>" disabled="disabled">
+                                                       required value="<?=$v->description?>">
                                           
                                         </div>
 
                                        <!-- tile footer -->
-                                
+                                <div class="tile-footer text-right bg-tr-black lter dvd dvd-top">
+                                    <!-- SUBMIT BUTTON -->
+                                    <input type="submit" class="btn btn-default" id="form4Submit" value="Submit" name="save">
+                                </div>
                                 <!-- /tile footer -->
 
+                                   <?php echo form_close(); ?> 
 
                                 </div>
                                 <!-- /tile body -->

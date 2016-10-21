@@ -15,7 +15,7 @@
 
                     <div class="pageheader">
 
-                        <h2>Designation </h2>
+                        <h2>Approve Payment status </h2>
 
                         <div class="page-bar">
 
@@ -23,11 +23,11 @@
                                 <li>
                                     <a href="<?= base_url()?>"><i class="fa fa-home"></i> HOME</a>
                                 </li>
-                                <li>
-                                    <a href="<?= base_url()?>designation">Designation</a>
+                                  <li>
+                                    <a href="<?= base_url()?>payment_status"> Payment status</a>
                                 </li>
                                 <li>
-                                    <a href="javascript::">Edit Designation</a>
+                                    <a href="javascript::">Approve Payment status</a>
                                 </li>
                             </ul>
                             
@@ -38,25 +38,66 @@
 
                     <!-- row -->
                     <div class="row">
-
-
-                      <?php if(isset($view) && $view->num_rows()>0){ $v=$view->row();?>
-
-
-                        <!-- col -->
-                        <div class="col-md-4 insert_forms add_forms">
-
-                            <!-- tile -->
-                            
-                            <!-- /tile -->
-<?php $this->load->view('admin/msg')?>
+                    
+                    <div class="col-md-12">
+					<?php $this->load->view('admin/msg')?>
+                    </div>
+                    
+ <?php if(isset($view) && $view->num_rows()>0){ $v=$view->row();?>
+ 
+ <div class="col-md-8">
 
                             <!-- tile -->
                             <section class="tile">
 
                                 <!-- tile header -->
                                 <div class="tile-header dvd dvd-btm">
-                                    <h1 class="custom-font"><strong>Edit</strong> Designation</h1>
+                                    <h1 class="custom-font"><strong>Payment Status Master</strong></h1>
+                                    
+                                    <ul class="controls">
+                                        
+                                        <li><a href="<?= base_url()?>add_payment_status" title="Add Department" role="button" tabindex="0" class="tile-close">Add New  <i class="fa fa-plus"></i></a></li>
+                                    </ul>
+                                </div>
+                                <!-- /tile header -->
+
+                                <!-- tile body -->
+                                <div class="tile-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-custom" id="basic-usage">
+                                            <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Status</th>
+                                                <th>Description</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- /tile body -->
+
+                            </section>
+                            <!-- /tile -->
+
+
+                        </div>
+                        <!-- col -->
+                        <div class="col-md-4 add_forms">
+
+                         
+                            
+                            <!-- /tile -->
+
+
+                            <!-- tile -->
+                            <section class="tile">
+
+                                <!-- tile header -->
+                                <div class="tile-header dvd dvd-btm">
+                                    <h1 class="custom-font"><strong>Edit</strong> Payment Status</h1>
                                     
                                 </div>
                                 <!-- /tile header -->
@@ -65,26 +106,27 @@
                                 <div class="tile-body">
 
 
-                                
- <?=form_open_multipart(base_url().'edit_designation/'.$v->desigID,array('class'=>'form-horizontal','id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
-                                        <div class="form-group">
-                                            <label class="control-label">Designation Name</label>
-                                           
-                                                <input type="text" name="name" class="form-control" placeholder="Designation Name"
-                                                       data-parsley-trigger="change"
-                                                       required value="<?=$v->name?>">
-                                           
-                                        </div>
-<input type="hidden" value="<?=$v->desigID?>" name="desigID" />
-                                       
+                                   
+                                     <?=form_open_multipart(base_url().'approve_payment_status/'.$v->payStatusID,array('class'=>'form-horizontal','id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
 
                                         <div class="form-group">
-                                            <label class="control-label">Designation Description</label>
-                                            
-                                                <input type="text" name="description" class="form-control" placeholder="Designation Description"
+                                            <label class="control-label">Payment Status Name</label>
+                                           
+                                                <input type="text" name="payStatus" class="form-control" placeholder="Payment Status Name"
+                                                       data-parsley-trigger="change"
+                                                       required value="<?=$v->payStatus?>">
+                                           
+                                        </div>
+<input type="hidden" value="<?=$v->payStatusID?>" name="payStatusID" />
+                                      
+
+                                        <div class="form-group">
+                                            <label class="control-label">Payment Status Description</label>
+                                           
+                                                <input type="text" name="description" class="form-control" placeholder="Payment Status Description"
                                                        data-parsley-trigger="change"
                                                        required value="<?=$v->description?>">
-                                          
+                                            
                                         </div>
 
                                        <!-- tile footer -->
@@ -108,7 +150,7 @@
                         </div>
                         <!-- /col -->
 
-<?php } else { ?>
+	<?php } else { ?>
                         
                         No Records Found
                         <?php }?>
