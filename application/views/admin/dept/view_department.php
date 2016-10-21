@@ -15,7 +15,7 @@
 
                     <div class="pageheader">
 
-                        <h2>Department Approve </h2>
+                        <h2>View Department </h2>
 
                         <div class="page-bar">
 
@@ -27,7 +27,7 @@
                                     <a href="<?= base_url()?>department">Department</a>
                                 </li>
                                 <li>
-                                    <a href="javascript::">Approve Department</a>
+                                    <a href="javascript::">View Department</a>
                                 </li>
                             </ul>
                             
@@ -38,58 +38,17 @@
 
                     <!-- row -->
                     <div class="row">
-					<div class="col-md-12">
-					<?php $this->load->view('admin/msg')?>
-                    </div>
+					
                       <?php if(isset($view) && $view->num_rows()>0){ $v=$view->row();?>
-                      <div class="col-md-8">
-
-
-                            <!-- tile -->
-                            <section class="tile">
-
-                                <!-- tile header -->
-                                <div class="tile-header dvd dvd-btm">
-                                    <h1 class="custom-font"><strong>Department</strong> Manage Edit/Approve</h1>
-                                    
-                                    <ul class="controls">
-                                        
-                                        <li><a href="<?= base_url()?>add_department" title="Add Department" role="button" tabindex="0" class="tile-close">Add New  <i class="fa fa-plus"></i></a></li>
-                                    </ul>
-                                </div>
-                                <!-- /tile header -->
-
-                                <!-- tile body -->
-                                <div class="tile-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-custom" id="basic-usage">
-                                            <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
-                                                <th>Action</th>
-                                            </tr>
-                                            </thead>
-
-                                        </table>
-                                    </div>
-                                </div>
-                                <!-- /tile body -->
-
-                            </section>
-                            <!-- /tile -->
-
-
-                        </div>
-                        <div class="col-md-4 add_forms">
+                      
+                        <div class="col-md-4 insert_forms add_forms">
 
                          
                             <section class="tile">
 
                                 <!-- tile header -->
                                 <div class="tile-header dvd dvd-btm">
-                                    <h1 class="custom-font"><strong>Edit </strong> Department</h1>
+                                    <h1 class="custom-font"><strong>View </strong> Department</h1>
                                     
                                 </div>
                                 <!-- /tile header -->
@@ -97,15 +56,14 @@
                                 <!-- tile body -->
                                 <div class="tile-body">
 
-  <?=form_open_multipart(base_url().'view_department/'.$v->deptID,array('class'=>'form-horizontal','id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
-                                   
+  
 
                                         <div class="form-group">
                                             <label class="control-label">Department Name</label>
                                             
                                                 <input type="text" name="department" class="form-control" placeholder="Department Name"
                                                        data-parsley-trigger="change"
-                                                       required value="<?= $v->department?>">
+                                                       required value="<?= $v->department?>" disabled="disabled">
                                             
                                         </div>
 
@@ -116,21 +74,18 @@
                                            
                                                 <input type="text" name="description" class="form-control" placeholder="Department Description"
                                                        data-parsley-trigger="change"
-                                                       required value="<?=$v->description?>">
+                                                       required value="<?=$v->description?>"  disabled="disabled">
                                                        
                                                        <input type="hidden" name="deptID" class="form-control" 
-                                                        value="<?=$v->deptID?>">
+                                                        value="<?=$v->deptID?>" >
                                            
                                         </div>
 
                                        <!-- tile footer -->
-                                <div class="tile-footer text-right bg-tr-black lter dvd dvd-top">
-                                    <!-- SUBMIT BUTTON -->
-                                    <input type="submit" class="btn btn-default" id="form4Submit" value="Submit" name="save">
-                                </div>
+                                
                                 <!-- /tile footer -->
 
-                                  <?php echo form_close(); ?> 
+                                  
 
                                 </div>
                                 <!-- /tile body -->

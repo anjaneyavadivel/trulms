@@ -15,7 +15,7 @@
 
                     <div class="pageheader">
 
-                        <h2>Approve Payment status </h2>
+                        <h2>View Payment status </h2>
 
                         <div class="page-bar">
 
@@ -27,7 +27,7 @@
                                     <a href="<?= base_url()?>payment_status"> Payment status</a>
                                 </li>
                                 <li>
-                                    <a href="javascript::">Approve Payment status</a>
+                                    <a href="javascript::">View Payment status</a>
                                 </li>
                             </ul>
                             
@@ -45,47 +45,9 @@
                     
  <?php if(isset($view) && $view->num_rows()>0){ $v=$view->row();?>
  
- <div class="col-md-8">
-
-                            <!-- tile -->
-                            <section class="tile">
-
-                                <!-- tile header -->
-                                <div class="tile-header dvd dvd-btm">
-                                    <h1 class="custom-font"><strong>Payment Status</strong> Manage Approve/Edit</h1>
-                                    
-                                    <ul class="controls">
-                                        
-                                        <li><a href="<?= base_url()?>add_payment_status" title="Add Department" role="button" tabindex="0" class="tile-close">Add New  <i class="fa fa-plus"></i></a></li>
-                                    </ul>
-                                </div>
-                                <!-- /tile header -->
-
-                                <!-- tile body -->
-                                <div class="tile-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-custom" id="basic-usage">
-                                            <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Status</th>
-                                                <th>Description</th>
-                                                <th>Action</th>
-                                            </tr>
-                                            </thead>
-
-                                        </table>
-                                    </div>
-                                </div>
-                                <!-- /tile body -->
-
-                            </section>
-                            <!-- /tile -->
-
-
-                        </div>
+ 
                         <!-- col -->
-                        <div class="col-md-4 add_forms">
+                        <div class="col-md-4 insert_forms add_forms">
 
                          
                             
@@ -97,7 +59,7 @@
 
                                 <!-- tile header -->
                                 <div class="tile-header dvd dvd-btm">
-                                    <h1 class="custom-font"><strong>Edit</strong> Payment Status</h1>
+                                    <h1 class="custom-font"><strong>View</strong> Payment Status</h1>
                                     
                                 </div>
                                 <!-- /tile header -->
@@ -107,14 +69,13 @@
 
 
                                    
-                                     <?=form_open_multipart(base_url().'view_payment_status/'.$v->payStatusID,array('class'=>'form-horizontal','id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
 
                                         <div class="form-group">
                                             <label class="control-label">Payment Status Name</label>
                                            
                                                 <input type="text" name="payStatus" class="form-control" placeholder="Payment Status Name"
                                                        data-parsley-trigger="change"
-                                                       required value="<?=$v->payStatus?>">
+                                                       required value="<?=$v->payStatus?>" disabled="disabled">
                                            
                                         </div>
 <input type="hidden" value="<?=$v->payStatusID?>" name="payStatusID" />
@@ -125,18 +86,14 @@
                                            
                                                 <input type="text" name="description" class="form-control" placeholder="Payment Status Description"
                                                        data-parsley-trigger="change"
-                                                       required value="<?=$v->description?>">
+                                                       required value="<?=$v->description?>" disabled="disabled">
                                             
                                         </div>
 
                                        <!-- tile footer -->
-                                <div class="tile-footer text-right bg-tr-black lter dvd dvd-top">
-                                    <!-- SUBMIT BUTTON -->
-                                    <input type="submit" class="btn btn-default" id="form4Submit" value="Submit" name="save">
-                                </div>
+                              
                                 <!-- /tile footer -->
 
-                                   <?php echo form_close(); ?> 
 
                                 </div>
                                 <!-- /tile body -->

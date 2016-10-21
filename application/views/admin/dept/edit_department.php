@@ -41,7 +41,7 @@
 
                       <?php if(isset($view) && $view->num_rows()>0){ $v=$view->row();?>
                       
-                        <div class="col-md-4 add_forms">
+                        <div class="col-md-4 insert_forms add_forms">
 
                            <?php $this->load->view('admin/msg')?>
                             <section class="tile">

@@ -45,7 +45,7 @@
 
                                 <!-- tile header -->
                                 <div class="tile-header dvd dvd-btm">
-                                    <h1 class="custom-font"><strong>Designation</strong> Manage Add/Edit</h1>
+                                    <h1 class="custom-font"><strong>Designation</strong> Master</h1>
                                     
                                     <ul class="controls">
                                         

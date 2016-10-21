@@ -15,7 +15,7 @@
 
                     <div class="pageheader">
 
-                        <h2>View Employee Types </h2>
+                        <h2>Approve Employee Types </h2>
 
                         <div class="page-bar">
 
@@ -29,7 +29,7 @@
                                 </li>
                                 
                                 <li>
-                                    <a href="javascript::">View Employee Types</a>
+                                    <a href="javascript::">Approve Employee Types</a>
                                 </li>
                             </ul>
                             
@@ -45,9 +45,47 @@
 					<?php $this->load->view('admin/msg')?>
                     </div>
  <?php if(isset($view) && $view->num_rows()>0){ $v=$view->row();?>
- 
+ <div class="col-md-8">
+
+                            <!-- tile -->
+                            <section class="tile">
+
+                                <!-- tile header -->
+                                <div class="tile-header dvd dvd-btm">
+                                    <h1 class="custom-font"><strong>Employee Types Master</strong></h1>
+                                    
+                                    <ul class="controls">
+                                        
+                                        <li><a href="<?= base_url()?>add_employee_types" title="Add Employee Types" role="button" tabindex="0" class="tile-close">Add New  <i class="fa fa-plus"></i></a></li>
+                                    </ul>
+                                </div>
+                                <!-- /tile header -->
+
+                                <!-- tile body -->
+                                <div class="tile-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-custom" id="basic-usage">
+                                            <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Type</th>
+                                                <th>Description</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- /tile body -->
+
+                            </section>
+                            <!-- /tile -->
+
+
+                        </div>
                         <!-- col -->
-                        <div class="col-md-4 insert_forms add_forms">
+                        <div class="col-md-4 add_forms">
                             <!-- tile -->
                             
                             <!-- /tile -->
@@ -68,12 +106,13 @@
 
 
                                     
+ <?=form_open_multipart(base_url().'approve_employee_types/'.$v->employetypeID,array('class'=>'form-horizontal','id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
                                         <div class="form-group">
                                             <label class="control-label">Employee Types Name</label>
                                            
                                                 <input type="text" name="typename" class="form-control" placeholder="Employee Types Name"
                                                        data-parsley-trigger="change"
-                                                       required value="<?=$v->typename?>" disabled="disabled">
+                                                       required value="<?=$v->typename?>">
                                             
                                         </div>
 <input type="hidden" value="<?=$v->employetypeID?>" name="employetypeID" />
@@ -84,14 +123,18 @@
                                             
                                                 <input type="text" name="description" class="form-control" placeholder="Employee Types Description"
                                                        data-parsley-trigger="change"
-                                                       required value="<?=$v->description?>" disabled="disabled">
+                                                       required value="<?=$v->description?>">
                                             
                                         </div>
 
                                        <!-- tile footer -->
-                                
+                                <div class="tile-footer text-right bg-tr-black lter dvd dvd-top">
+                                    <!-- SUBMIT BUTTON -->
+                                    <input type="submit" class="btn btn-default" id="form4Submit" value="Submit" name="save">
+                                </div>
                                 <!-- /tile footer -->
 
+                                 <?php echo form_close(); ?> 
 
                                 </div>
                                 <!-- /tile body -->

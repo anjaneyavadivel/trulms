@@ -47,7 +47,7 @@
 
                                 <!-- tile header -->
                                 <div class="tile-header dvd dvd-btm">
-                                    <h1 class="custom-font"><strong>Employee Types</strong> Manage Add/Edit</h1>
+                                    <h1 class="custom-font"><strong>Employee Types</strong> Master</h1>
                                     
                                     <ul class="controls">
                                         
