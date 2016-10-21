@@ -3,7 +3,9 @@ class Manage extends CI_Controller {
    
     function __construct() {
         parent::__construct();
-        //$this->load->model('Commonsql_model');
+        if (!$this->session->userdata('SESS_userId')) {
+            redirect(base_url() . "login");
+        }
     }
     
     function index()

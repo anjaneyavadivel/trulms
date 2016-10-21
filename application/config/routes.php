@@ -112,3 +112,9 @@ $route['view_employee_types/([a-zA-Z0-9---_%])+'] 	=		'manage/view_employee_type
 $route['approve_employee_types/([a-zA-Z0-9---_%])+'] 	=		'manage/approve_employee_types/$1';
 $route['approve_employee_types/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_employee_types/$1/$1';
 
+$route['contract-consignor'] 							=		'manage/contract_consignor';
+$route['add-contract-consignor'] 						=		'manage/add_contract_consignor';
+$route['edit-contract-consignor/([a-zA-Z0-9---_%])+'] 	=		'manage/edit_contract_consignor/$1';
+$route['view-contract-consignor/([a-zA-Z0-9---_%])+'] 	=		'manage/view_contract_consignor/$1';
+$route['approve-contract-consignor/([a-zA-Z0-9---_%])+'] 	=		'manage/approve_contract_consignor/$1';
+$route['approve-contract-consignor/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_contract_consignor/$1/$1';
