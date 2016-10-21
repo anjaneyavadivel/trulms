@@ -227,7 +227,22 @@
                     ],
                     "dom": 'Rlfrtip'
                 });
-					<?php }else{?>
+					<?php }else if($segment1=='form-master'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>form-master-json',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+                        { "data": "description" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+                    "dom": 'Rlfrtip'
+                });
+				<?php }else{?>
 						
                 var table = $('#basic-usage').DataTable({
                     "ajax": 'assets/extras/datatables-basic.json',

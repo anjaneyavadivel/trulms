@@ -64,7 +64,12 @@ $route['forgot-password'] 				=		'welcome/forgot_password';
 
 /* * *****************************************Page Controller**************************** */
 
-$route['page_master'] = 'welcome/page_master';
+$route['form-master'] = 'setup/form_master';
+$route['form-master-json'] = 'setup/form_master_json';
+$route['add-form-master'] = 'setup/add_form_master';
+$route['employee-role'] = 'setup/employee_role';
+$route['add-employee-role'] = 'setup/add_employee_role';
+$route['form-access'] = 'setup/form_access';
 
 /*******************************************manage Controller*****************************/
 

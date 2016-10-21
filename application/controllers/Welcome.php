@@ -120,34 +120,4 @@ class Welcome extends CI_Controller {
     }
     
     
-    ////////// page setup
-    function page_master()
-	{
-            if (!$this->session->userdata('SESS_userId')) {
-                redirect(base_url() . "login");
-            }
-		if($_POST)
-		{
-			$whereData	=	array('deptID'	=>	$this->uri->segment(3));
-			$updateData	=	array('active'	=>	$this->uri->segment(4));
-			$upt	=	$this->Commonsql_model->updateTable('tbldept', $whereData , $updateData);
-			//echo $this->db->last_query();exit;
-			if($upt)
-			{
-				$this->session->set_userdata('suc','Department Status Successfully  Changed...!');
-				redirect('department');
-				
-			}
-			else
-			{
-				$this->session->set_userdata('err','Error Please try again..!');
-				redirect('department');
-			}
-		}
-			
-                $data['pageTitle']	=	"Page Master";
-                $data['table']		=	"Page Master";
-                $this->load->view('admin/page_setup/page_setup',$data);
-	}
-
 }
