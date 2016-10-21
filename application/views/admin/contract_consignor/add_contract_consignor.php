@@ -47,14 +47,42 @@
                 </ul>
               </div>
               <div class="form-group col-md-3">
-                <label for="contactemail">Contact 1 </label>
-                <input type="email" name="phone1" id="contactemail" required class="form-control" data-parsley-id="1328">
+                <label for="name">Company Name: </label>
+                <input type="text" name="companyName" id="name" class="form-control" required="" data-parsley-id="8057">
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="contactemail">Contact Person </label>
+                <input type="email" name="contactPer1" id="contactemail" required class="form-control" data-parsley-id="1328">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
               <div class="form-group col-md-3">
-                <label for="name">Contact 2 </label>
-                <input type="text" name="phone2" id="name" class="form-control" required="" data-parsley-id="8057">
+                <label for="name">Contact Number </label>
+                <input type="text" name="phone1" id="name" class="form-control" required="" data-parsley-id="8057">
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+             
+            </div>
+            <div class="row">
+              
+              <div class="form-group col-md-3">
+                <label for="name">Company Name: </label>
+                <input type="text" name="companyName" id="name" class="form-control" required="" data-parsley-id="8057">
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="contactemail">city </label>
+                <input type="email" name="city" id="contactemail" required class="form-control" data-parsley-id="1328">
+                <ul class="parsley-errors-list" id="parsley-id-1328">
+                </ul>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="name">state </label>
+                <input type="text" name="state" id="name" class="form-control" required="" data-parsley-id="8057">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
@@ -68,7 +96,7 @@
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="message">Address </label>
-                <textarea class="form-control" rows="1" name="addressline1" id="message" placeholder="Type your message" required="" data-parsley-id="2766"></textarea>
+                <textarea class="form-control" rows="5" name="addressline1" id="message" placeholder="Type your message" required="" data-parsley-id="2766"></textarea>
                 <ul class="parsley-errors-list" id="parsley-id-2766">
                 </ul>
               </div>
@@ -81,6 +109,19 @@
               <div class="form-group col-md-3">
                 <label for="name">Pin no </label>
                 <input type="text" name="name" id="name" class="form-control" required="" data-parsley-id="8057">
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="name">Fax </label>
+                <input type="text" name="name" id="name" class="form-control"  data-parsley-id="8057">
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+              
+              <div class="form-group col-md-3">
+                <label for="name">Website </label>
+                <input type="text" name="website" id="name" class="form-control"  data-parsley-id="8057">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
@@ -157,7 +198,7 @@
               <div class="form-group col-md-6">
                 <label class="col-sm-10 control-label">Handling Charges</label>
                 <div class="col-sm-1">
-                  <div class="onoffswitch greensea inline-block">
+                  <div class="onoffswitch labeled  greensea inline-block">
                     <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch01" checked="">
                     <label class="onoffswitch-label" for="switch01"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
                   </div>
@@ -166,7 +207,7 @@
               <div class="form-group col-md-6">
                 <label class="col-sm-10 control-label">State / Permit Charges</label>
                 <div class="col-sm-1">
-                  <div class="onoffswitch greensea inline-block">
+                  <div class="onoffswitch labeled  greensea inline-block">
                     <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch02" checked="">
                     <label class="onoffswitch-label" for="switch02"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
                   </div>
@@ -177,7 +218,7 @@
               <div class="form-group col-md-6">
                 <label class="col-sm-10 control-label">Door Pick/Up Delivery Charge</label>
                 <div class="col-sm-2">
-                  <div class="onoffswitch greensea inline-block">
+                  <div class="onoffswitch labeled  greensea inline-block">
                     <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch03" checked="">
                     <label class="onoffswitch-label" for="switch03"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
                   </div>
@@ -186,7 +227,7 @@
               <div class="form-group col-md-6">
                 <label class="col-sm-10 control-label">To Pay Charge</label>
                 <div class="col-sm-2">
-                  <div class="onoffswitch greensea inline-block">
+                  <div class="onoffswitch labeled greensea inline-block">
                     <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch04" checked="checked">
                     <label class="onoffswitch-label" for="switch04"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
                   </div>
@@ -197,7 +238,7 @@
               <div class="form-group col-md-6">
                 <label class="col-sm-10 control-label">CheckPost Exepense</label>
                 <div class="col-sm-2">
-                  <div class="onoffswitch greensea inline-block">
+                  <div class="onoffswitch labeled greensea inline-block">
                     <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch05" checked="">
                     <label class="onoffswitch-label" for="switch05"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
                   </div>
@@ -206,7 +247,7 @@
               <div class="form-group col-md-6">
                 <label class="col-sm-10 control-label">Service Tax</label>
                 <div class="col-sm-2">
-                  <div class="onoffswitch greensea inline-block">
+                  <div class="onoffswitch labeled  greensea inline-block">
                     <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch06" checked="">
                     <label class="onoffswitch-label" for="switch06"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
                   </div>
