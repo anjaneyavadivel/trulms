@@ -118,3 +118,7 @@ $route['edit-contract-consignor/([a-zA-Z0-9---_%])+'] 	=		'manage/edit_contract_
 $route['view-contract-consignor/([a-zA-Z0-9---_%])+'] 	=		'manage/view_contract_consignor/$1';
 $route['approve-contract-consignor/([a-zA-Z0-9---_%])+'] 	=		'manage/approve_contract_consignor/$1';
 $route['approve-contract-consignor/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_contract_consignor/$1/$1';
+
+
+
+/*****/

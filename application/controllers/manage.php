@@ -3,7 +3,8 @@ class Manage extends CI_Controller {
    
     function __construct() {
         parent::__construct();
-        if (!$this->session->userdata('SESS_userId')) {
+        if (!$this->session->userdata('SESS_userId')) 
+		{
             redirect(base_url() . "login");
         }
     }

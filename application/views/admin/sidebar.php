@@ -40,8 +40,8 @@
                                             <li>
                                                 <a href="#"><i class="fa fa-cubes"></i> <span>Master</span> </a>   
                                                 <ul>
-                                                    <li><a href="<?= base_url()?>company"><i class="fa fa-caret-right"></i> Company (later)</a></li>
-                                                    <li><a href="<?= base_url()?>branch"><i class="fa fa-caret-right"></i> Branch (later)</a></li>
+                                                    <li><a href="<?= base_url()?>company"><i class="fa fa-caret-right"></i> Company(later)</a></li>
+                                                    <li><a href="<?= base_url()?>branch"><i class="fa fa-caret-right"></i> Branch(later)</a></li>
                                                     <li><a href="<?= base_url()?>bank"><i class="fa fa-caret-right"></i> Bank Details (later)</a></li>
                                                     <li><a href="<?= base_url()?>employee"><i class="fa fa-caret-right"></i> Employee</a></li>
                                                     <li><a href="<?= base_url()?>consignee"><i class="fa fa-caret-right"></i> Consignee(later)</a></li>
