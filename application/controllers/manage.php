@@ -1665,26 +1665,64 @@ class Manage extends CI_Controller {
 	{
 		if($this->input->post('save'))
 		{
-			$values=array('typename'				=>	$this->input->post('typename'),
-							'description'		=>	$this->input->post('description'),
+			$values=array('name'				=>	$this->input->post('name'),
+							'companyName'		=>	$this->input->post('companyName'),
+							'addressline1'		=>	$this->input->post('addressline1'),
+							'city'				=>	$this->input->post('city'),
+							'state'				=>	$this->input->post('state'),
+							'email1'			=>	$this->input->post('email1'),
+							'email2'			=>	$this->input->post('email2'),
+							'phone1'			=>	$this->input->post('phone1'),
+							'phone2'			=>	$this->input->post('phone2'),
+							'fax'				=>	$this->input->post('fax'),
+							'website'			=>	$this->input->post('website'),
 							'dbentrystateID'	=>	0,
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$query	=	insertTable('tblemployetypes', $values,0);
-			if($query)
+			$contactID	=	insertTable('tblcontactdetails', $values,0);
+			
+			$values=array('contactID'				=>	$contactID,
+							'contactPer1'		=>	$this->input->post('contactPer1'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$consignorID	=	insertTable('tblconsignor', $values,0);
+			
+			$values=array('contractCode'		=>	$this->input->post('contractCode'),
+							'consignorID'		=>	$consignorID,
+							'contractTypeID'	=>	1,
+							'from'				=>	$this->input->post('from'),
+							'to'				=>	$this->input->post('to'),
+							'vehicleLength'		=>	$this->input->post('vehicleLength'),
+							'vehicleType'		=>	$this->input->post('vehicleType'),
+							'vehicleCapacity'	=>	$this->input->post('vehicleCapacity'),
+							'roadType'			=>	$this->input->post('roadType'),
+							'minKM'				=>	$this->input->post('minKM'),
+							'seasonType'		=>	$this->input->post('seasonType'),
+							'miscType'			=>	$this->input->post('miscType'),
+							'dated'				=>	date('Y-m-d',strtotime($this->input->post('dated'))),
+							'signedby'			=>	$this->input->post('signedby'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$contractID	=	insertTable('tblcontract', $values,0);
+			
+			if($contractID)
 			{
 				$this->session->set_userdata('suc','Employee Types Successfully  Added...!');
-				redirect('manage/add_contract_consignor');
+				redirect('add-contract-consignor');
 				
 			}
 			else
 			{
 				$this->session->set_userdata('err','Error Please try again..!');
-				redirect('manage/add_contract_consignor');
+				redirect('add-contract-consignor');
 			}
 		}
-		$data['pageTitle']	=	"Add Emplyee Types";
+		$data['pageTitle']	=	"Add Contract Consignor";
 		$this->load->view('admin/contract_consignor/add_contract_consignor',$data);
 	}
 	function edit_contract_consignor()

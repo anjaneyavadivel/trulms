@@ -291,7 +291,11 @@
           <script src="<?= base_url()?>assets/js/vendor/screenfull/screenfull.min.js"></script>
 
         <script src="<?= base_url()?>assets/js/vendor/parsley/parsley.min.js"></script>
-        
+         <script src="<?= base_url()?>assets/js/vendor/daterangepicker/moment.min.js"></script>
+
+        <script src="<?= base_url()?>assets/js/vendor/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+
+
         <!--/ vendor javascripts -->
         <!-- ============================================
         ============== Custom JavaScripts ===============

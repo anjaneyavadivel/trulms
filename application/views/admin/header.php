@@ -34,6 +34,7 @@
         <link rel="stylesheet" href="<?= base_url()?>assets/js/vendor/datatables/extensions/TableTools/css/dataTables.tableTools.min.css">
         <?php 
 		}?>
+ <link rel="stylesheet" href="<?= base_url()?>assets/js/vendor/datetimepicker/css/bootstrap-datetimepicker.min.css">
 
         <!-- project main css files -->
         <link rel="stylesheet" href="<?= base_url(); ?>assets/css/main.css">
