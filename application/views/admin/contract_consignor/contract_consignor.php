@@ -63,8 +63,19 @@
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Type</th>
-                                                <th>Description</th>
+                                                <th>Consioner Name</th>
+                                                <th>From</th>
+                                                
+                                                <th>To</th>
+                                                <th>Length</th>
+                                                <th>Weight</th>
+                                                
+                                                <th>Dated</th>
+                                                <th>Signed by</th>
+                                                <th>Grand Total</th>
+                                               
+                                                
+                                                <th>Action</th>
                                                
                                             </tr>
                                             </thead>

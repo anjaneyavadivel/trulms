@@ -242,6 +242,28 @@
                     ],
                     "dom": 'Rlfrtip'
                 });
+				
+				<?php }else if($segment1=='contract-consignor'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/contract_consignor_json',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+						{ "data": "from" },
+						{ "data": "to" },
+						{ "data": "length" },
+						{ "data": "weight" },
+						{ "data": "date" },
+						{ "data": "sign" },
+                        { "data": "total" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+                    "dom": 'Rlfrtip'
+                });
 				<?php }else{?>
 						
                 var table = $('#basic-usage').DataTable({
