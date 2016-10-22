@@ -40,7 +40,28 @@ class Setup extends CI_Controller {
         $data['table'] = "Form";
         $this->load->view('admin/form_master/form_master', $data);
     }
-    
+
+    function add_form_master() {
+        if ($this->input->post('save')) {
+            $values = array('department' => $this->input->post('department'),
+                'description' => $this->input->post('description'),
+                'dbentrystateID' => 0,
+                'createby' => $this->session->userdata('SESS_userId'),
+                'active' => 1);
+
+            $query = insertTable('tbldept', $values, 1, 'deptID');
+            if ($query) {
+                $this->session->set_userdata('suc', 'Department Successfully  Added...!');
+                redirect('manage/add_department');
+            } else {
+                $this->session->set_userdata('err', 'Error Please try again..!');
+                redirect('manage/add_department');
+            }
+        }
+        $data['pageTitle'] = "Form";
+        $this->load->view('admin/form_master/add_form_master', $data);
+    }
+
     ////////// employee role
     function employee_role() {
         if (!$this->session->userdata('SESS_userId')) {
