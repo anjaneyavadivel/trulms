@@ -33,56 +33,118 @@
           
           <!-- tile header --> 
           <!-- /tile header --> 
-          
+          <div class="tile-header dvd bg-greensea dvd-btm">
+                                    <h1 class="custom-font"><strong>Consignor</strong> </h1>
+                                    
+                                </div>
           <!-- tile body -->
           <div class="tile-body">
-            <p class="text-muted">Consignor</p>
             <div class="row">
               <div class="form-group col-md-3">
-                <label for="name">Name: </label>
+                <label for="name">Name <span class="required">*</span></label>
                 <input type="text" name="name" id="name" class="form-control" required="" data-parsley-id="8057">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
               <div class="form-group col-md-3">
-                <label for="contactemail">Contact 1 </label>
-                <input type="email" name="contactemail" id="contactemail" required class="form-control" data-parsley-id="1328">
-                <ul class="parsley-errors-list" id="parsley-id-1328">
-                </ul>
-              </div>
-              <div class="form-group col-md-3">
-                <label for="name">Contact 2 </label>
-                <input type="text" name="name" id="name" class="form-control" required="" data-parsley-id="8057">
+                <label for="name">Company Name <span class="required">*</span> </label>
+                <input type="text" name="companyName" id="name" class="form-control" required="" data-parsley-id="8057">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
               <div class="form-group col-md-3">
-                <label for="contactemail">Email ID 1 </label>
-                <input type="email" name="contactemail" id="contactemail" required class="form-control" data-parsley-id="1328">
+                <label for="contactemail">Alter Contact Person </label>
+                <input type="email" name="contactPer1" id="contactemail" class="form-control" data-parsley-id="1328">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
+              <div class="form-group col-md-3">
+                <label for="name">Contact  No-1	<span class="required">*</span> </label>
+                <input type="text" name="phone1" id="name" class="form-control" required="" data-parsley-id="8057">
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+             
+            </div>
+            
+            <div class="row">
+            
+            <div class="form-group col-md-3">
+                <label for="name">Contact  No-2 </label>
+                <input type="text" name="phone1" id="name" class="form-control"  data-parsley-id="8057">
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+             <div class="form-group col-md-3">
+                <label for="contactemail">Email ID-1 <span class="required">*</span></label>
+                <input type="email" name="email1" id="contactemail" required class="form-control" data-parsley-id="1328">
+                <ul class="parsley-errors-list" id="parsley-id-1328">
+                </ul>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="contactemail">Email ID-2 </label>
+                <input type="email" name="email2" id="contactemail"  class="form-control" data-parsley-id="1328">
+                <ul class="parsley-errors-list" id="parsley-id-1328">
+                </ul>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="name">CST/LST/TIN No</label>
+                <input type="text" name="name" id="name" class="form-control"  data-parsley-id="8057">
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+             
             </div>
             <div class="row">
-              <div class="form-group col-md-6">
-                <label for="message">Address </label>
-                <textarea class="form-control" rows="1" name="message" id="message" placeholder="Type your message" required="" data-parsley-id="2766"></textarea>
-                <ul class="parsley-errors-list" id="parsley-id-2766">
-                </ul>
-              </div>
               <div class="form-group col-md-3">
-                <label for="contactemail">Email Id 2 </label>
-                <input type="email" name="contactemail" id="contactemail"required  class="form-control" data-parsley-id="1328">
+                <label for="contactemail">Address 1 <span class="required">*</span> </label>
+                <input type="email" name="city" id="contactemail" required class="form-control" data-parsley-id="1328">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
               <div class="form-group col-md-3">
-                <label for="name">Pin no </label>
-                <input type="text" name="name" id="name" class="form-control" required="" data-parsley-id="8057">
+                <label for="contactemail">Address 2 </label>
+                <input type="email" name="city" id="contactemail" class="form-control" data-parsley-id="1328">
+                <ul class="parsley-errors-list" id="parsley-id-1328">
+                </ul>
+              </div>
+             
+              <div class="form-group col-md-3">
+                <label for="contactemail">city </label>
+                <input type="email" name="city" id="contactemail"  class="form-control" data-parsley-id="1328">
+                <ul class="parsley-errors-list" id="parsley-id-1328">
+                </ul>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="name">state </label>
+                <input type="text" name="state" id="name" class="form-control"  data-parsley-id="8057">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
+                <div class="form-group col-md-3">
+                <label for="name">Country </label>
+                <input type="text" name="companyName" id="name" class="form-control"  data-parsley-id="8057">
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+              
+              
+               <div class="form-group col-md-3">
+                <label for="name">Fax </label>
+                <input type="text" name="name" id="name" class="form-control"  data-parsley-id="8057">
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+              
+              <div class="form-group col-md-3">
+                <label for="name">Website </label>
+                <input type="text" name="website" id="name" class="form-control"  data-parsley-id="8057">
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+              
             </div>
+            
           </div>
           <!-- /tile body --> 
           
@@ -93,56 +155,74 @@
           
           <!-- tile header --> 
           <!-- /tile header --> 
-          
+          <div class="tile-header dvd dvd-btm bg-greensea">
+                                    <h1 class="custom-font"><strong>Contact Details</strong> </h1>
+                                    
+                                </div>
           <!-- tile body -->
           <div class="tile-body">
-            <p class="text-muted">Contact Details</p>
+           
+             
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="name">From </label>
-                <input type="text" name="name" id="name" class="form-control" required="" data-parsley-id="8057">
+                <input type="text" name="from" id="name" class="form-control" required="" data-parsley-id="8057">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
               <div class="form-group col-md-6">
                 <label for="contactemail">To </label>
-                <input type="email" name="contactemail" id="contactemail" required class="form-control" data-parsley-id="1328">
+                <input type="email" name="to" id="contactemail" required class="form-control" data-parsley-id="1328">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
             </div>
             <div class="row">
               <div class="form-group col-md-6">
-                <label for="name">Truck Lemgth (Feet) </label>
-                <input type="text" name="name" id="name" class="form-control" required="" data-parsley-id="8057">
+                <label for="name">TruckLength [Feet] </label>
+                <input type="text" name="vehicleLength" id="name" class="form-control" required="" data-parsley-id="8057">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
               <div class="form-group col-md-6">
-                <label for="contactemail">Weight (Kgd) </label>
-                <input type="email" name="contactemail" id="contactemail" required class="form-control" data-parsley-id="1328">
+                <label for="contactemail">Weight[Kgs]</label>
+                <input type="email" name="vehicleCapacity" id="contactemail" required class="form-control" data-parsley-id="1328">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
             </div>
             <div class="row">
               <div class="form-group col-md-6">
-                <label for="contactemail">Contract Date </label>
-                <input type="email" name="contactemail" id="contactemail" required class="form-control" data-parsley-id="1328">
+                <label for="contactemail">Vehicle Type</label>
+                <input type="email" name="dated" id="contactemail" required class="form-control" data-parsley-id="1328">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
               <div class="form-group col-md-6">
-                <label for="name">Contract Sign by </label>
-                <input type="text" name="name" id="name" class="form-control" required="" data-parsley-id="8057">
+                <label for="name">RoadType</label>
+                <input type="text" name="signedby" id="name" class="form-control" required="" data-parsley-id="8057">
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label for="contactemail">Contract Date</label>
+                <input type="email" name="dated" id="contactemail" required class="form-control datepicker " data-format="L" data-parsley-id="1328">
+                <ul class="parsley-errors-list" id="parsley-id-1328">
+                </ul>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="name">Contract Signed By</label>
+                <input type="text" name="signedby" id="name" class="form-control" required="" data-parsley-id="8057">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
             </div>
             <div class="row">
               <div class="form-group col-md-12">
-                <label for="message">Speacail Intructions </label>
-                <textarea class="form-control" rows="1" name="message" id="message" placeholder="Type your message" required="" data-parsley-id="2766"></textarea>
+                <label for="message">Special Instructions </label>
+                <textarea class="form-control" rows="1" name="roadType" id="message" placeholder="Type your message" required="" data-parsley-id="2766"></textarea>
                 <ul class="parsley-errors-list" id="parsley-id-2766">
                 </ul>
               </div>
@@ -151,16 +231,16 @@
               <div class="form-group col-md-6">
                 <label class="col-sm-10 control-label">Handling Charges</label>
                 <div class="col-sm-1">
-                  <div class="onoffswitch greensea inline-block">
+                  <div class="onoffswitch labeled  greensea inline-block">
                     <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch01" checked="">
                     <label class="onoffswitch-label" for="switch01"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
                   </div>
                 </div>
               </div>
               <div class="form-group col-md-6">
-                <label class="col-sm-10 control-label">State / Permit Charges</label>
+                <label class="col-sm-10 control-label">State/Permit Charges</label>
                 <div class="col-sm-1">
-                  <div class="onoffswitch greensea inline-block">
+                  <div class="onoffswitch labeled  greensea inline-block">
                     <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch02" checked="">
                     <label class="onoffswitch-label" for="switch02"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
                   </div>
@@ -169,9 +249,9 @@
             </div>
             <div class="row">
               <div class="form-group col-md-6">
-                <label class="col-sm-10 control-label">Door Pick/Up Delivery Charge</label>
+                <label class="col-sm-10 control-label">Door PickUp/Delivery Charge</label>
                 <div class="col-sm-2">
-                  <div class="onoffswitch greensea inline-block">
+                  <div class="onoffswitch labeled  greensea inline-block">
                     <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch03" checked="">
                     <label class="onoffswitch-label" for="switch03"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
                   </div>
@@ -180,8 +260,8 @@
               <div class="form-group col-md-6">
                 <label class="col-sm-10 control-label">To Pay Charge</label>
                 <div class="col-sm-2">
-                  <div class="onoffswitch greensea inline-block">
-                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch04" checked="">
+                  <div class="onoffswitch labeled greensea inline-block">
+                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch04" checked="checked">
                     <label class="onoffswitch-label" for="switch04"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
                   </div>
                 </div>
@@ -191,7 +271,7 @@
               <div class="form-group col-md-6">
                 <label class="col-sm-10 control-label">CheckPost Exepense</label>
                 <div class="col-sm-2">
-                  <div class="onoffswitch greensea inline-block">
+                  <div class="onoffswitch labeled greensea inline-block">
                     <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch05" checked="">
                     <label class="onoffswitch-label" for="switch05"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
                   </div>
@@ -200,7 +280,7 @@
               <div class="form-group col-md-6">
                 <label class="col-sm-10 control-label">Service Tax</label>
                 <div class="col-sm-2">
-                  <div class="onoffswitch greensea inline-block">
+                  <div class="onoffswitch labeled  greensea inline-block">
                     <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch06" checked="">
                     <label class="onoffswitch-label" for="switch06"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
                   </div>
@@ -223,10 +303,12 @@
           
           <!-- tile header --> 
           <!-- /tile header --> 
-          
+          <div class="tile-header bg-greensea dvd dvd-btm">
+                                    <h1 class="custom-font"><strong>Freight Charges</strong> </h1>
+                                    
+                                </div>
           <!-- tile body -->
           <div class="tile-body">
-            <p class="text-muted">Freight Charges</p>
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="name">Basic Freight </label>
@@ -257,7 +339,7 @@
             </div>
             <div class="row">
               <div class="form-group col-md-6">
-                <label for="contactemail">Pick/Delivery Charges </label>
+                <label for="contactemail">Pickup/Delivery Charges </label>
                 <input type="email" name="contactemail" id="contactemail"required  class="form-control" data-parsley-id="1328">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
@@ -271,42 +353,45 @@
             </div>
             <div class="row">
               <div class="form-group col-md-6">
-                <label for="contactemail">Check Post Expense </label>
+                <label for="contactemail">CheckPost Expense </label>
                 <input type="email" name="contactemail" id="contactemail" required class="form-control" data-parsley-id="1328">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
-              <div class="form-group col-md-6">
-                <label for="name">Contract Sign by </label>
-                <input type="text" name="name" id="name" class="form-control" required data-parsley-id="8057">
-                <ul class="parsley-errors-list" id="parsley-id-8057">
-                </ul>
-              </div>
-            </div>
-            <div class="row">
               <div class="form-group col-md-6">
                 <label for="contactemail">COD/DOD Charges </label>
                 <input type="email" name="contactemail" id="contactemail" required class="form-control" data-parsley-id="1328">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
+              
+            </div>
+            <div class="row">
+              
               <div class="form-group col-md-6">
                 <label for="name">MISC Charges </label>
                 <input type="text" name="name" id="name" class="form-control" required data-parsley-id="8057">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
-            </div>
-            <div class="row">
               <div class="form-group col-md-6">
                 <label for="contactemail">Sub Total </label>
                 <input type="email" name="contactemail" id="contactemail" required class="form-control" data-parsley-id="1328">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
+            </div>
+            <div class="row">
+              
               <div class="form-group col-md-6">
                 <label for="name">Service Tax </label>
                 <input type="text" name="name" id="name" class="form-control" required="" data-parsley-id="8057">
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="name">Contract Sign by </label>
+                <input type="text" name="name" id="name" class="form-control" required data-parsley-id="8057">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
@@ -335,7 +420,7 @@
             <!-- tile footer -->
             <div class="tile-footer text-right bg-tr-black lter dvd dvd-top"> 
               <!-- SUBMIT BUTTON -->
-              <input type="submit" class="btn btn-default" id="form4Submit" value="Submit" name="save">
+              <input type="submit" class="btn btn-greensea" id="form4Submit" value="Submit" name="save">
             </div>
             <!-- /tile footer --> 
             

@@ -17606,3 +17606,8 @@ hr.line-full {
 	margin-right: 0px;
     margin-left: 0px;
 }
+.form-group .required {
+    color: #e02222;
+    font-size: 12px;
+    padding-left: 2px;
+}
