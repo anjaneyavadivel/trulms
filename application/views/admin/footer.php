@@ -12,6 +12,7 @@
         <script>window.jQuery || document.write('<script src="<?= base_url()?>assets/js/vendor/jquery/jquery-1.11.2.min.js"><\/script>')</script>
 
         <script src="<?= base_url()?>assets/js/vendor/bootstrap/bootstrap.min.js"></script>
+        <script src="<?= base_url()?>assets/js/jquery.cookie.min.js"></script>
 
         <script src="<?= base_url()?>assets/js/vendor/jRespond/jRespond.min.js"></script>
 
