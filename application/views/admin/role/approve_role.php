@@ -53,7 +53,7 @@
                             <section class="tile">
 
                                 <!-- tile header -->
-                                <div class="tile-header dvd dvd-btm">
+                                <div class="tile-header bg-greensea  dvd dvd-btm">
                                     <h1 class="custom-font"><strong>Role Master</strong> </h1>
                                     
                                     <ul class="controls">
@@ -98,7 +98,7 @@
                             <section class="tile">
 
                                 <!-- tile header -->
-                                <div class="tile-header dvd dvd-btm">
+                                <div class="tile-header bg-greensea  dvd dvd-btm">
                                     <h1 class="custom-font"><strong>Edit</strong> Role</h1>
                                     
                                 </div>
