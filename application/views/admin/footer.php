@@ -1,5 +1,4 @@
-
-        <?php $segment1= $this->uri->segment(1);
+<?php $segment1= $this->uri->segment(1);
 		
 		if(isset($table)){
 		?>
@@ -13,7 +12,6 @@
         <script>window.jQuery || document.write('<script src="<?= base_url()?>assets/js/vendor/jquery/jquery-1.11.2.min.js"><\/script>')</script>
 
         <script src="<?= base_url()?>assets/js/vendor/bootstrap/bootstrap.min.js"></script>
-        <script src="<?= base_url()?>assets/js/jquery.cookie.min.js"></script>
 
         <script src="<?= base_url()?>assets/js/vendor/jRespond/jRespond.min.js"></script>
 
@@ -41,13 +39,14 @@
         <script src="<?= base_url()?>assets/js/main.js"></script>
         <script src="<?= base_url()?>assets-new/js/mainnew.js"></script>
         <!--/ custom javascripts -->
-  <!-- ===============================================
+        <!-- ===============================================
         ============== Page Specific Scripts ===============
         ================================================ -->
         <script>
                 var base_path='<?= base_url()?>';
             $(window).load(function(){
                 Mainnew.init();
+
                 //initialize basic datatable
 				<?php if($segment1=='department'){
 					?>
@@ -247,6 +246,27 @@
                     ],
                     "dom": 'Rlfrtip'
                 });
+				<?php }else if($segment1=='contract-consignor'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/contract_consignor_json',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+						{ "data": "from" },
+						{ "data": "to" },
+						{ "data": "length" },
+						{ "data": "weight" },
+						{ "data": "date" },
+						{ "data": "sign" },
+                        { "data": "total" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+                    "dom": 'Rlfrtip'
+                });
 				<?php }else{?>
 						
                 var table = $('#basic-usage').DataTable({
@@ -325,5 +345,3 @@
         
     </body>
 </html>
-
-      

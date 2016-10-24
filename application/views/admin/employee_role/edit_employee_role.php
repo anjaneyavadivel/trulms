@@ -55,7 +55,7 @@
                             <section class="tile">
 
                                 <!-- tile header -->
-                                <div class="tile-header dvd dvd-btm">
+                                <div class="tile-header bg-greensea  dvd dvd-btm">
                                     <h1 class="custom-font"><strong>Edit</strong> Designation</h1>
                                     
                                 </div>

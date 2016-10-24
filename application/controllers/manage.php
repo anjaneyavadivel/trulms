@@ -9,15 +9,7 @@ class Manage extends CI_Controller {
         }
     }
     
-    function index()
-	{
-		$this->load->view('admin/dept/dept');
-	}
-	function dept_add()
-	{
-		$this->load->view('admin/dept/dept_add');
-	}
-	/***********************************************************************************************************************************/
+   /***********************************************************************************************************************************/
 	function department()
 	{
 		if($this->uri->segment(3))
@@ -1609,20 +1601,20 @@ class Manage extends CI_Controller {
 	{
 		if($this->uri->segment(3))
 		{
-			$whereData	=	array('employetypeID'	=>	$this->uri->segment(3));
+			$whereData	=	array('consignorID'	=>	$this->uri->segment(3));
 			$updateData	=	array('active'	=>	$this->uri->segment(4));
-			$upt	=	$this->Commonsql_model->updateTable('tblemployetypes', $whereData , $updateData);
+			$upt	=	$this->Commonsql_model->updateTable('tblconsignor', $whereData , $updateData);
 			//echo $this->db->last_query();exit;
 			if($upt)
 			{
-				$this->session->set_userdata('suc','Employee Types Status Successfully  Changed...!');
-				redirect('contract_consignor');
+				$this->session->set_userdata('suc','contract consignor Status Successfully  Changed...!');
+				redirect('contract-consignor');
 				
 			}
 			else
 			{
 				$this->session->set_userdata('err','Error Please try again..!');
-				redirect('contract_consignor');
+				redirect('contract-consignor');
 			}
 		}
 		else
@@ -1634,27 +1626,36 @@ class Manage extends CI_Controller {
 	}
 	function contract_consignor_json()
 	{
-		$result	=	$this->Commonsql_model->select_all('tblemployetypes','employetypeID');
+		$result	=	$this->Commonsql_model->select_conginor_contract();
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$i++;
-			$vaules['name'] 			= 	$value->typename;
-			$vaules['description'] 		= 	$value->description;
+			$vaules['ID']			=	$i++;
+			$vaules['name'] 		= 	$value->name;
+			$vaules['from'] 		= 	$value->from;
+			$vaules['to'] 			= 	$value->to;
+			
+			$vaules['length'] 		= 	$value->vehicleLength;
+			$vaules['weight'] 		= 	$value->vehicleCapacity;
+			$vaules['date'] 		= 	date('d-m-Y',strtotime($value->dated));
+			
+			$vaules['sign'] 		= 	$value->signedby;
+			$vaules['total'] 		= 	$value->grandTotal;
+			
 			if($value->active==1)
 			{
-				$view		=	"<a href='".base_url()."view_contract_consignor/".$value->employetypeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
-				$Approve		=	"<a href='".base_url()."approve_contract_consignor/".$value->employetypeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approve</a>";
-				$active	=	"<a href='".base_url()."manage/contract_consignor/".$value->employetypeID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+				$view		=	"<a href='".base_url()."view_contract_consignor/".$value->consignorID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+				$Approve		=	"<a href='".base_url()."approve_contract_consignor/".$value->consignorID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approve</a>";
+				$active	=	"<a href='".base_url()."manage/contract_consignor/".$value->consignorID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
 			}
 			else
 			{
 				$view		=	'';
 				$Approve		=	'';
-				$active	=	"<a href='".base_url()."manage/contract_consignor/".$value->employetypeID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+				$active	=	"<a href='".base_url()."manage/contract_consignor/".$value->consignorID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
 			}
 			
-			$vaules['Action'] 			=	$view.$Approve."<a  href='".base_url()."edit_contract_consignor/".$value->employetypeID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			$vaules['Action'] 			=	$view.$Approve."<a  href='".base_url()."edit_contract_consignor/".$value->consignorID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
 			
 			$output[] =$vaules;
 		}
@@ -1665,11 +1666,13 @@ class Manage extends CI_Controller {
 	{
 		if($this->input->post('save'))
 		{
-			$values=array('name'				=>	$this->input->post('name'),
+			$contact_values=array('name'		=>	$this->input->post('name'),
 							'companyName'		=>	$this->input->post('companyName'),
 							'addressline1'		=>	$this->input->post('addressline1'),
+							'addressline2'		=>	$this->input->post('addressline2'),
 							'city'				=>	$this->input->post('city'),
 							'state'				=>	$this->input->post('state'),
+							'country'			=>	$this->input->post('country'),
 							'email1'			=>	$this->input->post('email1'),
 							'email2'			=>	$this->input->post('email2'),
 							'phone1'			=>	$this->input->post('phone1'),
@@ -1680,15 +1683,17 @@ class Manage extends CI_Controller {
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$contactID	=	insertTable('tblcontactdetails', $values,0);
+			$contactID	=	insertTable('tblcontactdetails', $contact_values,0);
 			
-			$values=array('contactID'				=>	$contactID,
-							'contactPer1'		=>	$this->input->post('contactPer1'),
+			$values_cons=array('contactID'		=>	$contactID,
+							'contactPer1'		=>	$this->input->post('name'),
+							'contactPer1'		=>	$this->input->post('contactPer2'),
+							'csttinno'			=>	$this->input->post('csttinno'),
 							'dbentrystateID'	=>	0,
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$consignorID	=	insertTable('tblconsignor', $values,0);
+			$consignorID	=	insertTable('tblconsignor', $values_cons,0);
 			
 			$values=array('contractCode'		=>	$this->input->post('contractCode'),
 							'consignorID'		=>	$consignorID,
@@ -1709,6 +1714,25 @@ class Manage extends CI_Controller {
 							'active'			=>	1);
 							
 			$contractID	=	insertTable('tblcontract', $values,0);
+			
+			$values_map=array('contractVerID'		=>	1,
+							'contractID'			=>	$contractID,
+							'basicfreight'			=>	$this->input->post('basicfreight'),
+							'docketChgs'			=>	$this->input->post('docketChgs'),
+							'handlingChgs'			=>	$this->input->post('handlingChgs'),
+							'statePermitChgs'		=>	$this->input->post('statePermitChgs'),
+							'pickupDeliveryChgs'	=>	$this->input->post('pickupDeliveryChgs'),
+							'toPayChgs'				=>	$this->input->post('toPayChgs'),
+							'checkpostExpenses'		=>	$this->input->post('checkpostExpenses'),
+							'coddodChgs'			=>	$this->input->post('coddodChgs'),
+							'MISCCharges'			=>	$this->input->post('MISCCharges'),
+							'serivceTax'			=>	$this->input->post('serivceTax'),
+							'grandTotal'			=>	$this->input->post('grandTotal'),
+							'dbentrystateID'		=>	0,
+							'createby'				=>	$this->session->userdata('SESS_userId'),
+							'active'				=>	1);
+							
+			$contractVersionMapID	=	insertTable('tblcontractversionmap', $values_map,0);
 			
 			if($contractID)
 			{
