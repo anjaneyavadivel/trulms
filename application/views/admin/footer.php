@@ -13,6 +13,7 @@
         <script>window.jQuery || document.write('<script src="<?= base_url()?>assets/js/vendor/jquery/jquery-1.11.2.min.js"><\/script>')</script>
 
         <script src="<?= base_url()?>assets/js/vendor/bootstrap/bootstrap.min.js"></script>
+        <script src="<?= base_url()?>assets/js/jquery.cookie.min.js"></script>
 
         <script src="<?= base_url()?>assets/js/vendor/jRespond/jRespond.min.js"></script>
 
@@ -38,13 +39,15 @@
         ============== Custom JavaScripts ===============
         ============================================= -->
         <script src="<?= base_url()?>assets/js/main.js"></script>
+        <script src="<?= base_url()?>assets-new/js/mainnew.js"></script>
         <!--/ custom javascripts -->
   <!-- ===============================================
         ============== Page Specific Scripts ===============
         ================================================ -->
         <script>
+                var base_path='<?= base_url()?>';
             $(window).load(function(){
-
+                Mainnew.init();
                 //initialize basic datatable
 				<?php if($segment1=='department'){
 					?>
@@ -232,13 +235,15 @@
 					var table = $('#basic-usage').DataTable({
                     "ajax": '<?php echo base_url()?>form-master-json',
                     "columns": [
-                        { "data": "ID" },
-                        { "data": "name" },
-                        { "data": "description" },
-						{ "data": "Action" }
+                        { "data": "pageID" },
+                        { "data": "menuCaption" },
+                        { "data": "parentID" },
+                        { "data": "url" },
+                        { "data": "active" },
+			{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
-                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                      { 'bSortable': false, 'aTargets': [ 5] }
                     ],
                     "dom": 'Rlfrtip'
                 });

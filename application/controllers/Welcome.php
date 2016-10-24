@@ -37,6 +37,63 @@ class Welcome extends CI_Controller {
         $this->load->view('admin/footer');
     }
 
+    //forgot_password
+    function checkfield() {
+        if (!$this->session->userdata('SESS_userId')) {
+            return FALSE;
+        }
+        $this->form_validation->set_rules('checkvalue', 'Check Value', 'trim|required');
+        $this->form_validation->set_rules('data_tb', 'Data Tb', 'trim|required');
+        $this->form_validation->set_rules('data_col', 'Data Col', 'trim|required');
+        if ($this->form_validation->run($this) == FALSE) {
+            return FALSE;
+        }
+        $checkvalue = $this->input->post('checkvalue', TRUE);
+        $table_name = 'tbl'.$this->input->post('data_tb', TRUE);
+        $check_column = $this->input->post('data_col', TRUE);
+        $whereData = array($check_column => $checkvalue);
+        // Get user record
+        $result = selectTable($table_name, $whereData);
+        if (isset($result) && $result->num_rows() > 0) {?>
+            <font color="#FF0000"><?= "Sorry! " . $checkvalue . " already registered. Try another?"; ?></font>
+            <?php
+        } else {
+            ?>
+            <font color="#0000FF"><?= "Success! " . $checkvalue . " is available."; ?></font>
+            <?php
+        }
+    }
+    function active_deactive() {
+        if (!$this->session->userdata('SESS_userId')) {
+            return FALSE;
+        }
+        $this->form_validation->set_rules('type', 'type', 'trim|required');
+        $this->form_validation->set_rules('tbname', 'Data Tb', 'trim|required');
+        $this->form_validation->set_rules('id', 'id', 'trim|required');
+        $this->form_validation->set_rules('tbcol', 'tb col', 'trim|required');
+        if ($this->form_validation->run($this) == FALSE) {
+            return FALSE;
+        }
+        $status = $this->input->post('type', TRUE);
+        $table_name = 'tbl'.$this->input->post('tbname', TRUE);
+        $id = $this->input->post('id', TRUE);
+        $check_column = $this->input->post('tbcol', TRUE);
+        $whereData = array($check_column => $id);
+        $updateData = array('active' => $status);
+        $upt = $this->Commonsql_model->updateTable($table_name, $whereData, $updateData);
+        if ($upt > 0) {
+            if($status){
+            $this->session->set_userdata('suc','Success! Activated successfully.');
+                //echo "Success! Activated successfully.";
+            }else{
+            $this->session->set_userdata('suc','Success! De-Activated successfully.');
+               // echo "Success! De-Activated successfully.";
+            }
+        } else {
+            $this->session->set_userdata('err','Sorry! Try another!');
+        }echo 1;
+    }
+
     function login() {
         if ($this->session->userdata('SESS_userId')) {
             redirect(base_url() . "dashboard");

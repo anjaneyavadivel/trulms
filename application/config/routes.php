@@ -62,11 +62,19 @@ $route['forgot-password'] 				=		'welcome/forgot_password';
 
 
 
+/* * *****************************************common Controller**************************** */
+
+$route['ajax/checkfield'] = 'welcome/checkfield';
+$route['ajax/active-deactive'] = 'welcome/active_deactive';
+
 /* * *****************************************Page Controller**************************** */
 
 $route['form-master'] = 'setup/form_master';
 $route['form-master-json'] = 'setup/form_master_json';
 $route['add-form-master'] = 'setup/add_form_master';
+$route['view-form-master/(:num)'] = 'setup/view_form_master/$1';
+$route['edit-form-master/(:num)'] = 'setup/edit_form_master/$1';
+
 $route['employee-role'] = 'setup/employee_role';
 $route['add-employee-role'] = 'setup/add_employee_role';
 $route['form-access'] = 'setup/form_access';
