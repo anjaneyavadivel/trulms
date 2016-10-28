@@ -12,7 +12,7 @@
       <div class="page-bar">
         <ul class="page-breadcrumb">
           <li> <a href="<?= base_url()?>"><i class="fa fa-home"></i> HOME</a> </li>
-          <li> <a href="<?= base_url()?>contract-consignor">Employee</a> </li>
+          <li> <a href="<?= base_url()?>employee">Employee</a> </li>
           <li> <a href="javascript::">Add Employee</a> </li>
         </ul>
       </div>
@@ -50,7 +50,17 @@
               </div>
               <div class="form-group col-md-3">
                 <label for="contactemail">Branch</label>
-                <input type="text" name="branchID" id="branchID" class="form-control" placeholder=" Enter Alter Contact Person" data-parsley-id="1328">
+                               <select  name="branchID" id="branchID" required class="form-control" >
+                <option value="">-- Select Branch --</option>
+                <?php if(isset($branch) && $branch->num_rows()>0)
+				foreach($branch->result() as $dep)
+				{
+					?>
+                    <option value="<?=$dep->branchID?>"><?=$dep->name?></option>
+                    <?php
+				}
+				?>
+                </select>
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
@@ -225,29 +235,7 @@
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
-              
-              <div class="form-group col-md-3">
-                <label for="name">Photo <span class="required">*</span></label>
-                <input type="file" name="photo" id="photo" class="form-control" required  placeholder=" Enter Mail Personal " data-parsley-id="8057">
-                <ul class="parsley-errors-list" id="parsley-id-8057">
-                </ul>
-              </div>
-              <div class="form-group col-md-3">
-                <label for="name">Proof 1 </label>
-                <input type="file" name="proof1" id="proof1" class="form-control" placeholder=" Enter Address Line 1" data-parsley-id="8057">
-                <ul class="parsley-errors-list" id="parsley-id-8057">
-                </ul>
-              </div>
-              
-            </div>
-            <div class="row">
-              <div class="form-group col-md-3">
-                <label for="contactemail">Proof 2 </label>
-                <input type="file" name="proof2" id="proof2" placeholder=" Enter Proof  2" class="form-control" data-parsley-id="1328">
-                <ul class="parsley-errors-list" id="parsley-id-1328">
-                </ul>
-              </div>
-              <div class="form-group col-md-3">
+               <div class="form-group col-md-3">
                 <label for="contactemail">Remarks </label>
                 <input type="text" name="remarks" id="remarks" placeholder=" Enter Remarks" class="form-control" data-parsley-id="1328">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
@@ -261,9 +249,33 @@
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
+            
+              
+            </div>
+            <div class="row">
+            
+              <div class="form-group col-md-3">
+                <label for="name">Photo <span class="required">*</span></label>
+                <input type="file" name="photo" id="photo" class="form-control" required  placeholder=" Enter Mail Personal " data-parsley-id="8057">
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="name">Proof 1 </label>
+                <input type="file" name="proof1" id="proof1" class="form-control" placeholder=" Enter Address Line 1" data-parsley-id="8057">
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="contactemail">Proof 2 </label>
+                <input type="file" name="proof2" id="proof2" placeholder=" Enter Proof  2" class="form-control" data-parsley-id="1328">
+                <ul class="parsley-errors-list" id="parsley-id-1328">
+                </ul>
+              </div>
+             
               
               <!-- tile footer -->
-            <div class="tile-footer text-right bg-tr-black lter dvd dvd-top"> 
+            <div class="tile-footer text-right bg-tr-black lter col-md-3 dvd dvd-top"> 
               <!-- SUBMIT BUTTON -->
               <input type="submit" class="btn btn-greensea" id="form4Submit" value="Submit" name="save">
             </div>

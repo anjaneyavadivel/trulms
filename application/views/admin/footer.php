@@ -271,7 +271,7 @@
 				<?php }else if($segment1=='employee'){
 					?>
 					var table = $('#basic-usage').DataTable({
-                    "ajax": '<?php echo base_url()?>manage/employee_types_json',
+                    "ajax": '<?php echo base_url()?>manage/employee_json',
                     "columns": [
                         { "data": "ID" },
                         { "data": "name" },

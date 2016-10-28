@@ -1636,8 +1636,8 @@ class Manage extends CI_Controller {
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['deptID']			=	$i++;
-			$vaules['employee'] 		= 	$value->empname;
+			$vaules['ID']			=	$i++;
+			$vaules['name'] 		= 	$value->empname;
 			$vaules['description'] 		= 	$value->empCode;
 			if($value->active==1)
 			{
@@ -1649,10 +1649,10 @@ class Manage extends CI_Controller {
 			{
 				$APPROVE		=	'';
 				$view			 =	'';
-				$active	=	"<a href='".base_url()."manage/employee/".$value->deptID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+				$active	=	"<a href='".base_url()."manage/employee/".$value->empID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
 			}
 			
-			$vaules['Action'] 			=	$view.$APPROVE."<a href='".base_url()."edit_employee/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			$vaules['Action'] 			=	$view.$APPROVE."<a href='".base_url()."edit_employee/".$value->empID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
 			
 			$output[] =$vaules;
 		}
@@ -1737,6 +1737,7 @@ class Manage extends CI_Controller {
 		$data['dept']		=	$this->Commonsql_model->select('tbldept',array('dbentrystateID'=>3,'active'=>1));
 		$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID'=>3,'active'=>1));
 		$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID'=>3,'active'=>1));
+		$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID'=>3,'active'=>1));
 		$data['pageTitle']	=	"Add employee";
 		$this->load->view('admin/employee/add_employee',$data);
 	}
@@ -1744,13 +1745,41 @@ class Manage extends CI_Controller {
 	{
 		if($this->input->post('save'))
 		{
-			
-			
+			$photo=$_FILES['photo']['name'];
+			$proof1=$_FILES['proof1']['name'];
+			$proof2=$_FILES['proof2']['name'];
+			if($photo!='')
+			{
+				$uploadpath="./uploads/photo/".$photo;
+				move_uploaded_file($_FILES['photo']['tmp_name'], $uploadpath);
+			}
+			else
+			{
+				$photo	=	$this->input->post('photo1');
+			}
+			if($proof1!='')
+			{
+				$uploadpath="./uploads/proof/".$proof1;
+				move_uploaded_file($_FILES['proof1']['tmp_name'], $uploadpath);
+			}
+			else
+			{
+				$proof1	=	$this->input->post('proof11');
+			}
+			if($proof2!='')
+			{
+				$uploadpath="./uploads/proof/".$proof1;
+				move_uploaded_file($_FILES['proof2']['tmp_name'], $uploadpath);
+			}
+			else
+			{
+				$proof2	=	$this->input->post('proof21');
+			}
 				$values_mod=array('empCode'						=>	$this->input->post('empCode'),
 							'empname'					=>	$this->input->post('empname'),
 							'branchID'					=>	$this->input->post('branchID'),
 							
-							'dob'						=>	$this->input->post('dob'),
+							'dob'						=>	date('Y-m-d',strtotime($this->input->post('dob'))),
 							'sex'						=>	$this->input->post('sex'),
 							'fathername'				=>	$this->input->post('fathername'),
 							
@@ -1771,15 +1800,15 @@ class Manage extends CI_Controller {
 							'state'						=>	$this->input->post('state'),
 							
 							'country'					=>	$this->input->post('country'),
-							'joiningdate'				=>	$this->input->post('joiningdate'),
+							'joiningdate'				=>	date('Y-m-d',strtotime($this->input->post('joiningdate'))),
 							'reportingto'				=>	$this->input->post('reportingto'),
 							
-							'photo'						=>	$this->input->post('photo'),
-							'proof1'					=>	$this->input->post('proof1'),
-							'proof2'					=>	$this->input->post('proof2'),
+							'photo'						=>	$photo,
+							'proof1'					=>	$proof1,
+							'proof2'					=>	$proof2,
 							
 							'remarks'					=>	$this->input->post('remarks'),
-							'releavingdate'				=>	$this->input->post('releavingdate'),
+							'releavingdate'				=>	date('Y-m-d',strtotime($this->input->post('releavingdate'))),
 							
 							'dbentrystateID'			=>	0,
 							'createby'					=>	$this->session->userdata('SESS_userId'),
@@ -1802,12 +1831,20 @@ class Manage extends CI_Controller {
 			}
 		}
 		$data['pageTitle']	=	"Edit employee";
+		$data['dept']		=	$this->Commonsql_model->select('tbldept',array('dbentrystateID'=>3,'active'=>1));
+		$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID'=>3,'active'=>1));
+		$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID'=>3,'active'=>1));
+		$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID'=>3,'active'=>1));
 		$data['view']		=	$this->Commonsql_model->select('tblemployee',array('empID'=>$this->uri->segment(2)));
 		$this->load->view('admin/employee/edit_employee',$data);
 	}
 	function view_employee()
 	{
 		$data['pageTitle']	=	"View employee";
+		$data['dept']		=	$this->Commonsql_model->select('tbldept',array('dbentrystateID'=>3,'active'=>1));
+		$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID'=>3,'active'=>1));
+		$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID'=>3,'active'=>1));
+		$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID'=>3,'active'=>1));
 		$data['view']		=	$this->Commonsql_model->select('tblemployee',array('empID'=>$this->uri->segment(2)));
 		$this->load->view('admin/employee/view_employee',$data);
 	}
