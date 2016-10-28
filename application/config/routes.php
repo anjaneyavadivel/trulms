@@ -132,5 +132,10 @@ $route['approve-contract-consignor/([a-zA-Z0-9---_%])+'] 	=		'manage/approve_con
 $route['approve-contract-consignor/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_contract_consignor/$1/$1';
 
 
-
+$route['employee'] 									=		'manage/employee';
+$route['add_employee'] 								=		'manage/add_employee';
+$route['edit_employee/([a-zA-Z0-9---_%])+'] 		=		'manage/edit_employee/$1';
+$route['view_employee/([a-zA-Z0-9---_%])+'] 		=		'manage/view_employee/$1';
+$route['approve_employee/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_employee/$1';
+$route['approve_employee/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_employee/$1/$1';
 /*****/

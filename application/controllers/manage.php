@@ -1597,6 +1597,367 @@ class Manage extends CI_Controller {
 		}
 	}
 	/***********************************************************************************************************************************/
+	function employee()
+	{
+		if($this->uri->segment(3))
+		{
+			$whereData	=	array('empID'	=>	$this->uri->segment(3));
+			$updateData	=	array('active'	=>	$this->uri->segment(4));
+			$upt	=	$this->Commonsql_model->updateTable('tblemployee', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','employee Status Successfully  Changed...!');
+				redirect('employee');
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('employee');
+			}
+		}
+		else
+		{
+			/*print_r($this->session->userdata('SESS_userRole'));
+			$SESS_userRole = $this->session->userdata('SESS_userRole');
+			$pageroleaccessmap = pageroleaccessmap($SESS_userRole, 'designation');
+			print_r($pageroleaccessmap);
+			exit();*/
+			
+			$data['pageTitle']	=	"employee";
+			$data['table']		=	"employee";
+			$this->load->view('admin/employee/employee',$data);
+		}
+	}
+	function employee_json()
+	{
+		$result	=	$this->Commonsql_model->select_all('tblemployee','empID');
+		$output = array();$i=1;
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['deptID']			=	$i++;
+			$vaules['employee'] 		= 	$value->empname;
+			$vaules['description'] 		= 	$value->empCode;
+			if($value->active==1)
+			{
+				$view			 			=	"<a href='".base_url()."view_employee/".$value->empID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+				$APPROVE			 			=	"<a href='".base_url()."approve_employee/".$value->empID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
+				$active	=	"<a href='".base_url()."manage/employee/".$value->empID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+			}
+			else
+			{
+				$APPROVE		=	'';
+				$view			 =	'';
+				$active	=	"<a href='".base_url()."manage/employee/".$value->deptID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+			}
+			
+			$vaules['Action'] 			=	$view.$APPROVE."<a href='".base_url()."edit_employee/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			
+			$output[] =$vaules;
+		}
+
+		 echo json_encode(array('data'=>$output), true);
+	}
+	function add_employee()
+	{
+		if($this->input->post('save'))
+		{
+			
+			$photo=$_FILES['photo']['name'];
+			$proof1=$_FILES['proof1']['name'];
+			$proof2=$_FILES['proof2']['name'];
+			if($photo!='')
+			{
+				$uploadpath="./uploads/photo/".$photo;
+				move_uploaded_file($_FILES['photo']['tmp_name'], $uploadpath);
+			}
+			if($proof1!='')
+			{
+				$uploadpath="./uploads/proof/".$proof1;
+				move_uploaded_file($_FILES['proof1']['tmp_name'], $uploadpath);
+			}
+			if($proof2!='')
+			{
+				$uploadpath="./uploads/proof/".$proof1;
+				move_uploaded_file($_FILES['proof2']['tmp_name'], $uploadpath);
+			}
+			$values=array('empCode'						=>	$this->input->post('empCode'),
+							'empname'					=>	$this->input->post('empname'),
+							'branchID'					=>	$this->input->post('branchID'),
+							
+							'dob'						=>	date('Y-m-d',strtotime($this->input->post('dob'))),
+							'sex'						=>	$this->input->post('sex'),
+							'fathername'				=>	$this->input->post('fathername'),
+							
+							'qualification'				=>	$this->input->post('qualification'),
+							'deptid'					=>	$this->input->post('deptid'),
+							'designation'				=>	$this->input->post('designation'),
+							
+							'employeetype'				=>	$this->input->post('employeetype'),
+							'mobile'					=>	$this->input->post('mobile'),
+							'emergencycontactperson'	=>	$this->input->post('emergencycontactperson'),
+							
+							'emergencycontact'			=>	$this->input->post('emergencycontact'),
+							'mailoffice'				=>	$this->input->post('mailoffice'),
+							'mailpersonal'				=>	$this->input->post('mailpersonal'),
+							
+							'addressline1'				=>	$this->input->post('addressline1'),
+							'city'						=>	$this->input->post('city'),
+							'state'						=>	$this->input->post('state'),
+							
+							'country'					=>	$this->input->post('country'),
+							'joiningdate'				=>	date('Y-m-d',strtotime($this->input->post('joiningdate'))),
+							'reportingto'				=>	$this->input->post('reportingto'),
+							
+							'photo'						=>	$photo,
+							'proof1'					=>	$proof1,
+							'proof2'					=>	$proof2,
+							
+							'remarks'					=>	$this->input->post('remarks'),
+							'releavingdate'				=>	date('Y-m-d',strtotime($this->input->post('releavingdate'))),
+							
+							'dbentrystateID'			=>	0,
+							'createby'					=>	$this->session->userdata('SESS_userId'),
+							'active'					=>	1);
+							
+			$query	=	insertTable('tblemployee', $values,1,'empID');
+			if($query)
+			{
+				$this->session->set_userdata('suc','employee Successfully  Added...!');
+				redirect('add_employee');
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('add_employee');
+			}
+		}
+		$data['dept']		=	$this->Commonsql_model->select('tbldept',array('dbentrystateID'=>3,'active'=>1));
+		$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID'=>3,'active'=>1));
+		$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID'=>3,'active'=>1));
+		$data['pageTitle']	=	"Add employee";
+		$this->load->view('admin/employee/add_employee',$data);
+	}
+	function edit_employee()
+	{
+		if($this->input->post('save'))
+		{
+			
+			
+				$values_mod=array('empCode'						=>	$this->input->post('empCode'),
+							'empname'					=>	$this->input->post('empname'),
+							'branchID'					=>	$this->input->post('branchID'),
+							
+							'dob'						=>	$this->input->post('dob'),
+							'sex'						=>	$this->input->post('sex'),
+							'fathername'				=>	$this->input->post('fathername'),
+							
+							'qualification'				=>	$this->input->post('qualification'),
+							'deptid'					=>	$this->input->post('deptid'),
+							'designation'				=>	$this->input->post('designation'),
+							
+							'employeetype'				=>	$this->input->post('employeetype'),
+							'mobile'					=>	$this->input->post('mobile'),
+							'emergencycontactperson'	=>	$this->input->post('emergencycontactperson'),
+							
+							'emergencycontact'			=>	$this->input->post('emergencycontact'),
+							'mailoffice'				=>	$this->input->post('mailoffice'),
+							'mailpersonal'				=>	$this->input->post('mailpersonal'),
+							
+							'addressline1'				=>	$this->input->post('addressline1'),
+							'city'						=>	$this->input->post('city'),
+							'state'						=>	$this->input->post('state'),
+							
+							'country'					=>	$this->input->post('country'),
+							'joiningdate'				=>	$this->input->post('joiningdate'),
+							'reportingto'				=>	$this->input->post('reportingto'),
+							
+							'photo'						=>	$this->input->post('photo'),
+							'proof1'					=>	$this->input->post('proof1'),
+							'proof2'					=>	$this->input->post('proof2'),
+							
+							'remarks'					=>	$this->input->post('remarks'),
+							'releavingdate'				=>	$this->input->post('releavingdate'),
+							
+							'dbentrystateID'			=>	0,
+							'createby'					=>	$this->session->userdata('SESS_userId'),
+							'active'					=>	1);
+							
+			$whereData	=	array('empID'	=>	$this->input->post('empID'));
+			
+			$query		= updateTable('tblemployee', $whereData, $values_mod , 1,'empID', $this->input->post('empID'));
+			
+			if($query)
+			{
+				$this->session->set_userdata('suc','employee Successfully  Updated...!');
+				redirect('edit_employee/'.$this->input->post('empID'));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('edit_employee/'.$this->input->post('empID'));
+			}
+		}
+		$data['pageTitle']	=	"Edit employee";
+		$data['view']		=	$this->Commonsql_model->select('tblemployee',array('empID'=>$this->uri->segment(2)));
+		$this->load->view('admin/employee/edit_employee',$data);
+	}
+	function view_employee()
+	{
+		$data['pageTitle']	=	"View employee";
+		$data['view']		=	$this->Commonsql_model->select('tblemployee',array('empID'=>$this->uri->segment(2)));
+		$this->load->view('admin/employee/view_employee',$data);
+	}
+	function approve_employee()
+	{
+		if($this->input->post('save'))
+		{
+			
+			$check 	=	$this->Commonsql_model->select('tblemployee',array('empID'	=>	$this->input->post('empID'),'employee'		=>	$this->input->post('employee'),
+							'description'		=>	$this->input->post('description')));
+			if($check->num_rows()==0)
+			{
+					$values_mod=array('employee'		=>	$this->input->post('employee'),
+								'description'		=>	$this->input->post('description'),
+								'dbentrystateID'	=>	0,
+								'createby'			=>	$this->session->userdata('SESS_userId'),
+								'active'			=>	1);
+								
+				$whereData	=	array('empID'	=>	$this->input->post('empID'));
+				
+				$query		= updateTable('tblemployee', $whereData, $values_mod , 1,'empID', $this->input->post('empID'));
+				
+				if($query)
+				{
+					$this->session->set_userdata('suc','employee Successfully  Updated...!');
+					redirect('approve_employee/'.$this->input->post('empID'));
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('approve_employee/'.$this->input->post('empID'));
+				}
+			}
+			else
+			{
+				$this->session->set_userdata('err','No Changes Found..!');
+				redirect('approve_employee/'.$this->input->post('empID'));
+			}
+		}
+		if($this->uri->segment(4))
+		{
+			$whereData	=	array('dept_modID'	=>	$this->uri->segment(4));
+			$updateData	=	array('active'	=>	$this->uri->segment(5));
+			$upt	=	$this->Commonsql_model->updateTable('tblemployee_mod', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','employee Status Successfully  Changed...!');
+				redirect('approve_employee/'.$this->uri->segment(3));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('approve_employee/'.$this->uri->segment(3));
+			}
+		}
+		else if($this->uri->segment(3))
+		{
+			$data['pageTitle']	=	"View employee";
+			$data['table']		=	"Designation";
+			$data['view']		=	$this->Commonsql_model->select('tblemployee_mod',array('emp_modID'=>$this->uri->segment(3)));
+			$this->load->view('admin/dept/approve_employee',$data);
+		}
+		else
+		{
+			$data['pageTitle']	=	"View employee";
+			$data['table']		=	"Designation";
+			$data['view']		=	$this->Commonsql_model->select('tblemployee',array('empID'=>$this->uri->segment(2)));
+			$this->load->view('admin/employee/approve_employee',$data);
+		}
+	}
+	function approve_employee_json()
+	{
+		$result	=	$this->Commonsql_model->select_desc('tblemployee_mod',array('empID'=>$this->uri->segment(3)),'emp_modID');
+		//echo $this->db->last_query();
+		$output = array();$i=1;$j=1;
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['ID']				=	$i++;
+			$vaules['name'] 			= 	$value->employee;
+			$vaules['description'] 		= 	$value->description;
+			if($value->active==1)
+			{
+				if($j++==1)
+				{
+					$Approve			 			=	"<a href='".base_url()."manage/employee_mod_approve/".$value->emp_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approved</a>";
+				}
+				else
+				{
+					$Approve	=	'';
+				}
+				
+				$active	=	"<a href='".base_url()."manage/approve_employee/".$value->empID.'/'.$value->emp_modID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+			}
+			else
+			{
+				$Approve		=	'';
+				$active	=	"<a href='".base_url()."manage/approve_employee/".$value->empID.'/'.$value->emp_modID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+			}
+			
+			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_employee/".$value->empID.'/'.$value->emp_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			
+			$output[] =$vaules;
+		}
+
+		 echo json_encode(array('data'=>$output), true);
+	}
+	function employee_mod_approve()
+	{
+		$mod_id	=	$this->uri->segment(3);
+		$data	=	$this->Commonsql_model->select('tblemployee_mod',array('emp_modID'=>$mod_id));
+		if($data->num_rows()>0)
+		{
+			$val	=	$data->row();
+			
+				$values		=array('employee'		=>	$val->employee,
+								'description'		=>	$val->description,
+								'dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond		=	array('empID'	=>	$val->empID);
+				
+				$values_mod	=	array('dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond_mod	=	array('emp_modID'	=>	$mod_id);
+				$upt		=	$this->Commonsql_model->updateTable('tblemployee', $cond , $values);
+				$upt_m		=	$this->Commonsql_model->updateTable('tblemployee_mod', $cond_mod , $values_mod);
+				//echo $this->db->last_query();exit;
+				if($upt)
+				{
+					$this->session->set_userdata('suc','Approved Successfully  Finished...!');
+					redirect('approve_employee/'.$val->empID);
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('approve_employee/'.$val->empID);
+				}
+							
+							
+						
+		}
+	}
+	/***********************************************************************************************************************************/
 	function contract_consignor()
 	{
 		if($this->uri->segment(3))
@@ -1655,7 +2016,7 @@ class Manage extends CI_Controller {
 				$active	=	"<a href='".base_url()."manage/contract_consignor/".$value->consignorID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
 			}
 			
-			$vaules['Action'] 			=	$view.$Approve."<a  href='".base_url()."edit_contract_consignor/".$value->consignorID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			$vaules['Action'] 			=	$view.$Approve."<a  href='".base_url()."edit-contract-consignor/".$value->consignorID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
 			
 			$output[] =$vaules;
 		}
@@ -1753,29 +2114,92 @@ class Manage extends CI_Controller {
 	{
 		if($this->input->post('save'))
 		{
-				$values=array('typename'				=>	$this->input->post('typename'),
-								'description'		=>	$this->input->post('description'),
-								'employetypeID'		=>	$this->input->post('employetypeID'),
-								'dbentrystateID'	=>	0,
-								'createby'			=>	$this->session->userdata('SESS_userId'),
-								'active'			=>	1);
-								
-			$whereData	=	array('employetypeID'	=>	$this->input->post('employetypeID'));
-			$query		= updateTable('tblemployetypes', $whereData, $values , 1,'employetypeID', $this->input->post('employetypeID'));
-			if($query)
+			$whereData	= array('consignorID'=>$this->input->post('consignorID'));
+			$contac_wh	= array('contactID'=>$this->input->post('contactID'));
+			$contract_wh	= array('contractID'=>$this->input->post('contractID'));
+			$contact_values=array('name'		=>	$this->input->post('name'),
+							'companyName'		=>	$this->input->post('companyName'),
+							'addressline1'		=>	$this->input->post('addressline1'),
+							'addressline2'		=>	$this->input->post('addressline2'),
+							'city'				=>	$this->input->post('city'),
+							'state'				=>	$this->input->post('state'),
+							'country'			=>	$this->input->post('country'),
+							'email1'			=>	$this->input->post('email1'),
+							'email2'			=>	$this->input->post('email2'),
+							'phone1'			=>	$this->input->post('phone1'),
+							'phone2'			=>	$this->input->post('phone2'),
+							'fax'				=>	$this->input->post('fax'),
+							'website'			=>	$this->input->post('website'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$query1		= updateTable('tblcontactdetails', $contac_wh, $contact_values , 1,'contactID', $this->input->post('contactID'));
+			
+			$values_cons=array('contactID'		=>	$this->input->post('contactID'),
+							'contactPer1'		=>	$this->input->post('name'),
+							'contactPer2'		=>	$this->input->post('contactPer2'),
+							'csttinno'			=>	$this->input->post('csttinno'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$query2		= updateTable('tblconsignor', $whereData, $values_cons , 1,'consignorID', $this->input->post('consignorID'));
+			
+			$values=array('contractCode'		=>	$this->input->post('contractCode'),
+							'contractTypeID'	=>	1,
+							'from'				=>	$this->input->post('from'),
+							'to'				=>	$this->input->post('to'),
+							'vehicleLength'		=>	$this->input->post('vehicleLength'),
+							'vehicleType'		=>	$this->input->post('vehicleType'),
+							'vehicleCapacity'	=>	$this->input->post('vehicleCapacity'),
+							'roadType'			=>	$this->input->post('roadType'),
+							'minKM'				=>	$this->input->post('minKM'),
+							'seasonType'		=>	$this->input->post('seasonType'),
+							'miscType'			=>	$this->input->post('miscType'),
+							'dated'				=>	date('Y-m-d',strtotime($this->input->post('dated'))),
+							'signedby'			=>	$this->input->post('signedby'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$query3		= updateTable('tblcontract', $whereData, $values , 1,'contractID', $this->input->post('contractID'));
+			
+			$values_map=array('contractVerID'		=>	1,
+							'contractID'			=>	$this->input->post('contractID'),
+							'basicfreight'			=>	$this->input->post('basicfreight'),
+							'docketChgs'			=>	$this->input->post('docketChgs'),
+							'handlingChgs'			=>	$this->input->post('handlingChgs'),
+							'statePermitChgs'		=>	$this->input->post('statePermitChgs'),
+							'pickupDeliveryChgs'	=>	$this->input->post('pickupDeliveryChgs'),
+							'toPayChgs'				=>	$this->input->post('toPayChgs'),
+							'checkpostExpenses'		=>	$this->input->post('checkpostExpenses'),
+							'coddodChgs'			=>	$this->input->post('coddodChgs'),
+							'MISCCharges'			=>	$this->input->post('MISCCharges'),
+							'serivceTax'			=>	$this->input->post('serivceTax'),
+							'grandTotal'			=>	$this->input->post('grandTotal'),
+							'dbentrystateID'		=>	0,
+							'createby'				=>	$this->session->userdata('SESS_userId'),
+							'active'				=>	1);
+							
+			$query4		= updateTable('tblcontractversionmap', $contract_wh, $values_map , 1,'contractVersionMapID', $this->input->post('contractVersionMapID'));
+			
+			if($query1 || $query2 || $query3 || $query4)
 			{
-				$this->session->set_userdata('suc','Employee Types Successfully  Updated...!');
-				redirect('edit_contract_consignor/'.$this->input->post('employetypeID'));
+				$this->session->set_userdata('suc','Coontract Consioner Types Successfully  Added...!');
+				redirect('edit-contract-consignor/'.$this->input->post('consignorID'));
 				
 			}
 			else
 			{
 				$this->session->set_userdata('err','Error Please try again..!');
-				redirect('edit_contract_consignor/'.$this->input->post('employetypeID'));
+				redirect('edit-contract-consignor/'.$this->input->post('consignorID'));
 			}
 		}
+		$data['view']		=	$this->Commonsql_model->select_conginor_contract(array('a.consignorID'=>$this->uri->segment(2)));
+//		echo $date['view']->num_rows();exit;
+		//echo $this->db->last_query();exit;
 		$data['pageTitle']	=	"Edit Emplyee Types";
-		$data['view']		=	$this->Commonsql_model->select('tblemployetypes',array('employetypeID'=>$this->uri->segment(2)));
 		$this->load->view('admin/contract_consignor/edit_contract_consignor',$data);
 	}
 	function view_contract_consignor()

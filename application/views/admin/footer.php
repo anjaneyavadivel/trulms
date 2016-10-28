@@ -268,6 +268,21 @@
                     ],
                     "dom": 'Rlfrtip'
                 });
+				<?php }else if($segment1=='employee'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/employee_types_json',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+                        { "data": "description" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+                    "dom": 'Rlfrtip'
+                });
 				<?php }else{?>
 						
                 var table = $('#basic-usage').DataTable({

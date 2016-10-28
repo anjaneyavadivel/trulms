@@ -161,13 +161,24 @@ class Commonsql_model extends CI_Model {
 		$query	=	$this->db->get();
 		return $query;
 	}
-	function select_conginor_contract()
+	function select_conginor_contract($cond=array())
 	{
-		$this->db->select('a.*,b.from,b.to,b.vehicleLength,b.vehicleCapacity,b.dated,b.signedby,c.grandTotal,d.name');
+		if(!empty($cond))
+		{
+			$this->db->select('*');
+		}
+		else
+		{
+			$this->db->select('a.*,b.from,b.to,b.vehicleLength,b.vehicleCapacity,b.dated,b.signedby,c.grandTotal,d.name');
+		}
 		$this->db->from('tblconsignor as a');
 		$this->db->join('tblcontract as b','a.consignorID=b.consignorID','inner');
 		$this->db->join('tblcontractversionmap as c','b.contractID=c.contractID','inner');
 		$this->db->join('tblcontactdetails as d','a.contactID=d.contactID','inner');
+		if(!empty($cond))
+		{
+			$this->db->where($cond);
+		}
 		$this->db->order_by('a.consignorID','desc');
 		$query	=	$this->db->get();
 		return $query;

@@ -8,12 +8,12 @@
 <section id="content">
   <div class="page page-forms-validate">
     <div class="pageheader">
-      <h2>Contract Consignor</h2>
+      <h2>Employee</h2>
       <div class="page-bar">
         <ul class="page-breadcrumb">
           <li> <a href="<?= base_url()?>"><i class="fa fa-home"></i> HOME</a> </li>
-          <li> <a href="<?= base_url()?>contract-consignor">Contract Consignor</a> </li>
-          <li> <a href="javascript::">Edit Contract Consignor</a> </li>
+          <li> <a href="<?= base_url()?>contract-consignor">Employee</a> </li>
+          <li> <a href="javascript::">Edit Employee</a> </li>
         </ul>
       </div>
     </div>

@@ -238,14 +238,14 @@
                 </ul>
               </div>
             </div>
-            <div class="row">
+            <!--<div class="row">
               <div class="form-group col-md-12">
                 <label for="message">Special Instructions </label>
                 <textarea class="form-control" rows="1" name="roadType" id="message" placeholder="Type your Special Instructions" data-parsley-id="2766"></textarea>
                 <ul class="parsley-errors-list" id="parsley-id-2766">
                 </ul>
               </div>
-            </div>
+            </div>-->
             <div class="row">
               <div class="form-group col-md-6">
                 <label class="col-sm-10 control-label">Handling Charges</label>
