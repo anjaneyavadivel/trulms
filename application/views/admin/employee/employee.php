@@ -63,11 +63,20 @@
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Consioner Name</th>
-                                                <th>From</th>
+                                                <th>Code</th>
+                                                <th>Name</th>
+                                                <th>Qualification</th>
                                                 
-                                               
-                                               
+                                                <th>Section</th>
+                                                <th>Designation</th>
+                                                <th>Mobile</th>
+                                                
+                                                <th>Mail</th>
+                                                <th>Remarks</th>
+                                                <th>Joining Date</th>
+                                                
+                                                <th>Releaving Date</th>
+                                                
                                                 
                                                 <th>Action</th>
                                                

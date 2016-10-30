@@ -250,22 +250,60 @@
             <div class="row">
             
               <div class="form-group col-md-3">
-              
+              <?php $img_url=base_url()."uploads/photo/".$v->photo;
+				if (@getimagesize($img_url))
+				{
+					?>
+					<img src="<?=$img_url?>" height="70" width="70" />
+					 <?php
+				}
+				else
+				{
+					?>
+					<img src="<?=base_url()?>uploads/photo/no_image.jpg" height="70" width="70" />
+					<?php 
+				}
+				?>
                 
-                <img src="<?=base_url()?>uploads/photo/<?=$v->photo?>" height="70" width="70" />
+                
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
               <div class="form-group col-md-3">
                
-                
-                <img src="<?=base_url()?>uploads/proof/<?=$v->proof1?>" height="70" width="70" />
+                <?php $img_url=base_url()."uploads/proof/".$v->proof1;
+				if (@getimagesize($img_url))
+				{
+					?>
+					<img src="<?=$img_url?>" height="70" width="70" />
+					 <?php
+				}
+				else
+				{
+					?>
+					<img src="<?=base_url()?>uploads/proof/no_image.jpg" height="70" width="70" />
+					<?php 
+				}
+				?>
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
               <div class="form-group col-md-3">
                
-                <img src="<?=base_url()?>uploads/proof/<?=$v->proof2?>" height="70" width="70" />
+                <?php $img_url=base_url()."uploads/proof/".$v->proof2;
+				if (@getimagesize($img_url))
+				{
+					?>
+					<img src="<?=$img_url?>" height="70" width="70" />
+					 <?php
+				}
+				else
+				{
+					?>
+					<img src="<?=base_url()?>uploads/proof/no_image.jpg" height="70" width="70" />
+					<?php 
+				}
+				?>
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
@@ -274,6 +312,62 @@
           
               
             </div>
+            <div class="row">
+               <div class="form-group col-md-3">
+              <?php $img_url=base_url()."uploads/photo/".$v->photo;
+				if (@getimagesize($img_url))
+				{
+					?>
+					<a href="<?=$img_url?>" target="_blank">Download Image</a>
+					 <?php
+				}
+				else
+				{
+					?>
+					<a href="<?=base_url()?>uploads/photo/no_image.jpg" target="_blank">Download Image</a>
+					<?php 
+				}
+				?>
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+              <div class="form-group col-md-3">
+                <?php $img_url=base_url()."uploads/proof/".$v->proof1;
+				if (@getimagesize($img_url))
+				{
+					?>
+					<a href="<?=$img_url?>" target="_blank">Download Image</a>
+					 <?php
+				}
+				else
+				{
+					?>
+					<a href="<?=base_url()?>uploads/proof/no_image.jpg" target="_blank">Download Image</a>
+					<?php 
+				}
+				?>
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+              <div class="form-group col-md-3">
+               <?php $img_url=base_url()."uploads/proof/".$v->proof2;
+				if (@getimagesize($img_url))
+				{
+					?>
+					<a href="<?=$img_url?>" target="_blank">Download Image</a>
+					 <?php
+				}
+				else
+				{
+					?>
+					<a href="<?=base_url()?>uploads/proof/no_image.jpg" target="_blank">Download Image</a>
+					<?php 
+				}
+				?>
+                <ul class="parsley-errors-list" id="parsley-id-1328">
+                </ul>
+              </div>
+             </div>
             
           </div>
           <!-- /tile body --> 

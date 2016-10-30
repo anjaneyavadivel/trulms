@@ -91,23 +91,7 @@
 </div>
 <!--/ Application Content -->
 <!-- Splash Modal -->
-<span  id="activedeactiveid" data-toggle="modal" data-target="#active-deactive" data-options="splash-2 splash-ef-11"></span>
-<div class="modal splash fade" id="active-deactive" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title custom-font">Confirmation!</h3>
-            </div>
-            <div class="modal-body">
-                <p id="confirmation-msg"></p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-default btn-border activedeactiveconf-btn">Submit</button>
-                <button class="btn btn-default btn-border activedeactiveconf-close" data-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <?php $this->load->view('admin/footer') ?>
 

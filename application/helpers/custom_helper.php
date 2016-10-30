@@ -743,5 +743,31 @@ if (!function_exists('group_dh_time_ago')) {
     }
 
 }
+
+if (!function_exists('enable_disable_approve_deactive_html')) {
+
+    function disable_approve_deactive_html($onclick_values)
+	{
+		return '<a href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" class=" text-danger text-uppercase text-strong text-sm mr-10 " onclick="active_deactive_class('.$onclick_values.')">De-Active</a>';
+	}
+
+}
+if (!function_exists('enable_approve_deactive_html')) {
+
+    function enable_approve_deactive_html($onclick_values)
+	{
+		return '<a href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" class="text-success text-uppercase text-strong text-sm mr-10" onclick="active_deactive_class('.$onclick_values.')">Active</a>';
+	}
+
+}
+if (!function_exists('approve_html')) {
+
+    function approve_html($onclick_values)
+	{
+		return '<a href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" class="text-primary text-uppercase text-strong text-sm mr-10" onclick="active_deactive_class('.$onclick_values.')">Approved</a>';
+	}
+
+}
+
 /* End of file custom_helper.php */
 ?>
