@@ -350,6 +350,42 @@
                     ],
                     "dom": 'Rlfrtip'
                 });
+				<?php }else if($segment1=='driver'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/driver_json',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+                        { "data": "addressline1" },
+						{ "data": "phone1" },
+						{ "data": "dlno" },
+						{ "data": "dlexpirydt" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+                    "dom": 'Rlfrtip'
+                });
+				<?php }else if($segment1=='approve_driver'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/approve_driver_json/<?php echo $this->uri->segment(2)?>',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+                        { "data": "addressline1" },
+						{ "data": "phone1" },
+						{ "data": "dlno" },
+						{ "data": "dlexpirydt" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+                    "dom": 'Rlfrtip'
+                });
 				<?php }else{?>
 						
                 var table = $('#basic-usage').DataTable({

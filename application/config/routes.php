@@ -86,14 +86,14 @@ $route['department'] 								=		'manage/department';
 $route['add_department'] 							=		'manage/add_department';
 $route['edit_department/([a-zA-Z0-9---_%])+'] 		=		'manage/edit_department/$1';
 $route['view_department/([a-zA-Z0-9---_%])+'] 		=		'manage/view_department/$1';
-$route['approve_department/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_department/$1';
+$route['approve_department/([a-zA-Z0-9---_%])+'] 	=		'manage/approve_department/$1';
 $route['approve_department/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_department/$1/$1';
 
 $route['designation'] 								=		'manage/designation';
 $route['add_designation'] 							=		'manage/add_designation';
 $route['edit_designation/([a-zA-Z0-9---_%])+'] 		=		'manage/edit_designation/$1';
 $route['view_designation/([a-zA-Z0-9---_%])+'] 		=		'manage/view_designation/$1';
-$route['approve_designation/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_designation/$1';
+$route['approve_designation/([a-zA-Z0-9---_%])+'] 	=		'manage/approve_designation/$1';
 $route['approve_designation/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_designation/$1/$1';
 
 $route['role'] 										=		'manage/role';
@@ -114,21 +114,21 @@ $route['payment_status'] 							=		'manage/payment_status';
 $route['add_payment_status'] 						=		'manage/add_payment_status';
 $route['edit_payment_status/([a-zA-Z0-9---_%])+'] 	=		'manage/edit_payment_status/$1';
 $route['view_payment_status/([a-zA-Z0-9---_%])+'] 	=		'manage/view_payment_status/$1';
-$route['approve_payment_status/([a-zA-Z0-9---_%])+'] 	=		'manage/approve_payment_status/$1';
+$route['approve_payment_status/([a-zA-Z0-9---_%])+']=		'manage/approve_payment_status/$1';
 $route['approve_payment_status/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_payment_status/$1/$1';
 
 $route['employee_types'] 							=		'manage/employee_types';
 $route['add_employee_types'] 						=		'manage/add_employee_types';
 $route['edit_employee_types/([a-zA-Z0-9---_%])+'] 	=		'manage/edit_employee_types/$1';
 $route['view_employee_types/([a-zA-Z0-9---_%])+'] 	=		'manage/view_employee_types/$1';
-$route['approve_employee_types/([a-zA-Z0-9---_%])+'] 	=		'manage/approve_employee_types/$1';
+$route['approve_employee_types/([a-zA-Z0-9---_%])+']=		'manage/approve_employee_types/$1';
 $route['approve_employee_types/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_employee_types/$1/$1';
 
 $route['contract-consignor'] 							=		'manage/contract_consignor';
 $route['add-contract-consignor'] 						=		'manage/add_contract_consignor';
 $route['edit-contract-consignor/([a-zA-Z0-9---_%])+'] 	=		'manage/edit_contract_consignor/$1';
 $route['view-contract-consignor/([a-zA-Z0-9---_%])+'] 	=		'manage/view_contract_consignor/$1';
-$route['approve-contract-consignor/([a-zA-Z0-9---_%])+'] 	=		'manage/approve_contract_consignor/$1';
+$route['approve-contract-consignor/([a-zA-Z0-9---_%])+']=		'manage/approve_contract_consignor/$1';
 $route['approve-contract-consignor/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_contract_consignor/$1/$1';
 
 
@@ -138,4 +138,12 @@ $route['edit_employee/([a-zA-Z0-9---_%])+'] 		=		'manage/edit_employee/$1';
 $route['view_employee/([a-zA-Z0-9---_%])+'] 		=		'manage/view_employee/$1';
 $route['approve_employee/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_employee/$1';
 $route['approve_employee/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_employee/$1/$1';
+
+
+$route['driver'] 									=		'manage/driver';
+$route['add_driver'] 								=		'manage/add_driver';
+$route['edit_driver/([a-zA-Z0-9---_%])+'] 			=		'manage/edit_driver/$1';
+$route['view_driver/([a-zA-Z0-9---_%])+'] 			=		'manage/view_driver/$1';
+$route['approve_driver/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_driver/$1';
+$route['approve_driver/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_driver/$1/$1';
 /*****/

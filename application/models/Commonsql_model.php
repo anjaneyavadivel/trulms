@@ -193,6 +193,7 @@ class Commonsql_model extends CI_Model {
 		$query	=	$this->db->get();
 		return $query;
 	}
+	
 	function select_all_employee_mod($id)
 	{
 		$this->db->select('a.emp_modID,a.empID,a.empCode,a.empname,a.qualification,a.mobile,a.mailoffice,a.remarks,a.active,a.joiningdate,a.releavingdate,b.department,c.name');
@@ -201,6 +202,44 @@ class Commonsql_model extends CI_Model {
 		$this->db->join('tbldesignation as c','a.designation=c.desigID','inner');
 		$this->db->where('a.empID',$id);
 		$this->db->order_by('emp_modID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_all_driver()
+	{
+		$this->db->select('a.driverID,a.dlno,a.dlexpirydt,a.active,b.name,b.phone1,b.addressline1');
+		$this->db->from('tbldriver as a');
+		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
+		$this->db->order_by('driverID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_all_driver_mod($id)
+	{
+		$this->db->select('a.driver_modID,a.driverID,a.dlno,a.dlexpirydt,a.active,b.name,b.phone1,b.addressline1');
+		$this->db->from('tbldriver_mod as a');
+		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
+		$this->db->where('a.driverID',$id);
+		$this->db->order_by('driver_modID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_all_driver_mod_where($id)
+	{
+		$this->db->select('*');
+		$this->db->from('tbldriver_mod as a');
+		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
+		$this->db->where('a.driver_modID',$id);
+		$this->db->order_by('a.driver_modID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_driver_edit($id)
+	{
+		$this->db->select('*');
+		$this->db->from('tbldriver as a');
+		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
+		$this->db->where('a.driverID',$id);
 		$query	=	$this->db->get();
 		return $query;
 	}

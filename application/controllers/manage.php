@@ -2141,6 +2141,418 @@ class Manage extends CI_Controller {
 		}
 	}
 	/***********************************************************************************************************************************/
+	function driver()
+	{
+		if($this->uri->segment(3))
+		{
+			$whereData	=	array('driverID'	=>	$this->uri->segment(3));
+			$updateData	=	array('active'	=>	$this->uri->segment(4));
+			$upt	=	$this->Commonsql_model->updateTable('tbldriver', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','driver Status Successfully  Changed...!');
+				redirect('driver');
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('driver');
+			}
+		}
+		else
+		{
+			/*print_r($this->session->userdata('SESS_userRole'));
+			$SESS_userRole = $this->session->userdata('SESS_userRole');
+			$pageroleaccessmap = pageroleaccessmap($SESS_userRole, 'designation');
+			print_r($pageroleaccessmap);
+			exit();*/
+			
+			$data['pageTitle']	=	"driver";
+			$data['table']		=	"driver";
+			$this->load->view('admin/driver/driver',$data);
+		}
+	}
+	function driver_json()
+	{
+		$result	=	$this->Commonsql_model->select_all_driver();
+		$output = array();$i=1;
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['ID']				=	$i++;
+			$vaules['name'] 			= 	$value->name;
+			$vaules['addressline1'] 	= 	$value->addressline1;
+			$vaules['phone1'] 			= 	$value->phone1;
+			
+			$vaules['dlno'] 			= 	$value->dlno;
+			$vaules['dlexpirydt'] 		= 	date('m-d-Y',strtotime($value->dlexpirydt));
+			
+			if($value->active==1)
+			{
+				$view			 			=	"<a href='".base_url()."view_driver/".$value->driverID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+				$APPROVE			 			=	"<a href='".base_url()."approve_driver/".$value->driverID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/driver/".$value->driverID."','0'");
+			}
+			else
+			{
+				$APPROVE		=	'';
+				$view			 =	'';
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/driver/".$value->driverID."','1'");
+			}
+			
+			$vaules['Action'] 			=	$view.$APPROVE."<a href='".base_url()."edit_driver/".$value->driverID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			
+			$output[] =$vaules;
+		}
+
+		 echo json_encode(array('data'=>$output), true);
+	}
+	function add_driver()
+	{
+		if($this->input->post('save'))
+		{
+			
+			$dlImage=$_FILES['dlImage']['name'];
+			if($dlImage!='')
+			{
+				$uploadpath="./uploads/photo/".$dlImage;
+				move_uploaded_file($_FILES['dlImage']['tmp_name'], $uploadpath);
+			}
+			
+			$contact_values=array('name'		=>	$this->input->post('name'),
+							'companyName'		=>	$this->input->post('companyName'),
+							'addressline1'		=>	$this->input->post('addressline1'),
+							'addressline2'		=>	$this->input->post('addressline2'),
+							'city'				=>	$this->input->post('city'),
+							'state'				=>	$this->input->post('state'),
+							'country'			=>	$this->input->post('country'),
+							'email1'			=>	$this->input->post('email1'),
+							'email2'			=>	$this->input->post('email2'),
+							'phone1'			=>	$this->input->post('phone1'),
+							'phone2'			=>	$this->input->post('phone2'),
+							'fax'				=>	$this->input->post('fax'),
+							'website'			=>	$this->input->post('website'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$contactID	=	insertTable('tblcontactdetails', $contact_values,0);
+			
+			$values=array('contactID'					=>	$contactID,
+							'sex'						=>	$this->input->post('sex'),
+							'dlno'						=>	$this->input->post('dlno'),
+							
+							'dlexpirydt'				=>	date('Y-m-d',strtotime($this->input->post('dlexpirydt'))),
+							'dlImage'					=>	$dlImage,
+							
+							'dbentrystateID'			=>	0,
+							'createby'					=>	$this->session->userdata('SESS_userId'),
+							'active'					=>	1);
+							
+			$query	=	insertTable('tbldriver', $values,1,'driverID');
+			if($query)
+			{
+				$this->session->set_userdata('suc','Driver Successfully  Added...!');
+				redirect('add_driver');
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('add_driver');
+			}
+		}
+		$data['pageTitle']	=	"Add driver";
+		$this->load->view('admin/driver/add_driver',$data);
+	}
+	function edit_driver()
+	{
+		if($this->input->post('save'))
+		{
+			$dlImage=$_FILES['dlImage']['name'];
+			if($dlImage!='')
+			{
+				$uploadpath="./uploads/photo/".$dlImage;
+				move_uploaded_file($_FILES['dlImage']['tmp_name'], $uploadpath);
+				
+			}
+			else
+			{
+				$dlImage	=	$this->input->post('dlImage1');
+			}
+			
+			$contact_values=array('name'		=>	$this->input->post('name'),
+							'companyName'		=>	$this->input->post('companyName'),
+							'addressline1'		=>	$this->input->post('addressline1'),
+							'addressline2'		=>	$this->input->post('addressline2'),
+							'city'				=>	$this->input->post('city'),
+							'state'				=>	$this->input->post('state'),
+							'country'			=>	$this->input->post('country'),
+							'email1'			=>	$this->input->post('email1'),
+							'email2'			=>	$this->input->post('email2'),
+							'phone1'			=>	$this->input->post('phone1'),
+							'phone2'			=>	$this->input->post('phone2'),
+							'fax'				=>	$this->input->post('fax'),
+							'website'			=>	$this->input->post('website'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$whereData1	=	array('contactID'	=>	$this->input->post('contactID'));
+			
+			$query1		= updateTable('tblcontactdetails', $whereData1, $contact_values , 1,'contactID', $this->input->post('contactID'));
+			
+			$values_mod=array('contactID'				=>	$this->input->post('contactID'),
+							'sex'						=>	$this->input->post('sex'),
+							'dlno'						=>	$this->input->post('dlno'),
+							
+							'dlexpirydt'				=>	date('Y-m-d',strtotime($this->input->post('dlexpirydt'))),
+							'dlImage'					=>	$dlImage,
+							
+							'dbentrystateID'			=>	0,
+							'createby'					=>	$this->session->userdata('SESS_userId'),
+							'active'					=>	1);
+							
+							
+			$whereData	=	array('driverID'	=>	$this->input->post('driverID'));
+			
+			$query		= updateTable('tbldriver', $whereData, $values_mod , 1,'driverID', $this->input->post('driverID'));
+			
+			if($query || $query1)
+			{
+				$this->session->set_userdata('suc','Driver Successfully  Updated...!');
+				redirect('edit_driver/'.$this->input->post('driverID'));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('edit_driver/'.$this->input->post('driverID'));
+			}
+		}
+		$data['pageTitle']	=	"Edit driver";
+		$data['view']		=	$this->Commonsql_model->select_driver_edit($this->uri->segment(2));
+		$this->load->view('admin/driver/edit_driver',$data);
+	}
+	function view_driver()
+	{
+		$data['pageTitle']	=	"View driver";
+		$data['view']		=	$this->Commonsql_model->select_driver_edit($this->uri->segment(2));
+		$this->load->view('admin/driver/view_driver',$data);
+	}
+	function approve_driver()
+	{
+		if($this->input->post('save'))
+		{
+			$dlImage=$_FILES['dlImage']['name'];
+			if($dlImage!='')
+			{
+				$uploadpath="./uploads/photo/".$dlImage;
+				move_uploaded_file($_FILES['dlImage']['tmp_name'], $uploadpath);
+			}
+			else
+			{
+				$dlImage	=	$this->input->post('dlImage1');
+			}
+			
+			$contact_values=array('name'		=>	$this->input->post('name'),
+							'companyName'		=>	$this->input->post('companyName'),
+							'addressline1'		=>	$this->input->post('addressline1'),
+							'addressline2'		=>	$this->input->post('addressline2'),
+							'city'				=>	$this->input->post('city'),
+							'state'				=>	$this->input->post('state'),
+							'country'			=>	$this->input->post('country'),
+							'email1'			=>	$this->input->post('email1'),
+							'email2'			=>	$this->input->post('email2'),
+							'phone1'			=>	$this->input->post('phone1'),
+							'phone2'			=>	$this->input->post('phone2'),
+							'fax'				=>	$this->input->post('fax'),
+							'website'			=>	$this->input->post('website'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$whereData1	=	array('contactID'	=>	$this->input->post('contactID'));
+			
+			$query1		= updateTable('tblcontactdetails', $whereData1, $contact_values , 1,'contactID', $this->input->post('contactID'));
+			
+			$values_mod=array('contactID'				=>	$this->input->post('contactID'),
+							'sex'						=>	$this->input->post('sex'),
+							'dlno'						=>	$this->input->post('dlno'),
+							
+							'dlexpirydt'				=>	date('Y-m-d',strtotime($this->input->post('dlexpirydt'))),
+							'dlImage'					=>	$dlImage,
+							
+							'dbentrystateID'			=>	0,
+							'createby'					=>	$this->session->userdata('SESS_userId'),
+							'active'					=>	1);
+							
+							
+			$whereData	=	array('driverID'	=>	$this->input->post('driverID'));
+			
+			$query		= updateTable('tbldriver', $whereData, $values_mod , 1,'driverID', $this->input->post('driverID'));
+			
+			if($query || $query1)
+			{
+				$this->session->set_userdata('suc','driver Successfully  Updated...!');
+				redirect('approve_driver/'.$this->input->post('driverID'));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('approve_driver/'.$this->input->post('driverID'));
+			}
+		}
+		if($this->uri->segment(4))
+		{
+			$whereData	=	array('driver_modID'	=>	$this->uri->segment(4));
+			$updateData	=	array('active'	=>	$this->uri->segment(5));
+			$upt	=	$this->Commonsql_model->updateTable('tbldriver_mod', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','driver Status Successfully  Changed...!');
+				redirect('approve_driver/'.$this->uri->segment(3));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('approve_driver/'.$this->uri->segment(3));
+			}
+		}
+		else if($this->uri->segment(3))
+		{
+			$data['pageTitle']	=	"View driver";
+			$data['table']		=	"Designation";
+			$data['view']		=	$this->Commonsql_model->select_all_driver_mod_where($this->uri->segment(3));
+			$this->load->view('admin/driver/approve_driver',$data);
+		}
+		else
+		{
+			$data['pageTitle']	=	"View driver";
+			$data['table']		=	"driver";
+			$data['view']		=	$this->Commonsql_model->select_driver_edit($this->uri->segment(2));
+			$this->load->view('admin/driver/approve_driver',$data);
+		}
+	}
+	function approve_driver_json()
+	{
+		$result	=	$this->Commonsql_model->select_all_driver_mod($this->uri->segment(3));
+		//echo $this->db->last_query();
+		$output = array();$i=1;$j=1;
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['ID']				=	$i++;
+			$vaules['name'] 			= 	$value->name;
+			$vaules['addressline1'] 	= 	$value->addressline1;
+			$vaules['phone1'] 			= 	$value->phone1;
+			
+			$vaules['dlno'] 			= 	$value->dlno;
+			$vaules['dlexpirydt'] 		= 	date('m-d-Y',strtotime($value->dlexpirydt));
+			
+			if($value->active==1)
+			{
+				if($j++==1)
+				{
+					$Approve	=	approve_html("'".base_url()."manage/driver_mod_approve/".$value->driver_modID."','2'");
+				}
+				else
+				{
+					$Approve	=	'';
+				}
+				
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_driver/".$value->driverID."/".$value->driver_modID."','0'");
+			}
+			else
+			{
+				$Approve		=	'';
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_driver/".$value->driverID."/".$value->driver_modID."','1'");
+			}
+			
+			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_driver/".$value->driverID.'/'.$value->driver_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			
+			$output[] =$vaules;
+		}
+
+		 echo json_encode(array('data'=>$output), true);
+	}
+	function driver_mod_approve()
+	{
+		$mod_id	=	$this->uri->segment(3);
+		$data	=	$this->Commonsql_model->select('tbldriver_mod',array('driver_modID'=>$mod_id));
+		if($data->num_rows()>0)
+		{
+			$val	=	$data->row();
+			
+				$values=array('empCode'				=>	$val->empCode,
+							'empname'					=>	$val->empname,
+							'branchID'					=>	$val->branchID,
+							
+							'dob'						=>	$val->dob,
+							'sex'						=>	$val->sex,
+							'fathername'				=>	$val->fathername,
+							
+							'qualification'				=>	$val->qualification,
+							'deptid'					=>	$val->deptid,
+							'designation'				=>	$val->designation,
+							
+							'employeetype'				=>	$val->employeetype,
+							'mobile'					=>	$val->mobile,
+							'emergencycontactperson'	=>	$val->emergencycontactperson,
+							
+							'emergencycontact'			=>	$val->emergencycontact,
+							'mailoffice'				=>	$val->mailoffice,
+							'mailpersonal'				=>	$val->mailpersonal,
+							
+							'addressline1'				=>	$val->addressline1,
+							'city'						=>	$val->city,
+							'state'						=>	$val->state,
+							
+							'country'					=>	$val->country,
+							'joiningdate'				=>	$val->joiningdate,
+							'reportingto'				=>	$val->reportingto,
+							
+							'photo'						=>	$val->photo,
+							'proof1'					=>	$val->proof1,
+							'proof2'					=>	$val->proof2,
+							
+							'remarks'					=>	$val->remarks,
+							'releavingdate'				=>	$val->releavingdate,
+							'dbentrystateID'			=>	3,
+							'approvedby'				=>	$this->session->userdata('SESS_userId'),
+							'approvedon'				=>	date('Y-m-d h:i:s'));
+								
+							
+				$cond		=	array('driverID'	=>	$val->driverID);
+				
+				$values_mod	=	array('dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond_mod	=	array('driver_modID'	=>	$mod_id);
+				$upt		=	$this->Commonsql_model->updateTable('tbldriver', $cond , $values);
+				$upt_m		=	$this->Commonsql_model->updateTable('tbldriver_mod', $cond_mod , $values_mod);
+				//echo $this->db->last_query();exit;
+				if($upt)
+				{
+					$this->session->set_userdata('suc','Approved Successfully  Finished...!');
+					redirect('approve_driver/'.$val->driverID);
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('approve_driver/'.$val->driverID);
+				}
+							
+							
+						
+		}
+	}
+	/***********************************************************************************************************************************/
 	function contract_consignor()
 	{
 		if($this->uri->segment(3))
