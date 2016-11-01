@@ -103,8 +103,8 @@ class Setup extends CI_Controller {
                 redirect('add-form-master');
             }
         }
-        $data['pageTitle'] = "Add Form";
-        $data['table'] = "Add Form";
+        $data['pageTitle'] = "Form";
+        //$data['table'] = "Add Form";
         $this->load->view('admin/form_master/add_form_master', $data);
     }
 
@@ -264,7 +264,73 @@ class Setup extends CI_Controller {
         $data['table'] = "Eployee Role";
         $this->load->view('admin/employee_role/employee_role', $data);
     }
+    function add_employee_role() {
+        if (!$this->session->userdata('SESS_userId')) {
+            redirect(base_url() . "login");
+        }
+        if ($_POST) {
+            $this->form_validation->set_rules('menuCaption', 'Form/Menu Name', 'trim|required');
+            $this->form_validation->set_rules('parentID', 'Parent Category', 'trim|required');
+            $this->form_validation->set_rules('url', 'URL', 'trim|required|is_unique[tblpages.url]');
+            if ($this->form_validation->run($this) == FALSE) {
+                $this->session->set_userdata('err', validation_errors());
+                redirect('add-form-master');
+            }
 
+            extract($this->input->post());
+
+            // insert data into tblpages
+            $values = array('menuCaption' => $menuCaption,
+                'url' => $url,
+                'icon' => $icon,
+                'tooltip' => $tooltip,
+                'parentID' => $parentID,
+                'dbentrystateID' => 3,
+                'createby' => $this->session->userdata('SESS_userId'),
+                'active' => 1);
+
+            $pageID = insertTable('tblpages', $values, 1, 'pageID');
+            // insert data into tblpagealterdetails
+            if (!isset($iscreateApproveRequired)) {
+                $iscreateApproveRequired = 0;
+            }
+            if (!isset($ismodifyApproveRequired)) {
+                $ismodifyApproveRequired = 0;
+            }
+            if (!isset($isReportingUserApproveAllowed)) {
+                $isReportingUserApproveAllowed = 0;
+            }
+            if (!isset($isSelfEditAllowed)) {
+                $isSelfEditAllowed = 0;
+            }
+            if (!isset($isSelfApprovalAllowed)) {
+                $isSelfApprovalAllowed = 0;
+            }
+            $values = array(
+                'pageID' => $pageID,
+                'iscreateApproveRequired' => $iscreateApproveRequired,
+                'ismodifyApproveRequired' => $ismodifyApproveRequired,
+                'isReportingUserApproveAllowed' => $isReportingUserApproveAllowed,
+                'isSelfEditAllowed' => $isSelfEditAllowed,
+                'isSelfApprovalAllowed' => $isSelfApprovalAllowed,
+                'dbentrystateID' => 3,
+                'createby' => $this->session->userdata('SESS_userId'),
+                'active' => 1);
+
+            $pageAlterDetailsID = insertTable('tblpagealterdetails', $values, 1, 'pageAlterDetailsID');
+            if ($pageID > 0 && $pageAlterDetailsID > 0) {
+                $this->session->set_userdata('suc', 'Form successfully  added...!');
+                redirect('add-form-master');
+            } else {
+                $this->session->set_userdata('err', 'Error! Please try again..!');
+                redirect('add-form-master');
+            }
+        }
+        $data['pageTitle'] = "Employee Role";
+        //$data['table'] = "Add Form";
+        $this->load->view('admin/employee_role/add_employee_role', $data);
+    }
+    
 ////////// form access
     function form_access() {
         if (!$this->session->userdata('SESS_userId')) {

@@ -24,10 +24,10 @@
 
         <!-- row -->
         <div class="row"> 
-            <?php $this->load->view('admin/msg')?>
-            <?= form_open_multipart(base_url() . 'add-form-master', array('id' => 'form4', 'role' => 'form', 'data-parsley-validate' => '')); ?>
+             <?= form_open_multipart(base_url() . 'add-form-master',array('id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
             <!-- col -->
-           <div class="col-md-6">
+            <?php $this->load->view('admin/msg')?>
+          <div class="col-md-6">
                
                 <section class="tile"> 
 
@@ -44,11 +44,11 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="menuCaption">Form/Menu Name <span class="required">*</span></label>
-                                <input type="text" name="menuCaption" id="menuCaption" class="form-control" required="" data-parsley-id="8057">
+                                <input type="text" name="menuCaption" id="menuCaption" class="form-control" required="" >
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="parentID">Parent Category <span class="required">*</span></label>
-                                <select name="parentID" class="form-control mb-10" data-parsley-trigger="change" required="" data-parsley-id="3888">
+                                <select name="parentID" class="form-control mb-10" data-parsley-trigger="change" required="" >
                                     <option value="">Select option...</option>
                                     <option value="1">Master</option>
                                     <option value="2">Setup</option>
@@ -60,18 +60,18 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="url">URL <span class="required">*</span></label>
-                                <input type="text" name="url" id="url" class="form-control checkfield" data-tb="pages" data-col="url" required="" data-parsley-id="8057" placeholder="add-form-master">
+                                <input type="text" name="url" id="url" class="form-control checkfield" data-tb="pages" data-col="url" required="" placeholder="add-form-master">
                                 <span id="checkfield_msg"></span>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="icon">Icon</label>
-                                <input type="text" name="icon" id="icon" class="form-control" data-parsley-id="1328" placeholder="fa fa-plus">
+                                <input type="text" name="icon" id="icon" class="form-control" placeholder="fa fa-plus">
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="tooltip">Tooltip</label>
-                                <input type="text" name="tooltip" id="tooltip" class="form-control" data-parsley-id="1328">
+                                <input type="text" name="tooltip" id="tooltip" class="form-control" >
                             </div>
                         </div>
                         
