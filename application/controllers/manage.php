@@ -56,13 +56,13 @@ class Manage extends CI_Controller {
 			{
 				$view			 			=	"<a href='".base_url()."view_department/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
 				$APPROVE			 			=	"<a href='".base_url()."approve_department/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
-				$active	=	"<a href='".base_url()."manage/department/".$value->deptID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/department/".$value->deptID."','0'");
 			}
 			else
 			{
 				$APPROVE		=	'';
 				$view			 =	'';
-				$active	=	"<a href='".base_url()."manage/department/".$value->deptID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/department/".$value->deptID."','1'");
 			}
 			
 			$vaules['Action'] 			=	$view.$APPROVE."<a href='".base_url()."edit_department/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
@@ -220,19 +220,19 @@ class Manage extends CI_Controller {
 			{
 				if($j++==1)
 				{
-					$Approve			 			=	"<a href='".base_url()."manage/department_mod_approve/".$value->dept_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approved</a>";
+					$Approve	=	approve_html("'".base_url()."manage/department_mod_approve/".$value->dept_modID."','2'");
 				}
 				else
 				{
 					$Approve	=	'';
 				}
 				
-				$active	=	"<a href='".base_url()."manage/approve_department/".$value->deptID.'/'.$value->dept_modID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/designation/".$value->deptID."/".$value->dept_modID."','0'");
 			}
 			else
 			{
 				$Approve		=	'';
-				$active	=	"<a href='".base_url()."manage/approve_department/".$value->deptID.'/'.$value->dept_modID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/designation/".$value->deptID."/".$value->dept_modID."','1'");
 			}
 			
 			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_department/".$value->deptID.'/'.$value->dept_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
@@ -323,13 +323,13 @@ class Manage extends CI_Controller {
 			{
 				$view			 			=	"<a href='".base_url()."view_designation/".$value->desigID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
 				$APPROVE			 			=	"<a href='".base_url()."approve_designation/".$value->desigID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
-				$active	=	"<a href='".base_url()."manage/designation/".$value->desigID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/designation/".$value->desigID."','0'");
 			}
 			else
 			{
 				$APPROVE		=	'';
 				$view		=	'';
-				$active	=	"<a href='".base_url()."manage/designation/".$value->desigID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/designation/".$value->desigID."','1'");
 			}
 			
 			$vaules['Action'] 			=	$view.$APPROVE."<a  href='".base_url()."edit_designation/".$value->desigID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
@@ -483,19 +483,19 @@ class Manage extends CI_Controller {
 			{
 				if($j++==1)
 				{
-					$Approve			 			=	"<a href='".base_url()."manage/designation_mod_approve/".$value->desig_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approved</a>";
+					$Approve	=	approve_html("'".base_url()."manage/designation_mod_approve/".$value->desig_modID."','2'");
 				}
 				else
 				{
 					$Approve	=	'';
 				}
 				
-				$active	=	"<a href='".base_url()."manage/approve_designation/".$value->desigID.'/'.$value->desig_modID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_designation/".$value->desigID."/".$value->desig_modID."','0'");
 			}
 			else
 			{
 				$Approve		=	'';
-				$active	=	"<a href='".base_url()."manage/approve_designation/".$value->desigID.'/'.$value->desig_modID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_designation/".$value->desigID."/".$value->desig_modID."','1'");
 			}
 			
 			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_designation/".$value->desigID.'/'.$value->desig_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
@@ -586,13 +586,13 @@ class Manage extends CI_Controller {
 			{
 				$view			 			=	"<a href='".base_url()."view_role/".$value->roleID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
 				$APPROVE			 			=	"<a href='".base_url()."approve_role/".$value->roleID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
-				$active	=	"<a href='".base_url()."manage/role/".$value->roleID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/role/".$value->roleID."','0'");
 			}
 			else
 			{
 				$view		=	'';
 				$APPROVE		=	'';
-				$active	=	"<a href='".base_url()."manage/role/".$value->roleID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/role/".$value->roleID."','1'");
 			}
 			
 			$vaules['Action'] 			=	$view.$APPROVE."<a href='".base_url()."edit_role/".$value->roleID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
@@ -746,19 +746,19 @@ class Manage extends CI_Controller {
 			{
 				if($j++==1)
 				{
-					$Approve			 			=	"<a href='".base_url()."manage/role_mod_approve/".$value->role_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approved</a>";
+					$Approve	=	approve_html("'".base_url()."manage/role_mod_approve/".$value->role_modID."','2'");
 				}
 				else
 				{
 					$Approve	=	'';
 				}
 				
-				$active	=	"<a href='".base_url()."manage/approve_role/".$value->roleID.'/'.$value->role_modID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_role/".$value->roleID."/".$value->role_modID."','0'");
 			}
 			else
 			{
 				$Approve		=	'';
-				$active	=	"<a href='".base_url()."manage/approve_role/".$value->roleID.'/'.$value->role_modID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_role/".$value->roleID."/".$value->role_modID."','1'");
 			}
 			
 			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_role/".$value->roleID.'/'.$value->role_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
@@ -849,13 +849,13 @@ class Manage extends CI_Controller {
 			{
 				$view			 			=	"<a href='".base_url()."view_payment_mode/".$value->paymentModeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
 				$APPROVE			 			=	"<a href='".base_url()."approve_payment_mode/".$value->paymentModeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
-				$active	=	"<a href='".base_url()."manage/payment_mode/".$value->paymentModeID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/payment_mode/".$value->paymentModeID."','0'");
 			}
 			else
 			{
 				$view		=	'';
 				$APPROVE		=	'';
-				$active	=	"<a href='".base_url()."manage/payment_mode/".$value->paymentModeID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/payment_mode/".$value->paymentModeID."','1'");
 			}
 			
 			$vaules['Action'] 			=	$view.$APPROVE."<a href='".base_url()."edit_payment_mode/".$value->paymentModeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
@@ -1010,18 +1010,18 @@ class Manage extends CI_Controller {
 			{
 				if($j++==1)
 				{
-					$Approve			 			=	"<a href='".base_url()."manage/payment_mode_mod_approve/".$value->paymentMode_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approved</a>";
+					$Approve	=	approve_html("'".base_url()."manage/payment_mode_mod_approve/".$value->paymentMode_modID."','2'");
 				}
 				else
 				{
 					$Approve	=	'';
 				}
-				$active	=	"<a href='".base_url()."manage/approve_payment_mode/".$value->paymentModeID.'/'.$value->paymentMode_modID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_payment_mode/".$value->paymentModeID."/".$value->paymentMode_modID."','0'");
 			}
 			else
 			{
 				$Approve		=	'';
-				$active	=	"<a href='".base_url()."manage/approve_payment_mode/".$value->paymentModeID.'/'.$value->paymentMode_modID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_payment_mode/".$value->paymentModeID."/".$value->paymentMode_modID."','1'");
 			}
 			
 			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_payment_mode/".$value->paymentModeID.'/'.$value->paymentMode_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
@@ -1112,13 +1112,13 @@ class Manage extends CI_Controller {
 			{
 				$view			 			=	"<a href='".base_url()."view_payment_status/".$value->payStatusID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
 				$APPROVE			 			=	"<a href='".base_url()."approve_payment_status/".$value->payStatusID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
-				$active	=	"<a href='".base_url()."manage/payment_status/".$value->payStatusID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/payment_status/".$value->payStatusID."','0'");
 			}
 			else
 			{
 				$view		=	'';
 				$APPROVE		=	'';
-				$active	=	"<a href='".base_url()."manage/payment_status/".$value->payStatusID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/payment_status/".$value->payStatusID."','1'");
 			}
 			
 			$vaules['Action'] 			=	$view.$APPROVE."<a href='".base_url()."edit_payment_status/".$value->payStatusID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
@@ -1272,18 +1272,18 @@ class Manage extends CI_Controller {
 			{
 				if($j++==1)
 				{
-					$Approve			 			=	"<a href='".base_url()."manage/payment_statu_mod_approve/".$value->payStatus_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approved</a>";
+					$Approve	=	approve_html("'".base_url()."manage/payment_statu_mod_approve/".$value->payStatus_modID."','2'");
 				}
 				else
 				{
 					$Approve	=	'';
 				}
-				$active	=	"<a href='".base_url()."manage/approve_payment_status/".$value->payStatusID.'/'.$value->payStatus_modID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_payment_status/".$value->payStatusID."/".$value->payStatus_modID."','0'");
 			}
 			else
 			{
 				$Approve		=	'';
-				$active	=	"<a href='".base_url()."manage/approve_payment_status/".$value->payStatusID.'/'.$value->payStatus_modID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_payment_status/".$value->payStatusID."/".$value->payStatus_modID."','1'");
 			}
 			
 			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_payment_status/".$value->payStatusID.'/'.$value->payStatus_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
@@ -1374,13 +1374,13 @@ class Manage extends CI_Controller {
 			{
 				$view		=	"<a href='".base_url()."view_employee_types/".$value->employetypeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
 				$Approve		=	"<a href='".base_url()."approve_employee_types/".$value->employetypeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approve</a>";
-				$active	=	"<a href='".base_url()."manage/employee_types/".$value->employetypeID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/employee_types/".$value->employetypeID."','0'");
 			}
 			else
 			{
 				$view		=	'';
 				$Approve		=	'';
-				$active	=	"<a href='".base_url()."manage/employee_types/".$value->employetypeID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/employee_types/".$value->employetypeID."','1'");
 			}
 			
 			$vaules['Action'] 			=	$view.$Approve."<a  href='".base_url()."edit_employee_types/".$value->employetypeID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
@@ -1537,18 +1537,18 @@ class Manage extends CI_Controller {
 			{
 				if($j++==1)
 				{
-					$Approve	=	"<a href='".base_url()."manage/employee_types_mod_approve/".$value->employetype_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approved</a>";
+					$Approve	=	approve_html("'".base_url()."manage/employee_types_mod_approve/".$value->employetype_modID."','2'");
 				}
 				else
 				{
 					$Approve	=	'';
 				}
-				$active	=	"<a href='".base_url()."manage/approve_employee_types/".$value->employetypeID.'/'.$value->employetype_modID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_employee_types/".$value->employetypeID."/".$value->employetype_modID."','0'");
 			}
 			else
 			{
 				$Approve	=	'';
-				$active	=	"<a href='".base_url()."manage/approve_employee_types/".$value->employetypeID.'/'.$value->employetype_modID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_employee_types/".$value->employetypeID."/".$value->employetype_modID."','1'");
 			}
 			
 			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_employee_types/".$value->employetypeID.'/'.$value->employetype_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
@@ -1593,6 +1593,962 @@ class Manage extends CI_Controller {
 					$this->session->set_userdata('err','Error Please try again..!');
 					redirect('approve_employee_types/'.$val->employetypeID);
 				}
+						
+		}
+	}
+	/***********************************************************************************************************************************/
+	function employee()
+	{
+		if($this->uri->segment(3))
+		{
+			$whereData	=	array('empID'	=>	$this->uri->segment(3));
+			$updateData	=	array('active'	=>	$this->uri->segment(4));
+			$upt	=	$this->Commonsql_model->updateTable('tblemployee', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','employee Status Successfully  Changed...!');
+				redirect('employee');
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('employee');
+			}
+		}
+		else
+		{
+			/*print_r($this->session->userdata('SESS_userRole'));
+			$SESS_userRole = $this->session->userdata('SESS_userRole');
+			$pageroleaccessmap = pageroleaccessmap($SESS_userRole, 'designation');
+			print_r($pageroleaccessmap);
+			exit();*/
+			
+			$data['pageTitle']	=	"employee";
+			$data['table']		=	"employee";
+			$this->load->view('admin/employee/employee',$data);
+		}
+	}
+	function employee_json()
+	{
+		$result	=	$this->Commonsql_model->select_all_employee();
+		$output = array();$i=1;
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['ID']				=	$i++;
+			$vaules['empCode'] 			= 	$value->empCode;
+			$vaules['empname'] 			= 	$value->empname;
+			$vaules['qualification'] 	= 	$value->qualification;
+			
+			$vaules['deptid'] 			= 	$value->department;
+			$vaules['designation'] 		= 	$value->name;
+			$vaules['mobile'] 			= 	$value->mobile;
+			
+			$vaules['mailoffice'] 		= 	$value->mailoffice;
+			$vaules['remarks'] 			= 	$value->remarks;
+			
+			
+			if('1970-01-01'==$value->joiningdate || $value->joiningdate=='')
+			{
+				$vaules['joiningdate'] 	= 	"-";
+			}
+			else
+			{
+				$vaules['joiningdate'] 		= 	date('m-d-Y',strtotime($value->joiningdate));
+			}
+			if('1970-01-01'==$value->releavingdate || $value->releavingdate=='')
+			{
+				$vaules['releavingdate'] 	= 	"-";
+			}
+			else
+			{
+				$vaules['releavingdate'] 	= 	date('m-d-Y',strtotime($value->releavingdate));
+			}
+			
+			if($value->active==1)
+			{
+				$view			 			=	"<a href='".base_url()."view_employee/".$value->empID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+				$APPROVE			 			=	"<a href='".base_url()."approve_employee/".$value->empID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/employee/".$value->empID."','0'");
+			}
+			else
+			{
+				$APPROVE		=	'';
+				$view			 =	'';
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/employee/".$value->empID."','1'");
+			}
+			
+			$vaules['Action'] 			=	$view.$APPROVE."<a href='".base_url()."edit_employee/".$value->empID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			
+			$output[] =$vaules;
+		}
+
+		 echo json_encode(array('data'=>$output), true);
+	}
+	function add_employee()
+	{
+		if($this->input->post('save'))
+		{
+			
+			$photo=$_FILES['photo']['name'];
+			$proof1=$_FILES['proof1']['name'];
+			$proof2=$_FILES['proof2']['name'];
+			if($photo!='')
+			{
+				$uploadpath="./uploads/photo/".$photo;
+				move_uploaded_file($_FILES['photo']['tmp_name'], $uploadpath);
+			}
+			if($proof1!='')
+			{
+				$uploadpath="./uploads/proof/".$proof1;
+				move_uploaded_file($_FILES['proof1']['tmp_name'], $uploadpath);
+			}
+			if($proof2!='')
+			{
+				$uploadpath="./uploads/proof/".$proof1;
+				move_uploaded_file($_FILES['proof2']['tmp_name'], $uploadpath);
+			}
+			$values=array('empCode'						=>	$this->input->post('empCode'),
+							'empname'					=>	$this->input->post('empname'),
+							'branchID'					=>	$this->input->post('branchID'),
+							
+							'dob'						=>	date('Y-m-d',strtotime($this->input->post('dob'))),
+							'sex'						=>	$this->input->post('sex'),
+							'fathername'				=>	$this->input->post('fathername'),
+							
+							'qualification'				=>	$this->input->post('qualification'),
+							'deptid'					=>	$this->input->post('deptid'),
+							'designation'				=>	$this->input->post('designation'),
+							
+							'employeetype'				=>	$this->input->post('employeetype'),
+							'mobile'					=>	$this->input->post('mobile'),
+							'emergencycontactperson'	=>	$this->input->post('emergencycontactperson'),
+							
+							'emergencycontact'			=>	$this->input->post('emergencycontact'),
+							'mailoffice'				=>	$this->input->post('mailoffice'),
+							'mailpersonal'				=>	$this->input->post('mailpersonal'),
+							
+							'addressline1'				=>	$this->input->post('addressline1'),
+							'city'						=>	$this->input->post('city'),
+							'state'						=>	$this->input->post('state'),
+							
+							'country'					=>	$this->input->post('country'),
+							'joiningdate'				=>	date('Y-m-d',strtotime($this->input->post('joiningdate'))),
+							'reportingto'				=>	$this->input->post('reportingto'),
+							
+							'photo'						=>	$photo,
+							'proof1'					=>	$proof1,
+							'proof2'					=>	$proof2,
+							
+							'remarks'					=>	$this->input->post('remarks'),
+							'releavingdate'				=>	date('Y-m-d',strtotime($this->input->post('releavingdate'))),
+							
+							'dbentrystateID'			=>	0,
+							'createby'					=>	$this->session->userdata('SESS_userId'),
+							'active'					=>	1);
+							
+			$query	=	insertTable('tblemployee', $values,1,'empID');
+			if($query)
+			{
+				$this->session->set_userdata('suc','employee Successfully  Added...!');
+				redirect('add_employee');
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('add_employee');
+			}
+		}
+		$data['dept']		=	$this->Commonsql_model->select('tbldept',array('dbentrystateID'=>3,'active'=>1));
+		$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID'=>3,'active'=>1));
+		$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID'=>3,'active'=>1));
+		$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID'=>3,'active'=>1));
+		$data['pageTitle']	=	"Add employee";
+		$this->load->view('admin/employee/add_employee',$data);
+	}
+	function edit_employee()
+	{
+		if($this->input->post('save'))
+		{
+			$photo=$_FILES['photo']['name'];
+			$proof1=$_FILES['proof1']['name'];
+			$proof2=$_FILES['proof2']['name'];
+			if($photo!='')
+			{
+				$uploadpath="./uploads/photo/".$photo;
+				move_uploaded_file($_FILES['photo']['tmp_name'], $uploadpath);
+			}
+			else
+			{
+				$photo	=	$this->input->post('photo1');
+			}
+			if($proof1!='')
+			{
+				$uploadpath="./uploads/proof/".$proof1;
+				move_uploaded_file($_FILES['proof1']['tmp_name'], $uploadpath);
+			}
+			else
+			{
+				$proof1	=	$this->input->post('proof11');
+			}
+			if($proof2!='')
+			{
+				$uploadpath="./uploads/proof/".$proof1;
+				move_uploaded_file($_FILES['proof2']['tmp_name'], $uploadpath);
+			}
+			else
+			{
+				$proof2	=	$this->input->post('proof21');
+			}
+				$values_mod=array('empCode'						=>	$this->input->post('empCode'),
+							'empname'					=>	$this->input->post('empname'),
+							'branchID'					=>	$this->input->post('branchID'),
+							
+							'dob'						=>	date('Y-m-d',strtotime($this->input->post('dob'))),
+							'sex'						=>	$this->input->post('sex'),
+							'fathername'				=>	$this->input->post('fathername'),
+							
+							'qualification'				=>	$this->input->post('qualification'),
+							'deptid'					=>	$this->input->post('deptid'),
+							'designation'				=>	$this->input->post('designation'),
+							
+							'employeetype'				=>	$this->input->post('employeetype'),
+							'mobile'					=>	$this->input->post('mobile'),
+							'emergencycontactperson'	=>	$this->input->post('emergencycontactperson'),
+							
+							'emergencycontact'			=>	$this->input->post('emergencycontact'),
+							'mailoffice'				=>	$this->input->post('mailoffice'),
+							'mailpersonal'				=>	$this->input->post('mailpersonal'),
+							
+							'addressline1'				=>	$this->input->post('addressline1'),
+							'city'						=>	$this->input->post('city'),
+							'state'						=>	$this->input->post('state'),
+							
+							'country'					=>	$this->input->post('country'),
+							'joiningdate'				=>	date('Y-m-d',strtotime($this->input->post('joiningdate'))),
+							'reportingto'				=>	$this->input->post('reportingto'),
+							
+							'photo'						=>	$photo,
+							'proof1'					=>	$proof1,
+							'proof2'					=>	$proof2,
+							
+							'remarks'					=>	$this->input->post('remarks'),
+							'releavingdate'				=>	date('Y-m-d',strtotime($this->input->post('releavingdate'))),
+							
+							'dbentrystateID'			=>	0,
+							'createby'					=>	$this->session->userdata('SESS_userId'),
+							'active'					=>	1);
+							
+			$whereData	=	array('empID'	=>	$this->input->post('empID'));
+			
+			$query		= updateTable('tblemployee', $whereData, $values_mod , 1,'empID', $this->input->post('empID'));
+			
+			if($query)
+			{
+				$this->session->set_userdata('suc','employee Successfully  Updated...!');
+				redirect('edit_employee/'.$this->input->post('empID'));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('edit_employee/'.$this->input->post('empID'));
+			}
+		}
+		$data['pageTitle']	=	"Edit employee";
+		$data['dept']		=	$this->Commonsql_model->select('tbldept',array('dbentrystateID'=>3,'active'=>1));
+		$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID'=>3,'active'=>1));
+		$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID'=>3,'active'=>1));
+		$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID'=>3,'active'=>1));
+		$data['view']		=	$this->Commonsql_model->select('tblemployee',array('empID'=>$this->uri->segment(2)));
+		$this->load->view('admin/employee/edit_employee',$data);
+	}
+	function view_employee()
+	{
+		$data['pageTitle']	=	"View employee";
+		$data['dept']		=	$this->Commonsql_model->select('tbldept',array('dbentrystateID'=>3,'active'=>1));
+		$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID'=>3,'active'=>1));
+		$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID'=>3,'active'=>1));
+		$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID'=>3,'active'=>1));
+		$data['view']		=	$this->Commonsql_model->select('tblemployee',array('empID'=>$this->uri->segment(2)));
+		$this->load->view('admin/employee/view_employee',$data);
+	}
+	function approve_employee()
+	{
+		if($this->input->post('save'))
+		{
+			$photo=$_FILES['photo']['name'];
+			$proof1=$_FILES['proof1']['name'];
+			$proof2=$_FILES['proof2']['name'];
+			if($photo!='')
+			{
+				$uploadpath="./uploads/photo/".$photo;
+				move_uploaded_file($_FILES['photo']['tmp_name'], $uploadpath);
+			}
+			else
+			{
+				$photo	=	$this->input->post('photo1');
+			}
+			if($proof1!='')
+			{
+				$uploadpath="./uploads/proof/".$proof1;
+				move_uploaded_file($_FILES['proof1']['tmp_name'], $uploadpath);
+			}
+			else
+			{
+				$proof1	=	$this->input->post('proof11');
+			}
+			if($proof2!='')
+			{
+				$uploadpath="./uploads/proof/".$proof1;
+				move_uploaded_file($_FILES['proof2']['tmp_name'], $uploadpath);
+			}
+			else
+			{
+				$proof2	=	$this->input->post('proof21');
+			}
+				$values_mod=array('empCode'						=>	$this->input->post('empCode'),
+							'empname'					=>	$this->input->post('empname'),
+							'branchID'					=>	$this->input->post('branchID'),
+							
+							'dob'						=>	date('Y-m-d',strtotime($this->input->post('dob'))),
+							'sex'						=>	$this->input->post('sex'),
+							'fathername'				=>	$this->input->post('fathername'),
+							
+							'qualification'				=>	$this->input->post('qualification'),
+							'deptid'					=>	$this->input->post('deptid'),
+							'designation'				=>	$this->input->post('designation'),
+							
+							'employeetype'				=>	$this->input->post('employeetype'),
+							'mobile'					=>	$this->input->post('mobile'),
+							'emergencycontactperson'	=>	$this->input->post('emergencycontactperson'),
+							
+							'emergencycontact'			=>	$this->input->post('emergencycontact'),
+							'mailoffice'				=>	$this->input->post('mailoffice'),
+							'mailpersonal'				=>	$this->input->post('mailpersonal'),
+							
+							'addressline1'				=>	$this->input->post('addressline1'),
+							'city'						=>	$this->input->post('city'),
+							'state'						=>	$this->input->post('state'),
+							
+							'country'					=>	$this->input->post('country'),
+							'joiningdate'				=>	date('Y-m-d',strtotime($this->input->post('joiningdate'))),
+							'reportingto'				=>	$this->input->post('reportingto'),
+							
+							'photo'						=>	$photo,
+							'proof1'					=>	$proof1,
+							'proof2'					=>	$proof2,
+							
+							'remarks'					=>	$this->input->post('remarks'),
+							'releavingdate'				=>	date('Y-m-d',strtotime($this->input->post('releavingdate'))),
+							
+							'dbentrystateID'			=>	0,
+							'createby'					=>	$this->session->userdata('SESS_userId'),
+							'active'					=>	1);
+							
+			$whereData	=	array('empID'	=>	$this->input->post('empID'));
+			
+			$query		= updateTable('tblemployee', $whereData, $values_mod , 1,'empID', $this->input->post('empID'));
+			
+			if($query)
+			{
+				$this->session->set_userdata('suc','employee Successfully  Updated...!');
+				redirect('approve_employee/'.$this->input->post('empID'));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('approve_employee/'.$this->input->post('empID'));
+			}
+		}
+		if($this->uri->segment(4))
+		{
+			$whereData	=	array('emp_modID'	=>	$this->uri->segment(4));
+			$updateData	=	array('active'	=>	$this->uri->segment(5));
+			$upt	=	$this->Commonsql_model->updateTable('tblemployee_mod', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','employee Status Successfully  Changed...!');
+				redirect('approve_employee/'.$this->uri->segment(3));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('approve_employee/'.$this->uri->segment(3));
+			}
+		}
+		else if($this->uri->segment(3))
+		{
+			$data['pageTitle']	=	"View employee";
+			$data['table']		=	"Designation";
+			$data['dept']		=	$this->Commonsql_model->select('tbldept',array('dbentrystateID'=>3,'active'=>1));
+			$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID'=>3,'active'=>1));
+			$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID'=>3,'active'=>1));
+			$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID'=>3,'active'=>1));
+			$data['view']		=	$this->Commonsql_model->select('tblemployee_mod',array('emp_modID'=>$this->uri->segment(3)));
+			$this->load->view('admin/employee/approve_employee',$data);
+		}
+		else
+		{
+			$data['pageTitle']	=	"View employee";
+			$data['table']		=	"employee";
+			$data['dept']		=	$this->Commonsql_model->select('tbldept',array('dbentrystateID'=>3,'active'=>1));
+			$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID'=>3,'active'=>1));
+			$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID'=>3,'active'=>1));
+			$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID'=>3,'active'=>1));
+			$data['view']		=	$this->Commonsql_model->select('tblemployee',array('empID'=>$this->uri->segment(2)));
+			$this->load->view('admin/employee/approve_employee',$data);
+		}
+	}
+	function approve_employee_json()
+	{
+		$result	=	$this->Commonsql_model->select_all_employee_mod($this->uri->segment(3));
+		//echo $this->db->last_query();
+		$output = array();$i=1;$j=1;
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['ID']				=	$i++;
+			$vaules['empCode'] 			= 	$value->empCode;
+			$vaules['empname'] 			= 	$value->empname;
+			$vaules['qualification'] 	= 	$value->qualification;
+			
+			$vaules['deptid'] 			= 	$value->department;
+			$vaules['designation'] 		= 	$value->name;
+			$vaules['mobile'] 			= 	$value->mobile;
+			
+			$vaules['mailoffice'] 		= 	$value->mailoffice;
+			$vaules['remarks'] 			= 	$value->remarks;
+			
+			
+			if('1970-01-01'==$value->joiningdate || $value->joiningdate=='')
+			{
+				$vaules['joiningdate'] 	= 	"-";
+			}
+			else
+			{
+				$vaules['joiningdate'] 		= 	date('m-d-Y',strtotime($value->joiningdate));
+			}
+			if('1970-01-01'==$value->releavingdate || $value->releavingdate=='')
+			{
+				$vaules['releavingdate'] 	= 	"-";
+			}
+			else
+			{
+				$vaules['releavingdate'] 	= 	date('m-d-Y',strtotime($value->releavingdate));
+			}
+			if($value->active==1)
+			{
+				if($j++==1)
+				{
+					$Approve	=	approve_html("'".base_url()."manage/employee_mod_approve/".$value->emp_modID."','2'");
+				}
+				else
+				{
+					$Approve	=	'';
+				}
+				
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_employee/".$value->empID."/".$value->emp_modID."','0'");
+			}
+			else
+			{
+				$Approve		=	'';
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_employee/".$value->empID."/".$value->emp_modID."','1'");
+			}
+			
+			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_employee/".$value->empID.'/'.$value->emp_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			
+			$output[] =$vaules;
+		}
+
+		 echo json_encode(array('data'=>$output), true);
+	}
+	function employee_mod_approve()
+	{
+		$mod_id	=	$this->uri->segment(3);
+		$data	=	$this->Commonsql_model->select('tblemployee_mod',array('emp_modID'=>$mod_id));
+		if($data->num_rows()>0)
+		{
+			$val	=	$data->row();
+			
+				$values=array('empCode'				=>	$val->empCode,
+							'empname'					=>	$val->empname,
+							'branchID'					=>	$val->branchID,
+							
+							'dob'						=>	$val->dob,
+							'sex'						=>	$val->sex,
+							'fathername'				=>	$val->fathername,
+							
+							'qualification'				=>	$val->qualification,
+							'deptid'					=>	$val->deptid,
+							'designation'				=>	$val->designation,
+							
+							'employeetype'				=>	$val->employeetype,
+							'mobile'					=>	$val->mobile,
+							'emergencycontactperson'	=>	$val->emergencycontactperson,
+							
+							'emergencycontact'			=>	$val->emergencycontact,
+							'mailoffice'				=>	$val->mailoffice,
+							'mailpersonal'				=>	$val->mailpersonal,
+							
+							'addressline1'				=>	$val->addressline1,
+							'city'						=>	$val->city,
+							'state'						=>	$val->state,
+							
+							'country'					=>	$val->country,
+							'joiningdate'				=>	$val->joiningdate,
+							'reportingto'				=>	$val->reportingto,
+							
+							'photo'						=>	$val->photo,
+							'proof1'					=>	$val->proof1,
+							'proof2'					=>	$val->proof2,
+							
+							'remarks'					=>	$val->remarks,
+							'releavingdate'				=>	$val->releavingdate,
+							'dbentrystateID'			=>	3,
+							'approvedby'				=>	$this->session->userdata('SESS_userId'),
+							'approvedon'				=>	date('Y-m-d h:i:s'));
+								
+							
+				$cond		=	array('empID'	=>	$val->empID);
+				
+				$values_mod	=	array('dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond_mod	=	array('emp_modID'	=>	$mod_id);
+				$upt		=	$this->Commonsql_model->updateTable('tblemployee', $cond , $values);
+				$upt_m		=	$this->Commonsql_model->updateTable('tblemployee_mod', $cond_mod , $values_mod);
+				//echo $this->db->last_query();exit;
+				if($upt)
+				{
+					$this->session->set_userdata('suc','Approved Successfully  Finished...!');
+					redirect('approve_employee/'.$val->empID);
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('approve_employee/'.$val->empID);
+				}
+							
+							
+						
+		}
+	}
+	/***********************************************************************************************************************************/
+	function driver()
+	{
+		if($this->uri->segment(3))
+		{
+			$whereData	=	array('driverID'	=>	$this->uri->segment(3));
+			$updateData	=	array('active'	=>	$this->uri->segment(4));
+			$upt	=	$this->Commonsql_model->updateTable('tbldriver', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','driver Status Successfully  Changed...!');
+				redirect('driver');
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('driver');
+			}
+		}
+		else
+		{
+			/*print_r($this->session->userdata('SESS_userRole'));
+			$SESS_userRole = $this->session->userdata('SESS_userRole');
+			$pageroleaccessmap = pageroleaccessmap($SESS_userRole, 'designation');
+			print_r($pageroleaccessmap);
+			exit();*/
+			
+			$data['pageTitle']	=	"driver";
+			$data['table']		=	"driver";
+			$this->load->view('admin/driver/driver',$data);
+		}
+	}
+	function driver_json()
+	{
+		$result	=	$this->Commonsql_model->select_all_driver();
+		$output = array();$i=1;
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['ID']				=	$i++;
+			$vaules['name'] 			= 	$value->name;
+			$vaules['addressline1'] 	= 	$value->addressline1;
+			$vaules['phone1'] 			= 	$value->phone1;
+			
+			$vaules['dlno'] 			= 	$value->dlno;
+			$vaules['dlexpirydt'] 		= 	date('m-d-Y',strtotime($value->dlexpirydt));
+			
+			if($value->active==1)
+			{
+				$view			 			=	"<a href='".base_url()."view_driver/".$value->driverID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+				$APPROVE			 			=	"<a href='".base_url()."approve_driver/".$value->driverID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/driver/".$value->driverID."','0'");
+			}
+			else
+			{
+				$APPROVE		=	'';
+				$view			 =	'';
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/driver/".$value->driverID."','1'");
+			}
+			
+			$vaules['Action'] 			=	$view.$APPROVE."<a href='".base_url()."edit_driver/".$value->driverID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			
+			$output[] =$vaules;
+		}
+
+		 echo json_encode(array('data'=>$output), true);
+	}
+	function add_driver()
+	{
+		if($this->input->post('save'))
+		{
+			
+			$dlImage=$_FILES['dlImage']['name'];
+			if($dlImage!='')
+			{
+				$uploadpath="./uploads/photo/".$dlImage;
+				move_uploaded_file($_FILES['dlImage']['tmp_name'], $uploadpath);
+			}
+			
+			$contact_values=array('name'		=>	$this->input->post('name'),
+							'companyName'		=>	$this->input->post('companyName'),
+							'addressline1'		=>	$this->input->post('addressline1'),
+							'addressline2'		=>	$this->input->post('addressline2'),
+							'city'				=>	$this->input->post('city'),
+							'state'				=>	$this->input->post('state'),
+							'country'			=>	$this->input->post('country'),
+							'email1'			=>	$this->input->post('email1'),
+							'email2'			=>	$this->input->post('email2'),
+							'phone1'			=>	$this->input->post('phone1'),
+							'phone2'			=>	$this->input->post('phone2'),
+							'fax'				=>	$this->input->post('fax'),
+							'website'			=>	$this->input->post('website'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$contactID	=	insertTable('tblcontactdetails', $contact_values,0);
+			
+			$values=array('contactID'					=>	$contactID,
+							'sex'						=>	$this->input->post('sex'),
+							'dlno'						=>	$this->input->post('dlno'),
+							
+							'dlexpirydt'				=>	date('Y-m-d',strtotime($this->input->post('dlexpirydt'))),
+							'dlImage'					=>	$dlImage,
+							
+							'dbentrystateID'			=>	0,
+							'createby'					=>	$this->session->userdata('SESS_userId'),
+							'active'					=>	1);
+							
+			$query	=	insertTable('tbldriver', $values,1,'driverID');
+			if($query)
+			{
+				$this->session->set_userdata('suc','Driver Successfully  Added...!');
+				redirect('add_driver');
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('add_driver');
+			}
+		}
+		$data['pageTitle']	=	"Add driver";
+		$this->load->view('admin/driver/add_driver',$data);
+	}
+	function edit_driver()
+	{
+		if($this->input->post('save'))
+		{
+			$dlImage=$_FILES['dlImage']['name'];
+			if($dlImage!='')
+			{
+				$uploadpath="./uploads/photo/".$dlImage;
+				move_uploaded_file($_FILES['dlImage']['tmp_name'], $uploadpath);
+				
+			}
+			else
+			{
+				$dlImage	=	$this->input->post('dlImage1');
+			}
+			
+			$contact_values=array('name'		=>	$this->input->post('name'),
+							'companyName'		=>	$this->input->post('companyName'),
+							'addressline1'		=>	$this->input->post('addressline1'),
+							'addressline2'		=>	$this->input->post('addressline2'),
+							'city'				=>	$this->input->post('city'),
+							'state'				=>	$this->input->post('state'),
+							'country'			=>	$this->input->post('country'),
+							'email1'			=>	$this->input->post('email1'),
+							'email2'			=>	$this->input->post('email2'),
+							'phone1'			=>	$this->input->post('phone1'),
+							'phone2'			=>	$this->input->post('phone2'),
+							'fax'				=>	$this->input->post('fax'),
+							'website'			=>	$this->input->post('website'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$whereData1	=	array('contactID'	=>	$this->input->post('contactID'));
+			
+			$query1		= updateTable('tblcontactdetails', $whereData1, $contact_values , 1,'contactID', $this->input->post('contactID'));
+			
+			$values_mod=array('contactID'				=>	$this->input->post('contactID'),
+							'sex'						=>	$this->input->post('sex'),
+							'dlno'						=>	$this->input->post('dlno'),
+							
+							'dlexpirydt'				=>	date('Y-m-d',strtotime($this->input->post('dlexpirydt'))),
+							'dlImage'					=>	$dlImage,
+							
+							'dbentrystateID'			=>	0,
+							'createby'					=>	$this->session->userdata('SESS_userId'),
+							'active'					=>	1);
+							
+							
+			$whereData	=	array('driverID'	=>	$this->input->post('driverID'));
+			
+			$query		= updateTable('tbldriver', $whereData, $values_mod , 1,'driverID', $this->input->post('driverID'));
+			
+			if($query || $query1)
+			{
+				$this->session->set_userdata('suc','Driver Successfully  Updated...!');
+				redirect('edit_driver/'.$this->input->post('driverID'));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('edit_driver/'.$this->input->post('driverID'));
+			}
+		}
+		$data['pageTitle']	=	"Edit driver";
+		$data['view']		=	$this->Commonsql_model->select_driver_edit($this->uri->segment(2));
+		$this->load->view('admin/driver/edit_driver',$data);
+	}
+	function view_driver()
+	{
+		$data['pageTitle']	=	"View driver";
+		$data['view']		=	$this->Commonsql_model->select_driver_edit($this->uri->segment(2));
+		$this->load->view('admin/driver/view_driver',$data);
+	}
+	function approve_driver()
+	{
+		if($this->input->post('save'))
+		{
+			$dlImage=$_FILES['dlImage']['name'];
+			if($dlImage!='')
+			{
+				$uploadpath="./uploads/photo/".$dlImage;
+				move_uploaded_file($_FILES['dlImage']['tmp_name'], $uploadpath);
+			}
+			else
+			{
+				$dlImage	=	$this->input->post('dlImage1');
+			}
+			
+			$contact_values=array('name'		=>	$this->input->post('name'),
+							'companyName'		=>	$this->input->post('companyName'),
+							'addressline1'		=>	$this->input->post('addressline1'),
+							'addressline2'		=>	$this->input->post('addressline2'),
+							'city'				=>	$this->input->post('city'),
+							'state'				=>	$this->input->post('state'),
+							'country'			=>	$this->input->post('country'),
+							'email1'			=>	$this->input->post('email1'),
+							'email2'			=>	$this->input->post('email2'),
+							'phone1'			=>	$this->input->post('phone1'),
+							'phone2'			=>	$this->input->post('phone2'),
+							'fax'				=>	$this->input->post('fax'),
+							'website'			=>	$this->input->post('website'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$whereData1	=	array('contactID'	=>	$this->input->post('contactID'));
+			
+			$query1		= updateTable('tblcontactdetails', $whereData1, $contact_values , 1,'contactID', $this->input->post('contactID'));
+			
+			$values_mod=array('contactID'				=>	$this->input->post('contactID'),
+							'sex'						=>	$this->input->post('sex'),
+							'dlno'						=>	$this->input->post('dlno'),
+							
+							'dlexpirydt'				=>	date('Y-m-d',strtotime($this->input->post('dlexpirydt'))),
+							'dlImage'					=>	$dlImage,
+							
+							'dbentrystateID'			=>	0,
+							'createby'					=>	$this->session->userdata('SESS_userId'),
+							'active'					=>	1);
+							
+							
+			$whereData	=	array('driverID'	=>	$this->input->post('driverID'));
+			
+			$query		= updateTable('tbldriver', $whereData, $values_mod , 1,'driverID', $this->input->post('driverID'));
+			
+			if($query || $query1)
+			{
+				$this->session->set_userdata('suc','driver Successfully  Updated...!');
+				redirect('approve_driver/'.$this->input->post('driverID'));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('approve_driver/'.$this->input->post('driverID'));
+			}
+		}
+		if($this->uri->segment(4))
+		{
+			$whereData	=	array('driver_modID'	=>	$this->uri->segment(4));
+			$updateData	=	array('active'	=>	$this->uri->segment(5));
+			$upt	=	$this->Commonsql_model->updateTable('tbldriver_mod', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','driver Status Successfully  Changed...!');
+				redirect('approve_driver/'.$this->uri->segment(3));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('approve_driver/'.$this->uri->segment(3));
+			}
+		}
+		else if($this->uri->segment(3))
+		{
+			$data['pageTitle']	=	"View driver";
+			$data['table']		=	"Designation";
+			$data['view']		=	$this->Commonsql_model->select_all_driver_mod_where($this->uri->segment(3));
+			$this->load->view('admin/driver/approve_driver',$data);
+		}
+		else
+		{
+			$data['pageTitle']	=	"View driver";
+			$data['table']		=	"driver";
+			$data['view']		=	$this->Commonsql_model->select_driver_edit($this->uri->segment(2));
+			$this->load->view('admin/driver/approve_driver',$data);
+		}
+	}
+	function approve_driver_json()
+	{
+		$result	=	$this->Commonsql_model->select_all_driver_mod($this->uri->segment(3));
+		//echo $this->db->last_query();
+		$output = array();$i=1;$j=1;
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['ID']				=	$i++;
+			$vaules['name'] 			= 	$value->name;
+			$vaules['addressline1'] 	= 	$value->addressline1;
+			$vaules['phone1'] 			= 	$value->phone1;
+			
+			$vaules['dlno'] 			= 	$value->dlno;
+			$vaules['dlexpirydt'] 		= 	date('m-d-Y',strtotime($value->dlexpirydt));
+			
+			if($value->active==1)
+			{
+				if($j++==1)
+				{
+					$Approve	=	approve_html("'".base_url()."manage/driver_mod_approve/".$value->driver_modID."','2'");
+				}
+				else
+				{
+					$Approve	=	'';
+				}
+				
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_driver/".$value->driverID."/".$value->driver_modID."','0'");
+			}
+			else
+			{
+				$Approve		=	'';
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_driver/".$value->driverID."/".$value->driver_modID."','1'");
+			}
+			
+			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_driver/".$value->driverID.'/'.$value->driver_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			
+			$output[] =$vaules;
+		}
+
+		 echo json_encode(array('data'=>$output), true);
+	}
+	function driver_mod_approve()
+	{
+		$mod_id	=	$this->uri->segment(3);
+		$data	=	$this->Commonsql_model->select('tbldriver_mod',array('driver_modID'=>$mod_id));
+		if($data->num_rows()>0)
+		{
+			$val	=	$data->row();
+			
+				$values=array('empCode'				=>	$val->empCode,
+							'empname'					=>	$val->empname,
+							'branchID'					=>	$val->branchID,
+							
+							'dob'						=>	$val->dob,
+							'sex'						=>	$val->sex,
+							'fathername'				=>	$val->fathername,
+							
+							'qualification'				=>	$val->qualification,
+							'deptid'					=>	$val->deptid,
+							'designation'				=>	$val->designation,
+							
+							'employeetype'				=>	$val->employeetype,
+							'mobile'					=>	$val->mobile,
+							'emergencycontactperson'	=>	$val->emergencycontactperson,
+							
+							'emergencycontact'			=>	$val->emergencycontact,
+							'mailoffice'				=>	$val->mailoffice,
+							'mailpersonal'				=>	$val->mailpersonal,
+							
+							'addressline1'				=>	$val->addressline1,
+							'city'						=>	$val->city,
+							'state'						=>	$val->state,
+							
+							'country'					=>	$val->country,
+							'joiningdate'				=>	$val->joiningdate,
+							'reportingto'				=>	$val->reportingto,
+							
+							'photo'						=>	$val->photo,
+							'proof1'					=>	$val->proof1,
+							'proof2'					=>	$val->proof2,
+							
+							'remarks'					=>	$val->remarks,
+							'releavingdate'				=>	$val->releavingdate,
+							'dbentrystateID'			=>	3,
+							'approvedby'				=>	$this->session->userdata('SESS_userId'),
+							'approvedon'				=>	date('Y-m-d h:i:s'));
+								
+							
+				$cond		=	array('driverID'	=>	$val->driverID);
+				
+				$values_mod	=	array('dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond_mod	=	array('driver_modID'	=>	$mod_id);
+				$upt		=	$this->Commonsql_model->updateTable('tbldriver', $cond , $values);
+				$upt_m		=	$this->Commonsql_model->updateTable('tbldriver_mod', $cond_mod , $values_mod);
+				//echo $this->db->last_query();exit;
+				if($upt)
+				{
+					$this->session->set_userdata('suc','Approved Successfully  Finished...!');
+					redirect('approve_driver/'.$val->driverID);
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('approve_driver/'.$val->driverID);
+				}
+							
+							
 						
 		}
 	}
@@ -1646,16 +2602,16 @@ class Manage extends CI_Controller {
 			{
 				$view		=	"<a href='".base_url()."view_contract_consignor/".$value->consignorID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
 				$Approve		=	"<a href='".base_url()."approve_contract_consignor/".$value->consignorID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approve</a>";
-				$active	=	"<a href='".base_url()."manage/contract_consignor/".$value->consignorID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/contract_consignor/".$value->consignorID."','0'");
 			}
 			else
 			{
 				$view		=	'';
 				$Approve		=	'';
-				$active	=	"<a href='".base_url()."manage/contract_consignor/".$value->consignorID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/contract_consignor/".$value->consignorID."','1'");
 			}
 			
-			$vaules['Action'] 			=	$view.$Approve."<a  href='".base_url()."edit_contract_consignor/".$value->consignorID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			$vaules['Action'] 			=	$view.$Approve."<a  href='".base_url()."edit-contract-consignor/".$value->consignorID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
 			
 			$output[] =$vaules;
 		}
@@ -1753,29 +2709,92 @@ class Manage extends CI_Controller {
 	{
 		if($this->input->post('save'))
 		{
-				$values=array('typename'				=>	$this->input->post('typename'),
-								'description'		=>	$this->input->post('description'),
-								'employetypeID'		=>	$this->input->post('employetypeID'),
-								'dbentrystateID'	=>	0,
-								'createby'			=>	$this->session->userdata('SESS_userId'),
-								'active'			=>	1);
-								
-			$whereData	=	array('employetypeID'	=>	$this->input->post('employetypeID'));
-			$query		= updateTable('tblemployetypes', $whereData, $values , 1,'employetypeID', $this->input->post('employetypeID'));
-			if($query)
+			$whereData	= array('consignorID'=>$this->input->post('consignorID'));
+			$contac_wh	= array('contactID'=>$this->input->post('contactID'));
+			$contract_wh	= array('contractID'=>$this->input->post('contractID'));
+			$contact_values=array('name'		=>	$this->input->post('name'),
+							'companyName'		=>	$this->input->post('companyName'),
+							'addressline1'		=>	$this->input->post('addressline1'),
+							'addressline2'		=>	$this->input->post('addressline2'),
+							'city'				=>	$this->input->post('city'),
+							'state'				=>	$this->input->post('state'),
+							'country'			=>	$this->input->post('country'),
+							'email1'			=>	$this->input->post('email1'),
+							'email2'			=>	$this->input->post('email2'),
+							'phone1'			=>	$this->input->post('phone1'),
+							'phone2'			=>	$this->input->post('phone2'),
+							'fax'				=>	$this->input->post('fax'),
+							'website'			=>	$this->input->post('website'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$query1		= updateTable('tblcontactdetails', $contac_wh, $contact_values , 1,'contactID', $this->input->post('contactID'));
+			
+			$values_cons=array('contactID'		=>	$this->input->post('contactID'),
+							'contactPer1'		=>	$this->input->post('name'),
+							'contactPer2'		=>	$this->input->post('contactPer2'),
+							'csttinno'			=>	$this->input->post('csttinno'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$query2		= updateTable('tblconsignor', $whereData, $values_cons , 1,'consignorID', $this->input->post('consignorID'));
+			
+			$values=array('contractCode'		=>	$this->input->post('contractCode'),
+							'contractTypeID'	=>	1,
+							'from'				=>	$this->input->post('from'),
+							'to'				=>	$this->input->post('to'),
+							'vehicleLength'		=>	$this->input->post('vehicleLength'),
+							'vehicleType'		=>	$this->input->post('vehicleType'),
+							'vehicleCapacity'	=>	$this->input->post('vehicleCapacity'),
+							'roadType'			=>	$this->input->post('roadType'),
+							'minKM'				=>	$this->input->post('minKM'),
+							'seasonType'		=>	$this->input->post('seasonType'),
+							'miscType'			=>	$this->input->post('miscType'),
+							'dated'				=>	date('Y-m-d',strtotime($this->input->post('dated'))),
+							'signedby'			=>	$this->input->post('signedby'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$query3		= updateTable('tblcontract', $whereData, $values , 1,'contractID', $this->input->post('contractID'));
+			
+			$values_map=array('contractVerID'		=>	1,
+							'contractID'			=>	$this->input->post('contractID'),
+							'basicfreight'			=>	$this->input->post('basicfreight'),
+							'docketChgs'			=>	$this->input->post('docketChgs'),
+							'handlingChgs'			=>	$this->input->post('handlingChgs'),
+							'statePermitChgs'		=>	$this->input->post('statePermitChgs'),
+							'pickupDeliveryChgs'	=>	$this->input->post('pickupDeliveryChgs'),
+							'toPayChgs'				=>	$this->input->post('toPayChgs'),
+							'checkpostExpenses'		=>	$this->input->post('checkpostExpenses'),
+							'coddodChgs'			=>	$this->input->post('coddodChgs'),
+							'MISCCharges'			=>	$this->input->post('MISCCharges'),
+							'serivceTax'			=>	$this->input->post('serivceTax'),
+							'grandTotal'			=>	$this->input->post('grandTotal'),
+							'dbentrystateID'		=>	0,
+							'createby'				=>	$this->session->userdata('SESS_userId'),
+							'active'				=>	1);
+							
+			$query4		= updateTable('tblcontractversionmap', $contract_wh, $values_map , 1,'contractVersionMapID', $this->input->post('contractVersionMapID'));
+			
+			if($query1 || $query2 || $query3 || $query4)
 			{
-				$this->session->set_userdata('suc','Employee Types Successfully  Updated...!');
-				redirect('edit_contract_consignor/'.$this->input->post('employetypeID'));
+				$this->session->set_userdata('suc','Coontract Consioner Types Successfully  Added...!');
+				redirect('edit-contract-consignor/'.$this->input->post('consignorID'));
 				
 			}
 			else
 			{
 				$this->session->set_userdata('err','Error Please try again..!');
-				redirect('edit_contract_consignor/'.$this->input->post('employetypeID'));
+				redirect('edit-contract-consignor/'.$this->input->post('consignorID'));
 			}
 		}
+		$data['view']		=	$this->Commonsql_model->select_conginor_contract(array('a.consignorID'=>$this->uri->segment(2)));
+//		echo $date['view']->num_rows();exit;
+		//echo $this->db->last_query();exit;
 		$data['pageTitle']	=	"Edit Emplyee Types";
-		$data['view']		=	$this->Commonsql_model->select('tblemployetypes',array('employetypeID'=>$this->uri->segment(2)));
 		$this->load->view('admin/contract_consignor/edit_contract_consignor',$data);
 	}
 	function view_contract_consignor()

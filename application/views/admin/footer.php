@@ -1,3 +1,37 @@
+<span  id="activedeactiveid" data-toggle="modal" data-target="#active-deactive" data-options="splash-2 splash-ef-11"></span>
+<div class="modal splash fade" id="active-deactive" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title custom-font">Confirmation!</h3>
+            </div>
+            <div class="modal-body">
+                <p id="confirmation-msg"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default btn-border activedeactiveconf-btn">Submit</button>
+                <button class="btn btn-default btn-border activedeactiveconf-close" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal splash fade" id="active-deactive1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title custom-font">Confirmation!1111</h3>
+            </div>
+            <div class="modal-body">
+                <p id="confirmation-msg1"></p>
+            </div>
+            
+            <div class="modal-footer" id="form_sub_enable">
+                <a href="javascript::" class="btn btn-default btn-border activedeactiveconf-btn">Submit</a>
+                <button class="btn btn-default btn-border activedeactiveconf-close" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 <?php $segment1= $this->uri->segment(1);
 		
 		if(isset($table)){
@@ -23,7 +57,9 @@
         <script src="<?= base_url()?>assets/js/vendor/animsition/js/jquery.animsition.min.js"></script>
 
         <script src="<?= base_url()?>assets/js/vendor/screenfull/screenfull.min.js"></script>
+  		<script src="<?= base_url()?>assets/js/vendor/daterangepicker/moment.min.js"></script>
 
+        <script src="<?= base_url()?>assets/js/vendor/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
         <script src="<?= base_url()?>assets/js/vendor/datatables/js/jquery.dataTables.min.js"></script>
         <script src="<?= base_url()?>assets/js/vendor/datatables/extensions/ColReorder/js/dataTables.colReorder.min.js"></script>
         <script src="<?= base_url()?>assets/js/vendor/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
@@ -268,6 +304,88 @@
                     ],
                     "dom": 'Rlfrtip'
                 });
+				<?php }else if($segment1=='employee'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/employee_json',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "empCode" },
+						{ "data": "empname" },
+						{ "data": "qualification" },
+						{ "data": "deptid" },
+						{ "data": "designation" },
+						{ "data": "mobile" },
+						{ "data": "mailoffice" },
+						{ "data": "remarks" },
+						{ "data": "joiningdate" },
+                        { "data": "releavingdate" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+                    "dom": 'Rlfrtip'
+                });
+				<?php }else if($segment1=='approve_employee'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/approve_employee_json/<?php echo $this->uri->segment(2)?>',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "empCode" },
+						{ "data": "empname" },
+						{ "data": "qualification" },
+						{ "data": "deptid" },
+						{ "data": "designation" },
+						{ "data": "mobile" },
+						{ "data": "mailoffice" },
+						{ "data": "remarks" },
+						{ "data": "joiningdate" },
+                        { "data": "releavingdate" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+                    "dom": 'Rlfrtip'
+                });
+				<?php }else if($segment1=='driver'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/driver_json',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+                        { "data": "addressline1" },
+						{ "data": "phone1" },
+						{ "data": "dlno" },
+						{ "data": "dlexpirydt" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+                    "dom": 'Rlfrtip'
+                });
+				<?php }else if($segment1=='approve_driver'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/approve_driver_json/<?php echo $this->uri->segment(2)?>',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+                        { "data": "addressline1" },
+						{ "data": "phone1" },
+						{ "data": "dlno" },
+						{ "data": "dlexpirydt" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+                    "dom": 'Rlfrtip'
+                });
 				<?php }else{?>
 						
                 var table = $('#basic-usage').DataTable({
@@ -295,7 +413,18 @@
                 });
                 //*initialize basic datatable
             });
+			
         </script>
+        <?php if($segment1=='approve_employee'){
+			?>
+         <script>
+            $(window).load(function(){
+                $('#form4Submit').on('click', function(){
+               //     $('#form4').submit();
+                });
+            });
+        </script>
+        <?php }?>
         
       <?php }else{?>
         <!-- ============================================

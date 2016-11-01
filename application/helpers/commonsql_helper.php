@@ -61,9 +61,11 @@ if (!function_exists('updateTable')) {
         $CI = & get_instance();
         $CI->load->model('commonsql_model');
         $resultData = $CI->commonsql_model->updateTable($tableName, $whereData, $updateData);
+		//echo $CI->db->last_query();exit;
         if($resultData>0 && $isStoreMod==1){
             $updateData[$modIdName]=$modId;
             $insertmodid = $CI->commonsql_model->insert_table($tableName.'_mod', $updateData);
+			//echo $CI->db->last_query();exit;
         }
         return $resultData;
     }
