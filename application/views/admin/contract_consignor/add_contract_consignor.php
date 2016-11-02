@@ -1,4 +1,30 @@
+
 <?php $this->load->view('admin/sidebar')?>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <style>
+  .custom-combobox {
+    position: relative;
+    display: inline-block;
+  }
+  .custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+  }
+  .custom-combobox-input {
+    margin: 0;
+    padding: 5px 10px;
+  }
+  </style>
+  <script type="application/javascript">
+ function fetch_contact_details(id)
+ {
+	 alert(id);
+ }
+</script>
+
 <!-- =================================================
                 ================= RIGHTBAR Content ===================
                 ================================================== -->
@@ -38,9 +64,21 @@
             <div class="row">
               <div class="form-group col-md-3">
                 <label for="name">Name <span class="required">*</span></label>
-                <input type="text" name="name" id="name" class="form-control" placeholder="Name of Consignor" required="" data-parsley-id="8057">
-                <ul class="parsley-errors-list" id="parsley-id-8057">
+                <select  name="name" id="combobox" required class="form-control" onchange="fetch_contact_details(this.value)" >
+                <option value="">-- Select Name --</option>
+                <?php if(isset($view) && $view->num_rows()>0)
+				foreach($view->result() as $v)
+				{
+					?>
+                    <option value="<?=$v->contactID?>" ><?=$v->name?></option>
+                    <?php 
+				}
+				?>
+               
+                </select>
+               <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
+                
               </div>
               <div class="form-group col-md-3">
                 <label for="name">Company Name <span class="required">*</span> </label>
@@ -171,13 +209,13 @@
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="name">From </label>
-                <input type="text" name="from" id="name" class="form-control" required="" placeholder=" Enter From"data-parsley-id="8057">
+                <input type="text" name="from" id="geocomplete" class="form-control" required="" placeholder=" Enter From"data-parsley-id="8057">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
               <div class="form-group col-md-6">
                 <label for="contactemail">To </label>
-                <input type="text" name="to" id="contactemail" required class="form-control" placeholder=" Enter To" data-parsley-id="1328">
+                <input type="text" name="to" id="geocomplete1" required class="form-control" placeholder=" Enter To" data-parsley-id="1328">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
@@ -331,13 +369,13 @@
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="name">Basic Freight </label>
-                <input type="text" name="basicfreight" id="name" class="form-control" required="" data-parsley-id="8057" placeholder="Enter Basic Freight">
+                <input type="text" name="basicfreight" id="basicfreight" class="form-control tac_calculation" required="" data-parsley-id="8057" placeholder="Enter Basic Freight">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
               <div class="form-group col-md-6">
                 <label for="contactemail">Docket Charges </label>
-                <input type="text" name="docketChgs" id="contactemail" required class="form-control" data-parsley-id="1328" placeholder="Enter Docket Charges ">
+                <input type="text" name="docketChgs" id="docketChgs" required class="form-control tac_calculation" data-parsley-id="1328" placeholder="Enter Docket Charges ">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
@@ -345,13 +383,13 @@
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="name">Handling Charges </label>
-                <input type="text" name="handlingChgs" id="name" class="form-control"  data-parsley-id="8057" placeholder="Enter Handling Charges">
+                <input type="text" name="handlingChgs" id="handlingChgs" class="form-control tac_calculation"  data-parsley-id="8057" placeholder="Enter Handling Charges">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
               <div class="form-group col-md-6">
                 <label for="contactemail">State/Permit Charges </label>
-                <input type="text" name="statePermitChgs" id="contactemail"  class="form-control" data-parsley-id="1328" placeholder="Enter State/Permit Charges">
+                <input type="text" name="statePermitChgs" id="statePermitChgs"  class="form-control tac_calculation" data-parsley-id="1328" placeholder="Enter State/Permit Charges">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
@@ -359,13 +397,13 @@
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="contactemail">Pickup/Delivery Charges </label>
-                <input type="text" name="pickupDeliveryChgs" id="contactemail"  class="form-control" data-parsley-id="1328" placeholder="Enter Pickup/Delivery Charges">
+                <input type="text" name="pickupDeliveryChgs" id="pickupDeliveryChgs"  class="form-control tac_calculation" data-parsley-id="1328" placeholder="Enter Pickup/Delivery Charges">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
               <div class="form-group col-md-6">
                 <label for="name">To pay Charge </label>
-                <input type="text" name="toPayChgs" id="name" class="form-control"  data-parsley-id="8057" placeholder="Enter To pay Charge">
+                <input type="text" name="toPayChgs" id="toPayChgs" class="form-control tac_calculation"  data-parsley-id="8057" placeholder="Enter To pay Charge">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
@@ -373,13 +411,13 @@
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="contactemail">CheckPost Expense </label>
-                <input type="text" name="checkpostExpenses" id="contactemail"  class="form-control" data-parsley-id="1328" placeholder="Enter CheckPost Expense">
+                <input type="text" name="checkpostExpenses" id="checkpostExpenses"  class="form-control tac_calculation" data-parsley-id="1328" placeholder="Enter CheckPost Expense">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
               <div class="form-group col-md-6">
                 <label for="contactemail">COD/DOD Charges </label>
-                <input type="text" name="coddodChgs" id="contactemail"  class="form-control" data-parsley-id="1328" placeholder="Enter COD/DOD Charges">
+                <input type="text" name="coddodChgs" id="coddodChgs"  class="form-control tac_calculation" data-parsley-id="1328" placeholder="Enter COD/DOD Charges">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
@@ -389,13 +427,13 @@
               
               <div class="form-group col-md-6">
                 <label for="name">MISC Charges </label>
-                <input type="text" name="MISCCharges" id="name" class="form-control" data-parsley-id="8057" placeholder="Enter MISC Charges">
+                <input type="text" name="MISCCharges" id="MISCCharges" class="form-control tac_calculation" data-parsley-id="8057" placeholder="Enter MISC Charges">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
               <div class="form-group col-md-6">
                 <label for="contactemail">Sub Total </label>
-                <input type="text" name="contactemail" id="contactemail" class="form-control" data-parsley-id="1328" placeholder="Enter Sub Total ">
+                <input type="text" name="sub_total" id="sub_total" class="form-control" data-parsley-id="1328" placeholder="Enter Sub Total " disabled="disabled">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
@@ -403,14 +441,15 @@
             <div class="row">
               
               <div class="form-group col-md-6">
-                <label for="name">Service Tax </label>
-                <input type="text" name="serivceTax" id="name" class="form-control"  data-parsley-id="8057" placeholder="Enter Service Tax">
+                <label for="name">Service Tax (%)</label>
+                <input type="text" name="serivceTax" id="serivceTax" class="form-control tac_calculation"  data-parsley-id="8057" placeholder="Enter Service Tax">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
               <div class="form-group col-md-6">
                 <label for="name">Grand Total </label>
-                <input type="text" name="grandTotal" id="name" class="form-control" required data-parsley-id="8057" placeholder="Enter Grand Total ">
+                <input type="text"  id="grandTotal" class="form-control" required data-parsley-id="8057" placeholder="Enter Grand Total " disabled="disabled">
+                  <input type="hidden" name="grandTotal" class="form-control" required data-parsley-id="8057" placeholder="Enter Grand Total " >
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
@@ -461,5 +500,233 @@
 <!--/ CONTENT -->
 
 </div>
+<div class="map_canvas"></div>
+    <br>
+     <div class="map_canvas1"></div>
 <!--/ Application Content -->
 <?php $this->load->view('admin/footer')?>
+
+ <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAvqzVbnAGwqxoZ3x4dunb-WSydKzd6kLA&sensor=false&amp;libraries=places"></script>
+
+    <script src="<?= base_url(); ?>assets/js/jquery.geocomplete.js"></script>
+   
+    <script>
+      $(function(){
+        $("#geocomplete").geocomplete({
+          map: ".map_canvas"
+        });
+        
+        $("#search").click(function(){
+          $("#geocomplete").geocomplete("find", "NYC");
+        });
+        
+        $("#center").click(function(){
+          var map = $("#geocomplete").geocomplete("map"),
+            center = new google.maps.LatLng(10, 0);
+          
+          map.setCenter(center);
+          map.setZoom(3);
+        });
+		
+		 $("#geocomplete1").geocomplete({
+          map: ".map_canvas1"
+        });
+        
+        $("#search").click(function(){
+          $("#geocomplete1").geocomplete("find", "NYC");
+        });
+        
+        $("#center").click(function(){
+          var map = $("#geocomplete1").geocomplete("map"),
+            center = new google.maps.LatLng(10, 0);
+          
+          map.setCenter(center);
+          map.setZoom(3);
+        });
+      });
+	  $( ".tac_calculation" ).change(function() {
+		  var basicfreight			=	$('#basicfreight').val();
+		  var docketChgs			=	$('#docketChgs').val();
+		  var handlingChgs			=	$('#handlingChgs').val();
+		  
+		  var statePermitChgs		=	$('#statePermitChgs').val();
+		  var pickupDeliveryChgs	=	$('#pickupDeliveryChgs').val();
+		  var toPayChgs				=	$('#toPayChgs').val();
+		  
+		  var checkpostExpenses		=	$('#checkpostExpenses').val();
+		  var coddodChgs			=	$('#coddodChgs').val();
+		  var MISCCharges			=	$('#MISCCharges').val();
+		  
+		  var serivceTax			=	$('#serivceTax').val();
+		  var grand_total			=	0.00;
+		  var sub_total				=	0.00;
+		  var tax_total				=	0.00;
+		
+		  if(basicfreight!='')
+		  sub_total+=parseInt(basicfreight);
+		  if(docketChgs!='')
+		  sub_total+=parseInt(docketChgs);
+		  if(handlingChgs!='')
+		  sub_total+=parseInt(handlingChgs);
+		  if(statePermitChgs!='')
+		  sub_total+=parseInt(statePermitChgs);
+		  if(pickupDeliveryChgs!='')
+		  sub_total+=parseInt(pickupDeliveryChgs);
+		  if(toPayChgs!='')
+		  sub_total+=parseInt(toPayChgs);
+		  if(checkpostExpenses!='')
+		  sub_total+=parseInt(checkpostExpenses);
+		  if(coddodChgs!='')
+		  sub_total+=parseInt(coddodChgs);
+		  if(MISCCharges!='')
+		  sub_total+=parseInt(MISCCharges);
+		  if(serivceTax!='' && sub_total>0)
+		  {
+			  tax_total=sub_total*serivceTax/100;
+		  }
+		  $('#sub_total').val(sub_total);
+		  $('#grandTotal').val(sub_total+tax_total);
+		});
+		 
+    </script>
+
+ 
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $.widget( "custom.combobox", {
+      _create: function() {
+        this.wrapper = $( "<span>" )
+          .addClass( "custom-combobox" )
+          .insertAfter( this.element );
+ 
+        this.element.hide();
+        this._createAutocomplete();
+        this._createShowAllButton();
+      },
+ 
+      _createAutocomplete: function() {
+        var selected = this.element.children( ":selected" ),
+          value = selected.val() ? selected.text() : "";
+ 
+        this.input = $( "<input>" )
+          .appendTo( this.wrapper )
+          .val( value )
+          .attr( "title", "" )
+          .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+          .autocomplete({
+            delay: 0,
+            minLength: 0,
+            source: $.proxy( this, "_source" )
+          })
+          .tooltip({
+            classes: {
+              "ui-tooltip": "ui-state-highlight"
+            }
+          });
+ 
+        this._on( this.input, {
+          autocompleteselect: function( event, ui ) {
+            ui.item.option.selected = true;
+            this._trigger( "select", event, {
+              item: ui.item.option
+            });
+          },
+ 
+          autocompletechange: "_removeIfInvalid"
+        });
+      },
+ 
+      _createShowAllButton: function() {
+        var input = this.input,
+          wasOpen = false;
+ 
+        $( "<a>" )
+          .attr( "tabIndex", -1 )
+          .attr( "title", "Show All Items" )
+          .tooltip()
+          .appendTo( this.wrapper )
+          .button({
+            icons: {
+              primary: "ui-icon-triangle-1-s"
+            },
+            text: false
+          })
+          .removeClass( "ui-corner-all" )
+          .addClass( "custom-combobox-toggle ui-corner-right" )
+          .on( "mousedown", function() {
+            wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+          })
+          .on( "click", function() {
+            input.trigger( "focus" );
+ 			
+            // Close if already visible
+            if ( wasOpen ) {
+              return;
+            }
+ 
+            // Pass empty string as value to search for, displaying all results
+            input.autocomplete( "search", "" );
+          });
+      },
+ 
+      _source: function( request, response ) {
+        var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+        response( this.element.children( "option" ).map(function() {
+          var text = $( this ).text();
+          if ( this.value && ( !request.term || matcher.test(text) ) )
+            return {
+              label: text,
+              value: text,
+              option: this
+            };
+        }) );
+      },
+ 
+      _removeIfInvalid: function( event, ui ) {
+ 
+        // Selected an item, nothing to do
+        if ( ui.item ) {
+          return;
+        }
+ 
+        // Search for a match (case-insensitive)
+        var value = this.input.val(),
+          valueLowerCase = value.toLowerCase(),
+          valid = false;
+        this.element.children( "option" ).each(function() {
+          if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+            this.selected = valid = true;
+            return false;
+          }
+        });
+ 
+        // Found a match, nothing to do
+        if ( valid ) {
+          return;
+        }
+ 
+        $("#combobox").append('<option value="'+value+'" selected >'+value+'</option>');
+		// Remove invalid value
+        //this.input
+          //.val( "" )
+          //.attr( "title", value + " didn't match any item" )
+          //.tooltip( "open" );
+        //this.element.val( "" );
+       
+        
+      },
+ 
+      _destroy: function() {
+        this.wrapper.remove();
+        this.element.show();
+      }
+    });
+ 
+    $( "#combobox" ).combobox();
+    $( "#toggle" ).on( "click", function() {
+      $( "#combobox" ).toggle();
+    });
+  } );
+
+  </script>

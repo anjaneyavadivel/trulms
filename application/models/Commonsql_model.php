@@ -183,6 +183,16 @@ class Commonsql_model extends CI_Model {
 		$query	=	$this->db->get();
 		return $query;
 	}
+	function select_exist_conginor_contract($cond=array())
+	{
+		$this->db->select('d.contactID,d.name');
+		$this->db->from('tblconsignor as a');
+		$this->db->join('tblcontactdetails as d','a.contactID=d.contactID','inner');
+		$this->db->where('a.active',1);
+		$this->db->order_by('a.consignorID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
 	function select_all_employee()
 	{
 		$this->db->select('a.empID,a.empCode,a.empname,a.qualification,a.mobile,a.mailoffice,a.remarks,a.active,a.joiningdate,a.releavingdate,b.department,c.name');
