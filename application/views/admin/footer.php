@@ -272,8 +272,8 @@
                     "ajax": '<?php echo base_url()?>form-master-json',
                     "columns": [
                         { "data": "pageID" },
-                        { "data": "menuCaption" },
                         { "data": "parentID" },
+                        { "data": "menuCaption" },
                         { "data": "url" },
                         { "data": "active" },
 			{ "data": "Action" }
@@ -425,6 +425,7 @@
             });
         </script>
         <?php }?>
+            
         
       <?php }else{?>
         <!-- ============================================
@@ -460,12 +461,22 @@
         <!-- ===============================================
         ============== Page Specific Scripts ===============
         ================================================ -->
-        <script>
+        <?php if($segment1=='add-employee-role'){
+			?>
+        <script src="<?= base_url()?>assets/js/vendor/chosen/chosen.jquery.min.js"></script>
+         <script>
             $(window).load(function(){
-                $('#form4Submit').on('click', function(){
-               //     $('#form4').submit();
-                });
+               
+               
             });
+        </script>
+        <?php }?>
+        <script>
+//            $(window).load(function(){
+//                $('#form4Submit').on('click', function(){
+//               //     $('#form4').submit();
+//                });
+//            });
         </script>
         <!--/ Page Specific Scripts -->
 		<?php }?>

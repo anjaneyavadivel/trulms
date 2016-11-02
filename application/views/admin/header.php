@@ -4,11 +4,11 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
 <!--[if gt IE 8]><!--> 
 <html class="no-js" lang=""> <!--<![endif]-->
- <head>
+    <head>
 
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>TruLMS - <?=$pageTitle?></title>
+        <title>TruLMS - <?= $pageTitle ?></title>
         <link rel="icon" type="image/ico" href="<?= base_url(); ?>assets/images/favicon.ico" />
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,25 +21,27 @@
         <link rel="stylesheet" href="<?= base_url(); ?>assets/css/vendor/animate.css">
         <link rel="stylesheet" href="<?= base_url(); ?>assets/css/vendor/font-awesome.min.css">
         <link rel="stylesheet" href="<?= base_url(); ?>assets/js/vendor/animsition/css/animsition.min.css">
-		 <?php $segment1	=	$this->uri->segment(1);
-        if(isset($table))
-		{
-			?>
-        <link rel="stylesheet" href="<?= base_url()?>assets/js/vendor/animsition/css/animsition.min.css">
-        <link rel="stylesheet" href="<?= base_url()?>assets/js/vendor/datatables/css/jquery.dataTables.min.css">
-        <link rel="stylesheet" href="<?= base_url()?>assets/js/vendor/datatables/datatables.bootstrap.min.css">
-        <link rel="stylesheet" href="<?= base_url()?>assets/js/vendor/datatables/extensions/ColReorder/css/dataTables.colReorder.min.css">
-        <link rel="stylesheet" href="<?= base_url()?>assets/js/vendor/datatables/extensions/Responsive/css/dataTables.responsive.css">
-        <link rel="stylesheet" href="<?= base_url()?>assets/js/vendor/datatables/extensions/ColVis/css/dataTables.colVis.min.css">
-        <link rel="stylesheet" href="<?= base_url()?>assets/js/vendor/datatables/extensions/TableTools/css/dataTables.tableTools.min.css">
-        <?php 
-		}?>
- <link rel="stylesheet" href="<?= base_url()?>assets/js/vendor/datetimepicker/css/bootstrap-datetimepicker.min.css">
+        <?php
+        $segment1 = $this->uri->segment(1);
+        if (isset($table)) {
+            ?>
+            <link rel="stylesheet" href="<?= base_url() ?>assets/js/vendor/animsition/css/animsition.min.css">
+            <link rel="stylesheet" href="<?= base_url() ?>assets/js/vendor/datatables/css/jquery.dataTables.min.css">
+            <link rel="stylesheet" href="<?= base_url() ?>assets/js/vendor/datatables/datatables.bootstrap.min.css">
+            <link rel="stylesheet" href="<?= base_url() ?>assets/js/vendor/datatables/extensions/ColReorder/css/dataTables.colReorder.min.css">
+            <link rel="stylesheet" href="<?= base_url() ?>assets/js/vendor/datatables/extensions/Responsive/css/dataTables.responsive.css">
+            <link rel="stylesheet" href="<?= base_url() ?>assets/js/vendor/datatables/extensions/ColVis/css/dataTables.colVis.min.css">
+            <link rel="stylesheet" href="<?= base_url() ?>assets/js/vendor/datatables/extensions/TableTools/css/dataTables.tableTools.min.css">
+            <?php }
+        ?>
+        <link rel="stylesheet" href="<?= base_url() ?>assets/js/vendor/datetimepicker/css/bootstrap-datetimepicker.min.css">
 
         <!-- project main css files -->
         <link rel="stylesheet" href="<?= base_url(); ?>assets/css/main.css">
         <!--/ stylesheets -->
-
+        <?php if ($segment1 == 'add-employee-role') { ?>
+            <link rel="stylesheet" href="<?= base_url()?>assets/js/vendor/chosen/chosen.css">
+        <?php } ?>
 
 
         <!-- ==========================================
@@ -401,11 +403,11 @@
 
                         </li>
 
-<!--                        <li class="toggle-right-sidebar">
-                            <a href="#">
-                                <i class="fa fa-comments"></i>
-                            </a>
-                        </li>-->
+                        <!--                        <li class="toggle-right-sidebar">
+                                                    <a href="#">
+                                                        <i class="fa fa-comments"></i>
+                                                    </a>
+                                                </li>-->
                     </ul>
                     <!-- Right-side navigation end -->
 

@@ -27,7 +27,7 @@
              <?= form_open_multipart(base_url() . 'add-employee-role',array('id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
             <!-- col -->
             <?php $this->load->view('admin/msg')?>
-          <div class="col-md-6">
+          <div class="col-md-12">
                
                 <section class="tile"> 
 
@@ -42,37 +42,82 @@
 
 
                         <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="menuCaption">Form/Menu Name <span class="required">*</span></label>
-                                <input type="text" name="menuCaption" id="menuCaption" class="form-control" required="" >
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="parentID">Parent Category <span class="required">*</span></label>
-                                <select name="parentID" class="form-control mb-10" data-parsley-trigger="change" required="" >
-                                    <option value="">Select option...</option>
-                                    <option value="1">Master</option>
-                                    <option value="2">Setup</option>
-                                    <option value="3">Operations</option>
-                                    <option value="4">Report</option>
+                            <div class="form-group col-md-3">
+                                <label for="empID">Employee Code <span class="required">*</span></label>
+                                <select name="empID" tabindex="3" class="form-control chosen-select"  style="width: 240px;">
+                                        <option value="AK">Alaska</option>
+                                        <option value="HI">Hawaii</option>
+                                        <option value="CA">California</option>
+                                        <option value="NV">Nevada</option>
+                                        <option value="OR">Oregon</option>
+                                        <option value="WA">Washington</option>
+                                    
                                 </select>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="url">URL <span class="required">*</span></label>
-                                <input type="text" name="url" id="url" class="form-control checkfield" data-tb="pages" data-col="url" required="" placeholder="add-form-master">
+                            <div class="form-group col-md-3">
+                                <label for="empName">Employee Name</label>
+                                <input type="text" name="empName" id="empName" class="form-control" placeholder="Employee Name">
+                                
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="empDepartment">Department</label>
+                                <input type="text" name="empDepartment" id="empDepartment" class="form-control" placeholder="Department">
                                 <span id="checkfield_msg"></span>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="icon">Icon</label>
-                                <input type="text" name="icon" id="icon" class="form-control" placeholder="fa fa-plus">
+                            <div class="form-group col-md-3">
+                                <label for="empDesignation">Designation </label>
+                                <input type="text" name="empDesignation" id="empDesignation" class="form-control" placeholder="Designation">
                             </div>
                         </div>
+                        
                         <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="tooltip">Tooltip</label>
-                                <input type="text" name="tooltip" id="tooltip" class="form-control" >
-                            </div>
+                            <hr class="line-dashed line-full"/>
+                            <div class="form-group">
+                                            <label class="col-sm-12 control-label">Access Role <span class="required">*</span></label>
+                                            <div class="col-sm-2">
+
+                                                <label class="checkbox checkbox-custom-alt">
+                                                    <input type="checkbox"><i></i> Option one
+                                                </label>
+
+                                            </div>
+                                            <div class="col-sm-2">
+
+                                                <label class="checkbox checkbox-custom-alt">
+                                                    <input type="checkbox"><i></i> Option one
+                                                </label>
+
+                                            </div>
+                                            <div class="col-sm-2">
+
+                                                <label class="checkbox checkbox-custom-alt">
+                                                    <input type="checkbox"><i></i> Option one
+                                                </label>
+
+                                            </div>
+                                            <div class="col-sm-2">
+
+                                                <label class="checkbox checkbox-custom-alt">
+                                                    <input type="checkbox"><i></i> Option one
+                                                </label>
+
+                                            </div>
+                                            <div class="col-sm-2">
+
+                                                <label class="checkbox checkbox-custom-alt">
+                                                    <input type="checkbox"><i></i> Option one
+                                                </label>
+
+                                            </div>
+                                            <div class="col-sm-2">
+
+                                                <label class="checkbox checkbox-custom-alt">
+                                                    <input type="checkbox"><i></i> Option one
+                                                </label>
+
+                                            </div>
+                                        </div>
+                            
                         </div>
                         
                     </div>
@@ -82,88 +127,7 @@
                 <!-- /tile --> 
 
             </div>
-            <div class="col-md-6">
-                <section class="tile"> 
-
-                    <!-- tile header --> 
-                    <!-- /tile header --> 
-                    <div class="tile-header bg-greensea dvd dvd-btm">
-                        <h1 class="custom-font"><strong>Page Alter Details</strong> </h1>
-
-                    </div>
-                    <!-- tile body -->
-                    <div class="tile-body">
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label class="col-sm-10 control-label">Is Create Approve Required</label>
-                                <div class="col-sm-1">
-                                    <div class="onoffswitch labeled  greensea inline-block">
-                                        <input type="checkbox" name="iscreateApproveRequired" class="onoffswitch-checkbox" id="iscreateApproveRequired" checked="" value="1">
-                                        <label class="onoffswitch-label" for="iscreateApproveRequired"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="col-sm-10 control-label">Is Modify Approve Required</label>
-                                <div class="col-sm-1">
-                                    <div class="onoffswitch labeled  greensea inline-block">
-                                        <input type="checkbox" name="ismodifyApproveRequired" class="onoffswitch-checkbox" id="ismodifyApproveRequired" checked="" value="1">
-                                        <label class="onoffswitch-label" for="ismodifyApproveRequired"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label class="col-sm-10 control-label">Is Reporting User Approve Allowed</label>
-                                <div class="col-sm-2">
-                                    <div class="onoffswitch labeled  greensea inline-block">
-                                        <input type="checkbox" name="isReportingUserApproveAllowed" class="onoffswitch-checkbox" id="isReportingUserApproveAllowed" checked="" value="1">
-                                        <label class="onoffswitch-label" for="isReportingUserApproveAllowed"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="col-sm-10 control-label">Is Self Edit Allowed</label>
-                                <div class="col-sm-2">
-                                    <div class="onoffswitch labeled greensea inline-block">
-                                        <input type="checkbox" name="isSelfEditAllowed" class="onoffswitch-checkbox" id="isSelfEditAllowed" checked="checked" value="1">
-                                        <label class="onoffswitch-label" for="isSelfEditAllowed"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label class="col-sm-10 control-label">Is Self Approval Allowed</label>
-                                <div class="col-sm-2">
-                                    <div class="onoffswitch labeled greensea inline-block">
-                                        <input type="checkbox" name="isSelfApprovalAllowed" class="onoffswitch-checkbox" id="isSelfApprovalAllowed" checked="" value="1">
-                                        <label class="onoffswitch-label" for="isSelfApprovalAllowed"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
-                                    </div>
-                                </div>
-                            </div>
-<!--                            <div class="form-group col-md-6">
-                                <label class="col-sm-10 control-label">Default Approver RoleID</label>
-                                <div class="col-sm-2">
-                                    <div class="onoffswitch labeled  greensea inline-block">
-                                        <input type="checkbox" name="defaultApproverRoleID" class="onoffswitch-checkbox" id="defaultApproverRoleID" checked="" value="1">
-                                        <label class="onoffswitch-label" for="defaultApproverRoleID"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
-                                    </div>
-                                </div>
-                            </div>-->
-                        </div>
-                    </div>
-                    <!-- /tile body --> 
-
-                </section>
-                <!-- /tile --> 
-
-                <!-- tile --> 
-
-                <!-- /tile --> 
-
-            </div>
+         
             <div class="col-md-12"> 
 
                 <!-- tile --> 
