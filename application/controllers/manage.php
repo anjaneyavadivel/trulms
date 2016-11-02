@@ -2622,24 +2622,32 @@ class Manage extends CI_Controller {
 	{
 		if($this->input->post('save'))
 		{
-			$contact_values=array('name'		=>	$this->input->post('name'),
-							'companyName'		=>	$this->input->post('companyName'),
-							'addressline1'		=>	$this->input->post('addressline1'),
-							'addressline2'		=>	$this->input->post('addressline2'),
-							'city'				=>	$this->input->post('city'),
-							'state'				=>	$this->input->post('state'),
-							'country'			=>	$this->input->post('country'),
-							'email1'			=>	$this->input->post('email1'),
-							'email2'			=>	$this->input->post('email2'),
-							'phone1'			=>	$this->input->post('phone1'),
-							'phone2'			=>	$this->input->post('phone2'),
-							'fax'				=>	$this->input->post('fax'),
-							'website'			=>	$this->input->post('website'),
-							'dbentrystateID'	=>	0,
-							'createby'			=>	$this->session->userdata('SESS_userId'),
-							'active'			=>	1);
-							
-			$contactID	=	insertTable('tblcontactdetails', $contact_values,0);
+			if (is_numeric($this->input->post('name'))) 
+			{
+				$contactID	=	$this->input->post('name');
+				//echo $this->input->post('name');exit;
+			}
+			else
+			{
+				$contact_values=array('name'		=>	$this->input->post('name'),
+								'companyName'		=>	$this->input->post('companyName'),
+								'addressline1'		=>	$this->input->post('addressline1'),
+								'addressline2'		=>	$this->input->post('addressline2'),
+								'city'				=>	$this->input->post('city'),
+								'state'				=>	$this->input->post('state'),
+								'country'			=>	$this->input->post('country'),
+								'email1'			=>	$this->input->post('email1'),
+								'email2'			=>	$this->input->post('email2'),
+								'phone1'			=>	$this->input->post('phone1'),
+								'phone2'			=>	$this->input->post('phone2'),
+								'fax'				=>	$this->input->post('fax'),
+								'website'			=>	$this->input->post('website'),
+								'dbentrystateID'	=>	0,
+								'createby'			=>	$this->session->userdata('SESS_userId'),
+								'active'			=>	1);
+								
+				$contactID	=	insertTable('tblcontactdetails', $contact_values,0);
+			}
 			
 			$values_cons=array('contactID'		=>	$contactID,
 							'contactPer1'		=>	$this->input->post('name'),
@@ -2703,6 +2711,7 @@ class Manage extends CI_Controller {
 			}
 		}
 		$data['pageTitle']	=	"Add Contract Consignor";
+		$data['view']		=	$this->Commonsql_model->select_exist_conginor_contract();
 		$this->load->view('admin/contract_consignor/add_contract_consignor',$data);
 	}
 	function edit_contract_consignor()
