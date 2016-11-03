@@ -495,7 +495,7 @@
         <script>
             $(window).load(function(){
                 $('#form4Submit').on('click', function(){
-               //     $('#form4').submit();
+                    $('#form4').submit();
                 });
             });
         </script>
