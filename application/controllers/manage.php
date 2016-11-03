@@ -2601,7 +2601,7 @@ class Manage extends CI_Controller {
 			if($value->active==1)
 			{
 				$view		=	"<a href='".base_url()."view_contract_consignor/".$value->consignorID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
-				$Approve		=	"<a href='".base_url()."approve_contract_consignor/".$value->consignorID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approve</a>";
+				$Approve		=	"<a href='".base_url()."approve-contract-consignor/".$value->consignorID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approve</a>";
 				$active	=	disable_approve_deactive_html("'".base_url()."manage/contract_consignor/".$value->consignorID."','0'");
 			}
 			else
@@ -2714,7 +2714,109 @@ class Manage extends CI_Controller {
 		$data['view']		=	$this->Commonsql_model->select_exist_conginor_contract();
 		$this->load->view('admin/contract_consignor/add_contract_consignor',$data);
 	}
+	function contract_contact_details()
+	{
+		$data['view'] 	=	$this->Commonsql_model->select('tblcontactdetails',array('name'	=>	$this->input->post('name')));
+		$this->load->View('admin/contract_consignor/contract_contact_details',$data);
+	}
 	function edit_contract_consignor()
+	{
+		if($this->input->post('save'))
+		{
+			$whereData	= array('consignorID'=>$this->input->post('consignorID'));
+			$contac_wh	= array('contactID'=>$this->input->post('contactID'));
+			$contract_wh	= array('contractID'=>$this->input->post('contractID'));
+			$contact_values=array('name'		=>	$this->input->post('name'),
+							'companyName'		=>	$this->input->post('companyName'),
+							'addressline1'		=>	$this->input->post('addressline1'),
+							'addressline2'		=>	$this->input->post('addressline2'),
+							'city'				=>	$this->input->post('city'),
+							'state'				=>	$this->input->post('state'),
+							'country'			=>	$this->input->post('country'),
+							'email1'			=>	$this->input->post('email1'),
+							'email2'			=>	$this->input->post('email2'),
+							'phone1'			=>	$this->input->post('phone1'),
+							'phone2'			=>	$this->input->post('phone2'),
+							'fax'				=>	$this->input->post('fax'),
+							'website'			=>	$this->input->post('website'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$query1		= updateTables('tblcontactdetails', $contac_wh, $contact_values , 1,'contactID', $this->input->post('contactID'));
+			
+			$values_cons=array('contactID'		=>	$this->input->post('contactID'),
+							'contactPer1'		=>	$this->input->post('name'),
+							'contactPer2'		=>	$this->input->post('contactPer2'),
+							'csttinno'			=>	$this->input->post('csttinno'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$query2		= updateTables('tblconsignor', $whereData, $values_cons , 1,'consignorID', $this->input->post('consignorID'));
+			
+			$values=array('contractCode'		=>	$this->input->post('contractCode'),
+							'contractTypeID'	=>	1,
+							'consignorID'		=>	$this->input->post('consignorID'),
+							'from'				=>	$this->input->post('from'),
+							'to'				=>	$this->input->post('to'),
+							'vehicleLength'		=>	$this->input->post('vehicleLength'),
+							'vehicleType'		=>	$this->input->post('vehicleType'),
+							'vehicleCapacity'	=>	$this->input->post('vehicleCapacity'),
+							'roadType'			=>	$this->input->post('roadType'),
+							'minKM'				=>	$this->input->post('minKM'),
+							'seasonType'		=>	$this->input->post('seasonType'),
+							'miscType'			=>	$this->input->post('miscType'),
+							'dated'				=>	date('Y-m-d',strtotime($this->input->post('dated'))),
+							'signedby'			=>	$this->input->post('signedby'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$query3		= updateTables('tblcontract', $whereData, $values , 1,'contractID', $this->input->post('contractID'));
+			
+			$values_map=array('contractVerID'		=>	1,
+							'contractID'			=>	$this->input->post('contractID'),
+							'basicfreight'			=>	$this->input->post('basicfreight'),
+							'docketChgs'			=>	$this->input->post('docketChgs'),
+							'handlingChgs'			=>	$this->input->post('handlingChgs'),
+							'statePermitChgs'		=>	$this->input->post('statePermitChgs'),
+							'pickupDeliveryChgs'	=>	$this->input->post('pickupDeliveryChgs'),
+							'toPayChgs'				=>	$this->input->post('toPayChgs'),
+							'checkpostExpenses'		=>	$this->input->post('checkpostExpenses'),
+							'coddodChgs'			=>	$this->input->post('coddodChgs'),
+							'MISCCharges'			=>	$this->input->post('MISCCharges'),
+							'serivceTax'			=>	$this->input->post('serivceTax'),
+							'grandTotal'			=>	$this->input->post('grandTotal'),
+							'dbentrystateID'		=>	0,
+							'createby'				=>	$this->session->userdata('SESS_userId'),
+							'active'				=>	1);
+							
+			$query4		= updateTables('tblcontractversionmap', $contract_wh, $values_map , 1,'contractVersionMapID', $this->input->post('contractVersionMapID'));
+			
+			if($query1 || $query2 || $query3 || $query4)
+			{
+				$this->session->set_userdata('suc','Coontract Consioner Types Successfully  Added...!');
+				redirect('edit-contract-consignor/'.$this->input->post('consignorID'));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('edit-contract-consignor/'.$this->input->post('consignorID'));
+			}
+		}
+		$data['view']		=	$this->Commonsql_model->select_conginor_contract(array('a.consignorID'=>$this->uri->segment(2)));
+		$data['pageTitle']	=	"Edit Emplyee Types";
+		$this->load->view('admin/contract_consignor/edit_contract_consignor',$data);
+	}
+	function view_contract_consignor()
+	{
+		$data['pageTitle']	=	"View Emplyee Types";
+		$data['view']		=	$this->Commonsql_model->select('tblemployetypes',array('employetypeID'=>$this->uri->segment(2)));
+		$this->load->view('admin/contract_consignor/view_contract_consignor',$data);
+	}
+	function approve_contract_consignor()
 	{
 		if($this->input->post('save'))
 		{
@@ -2752,6 +2854,7 @@ class Manage extends CI_Controller {
 			
 			$values=array('contractCode'		=>	$this->input->post('contractCode'),
 							'contractTypeID'	=>	1,
+							'consignorID'		=>	$this->input->post('consignorID'),
 							'from'				=>	$this->input->post('from'),
 							'to'				=>	$this->input->post('to'),
 							'vehicleLength'		=>	$this->input->post('vehicleLength'),
@@ -2791,69 +2894,20 @@ class Manage extends CI_Controller {
 			if($query1 || $query2 || $query3 || $query4)
 			{
 				$this->session->set_userdata('suc','Coontract Consioner Types Successfully  Added...!');
-				redirect('edit-contract-consignor/'.$this->input->post('consignorID'));
+				redirect('approve-contract-consignor/'.$this->input->post('consignorID'));
 				
 			}
 			else
 			{
 				$this->session->set_userdata('err','Error Please try again..!');
-				redirect('edit-contract-consignor/'.$this->input->post('consignorID'));
-			}
-		}
-		$data['view']		=	$this->Commonsql_model->select_conginor_contract(array('a.consignorID'=>$this->uri->segment(2)));
-//		echo $date['view']->num_rows();exit;
-		//echo $this->db->last_query();exit;
-		$data['pageTitle']	=	"Edit Emplyee Types";
-		$this->load->view('admin/contract_consignor/edit_contract_consignor',$data);
-	}
-	function view_contract_consignor()
-	{
-		$data['pageTitle']	=	"View Emplyee Types";
-		$data['view']		=	$this->Commonsql_model->select('tblemployetypes',array('employetypeID'=>$this->uri->segment(2)));
-		$this->load->view('admin/contract_consignor/view_contract_consignor',$data);
-	}
-	function approve_contract_consignor()
-	{
-		if($this->input->post('save'))
-		{
-			
-			$check 	=	$this->Commonsql_model->select('tblemployetypes',array('employetypeID'	=>	$this->input->post('employetypeID'),'typename'		=>	$this->input->post('typename'),
-							'description'		=>	$this->input->post('description')));
-			if($check->num_rows()==0)
-			{
-					$values_mod=array('typename'		=>	$this->input->post('typename'),
-								'description'		=>	$this->input->post('description'),
-								'dbentrystateID'	=>	0,
-								'createby'			=>	$this->session->userdata('SESS_userId'),
-								'active'			=>	1);
-								
-				$whereData	=	array('employetypeID'	=>	$this->input->post('employetypeID'));
-				
-				$query		= updateTable('tblemployetypes', $whereData, $values_mod , 1,'employetypeID', $this->input->post('employetypeID'));
-				
-				if($query)
-				{
-					$this->session->set_userdata('suc','contract_consignor Successfully  Updated...!');
-					redirect('approve-contract-consignor/'.$this->input->post('employetypeID'));
-					
-				}
-				else
-				{
-					$this->session->set_userdata('err','Error Please try again..!');
-					redirect('approve-contract-consignor/'.$this->input->post('employetypeID'));
-				}
-			}
-			else
-			{
-				$this->session->set_userdata('err','No Changes Found..!');
-				redirect('approve-contract-consignor/'.$this->input->post('employetypeID'));
+				redirect('approve-contract-consignor/'.$this->input->post('consignorID'));
 			}
 		}
 		if($this->uri->segment(4))
 		{
-			$whereData	=	array('employetype_modID'	=>	$this->uri->segment(4));
+			$whereData	=	array('consignor_modID'	=>	$this->uri->segment(4));
 			$updateData	=	array('active'	=>	$this->uri->segment(5));
-			$upt	=	$this->Commonsql_model->updateTable('tblemployetypes_mod', $whereData , $updateData);
+			$upt	=	$this->Commonsql_model->updateTable('tblconsignor_mod', $whereData , $updateData);
 			//echo $this->db->last_query();exit;
 			if($upt)
 			{
@@ -2871,48 +2925,55 @@ class Manage extends CI_Controller {
 		{
 			$data['pageTitle']	=	"View contract_consignor";
 			$data['table']		=	"Designation";
-			$data['view']		=	$this->Commonsql_model->select('tblemployetypes_mod',array('employetype_modID'=>$this->uri->segment(3)));
+			$data['view']		=	$this->Commonsql_model->select('tblconsignor_mod',array('consignor_modID'=>$this->uri->segment(3)));
 			$this->load->view('admin/contract_consignor/approve_contract_consignor',$data);
 		}
 		else
 		{
 			$data['pageTitle']	=	"View contract_consignor";
 			$data['table']		=	"Designation";
-			$data['view']		=	$this->Commonsql_model->select('tblemployetypes',array('employetypeID'=>$this->uri->segment(2)));
+			$data['view']		=	$this->Commonsql_model->select_conginor_contract(array('a.consignorID'=>$this->uri->segment(2)));
 			$this->load->view('admin/contract_consignor/approve_contract_consignor',$data);
 		}
 	}
 	function approve_contract_consignor_json()
 	{
-		$result	=	$this->Commonsql_model->select_desc('tblemployetypes_mod',array('employetypeID'=>$this->uri->segment(3)),'employetype_modID');
-		//echo $this->db->last_query();
-		$output = array();
-		$i=1;$j=1;
+		$result	=	$this->Commonsql_model->select_conginor_contract_mod($this->uri->segment(3));
+		//echo $this->db->last_query();exit;
+		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$i++;
-			$vaules['name'] 			= 	$value->typename;
-			$vaules['description'] 		= 	$value->description;
+			$vaules['ID']			=	$i++;
+			$vaules['name'] 		= 	$value->name;
+			$vaules['from'] 		= 	$value->from;
+			$vaules['to'] 			= 	$value->to;
+			
+			$vaules['length'] 		= 	$value->vehicleLength;
+			$vaules['weight'] 		= 	$value->vehicleCapacity;
+			$vaules['date'] 		= 	date('d-m-Y',strtotime($value->dated));
+			
+			$vaules['sign'] 		= 	$value->signedby;
+			$vaules['total'] 		= 	$value->grandTotal;
 			
 			if($value->active==1)
 			{
 				if($j++==1)
 				{
-					$Approve	=	"<a href='".base_url()."manage/contract_consignor_mod_approve/".$value->employetype_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approved</a>";
+					$Approve	=	"<a href='".base_url()."manage/contract_consignor_mod_approve/".$value->consignorID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approved</a>";
 				}
 				else
 				{
 					$Approve	=	'';
 				}
-				$active	=	"<a href='".base_url()."manage/approve_contract_consignor/".$value->employetypeID.'/'.$value->employetype_modID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
+				$active	=	"<a href='".base_url()."manage/approve_contract_consignor/".$value->consignorID.'/'.$value->consignor_modID."/0'role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 active'>Active</a>";
 			}
 			else
 			{
 				$Approve	=	'';
-				$active	=	"<a href='".base_url()."manage/approve_contract_consignor/".$value->employetypeID.'/'.$value->employetype_modID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
+				$active	=	"<a href='".base_url()."manage/approve_contract_consignor/".$value->consignorID.'/'.$value->consignor_modID."/1' role='button' tabindex='0' class='delete text-danger text-uppercase text-strong text-sm mr-10 deactive'>De-Active</a>";
 			}
 			
-			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_contract_consignor/".$value->employetypeID.'/'.$value->employetype_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_contract_consignor/".$value->consignorID.'/'.$value->employetype_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
 			
 			$output[] =$vaules;
 		}
@@ -2922,7 +2983,7 @@ class Manage extends CI_Controller {
 	function contract_consignor_mod_approve()
 	{
 		$mod_id	=	$this->uri->segment(3);
-		$data	=	$this->Commonsql_model->select('tblemployetypes_mod',array('employetype_modID'=>$mod_id));
+		$data	=	$this->Commonsql_model->select('tblconsignor_mod',array('consignor_modID'=>$mod_id));
 		if($data->num_rows()>0)
 		{
 			$val	=	$data->row();
@@ -2933,15 +2994,15 @@ class Manage extends CI_Controller {
 								'approvedby'			=>	$this->session->userdata('SESS_userId'),
 								'approvedon'			=>	date('Y-m-d h:i:s'));
 							
-				$cond		=	array('employetypeID'	=>	$val->employetypeID);
+				$cond		=	array('consignorID'	=>	$val->consignorID);
 				
 				$values_mod	=	array('dbentrystateID'	=>	3,
 								'approvedby'			=>	$this->session->userdata('SESS_userId'),
 								'approvedon'			=>	date('Y-m-d h:i:s'));
 							
-				$cond_mod	=	array('employetype_modID'	=>	$mod_id);
-				$upt		=	$this->Commonsql_model->updateTable('tblemployetypes', $cond , $values);
-				$upt_m		=	$this->Commonsql_model->updateTable('tblemployetypes_mod', $cond_mod , $values_mod);
+				$cond_mod	=	array('consignor_modID'	=>	$mod_id);
+				$upt		=	$this->Commonsql_model->updateTable('tblconsignor', $cond , $values);
+				$upt_m		=	$this->Commonsql_model->updateTable('tblconsignor_mod', $cond_mod , $values_mod);
 				//echo $this->db->last_query();exit;
 				if($upt)
 				{

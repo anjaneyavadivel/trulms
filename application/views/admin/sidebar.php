@@ -50,11 +50,11 @@
                                                     <li><a href="<?= base_url()?>vehicleowner"><i class="fa fa-caret-right"></i> Vehicle / Owner(later)</a></li>
                                                     <li><a href="<?= base_url()?>driver"><i class="fa fa-caret-right"></i> Driver</a></li>
                                                     <li><a href="<?= base_url()?>contracttype"><i class="fa fa-caret-right"></i> Contract Type(later)</a></li>
-                                                    <li><a href="<?= base_url()?>payment-mode"><i class="fa fa-caret-right"></i> Payment Mode(later)</a></li>
-                                                     <li><a href="<?= base_url()?>payment-status"><i class="fa fa-caret-right"></i> Payment Status(later)</a></li>
+                                                    <li><a href="<?= base_url()?>payment_mode"><i class="fa fa-caret-right"></i> Payment Mode(later)</a></li>
+                                                     <li><a href="<?= base_url()?>payment_status"><i class="fa fa-caret-right"></i> Payment Status(later)</a></li>
                                                     <li><a href="<?= base_url()?>department"><i class="fa fa-caret-right"></i> Department</a></li>
                                                     <li><a href="<?= base_url()?>designation"><i class="fa fa-caret-right"></i> Designation</a></li>
-                                                    <li><a href="<?= base_url()?>employee-types"><i class="fa fa-caret-right"></i> Employee Types</a></li>
+                                                    <li><a href="<?= base_url()?>employee_types"><i class="fa fa-caret-right"></i> Employee Types</a></li>
                                                     <li><a href="<?= base_url()?>role"><i class="fa fa-caret-right"></i> Role</a></li>
                                                      <li><a href="<?= base_url()?>form-master"><i class="fa fa-caret-right"></i> Forms / Pages</a></li>
                                                 </ul>

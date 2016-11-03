@@ -71,6 +71,23 @@ if (!function_exists('updateTable')) {
     }
 
 }
+
+if (!function_exists('updateTables')) {
+
+    function updateTables($tableName, $whereData = array(), $updateData = array(), $isStoreMod=0, $modIdName='', $modId='') {
+        $CI = & get_instance();
+        $CI->load->model('commonsql_model');
+        $resultData = $CI->commonsql_model->updateTable($tableName, $whereData, $updateData);
+		//echo $CI->db->last_query();exit;
+        if($isStoreMod==1){
+            $updateData[$modIdName]=$modId;
+            $insertmodid = $CI->commonsql_model->insert_table($tableName.'_mod', $updateData);
+			//echo $CI->db->last_query();exit;
+        }
+        return $resultData;
+    }
+
+}
 /* update the data to table
  * $tableName -> Name of the table
  * $whereData -> Array -> where fields
@@ -157,7 +174,4 @@ if (!function_exists('get_joins')) {
     }
 
 }
-
-
-
 ?>

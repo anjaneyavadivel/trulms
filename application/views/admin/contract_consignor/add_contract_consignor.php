@@ -1,4 +1,4 @@
-
+	
 <?php $this->load->view('admin/sidebar')?>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <style>
@@ -10,20 +10,27 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    margin-left: -1px;
+    margin-left: 190px;
     padding: 0;
   }
   .custom-combobox-input {
     margin: 0;
     padding: 5px 10px;
+	color: #616f77;
+		outline: 0;
+		vertical-align: top;
+		background-color: #fff;
+		filter: none !important;
+		-webkit-box-shadow: none;
+		box-shadow: none;
+		border-radius: 2px;
+		border: 1px solid #dbe0e2;
+		-webkit-transition: all 0.2s linear;
+		-moz-transition: all 0.2s linear;
+		transition: all 0.2s linear;
+		width:110%
   }
   </style>
-  <script type="application/javascript">
- function fetch_contact_details(id)
- {
-	 alert(id);
- }
-</script>
 
 <!-- =================================================
                 ================= RIGHTBAR Content ===================
@@ -61,9 +68,9 @@
                                 </div>
           <!-- tile body -->
           <div class="tile-body">
-            <div class="row">
-              <div class="form-group col-md-3">
-                <label for="name">Name <span class="required">*</span></label>
+           
+              <div class="form-group name_class col-md-3" style="padding:0px;">
+                <label for="name">Name <span class="required">*</span></label><br />
                 <select  name="name" id="combobox" required class="form-control" onchange="fetch_contact_details(this.value)" >
                 <option value="">-- Select Name --</option>
                 <?php if(isset($view) && $view->num_rows()>0)
@@ -81,28 +88,34 @@
                 
               </div>
               <div class="form-group col-md-3">
-                <label for="name">Company Name <span class="required">*</span> </label>
-                <input type="text" name="companyName" id="name" class="form-control" placeholder="Name of Company" required="" data-parsley-id="8057">
-                <ul class="parsley-errors-list" id="parsley-id-8057">
-                </ul>
-              </div>
-              <div class="form-group col-md-3">
                 <label for="contactemail">Alter Contact Person </label>
                 <input type="text" name="contactPer2" id="contactemail" class="form-control" placeholder=" Enter Alter Contact Person" data-parsley-id="1328">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
               <div class="form-group col-md-3">
+                <label for="name">CST/LST/TIN No</label>
+                <input type="text" name="csttinno" id="name" placeholder=" Enter CST/LST/TIN No" class="form-control"  data-parsley-id="8057">
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+              <div id="change_content">
+              <div class="form-group col-md-3">
+                <label for="name">Company Name <span class="required">*</span> </label>
+                <input type="text" name="companyName" id="name" class="form-control" placeholder="Name of Company" required="" data-parsley-id="8057">
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+              
+              
+            
+            <div class="row">
+            <div class="form-group col-md-3">
                 <label for="name">Contact  No-1	<span class="required">*</span> </label>
                 <input type="text" name="phone1" id="name" class="form-control" required="" placeholder=" Enter Contact  No-1" data-parsley-id="8057">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
-             
-            </div>
-            
-            <div class="row">
-            
             <div class="form-group col-md-3">
                 <label for="name">Contact  No-2 </label>
                 <input type="text" name="phone2" id="name" class="form-control"  placeholder=" Enter Contact  No-2 " data-parsley-id="8057">
@@ -121,12 +134,7 @@
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
-              <div class="form-group col-md-3">
-                <label for="name">CST/LST/TIN No</label>
-                <input type="text" name="csttinno" id="name" placeholder=" Enter CST/LST/TIN No" class="form-control"  data-parsley-id="8057">
-                <ul class="parsley-errors-list" id="parsley-id-8057">
-                </ul>
-              </div>
+              
              
             </div>
             <div class="row">
@@ -177,6 +185,7 @@
                 </ul>
               </div>
               
+            </div>
             </div>
             
           </div>
@@ -449,7 +458,7 @@
               <div class="form-group col-md-6">
                 <label for="name">Grand Total </label>
                 <input type="text"  id="grandTotal" class="form-control" required data-parsley-id="8057" placeholder="Enter Grand Total " disabled="disabled">
-                  <input type="hidden" name="grandTotal" class="form-control" required data-parsley-id="8057" placeholder="Enter Grand Total " >
+                  <input type="hidden" name="grandTotal"id="grandTotals" class="form-control" required data-parsley-id="8057" placeholder="Enter Grand Total " >
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
@@ -586,6 +595,7 @@
 		  }
 		  $('#sub_total').val(sub_total);
 		  $('#grandTotal').val(sub_total+tax_total);
+		  $('#grandTotals').val(sub_total+tax_total);
 		});
 		 
     </script>
@@ -627,6 +637,15 @@
  
         this._on( this.input, {
           autocompleteselect: function( event, ui ) {
+			$.ajax({
+				data:"name="+ui.item.value,
+				type:"post",
+				url:"<?php echo base_url()?>manage/contract_contact_details",
+				success:function(html)
+				{
+					$('#change_content').html(html);
+				}
+			});
             ui.item.option.selected = true;
             this._trigger( "select", event, {
               item: ui.item.option
