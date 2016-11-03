@@ -283,6 +283,25 @@
                     ],
                     "dom": 'Rlfrtip'
                 });
+				<?php }else if($segment1=='employee-role'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>employee-role-json',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "empCode" },
+                        { "data": "empname" },
+                        { "data": "name" },
+                        { "data": "department" },
+                        { "data": "roleName" },
+                        { "data": "active" },
+			{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ 5] }
+                    ],
+                    "dom": 'Rlfrtip'
+                });
 				<?php }else if($segment1=='contract-consignor'){
 					?>
 					var table = $('#basic-usage').DataTable({
@@ -464,10 +483,15 @@
         <?php if($segment1=='add-employee-role'){
 			?>
         <script src="<?= base_url()?>assets/js/vendor/chosen/chosen.jquery.min.js"></script>
+        <script src="<?= base_url()?>assets-new/js/mainnew.js"></script>
          <script>
             $(window).load(function(){
-               
-               
+               Mainnew.init();
+               $("input[type='checkbox']").change(function() {
+                if ($("input[type='checkbox']:checked").length){
+                    $(this).valid()
+                }
+            })
             });
         </script>
         <?php }?>

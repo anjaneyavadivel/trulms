@@ -76,7 +76,11 @@ $route['view-form-master/(:num)'] = 'setup/view_form_master/$1';
 $route['edit-form-master/(:num)'] = 'setup/edit_form_master/$1';
 
 $route['employee-role'] = 'setup/employee_role';
+$route['employee-role-json'] = 'setup/employee_role_json';
 $route['add-employee-role'] = 'setup/add_employee_role';
+$route['view-employee-role/(:num)'] = 'setup/view_employee_role/$1';
+$route['edit-employee-role/(:num)'] = 'setup/edit_employee_role/$1';
+
 $route['form-access'] = 'setup/form_access';
 /*******************************************manage Controller*****************************/
 

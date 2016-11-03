@@ -12,29 +12,29 @@
 <section id="content">
     <div class="page page-forms-validate">
         <div class="pageheader">
-            <h2>Add <?=$pageTitle?> Setup</h2>
+            <h2>Add <?= $pageTitle ?> Setup</h2>
             <div class="page-bar">
                 <ul class="page-breadcrumb">
                     <li> <a href="<?= base_url() ?>"><i class="fa fa-home"></i> HOME</a> </li>
-                    <li> <a href="<?= base_url() ?>employee-role"><?=$pageTitle?> Setup</a> </li>
-                    <li> <a href="javascript::">Add <?=$pageTitle?> Setup</a> </li>
+                    <li> <a href="<?= base_url() ?>employee-role"><?= $pageTitle ?> Setup</a> </li>
+                    <li> <a href="javascript::">Add <?= $pageTitle ?> Setup</a> </li>
                 </ul>
             </div>
         </div>
 
         <!-- row -->
         <div class="row"> 
-             <?= form_open_multipart(base_url() . 'add-employee-role',array('id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
+            <?= form_open_multipart(base_url() . 'add-employee-role', array('id' => 'form4', 'role' => 'form', 'data-parsley-validate' => '')); ?>
             <!-- col -->
-            <?php $this->load->view('admin/msg')?>
-          <div class="col-md-12">
-               
+            <?php $this->load->view('admin/msg') ?>
+            <div class="col-md-12">
+
                 <section class="tile"> 
 
                     <!-- tile header --> 
                     <!-- /tile header --> 
                     <div class="tile-header dvd dvd-btm bg-greensea">
-                        <h1 class="custom-font"><strong><?=$pageTitle?> Setup</strong> </h1>
+                        <h1 class="custom-font"><strong><?= $pageTitle ?> Setup</strong> </h1>
 
                     </div>
                     <!-- tile body -->
@@ -42,84 +42,49 @@
 
 
                         <div class="row">
-                            <div class="form-group col-md-3">
-                                <label for="empID">Employee Code <span class="required">*</span></label>
-                                <select name="empID" tabindex="3" class="form-control chosen-select"  style="width: 240px;">
-                                        <option value="AK">Alaska</option>
-                                        <option value="HI">Hawaii</option>
-                                        <option value="CA">California</option>
-                                        <option value="NV">Nevada</option>
-                                        <option value="OR">Oregon</option>
-                                        <option value="WA">Washington</option>
-                                    
+
+                            <div class="form-group col-md-4">
+                                <label for="empID">Employee Code / Name / Department / Designation <span class="required">*</span></label>
+                                <select name="empID" id="empID" tabindex="3" required class="form-control chosen-select">
+                                    <option value=""></option>
+                                    <?php
+                                    if (isset($employee) && $employee->num_rows() > 0){
+                                        foreach ($employee->result() AS $emp) {
+                                            ?>
+                                    <option value="<?= $emp->empID ?>"><?= ucwords($emp->empCode .' / '.$emp->empname .' / '.$emp->department .' / '.$emp->name);?></option>
+                                            <?php
+                                    }}
+                                    ?>
+
                                 </select>
                             </div>
-                            <div class="form-group col-md-3">
-                                <label for="empName">Employee Name</label>
-                                <input type="text" name="empName" id="empName" class="form-control" placeholder="Employee Name">
-                                
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label for="empDepartment">Department</label>
-                                <input type="text" name="empDepartment" id="empDepartment" class="form-control" placeholder="Department">
-                                <span id="checkfield_msg"></span>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label for="empDesignation">Designation </label>
-                                <input type="text" name="empDesignation" id="empDesignation" class="form-control" placeholder="Designation">
-                            </div>
+                            
                         </div>
-                        
+
                         <div class="row">
                             <hr class="line-dashed line-full"/>
                             <div class="form-group">
-                                            <label class="col-sm-12 control-label">Access Role <span class="required">*</span></label>
-                                            <div class="col-sm-2">
+                                <label class="col-sm-12 control-label">Access Role <span class="required">*</span></label>
+                                 <?php
+                                    if (isset($role) && $role->num_rows() > 0){
+                                        foreach ($role->result() AS $rol) {
+                                            ?>
+                                <div class="col-sm-2">
 
-                                                <label class="checkbox checkbox-custom-alt">
-                                                    <input type="checkbox"><i></i> Option one
-                                                </label>
+                                    <label class="checkbox checkbox-custom-alt">
+                                        <input type="checkbox" name="accessrole[]" 
+                                                       data-parsley-trigger="change"
+                                                       required value="<?= $rol->roleID ?>"><i></i> <?= $rol->roleName ?>
+                                    </label>
 
-                                            </div>
-                                            <div class="col-sm-2">
+                                </div>
+                                <?php
+                                    }}
+                                    ?>
+                            </div>
 
-                                                <label class="checkbox checkbox-custom-alt">
-                                                    <input type="checkbox"><i></i> Option one
-                                                </label>
-
-                                            </div>
-                                            <div class="col-sm-2">
-
-                                                <label class="checkbox checkbox-custom-alt">
-                                                    <input type="checkbox"><i></i> Option one
-                                                </label>
-
-                                            </div>
-                                            <div class="col-sm-2">
-
-                                                <label class="checkbox checkbox-custom-alt">
-                                                    <input type="checkbox"><i></i> Option one
-                                                </label>
-
-                                            </div>
-                                            <div class="col-sm-2">
-
-                                                <label class="checkbox checkbox-custom-alt">
-                                                    <input type="checkbox"><i></i> Option one
-                                                </label>
-
-                                            </div>
-                                            <div class="col-sm-2">
-
-                                                <label class="checkbox checkbox-custom-alt">
-                                                    <input type="checkbox"><i></i> Option one
-                                                </label>
-
-                                            </div>
-                                        </div>
-                            
                         </div>
-                        
+
                     </div>
                     <!-- /tile body --> 
 
@@ -127,7 +92,7 @@
                 <!-- /tile --> 
 
             </div>
-         
+
             <div class="col-md-12"> 
 
                 <!-- tile --> 

@@ -63,6 +63,21 @@ var Mainnew = function () {
 
             });
             
+//            $('.tile-body').on('change', '#empID', function (e) {
+//                e.preventDefault();alert( $('option:selected', this).text() ); 
+//        alert( $(this).val() );
+//                type = $(this).attr('data-val');
+//                id = $(this).attr('data-id');
+//                tbname = $(this).attr('data-tb');
+//                tbcol = $(this).attr('data-col');
+//                if(type==0){
+//                   $('#confirmation-msg').html('Are you sure you would like to De-Active this record?');
+//                }else{
+//                   $('#confirmation-msg').html('Are you sure you would like to Active this record?');
+//                }
+//                $('#activedeactiveid').trigger("click");
+        //    });
+            
         } // End of init()
     };
 }();

@@ -103,7 +103,7 @@ if (!function_exists('deleteTableData')) {
  */
 if (!function_exists('get_joins')) {
 
-    function get_joins($table, $columns, $joins, $whereData = array(), $orWhereData = array(), $group = array(), $order = '', $having = '', $limit = array(), $result_way = 'all', $echo = 0,$inWhereData = array()) {
+    function get_joins($table, $columns, $joins, $whereData = array(), $orWhereData = array(), $group = array(), $order = '', $having = '', $limit = array(), $result_way = 'all', $echo = 0,$inWhereData = array(),$notInWhereData = array()) {
         $CI = & get_instance();
         $CI->db->select($columns)->from($table);
         if (is_array($joins) && count($joins) > 0) {
@@ -119,6 +119,9 @@ if (!function_exists('get_joins')) {
         }
         if (isset($inWhereData) && !empty($inWhereData)) {
             $CI->db->where_in($inWhereData[0],$inWhereData[1]);
+        }
+        if (isset($notInWhereData) && !empty($notInWhereData)) {
+            $CI->db->where_not_in ($notInWhereData[0],$notInWhereData[1]);
         }
         if (!empty($group)) {
             $CI->db->group_by($group);

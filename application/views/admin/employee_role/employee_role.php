@@ -61,10 +61,12 @@
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Employee ID</th>
+                                                <th>Employee Code</th>
                                                 <th>Employee Name</th>
-                                                <th>Form Name</th>
+                                                <th>Designation</th>
+                                                <th>Department</th>
                                                 <th>Access Role</th>
+                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                             </thead>
