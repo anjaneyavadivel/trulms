@@ -386,6 +386,27 @@
                     ],
                     "dom": 'Rlfrtip'
                 });
+				<?php }else if($segment1=='approve-contract-consignor'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/approve_contract_consignor_json/<?php echo $this->uri->segment(2)?>',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+						{ "data": "from" },
+						{ "data": "to" },
+						{ "data": "length" },
+						{ "data": "weight" },
+						{ "data": "date" },
+						{ "data": "sign" },
+                        { "data": "total" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+                    "dom": 'Rlfrtip'
+                });
 				<?php }else{?>
 						
                 var table = $('#basic-usage').DataTable({
@@ -470,16 +491,16 @@
                
             });
         </script>
-        <?php }?>
+        <?php }else{?>
         <script>
-//            $(window).load(function(){
-//                $('#form4Submit').on('click', function(){
-//               //     $('#form4').submit();
-//                });
-//            });
+            $(window).load(function(){
+                $('#form4Submit').on('click', function(){
+               //     $('#form4').submit();
+                });
+            });
         </script>
         <!--/ Page Specific Scripts -->
-		<?php }?>
+		<?php }}?>
         
         
         

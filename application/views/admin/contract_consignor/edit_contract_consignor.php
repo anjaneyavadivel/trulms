@@ -1,4 +1,5 @@
 <?php $this->load->view('admin/sidebar')?>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- =================================================
                 ================= RIGHTBAR Content ===================
                 ================================================== -->
@@ -176,13 +177,13 @@
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="name">From </label>
-                <input type="text" name="from" id="name" class="form-control" required="" placeholder=" Enter From"data-parsley-id="8057"  value="<?=$v->from?>">
+                <input type="text" name="from" id="from" class="form-control" required="" placeholder=" Enter From"data-parsley-id="8057"  value="<?=$v->from?>">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
               <div class="form-group col-md-6">
                 <label for="contactemail">To </label>
-                <input type="text" name="to" id="contactemail" required class="form-control" placeholder=" Enter To" data-parsley-id="1328"  value="<?=$v->to?>">
+                <input type="text" name="to" id="from" required class="form-control" placeholder=" Enter To" data-parsley-id="1328"  value="<?=$v->to?>">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
@@ -336,13 +337,13 @@
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="name">Basic Freight </label>
-                <input type="text" name="basicfreight" id="name" class="form-control" required="" data-parsley-id="8057" placeholder="Enter Basic Freight" value="<?=$v->basicfreight?>">
+                <input type="text" name="basicfreight" id="basicfreight" class="form-control tac_calculation" required="" data-parsley-id="8057" placeholder="Enter Basic Freight" value="<?=$v->basicfreight?>">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
               <div class="form-group col-md-6">
                 <label for="contactemail">Docket Charges </label>
-                <input type="text" name="docketChgs" id="contactemail" required class="form-control" data-parsley-id="1328" placeholder="Enter Docket Charges " value="<?=$v->docketChgs?>">
+                <input type="text" name="docketChgs" id="docketChgs" required class="form-control tac_calculation" data-parsley-id="1328" placeholder="Enter Docket Charges " value="<?=$v->docketChgs?>">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
@@ -350,13 +351,13 @@
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="name">Handling Charges </label>
-                <input type="text" name="handlingChgs" id="name" class="form-control"  data-parsley-id="8057" placeholder="Enter Handling Charges" value="<?=$v->handlingChgs?>">
+                <input type="text" name="handlingChgs" id="handlingChgs" class="form-control tac_calculation"  data-parsley-id="8057" placeholder="Enter Handling Charges" value="<?=$v->handlingChgs?>">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
               <div class="form-group col-md-6">
                 <label for="contactemail">State/Permit Charges </label>
-                <input type="text" name="statePermitChgs" id="contactemail"  class="form-control" data-parsley-id="1328" placeholder="Enter State/Permit Charges" value="<?=$v->statePermitChgs?>">
+                <input type="text" name="statePermitChgs" id="statePermitChgs"  class="form-control tac_calculation" data-parsley-id="1328" placeholder="Enter State/Permit Charges" value="<?=$v->statePermitChgs?>">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
@@ -364,13 +365,13 @@
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="contactemail">Pickup/Delivery Charges </label>
-                <input type="text" name="pickupDeliveryChgs" id="contactemail"  class="form-control" data-parsley-id="1328" placeholder="Enter Pickup/Delivery Charges" value="<?=$v->pickupDeliveryChgs?>">
+                <input type="text" name="pickupDeliveryChgs" id="pickupDeliveryChgs"  class="form-control tac_calculation" data-parsley-id="1328" placeholder="Enter Pickup/Delivery Charges" value="<?=$v->pickupDeliveryChgs?>">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
               <div class="form-group col-md-6">
                 <label for="name">To pay Charge </label>
-                <input type="text" name="toPayChgs" id="name" class="form-control"  data-parsley-id="8057" placeholder="Enter To pay Charge" value="<?=$v->toPayChgs?>">
+                <input type="text" name="toPayChgs" id="toPayChgs" class="form-control tac_calculation"  data-parsley-id="8057" placeholder="Enter To pay Charge" value="<?=$v->toPayChgs?>">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
@@ -378,13 +379,13 @@
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="contactemail">CheckPost Expense </label>
-                <input type="text" name="checkpostExpenses" id="contactemail"  class="form-control" data-parsley-id="1328" placeholder="Enter CheckPost Expense" value="<?=$v->checkpostExpenses?>">
+                <input type="text" name="checkpostExpenses" id="checkpostExpenses"  class="form-control tac_calculation" data-parsley-id="1328" placeholder="Enter CheckPost Expense" value="<?=$v->checkpostExpenses?>">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
               <div class="form-group col-md-6">
                 <label for="contactemail">COD/DOD Charges </label>
-                <input type="text" name="coddodChgs" id="contactemail"  class="form-control" data-parsley-id="1328" placeholder="Enter COD/DOD Charges" value="<?=$v->coddodChgs?>">
+                <input type="text" name="coddodChgs" id="coddodChgs"  class="form-control tac_calculation" data-parsley-id="1328" placeholder="Enter COD/DOD Charges" value="<?=$v->coddodChgs?>">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
@@ -394,13 +395,13 @@
               
               <div class="form-group col-md-6">
                 <label for="name">MISC Charges </label>
-                <input type="text" name="MISCCharges" id="name" class="form-control" data-parsley-id="8057" placeholder="Enter MISC Charges" value="<?=$v->MISCCharges?>">
+                <input type="text" name="MISCCharges" id="MISCCharges" class="form-control tac_calculation" data-parsley-id="8057" placeholder="Enter MISC Charges" value="<?=$v->MISCCharges?>">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
               <div class="form-group col-md-6">
                 <label for="contactemail">Sub Total </label>
-                <input type="text" name="contactemail" id="contactemail" class="form-control" data-parsley-id="1328" placeholder="Enter Sub Total " value="<?=$v->name?>">
+                <input type="text" name="sub_total" id="sub_total" class="form-control" data-parsley-id="1328" placeholder="Enter Sub Total " value="<?=$v->name?>">
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
@@ -409,13 +410,14 @@
               
               <div class="form-group col-md-6">
                 <label for="name">Service Tax </label>
-                <input type="text" name="serivceTax" id="name" class="form-control"  data-parsley-id="8057" placeholder="Enter Service Tax" value="<?=$v->serivceTax?>">
+                <input type="text" name="serivceTax" id="serivceTax" class="form-control tac_calculation"  data-parsley-id="8057" placeholder="Enter Service Tax" value="<?=$v->serivceTax?>">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
               <div class="form-group col-md-6">
                 <label for="name">Grand Total </label>
-                <input type="text" name="grandTotal" id="name" class="form-control" required data-parsley-id="8057" placeholder="Enter Grand Total " value="<?=$v->grandTotal?>">
+                <input type="text"  id="grandTotal" class="form-control" required data-parsley-id="8057" placeholder="Enter Grand Total " value="<?=$v->grandTotal?>">
+                 <input type="hidden" name="grandTotal" id="grandTotals" class="form-control" required data-parsley-id="8057" placeholder="Enter Grand Total " value="<?=$v->grandTotal?>">
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>
               </div>
@@ -471,3 +473,87 @@
 </div>
 <!--/ Application Content -->
 <?php $this->load->view('admin/footer')?>
+ <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAvqzVbnAGwqxoZ3x4dunb-WSydKzd6kLA&sensor=false&amp;libraries=places"></script>
+
+    <script src="<?= base_url(); ?>assets/js/jquery.geocomplete.js"></script>
+   
+    <script>
+      $(function(){
+        $("#geocomplete").geocomplete({
+          map: ".map_canvas"
+        });
+        
+        $("#search").click(function(){
+          $("#geocomplete").geocomplete("find", "NYC");
+        });
+        
+        $("#center").click(function(){
+          var map = $("#geocomplete").geocomplete("map"),
+            center = new google.maps.LatLng(10, 0);
+          
+          map.setCenter(center);
+          map.setZoom(3);
+        });
+		
+		 $("#geocomplete1").geocomplete({
+          map: ".map_canvas1"
+        });
+        
+        $("#search").click(function(){
+          $("#geocomplete1").geocomplete("find", "NYC");
+        });
+        
+        $("#center").click(function(){
+          var map = $("#geocomplete1").geocomplete("map"),
+            center = new google.maps.LatLng(10, 0);
+          
+          map.setCenter(center);
+          map.setZoom(3);
+        });
+      });
+	  $( ".tac_calculation" ).change(function() {
+		  var basicfreight			=	$('#basicfreight').val();
+		  var docketChgs			=	$('#docketChgs').val();
+		  var handlingChgs			=	$('#handlingChgs').val();
+		  
+		  var statePermitChgs		=	$('#statePermitChgs').val();
+		  var pickupDeliveryChgs	=	$('#pickupDeliveryChgs').val();
+		  var toPayChgs				=	$('#toPayChgs').val();
+		  
+		  var checkpostExpenses		=	$('#checkpostExpenses').val();
+		  var coddodChgs			=	$('#coddodChgs').val();
+		  var MISCCharges			=	$('#MISCCharges').val();
+		  
+		  var serivceTax			=	$('#serivceTax').val();
+		  var grand_total			=	0.00;
+		  var sub_total				=	0.00;
+		  var tax_total				=	0.00;
+		
+		  if(basicfreight!='')
+		  sub_total+=parseInt(basicfreight);
+		  if(docketChgs!='')
+		  sub_total+=parseInt(docketChgs);
+		  if(handlingChgs!='')
+		  sub_total+=parseInt(handlingChgs);
+		  if(statePermitChgs!='')
+		  sub_total+=parseInt(statePermitChgs);
+		  if(pickupDeliveryChgs!='')
+		  sub_total+=parseInt(pickupDeliveryChgs);
+		  if(toPayChgs!='')
+		  sub_total+=parseInt(toPayChgs);
+		  if(checkpostExpenses!='')
+		  sub_total+=parseInt(checkpostExpenses);
+		  if(coddodChgs!='')
+		  sub_total+=parseInt(coddodChgs);
+		  if(MISCCharges!='')
+		  sub_total+=parseInt(MISCCharges);
+		  if(serivceTax!='' && sub_total>0)
+		  {
+			  tax_total=sub_total*serivceTax/100;
+		  }
+		  $('#sub_total').val(sub_total);
+		  $('#grandTotal').val(sub_total+tax_total);
+		  $('#grandTotals').val(sub_total+tax_total);
+		});
+		 
+    </script>
