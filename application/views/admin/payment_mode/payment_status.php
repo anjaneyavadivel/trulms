@@ -45,11 +45,11 @@
 
                                 <!-- tile header -->
                                 <div class="tile-header bg-greensea  dvd dvd-btm">
-                                    <h1 class="custom-font"><strong>Payment Status</strong>Mastert</h1>
+                                    <h1 class="custom-font"><strong>Payment Status</strong>Master</h1>
                                     
                                     <ul class="controls">
                                         
-                                        <li><a href="<?= base_url()?>add_payment_status" title="Add Department" role="button" tabindex="0" class="tile-close">Add New  <i class="fa fa-plus"></i></a></li>
+                                        <li><a href="<?= base_url()?>add_payment_status" title="Add Department" role="button" tabindex="0" >Add New  <i class="fa fa-plus"></i></a></li>
                                     </ul>
                                 </div>
                                 <!-- /tile header -->
@@ -63,6 +63,7 @@
                                                 <th>ID</th>
                                                 <th>Status</th>
                                                 <th>Description</th>
+                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                             </thead>

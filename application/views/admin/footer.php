@@ -19,7 +19,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title custom-font">Confirmation!1111</h3>
+                <h3 class="modal-title custom-font">Confirmation!</h3>
             </div>
             <div class="modal-body">
                 <p id="confirmation-msg1"></p>
@@ -74,6 +74,7 @@
         ============================================= -->
         <script src="<?= base_url()?>assets/js/main.js"></script>
         <script src="<?= base_url()?>assets-new/js/mainnew.js"></script>
+        <script src="<?= base_url()?>assets-new/js/main.js"></script>
         <!--/ custom javascripts -->
         <!-- ===============================================
         ============== Page Specific Scripts ===============
@@ -529,6 +530,7 @@
         ============== Custom JavaScripts ===============
         ============================================= -->
         <script src="<?= base_url()?>assets/js/main.js"></script>
+        <script src="<?= base_url()?>assets-new/js/main.js"></script>
         <!--/ custom javascripts -->
         <!-- ===============================================
         ============== Page Specific Scripts ===============
