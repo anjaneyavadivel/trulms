@@ -10,6 +10,10 @@ class Manage extends CI_Controller {
     }
     
    /***********************************************************************************************************************************/
+	function lock_screeen()
+	{
+		$this->load->view('admin/lock_screen');
+	}
 	function department()
 	{
 		if($this->uri->segment(3))
