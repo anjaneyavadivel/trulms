@@ -14,18 +14,20 @@
 
                 <div class="page page-tables-datatables">
 
+                    
+
                     <div class="pageheader">
 
-                        <h2>Department </h2>
+                        <h2>Vehicle Owner </h2>
 
                         <div class="page-bar">
 
                             <ul class="page-breadcrumb">
-                                <li>
+                                 <li>
                                     <a href="<?= base_url()?>"><i class="fa fa-home"></i> Home</a>
                                 </li>
                                 <li>
-                                    <a href="#">Department</a>
+                                    <a href="#">Vehicle Owner</a>
                                 </li>
                                
                             </ul>
@@ -45,11 +47,11 @@
 
                                 <!-- tile header -->
                                 <div class="tile-header bg-greensea  dvd dvd-btm">
-                                    <h1 class="custom-font"><strong>Department</strong> Master</h1>
+                                    <h1 class="custom-font"><strong>Vehicle Owner</strong> Master</h1>
                                     
                                     <ul class="controls">
                                         
-                                       <li><a href="<?= base_url()?>add_department" title="Add Department" role="button" tabindex="0" >Add New  <i class="fa fa-plus"></i></a></li>
+                                        <li><a href="<?= base_url()?>add_vehicleowner" title="Add Vehicle Owner" role="button" tabindex="0" class="tile-close">Add New  <i class="fa fa-plus"></i></a></li>
                                     </ul>
                                 </div>
                                 <!-- /tile header -->
@@ -61,10 +63,15 @@
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Department</th>
-                                                <th>Description</th>
+                                                <th>Code</th>
+                                                <th>Name</th>
+                                                <th>Company Name</th>
+                                                
+                                                <th>Phone</th>
+                                                
                                                 <th>Status</th>
                                                 <th>Action</th>
+                                               
                                             </tr>
                                             </thead>
 
@@ -80,7 +87,6 @@
                         </div>
                         <!-- /col -->
                     </div>
-                    <!-- /row -->
 
                 </div>
                 

@@ -155,6 +155,14 @@ $route['edit_driver/([a-zA-Z0-9---_%])+'] 			=		'manage/edit_driver/$1';
 $route['view_driver/([a-zA-Z0-9---_%])+'] 			=		'manage/view_driver/$1';
 $route['approve_driver/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_driver/$1';
 $route['approve_driver/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_driver/$1/$1';
+
+$route['vehicleowner'] 								=		'manage/vehicleowner';
+$route['add_vehicleowner'] 							=		'manage/add_vehicleowner';
+$route['edit_vehicleowner/([a-zA-Z0-9---_%])+'] 	=		'manage/edit_vehicleowner/$1';
+$route['view_vehicleowner/([a-zA-Z0-9---_%])+'] 	=		'manage/view_vehicleowner/$1';
+$route['approve_vehicleowner/([a-zA-Z0-9---_%])+']	=		'manage/approve_vehicleowner/$1';
+$route['approve_vehicleowner/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_vehicleowner/$1/$1';
+
 /**************************************************/
 
 $route['booking'] 									=		'operation/index';
