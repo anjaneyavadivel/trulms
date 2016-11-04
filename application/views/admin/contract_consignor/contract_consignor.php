@@ -51,7 +51,7 @@
                                     
                                     <ul class="controls">
                                         
-                                        <li><a href="<?= base_url()?>add-contract-consignor" title="Add Contract Consignor" role="button" tabindex="0" class="tile-close">Add New  <i class="fa fa-plus"></i></a></li>
+                                        <li><a href="<?= base_url()?>add-contract-consignor" title="Add Contract Consignor" role="button" tabindex="0" >Add New  <i class="fa fa-plus"></i></a></li>
                                     </ul>
                                 </div>
                                 <!-- /tile header -->
@@ -74,7 +74,7 @@
                                                 <th>Signed by</th>
                                                 <th>Grand Total</th>
                                                
-                                                
+                                                <th>Status</th>
                                                 <th>Action</th>
                                                
                                             </tr>

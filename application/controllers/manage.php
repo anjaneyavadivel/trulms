@@ -53,9 +53,20 @@ class Manage extends CI_Controller {
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['deptID']			=	$i++;
+			$vaules['deptID']			=	$value->deptID;
 			$vaules['department'] 		= 	$value->department;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
+			
 			if($value->active==1)
 			{
 				$view			 			=	"<a href='".base_url()."view_department/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
@@ -217,9 +228,20 @@ class Manage extends CI_Controller {
 		$output = array();$i=1;$j=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$i++;
+			$vaules['ID']				=	$value->dept_modID;
 			$vaules['name'] 			= 	$value->department;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
+			
 			if($value->active==1)
 			{
 				if($j++==1)
@@ -320,9 +342,20 @@ class Manage extends CI_Controller {
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$i++;
+			$vaules['ID']				=	$value->desigID;
 			$vaules['name'] 			= 	$value->name;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
+			
 			if($value->active==1)
 			{
 				$view			 			=	"<a href='".base_url()."view_designation/".$value->desigID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
@@ -480,9 +513,20 @@ class Manage extends CI_Controller {
 		$output = array();$i=1;$j=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$i++;
+			$vaules['ID']				=	$value->desig_modID;
 			$vaules['name'] 			= 	$value->name;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
+			
 			if($value->active==1)
 			{
 				if($j++==1)
@@ -583,9 +627,20 @@ class Manage extends CI_Controller {
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$i++;
+			$vaules['ID']				=	$value->roleID;
 			$vaules['roleName'] 		= 	$value->roleName;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
+			
 			if($value->active==1)
 			{
 				$view			 			=	"<a href='".base_url()."view_role/".$value->roleID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
@@ -743,9 +798,20 @@ class Manage extends CI_Controller {
 		$output = array();$i=1;$j=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$i++;
+			$vaules['ID']				=	$value->role_modID;
 			$vaules['name'] 			= 	$value->roleName;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
+			
 			if($value->active==1)
 			{
 				if($j++==1)
@@ -846,9 +912,20 @@ class Manage extends CI_Controller {
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$i++;
+			$vaules['ID']				=	$value->paymentModeID;
 			$vaules['paymentMode'] 		= 	$value->paymentMode;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
+			
 			if($value->active==1)
 			{
 				$view			 			=	"<a href='".base_url()."view_payment_mode/".$value->paymentModeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
@@ -1007,9 +1084,20 @@ class Manage extends CI_Controller {
 		$output = array();$i=1;$j=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$i++;
+			$vaules['ID']				=	$value->paymentMode_modID;
 			$vaules['name'] 			= 	$value->paymentMode;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
+			
 			if($value->active==1)
 			{
 				if($j++==1)
@@ -1109,9 +1197,20 @@ class Manage extends CI_Controller {
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$i++;
+			$vaules['ID']				=	$value->payStatusID;
 			$vaules['name'] 			= 	$value->payStatus;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
+			
 			if($value->active==1)
 			{
 				$view			 			=	"<a href='".base_url()."view_payment_status/".$value->payStatusID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
@@ -1269,9 +1368,20 @@ class Manage extends CI_Controller {
 		$output = array();$i=1;$j=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$i++;
+			$vaules['ID']				=	$value->payStatus_modID;
 			$vaules['name'] 			= 	$value->payStatus;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
+			
 			if($value->active==1)
 			{
 				if($j++==1)
@@ -1371,9 +1481,20 @@ class Manage extends CI_Controller {
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$i++;
+			$vaules['ID']				=	$value->employetypeID;
 			$vaules['name'] 			= 	$value->typename;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
+			
 			if($value->active==1)
 			{
 				$view		=	"<a href='".base_url()."view_employee_types/".$value->employetypeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
@@ -1533,9 +1654,20 @@ class Manage extends CI_Controller {
 		$i=1;$j=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$i++;
+			$vaules['ID']				=	$value->employetype_modID;
 			$vaules['name'] 			= 	$value->typename;
 			$vaules['description'] 		= 	$value->description;
+			
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
 			
 			if($value->active==1)
 			{
@@ -1640,7 +1772,7 @@ class Manage extends CI_Controller {
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$i++;
+			$vaules['ID']				=	$value->empID;
 			$vaules['empCode'] 			= 	$value->empCode;
 			$vaules['empname'] 			= 	$value->empname;
 			$vaules['qualification'] 	= 	$value->qualification;
@@ -1669,6 +1801,17 @@ class Manage extends CI_Controller {
 			{
 				$vaules['releavingdate'] 	= 	date('m-d-Y',strtotime($value->releavingdate));
 			}
+			
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
 			
 			if($value->active==1)
 			{
@@ -2016,7 +2159,7 @@ class Manage extends CI_Controller {
 		$output = array();$i=1;$j=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$i++;
+			$vaules['ID']				=	$value->emp_modID;
 			$vaules['empCode'] 			= 	$value->empCode;
 			$vaules['empname'] 			= 	$value->empname;
 			$vaules['qualification'] 	= 	$value->qualification;
@@ -2045,6 +2188,17 @@ class Manage extends CI_Controller {
 			{
 				$vaules['releavingdate'] 	= 	date('m-d-Y',strtotime($value->releavingdate));
 			}
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
+			
 			if($value->active==1)
 			{
 				if($j++==1)
@@ -2184,13 +2338,24 @@ class Manage extends CI_Controller {
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$i++;
+			$vaules['ID']				=	$value->driverID;
 			$vaules['name'] 			= 	$value->name;
 			$vaules['addressline1'] 	= 	$value->addressline1;
 			$vaules['phone1'] 			= 	$value->phone1;
 			
 			$vaules['dlno'] 			= 	$value->dlno;
 			$vaules['dlexpirydt'] 		= 	date('m-d-Y',strtotime($value->dlexpirydt));
+			
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
 			
 			if($value->active==1)
 			{
@@ -2449,13 +2614,24 @@ class Manage extends CI_Controller {
 		$output = array();$i=1;$j=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']				=	$i++;
+			$vaules['ID']				=	$value->driver_modID;
 			$vaules['name'] 			= 	$value->name;
 			$vaules['addressline1'] 	= 	$value->addressline1;
 			$vaules['phone1'] 			= 	$value->phone1;
 			
 			$vaules['dlno'] 			= 	$value->dlno;
 			$vaules['dlexpirydt'] 		= 	date('m-d-Y',strtotime($value->dlexpirydt));
+			
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
 			
 			if($value->active==1)
 			{
@@ -2590,7 +2766,7 @@ class Manage extends CI_Controller {
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
-			$vaules['ID']			=	$i++;
+			$vaules['ID']			=	$value->consignorID;
 			$vaules['name'] 		= 	$value->name;
 			$vaules['from'] 		= 	$value->from;
 			$vaules['to'] 			= 	$value->to;
@@ -2601,6 +2777,17 @@ class Manage extends CI_Controller {
 			
 			$vaules['sign'] 		= 	$value->signedby;
 			$vaules['total'] 		= 	$value->grandTotal;
+			
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
 			
 			if($value->active==1)
 			{
@@ -2958,6 +3145,17 @@ class Manage extends CI_Controller {
 			
 			$vaules['sign'] 		= 	$value->signedby;
 			$vaules['total'] 		= 	$value->grandTotal;
+			
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
 			
 			if($value->active==1)
 			{

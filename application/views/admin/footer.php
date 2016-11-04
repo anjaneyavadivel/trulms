@@ -75,6 +75,7 @@
         ============================================= -->
         <script src="<?= base_url()?>assets/js/main.js"></script>
         <script src="<?= base_url()?>assets-new/js/mainnew.js"></script>
+         <script src="<?= base_url()?>assets-new/js/main.js"></script>
         <!--/ custom javascripts -->
         <!-- ===============================================
         ============== Page Specific Scripts ===============
@@ -93,6 +94,7 @@
                         { "data": "deptID" },
                         { "data": "department" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -108,6 +110,7 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -123,6 +126,7 @@
                         { "data": "ID" },
                         { "data": "roleName" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -138,6 +142,7 @@
                         { "data": "ID" },
                         { "data": "paymentMode" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -153,6 +158,7 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -168,6 +174,7 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -183,6 +190,7 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -198,6 +206,7 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -213,6 +222,7 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -228,6 +238,7 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -244,6 +255,7 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -259,6 +271,7 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -316,6 +329,7 @@
 						{ "data": "date" },
 						{ "data": "sign" },
                         { "data": "total" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -339,6 +353,7 @@
 						{ "data": "remarks" },
 						{ "data": "joiningdate" },
                         { "data": "releavingdate" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -362,6 +377,7 @@
 						{ "data": "remarks" },
 						{ "data": "joiningdate" },
                         { "data": "releavingdate" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -380,6 +396,7 @@
 						{ "data": "phone1" },
 						{ "data": "dlno" },
 						{ "data": "dlexpirydt" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -398,6 +415,7 @@
 						{ "data": "phone1" },
 						{ "data": "dlno" },
 						{ "data": "dlexpirydt" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -497,6 +515,7 @@
         ============== Custom JavaScripts ===============
         ============================================= -->
         <script src="<?= base_url()?>assets/js/main.js"></script>
+         <script src="<?= base_url()?>assets-new/js/main.js"></script>
         <!--/ custom javascripts -->
         <!-- ===============================================
         ============== Page Specific Scripts ===============
@@ -505,6 +524,7 @@
 			?>
         <script src="<?= base_url()?>assets/js/vendor/chosen/chosen.jquery.min.js"></script>
         <script src="<?= base_url()?>assets-new/js/mainnew.js"></script>
+        <script src="<?= base_url()?>assets-new/js/main.js"></script>
          <script>
             $(window).load(function(){
                Mainnew.init();

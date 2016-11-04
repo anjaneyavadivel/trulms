@@ -70,6 +70,7 @@
                                                 <th>Driving Liscense</th>
                                                 <th>Expiry Date</th>
                                                 
+                                                <th>Status</th>
                                                 <th>Action</th>
                                                
                                             </tr>

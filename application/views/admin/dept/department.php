@@ -49,7 +49,7 @@
                                     
                                     <ul class="controls">
                                         
-                                        <li><a href="<?= base_url()?>add_department" title="Add Department" role="button" tabindex="0" class="tile-close">Add New  <i class="fa fa-plus"></i></a></li>
+                                        <li><a href="javascript::" data-toggle="modal" data-target="#add_edit" data-options="splash-2 splash-ef-11" role="button" tabindex="0" class=" text-danger text-uppercase text-strong text-sm mr-10 " title="Add Department"  >Add New  <i class="fa fa-plus"></i></a></li>
                                     </ul>
                                 </div>
                                 <!-- /tile header -->
@@ -61,8 +61,9 @@
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
+                                                <th>Department</th>
+                                                <th>Description</th>
+                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                             </thead>

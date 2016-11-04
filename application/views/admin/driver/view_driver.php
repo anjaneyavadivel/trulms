@@ -216,7 +216,11 @@
               
               </div>
               
-            
+            <div class="tile-footer text-right bg-tr-black lter col-md-3 dvd dvd-top"> 
+              <!-- SUBMIT BUTTON -->
+               <a  href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="active_deactive_class('<?= base_url()?>driver','3')" class="btn btn-lightred">Back</a>
+             
+            </div>
              
             
                

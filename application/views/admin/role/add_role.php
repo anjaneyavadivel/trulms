@@ -43,7 +43,7 @@
                        
 
                         <!-- col -->
-                        <div class="col-md-4 add_forms">
+                        <div class="col-md-4 insert_forms add_forms">
 
 <?php $this->load->view('admin/msg')?>
                             <!-- tile -->
@@ -91,6 +91,7 @@
                                        <!-- tile footer -->
                                 <div class="tile-footer text-right bg-tr-black lter dvd dvd-top">
                                     <!-- SUBMIT BUTTON -->
+                                     <a  href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="active_deactive_class('<?= base_url()?>role','3')" class="btn btn-lightred">Back</a>
                                     <input type="submit" class="btn btn-default" id="form4Submit" value="Submit" name="save">
                                 </div>
                                 <!-- /tile footer -->

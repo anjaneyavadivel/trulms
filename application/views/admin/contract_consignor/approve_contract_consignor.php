@@ -523,7 +523,7 @@
                                                 <th>Signed by</th>
                                                 <th>Grand Total</th>
                                                
-                                                
+                                                <th>Status</th>
                                                 <th>Action</th>
                                                
                                             </tr>
