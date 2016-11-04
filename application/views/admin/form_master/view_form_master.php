@@ -177,9 +177,34 @@
                 <!-- /tile --> 
 
             </div>
+            
         <?php }?>
             <!-- /col --> 
 <?php }?>
+            <div class="col-md-12"> 
+
+                <!-- tile --> 
+
+                <!-- tile -->
+                <section class="tile"> 
+
+                    <!-- tile body -->
+                    <div class="tile-body"> 
+
+                        <!-- tile footer -->
+                        <div class="tile-footer text-right bg-tr-black lter dvd dvd-top"> 
+                            <!-- SUBMIT BUTTON -->
+                            <a href="<?=base_url().'form-master'?>" class="btn btn-warning "><i class="fa fa-hand-o-left"></i> Go Back</a>
+                       </div>
+                        <!-- /tile footer --> 
+
+                    </div>
+                    <!-- /tile body --> 
+
+                </section>
+                <!-- /tile --> 
+
+            </div>
         </div>
                       
 

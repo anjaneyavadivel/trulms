@@ -9,8 +9,8 @@
                 <p id="confirmation-msg"></p>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-default btn-border activedeactiveconf-btn">Submit</button>
-                <button class="btn btn-default btn-border activedeactiveconf-close" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-default btn-border activedeactiveconf-btn">Yes</button>
+                <button class="btn btn-default btn-border activedeactiveconf-close" data-dismiss="modal">No</button>
             </div>
         </div>
     </div>
@@ -26,8 +26,8 @@
             </div>
             
             <div class="modal-footer" id="form_sub_enable">
-                <a href="javascript::" class="btn btn-default btn-border activedeactiveconf-btn">Submit</a>
-                <button class="btn btn-default btn-border activedeactiveconf-close" data-dismiss="modal">Cancel</button>
+                <a href="javascript::" class="btn btn-default btn-border activedeactiveconf-btn">Yes</a>
+                <button class="btn btn-default btn-border activedeactiveconf-close" data-dismiss="modal">No</button>
             </div>
         </div>
     </div>
@@ -42,9 +42,8 @@
         <!-- ============================================
         ============== Vendor JavaScripts ===============
         ============================================= -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="<?= base_url()?>assets/js/vendor/jquery/jquery-1.11.2.min.js"><\/script>')</script>
-
+<!--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="<?= base_url()?>assets/js/vendor/jquery/jquery-1.11.2.min.js"><\/script>')</script>-->
         <script src="<?= base_url()?>assets/js/vendor/bootstrap/bootstrap.min.js"></script>
         <script src="<?= base_url()?>assets/js/jquery.cookie.min.js"></script>
 
@@ -281,6 +280,7 @@
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ 5] }
                     ],
+                    "order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				<?php }else if($segment1=='employee-role'){
@@ -298,8 +298,26 @@
 			{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
-                      { 'bSortable': false, 'aTargets': [ 5] }
+                      { 'bSortable': false, 'aTargets': [ 7] }
                     ],
+                    "order": [[0, 'desc' ]],
+                    "dom": 'Rlfrtip'
+                });
+				<?php }else if($segment1=='form-access'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>form-access-json',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "menuCaption" },
+                        { "data": "roleName" },
+                        { "data": "active" },
+			{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ 4] }
+                    ],
+                    "order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				<?php }else if($segment1=='contract-consignor'){
@@ -465,14 +483,28 @@
             });
         </script>
         <?php }?>
-            
+            <?php if($segment1=='form-access'){
+			?>
+        <script src="<?= base_url()?>/assets/js/vendor/parsley/parsley.min.js"></script>
+        <script src="<?= base_url()?>assets/js/vendor/chosen/chosen.jquery.min.js"></script>
+         <script>
+            $(window).load(function(){
+                
+//                    $("input[type='checkbox']").change(function() {
+//                     if ($("input[type='checkbox']:checked").length){
+//                         $(this).valid();
+//                     }
+//                 })
+            });
+        </script>
+        <?php }?>
         
       <?php }else{?>
         <!-- ============================================
         ============== Vendor JavaScripts ===============
         ============================================= -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery/jquery-1.11.2.min.js"><\/script>')</script>
+<!--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery/jquery-1.11.2.min.js"><\/script>')</script>-->
 
         <script src="<?= base_url(); ?>assets/js/vendor/bootstrap/bootstrap.min.js"></script>
 
@@ -517,11 +549,11 @@
         </script>
         <?php }?>
         <script>
-//            $(window).load(function(){
-//                $('#form4Submit').on('click', function(){
-//               //     $('#form4').submit();
-//                });
-//            });
+            $(window).load(function(){
+                $('#form4Submit').on('click', function(){
+                    $('#form4').submit();
+                });
+            });
         </script>
         <!--/ Page Specific Scripts -->
 		<?php }?>

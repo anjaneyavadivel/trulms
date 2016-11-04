@@ -177,7 +177,8 @@
                         <!-- tile footer -->
                         <div class="tile-footer text-right bg-tr-black lter dvd dvd-top"> 
                             <!-- SUBMIT BUTTON -->
-                            <input type="submit" class="btn btn-greensea" id="form4Submit" value="Submit" name="save">
+                            <a href="<?=base_url().'form-master'?>" class="btn btn-warning "><i class="fa fa-hand-o-left"></i> Go Back</a>
+                           <input type="submit" class="btn btn-greensea" id="form4Submit" value="Submit" name="save">
                         </div>
                         <!-- /tile footer --> 
 

@@ -4,9 +4,12 @@ var Mainnew = function () {
         init: function ()
         {
 
-            var type =0;var id =0;var tbname =0;var tbcol =0;
+            var type = 0;
+            var id = 0;
+            var tbname = 0;
+            var tbcol = 0;
             //$('#skills-list').on('click', '.btn-pf-viewskill', function () {
-             
+
             $('.checkfield').focusout(function (event) {
                 var checkvalue = this.value;//$('#checkemail').val();
                 var data_tb = $(this).attr('data-tb');
@@ -20,17 +23,17 @@ var Mainnew = function () {
                     }
                 });
             });
-            
+
             $('#basic-usage').on('click', '.active-deactive-btn', function (e) {
                 e.preventDefault();
                 type = $(this).attr('data-val');
                 id = $(this).attr('data-id');
                 tbname = $(this).attr('data-tb');
                 tbcol = $(this).attr('data-col');
-                if(type==0){
-                   $('#confirmation-msg').html('Are you sure you would like to De-Active this record?');
-                }else{
-                   $('#confirmation-msg').html('Are you sure you would like to Active this record?');
+                if (type == 0) {
+                    $('#confirmation-msg').html('Are you sure you would like to De-Active this record?');
+                } else {
+                    $('#confirmation-msg').html('Are you sure you would like to Active this record?');
                 }
                 $('#activedeactiveid').trigger("click");
             });
@@ -62,7 +65,53 @@ var Mainnew = function () {
 
 
             });
-            
+            $('#content').on('click', '.addcallform-btn', function (e) {
+                e.preventDefault();
+                var suburl = $(this).attr('data-ur');
+                var url = base_path + suburl;
+                $.get(url, {csrf_test_name: $.cookie('csrf_cookie_name'),
+                }, function (res) {
+                    //if (res.length>0) {
+                    $('#ajaxLoadDiv').html(res);
+                    $('.chosen-select').chosen();
+                    $('#form4').parsley();
+                    //$(".chosen-select").trigger("chosen:updated");
+                    //$(".chosen-select").trigger("liszt:updated");
+                    // }
+                });
+
+            });
+            $('#ajaxLoadDiv').on('click', '#form4Submit', function (e) {
+                e.preventDefault();
+                if ($('#form4').parsley().isValid()) {
+                    $('#form4Submit').prop('disabled', true);
+
+                    var values = $("#form4").serializeArray();
+                    values.push({name: "csrf_test_name", value: $.cookie('csrf_cookie_name')});
+                    var url = $('#form4').attr('action');
+
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: values,
+                        success: function (data) {
+                            if (data.substring(0, 5) == "Error") {
+                                $('#form4SubmitMsg').html('<font style="color: #fa3031">'+data+'</font>');
+                            }else{
+                                $('#addcallform-btn').click();
+                            }
+                        }
+                    });
+                } else {
+                    $('#form4').submit();
+                    $('#form4Submit').prop('disabled', false);
+                }
+            });
+            $('#ajaxLoadDiv').on('click', '.form4SubmitClose', function (e) {
+                e.preventDefault();
+                $('#ajaxLoadDiv').html('');
+            });
+
 //            $('.tile-body').on('change', '#empID', function (e) {
 //                e.preventDefault();alert( $('option:selected', this).text() ); 
 //        alert( $(this).val() );
@@ -76,24 +125,24 @@ var Mainnew = function () {
 //                   $('#confirmation-msg').html('Are you sure you would like to Active this record?');
 //                }
 //                $('#activedeactiveid').trigger("click");
-        //    });
-            
+            //    });
+
         } // End of init()
     };
 }();
-function active_deactive_class(url,type) 
+function active_deactive_class(url, type)
 {
-	if(type==0)
-	{
-		$('#confirmation-msg1').html('Are you sure you would like to De-Active this record?');
-	}
-	else if(type==2)
-	{
-		$('#confirmation-msg1').html('Are you sure you would like to Approve this record?');
-	}
-	else
-	{
-		$('#confirmation-msg1').html('Are you sure you would like to Active this record?');
-	}
-				$('#form_sub_enable').html('<a href="'+url+'/'+type+'" class="btn btn-default btn-border activedeactiveconf-btn">Submit</a><button class="btn btn-default btn-border activedeactiveconf-close" data-dismiss="modal">Cancel</button>');
+    if (type == 0)
+    {
+        $('#confirmation-msg1').html('Are you sure you would like to De-Active this record?');
+    }
+    else if (type == 2)
+    {
+        $('#confirmation-msg1').html('Are you sure you would like to Approve this record?');
+    }
+    else
+    {
+        $('#confirmation-msg1').html('Are you sure you would like to Active this record?');
+    }
+    $('#form_sub_enable').html('<a href="' + url + '/' + type + '" class="btn btn-default btn-border activedeactiveconf-btn">Yes</a><button class="btn btn-default btn-border activedeactiveconf-close" data-dismiss="modal">No</button>');
 }

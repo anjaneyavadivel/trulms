@@ -27,7 +27,7 @@ class Setup extends CI_Controller {
             $updateData = array('active' => $this->uri->segment(4));
             $upt = updateTable('tbldept', $whereData, $updateData, $isStoreMod = 1, $modIdName = 'deptID', $modId = $this->uri->segment(3));
             if ($upt) {
-                $this->session->set_userdata('suc', 'Forms Status Successfully Changed...!');
+                $this->session->set_userdata('suc', 'Forms status successfully cshanged...!');
                 redirect('employee-role');
             } else {
                 $this->session->set_userdata('err', 'Error Please try again..!');
@@ -95,7 +95,7 @@ class Setup extends CI_Controller {
 
             $pageAlterDetailsID = insertTable('tblpagealterdetails', $values, 1, 'pageAlterDetailsID');
             if ($pageID > 0 && $pageAlterDetailsID > 0) {
-                $this->session->set_userdata('suc', 'Form successfully  added...!');
+                $this->session->set_userdata('suc', 'Form successfully added...!');
                 redirect('add-form-master');
             } else {
                 $this->session->set_userdata('err', 'Error! Please try again..!');
@@ -116,10 +116,9 @@ class Setup extends CI_Controller {
         // Get user record
         $pages = selectTable('tblpages', $whereData);
         if (isset($pages) && $pages->num_rows() > 0) {
-            $i = 1;
             foreach ($pages->result() as $value) {
                 $vaules = array();
-                $vaules['pageID'] = $i++;
+                $vaules['pageID'] = $value->pageID;
                 if ($value->parentID == 1) {
                     $vaules['parentID'] = 'Master';
                 } else if ($value->parentID == 2) {
@@ -250,7 +249,7 @@ class Setup extends CI_Controller {
             $updateData = array('active' => $this->uri->segment(4));
             $upt = updateTable('tblemprolemap', $whereData, $updateData, $isStoreMod = 1, $modIdName = 'empRoleMapID', $modId = $this->uri->segment(3));
             if ($upt) {
-                $this->session->set_userdata('suc', 'Eployee Role Setup Status Successfully Changed...!');
+                $this->session->set_userdata('suc', 'Eployee Role Setup status successfully changed...!');
                 redirect('employee-role');
             } else {
                 $this->session->set_userdata('err', 'Error Please try again..!');
@@ -292,10 +291,9 @@ class Setup extends CI_Controller {
         $employeeRolw = get_joins('tblemployee AS temp', $columns, $joins, $whereData = array(), $orWhereData = array(), $group = array(), $order = 'empRoleMapID DESC');
 
         if (isset($employeeRolw) && $employeeRolw->num_rows() > 0) {
-            $i = 1;
             foreach ($employeeRolw->result() as $value) {
                 $vaules = array();
-                $vaules['ID'] = $i++;
+                $vaules['ID'] = $value->empRoleMapID;
                 $vaules['empCode'] = $value->empCode;
                 $vaules['empname'] = $value->empname;
                 $vaules['name'] = $value->name;
@@ -354,7 +352,7 @@ class Setup extends CI_Controller {
                 $empRoleMapID = insertTable('tblemprolemap', $values, 1, 'empRoleMapID');
             }
             if ($empRoleMapID > 0) {
-                $this->session->set_userdata('suc', 'Form successfully  added...!');
+                $this->session->set_userdata('suc', 'Form successfully added...!');
             } else {
                 $this->session->set_userdata('err', 'Error! Please try again..!');
             }
@@ -490,7 +488,7 @@ class Setup extends CI_Controller {
                     }
                 }
             }
-               $this->session->set_userdata('suc', 'Eployee Role Setup successfully updated...!');
+            $this->session->set_userdata('suc', 'Eployee Role Setup successfully updated...!');
             redirect('edit-employee-role/' . $empRoleMapID);
         }
         if ($userBranchID == 0) {
@@ -544,22 +542,160 @@ class Setup extends CI_Controller {
             redirect(base_url() . "login");
         }
         if ($_POST) {
-            $whereData = array('deptID' => $this->uri->segment(3));
+            $whereData = array('pageRoleMappingID' => $this->uri->segment(3));
             $updateData = array('active' => $this->uri->segment(4));
-            $upt = $this->Commonsql_model->updateTable('tbldept', $whereData, $updateData);
-            //echo $this->db->last_query();exit;
+            $upt = updateTable('tblpageroleaccessmap', $whereData, $updateData, $isStoreMod = 1, $modIdName = 'pageRoleMappingID', $modId = $this->uri->segment(3));
             if ($upt) {
-                $this->session->set_userdata('suc', 'Department Status Successfully  Changed...!');
-                redirect('department');
+                $this->session->set_userdata('suc', 'Form Access status successfully changed...!');
+                redirect('form-access');
             } else {
                 $this->session->set_userdata('err', 'Error Please try again..!');
-                redirect('department');
+                redirect('form-access');
             }
         }
 
         $data['pageTitle'] = "Form Access";
         $data['table'] = "Form Access";
         $this->load->view('admin/form_access/form_access', $data);
+    }
+
+    function form_access_json() {
+        if (!$this->session->userdata('SESS_userId')) {
+            return FALSE;
+        }
+        $output = array();
+        $joins = array(
+            array(
+                'table' => 'tblpages AS tp',
+                'condition' => 'tp.pageID = tpram.pageID',
+                'jointype' => 'LEFT'
+            ), array(
+                'table' => 'tblrole AS tr',
+                'condition' => 'tr.roleID = tpram.roleID',
+                'jointype' => 'LEFT'
+            ),
+        );
+        $columns = 'tpram.*,tr.roleName,tp.menuCaption';
+        $employeeRolw = get_joins('tblpageroleaccessmap AS tpram', $columns, $joins, $whereData = array(), $orWhereData = array(), $group = array(), $order = 'pageRoleMappingID DESC');
+
+        if (isset($employeeRolw) && $employeeRolw->num_rows() > 0) {
+            foreach ($employeeRolw->result() as $value) {
+                $vaules = array();
+                $vaules['ID'] = $value->pageRoleMappingID;
+                $vaules['menuCaption'] = $value->menuCaption;
+                $vaules['roleName'] = $value->roleName;
+                if ($value->active == 1) {
+                    $row = '<span class="label bg-greensea">Active</span>';
+                } else {
+                    $row = '<span class="label bg-red">De-Active</span>';
+                }
+
+                $vaules['active'] = $row;
+
+                if ($value->active == 1) {
+                    $view = "<a href='" . base_url() . "view-form-access/" . $value->pageRoleMappingID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+                    $APPROVE = "<a href='" . base_url() . "approve-form-access/" . $value->pageRoleMappingID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
+                    $active = '<a href="javascript:void(0)" data-tb="pageroleaccessmap" data-val="0" data-id="' . $value->pageRoleMappingID . '"  data-col="pageRoleMappingID" role="button" tabindex="0" class="active-deactive-btn text-danger text-uppercase text-strong text-sm mr-10 ">De-Active</a>';
+                } else {
+                    $APPROVE = '';
+                    $view = '';
+                    $active = '<a href="javascript:void(0)" data-tb="pageroleaccessmap" data-val="1" data-id="' . $value->pageRoleMappingID . '"  data-col="pageRoleMappingID" role="button" tabindex="0" class="active-deactive-btn text-success text-uppercase text-strong text-sm mr-10">Active</a>';
+                }
+
+                $vaules['Action'] = $view . $APPROVE . "<a href='" . base_url() . "edit-employee-role/" . $value->pageRoleMappingID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>" . $active;
+
+                $output[] = $vaules;
+            }
+        }
+
+        echo json_encode(array('data' => $output), true);
+    }
+
+    function add_form_access() {
+        if (!$this->session->userdata('SESS_userId')) {
+            return FALSE;
+        }
+        $userBranchID = $this->session->userdata('SESS_userBranchID');
+        if ($_POST) {
+            $this->form_validation->set_rules('pageID', 'Form Name', 'trim|required');
+            $this->form_validation->set_rules('roleID', 'Role Name', 'trim|required');
+            if ($this->form_validation->run($this) == FALSE) {
+                //$this->session->set_userdata('err', validation_errors());
+                echo 'Error! ' . validation_errors();
+                return FALSE;
+            }
+
+            $pageRoleMappingID = 0;
+            $createEnabled = 0;$viewEnabled = 0;$modifyEnabled = 0;$approveEnabled = 0;$deleteEnabled = 0;
+            extract($this->input->post());
+            //if(isset($createEnabled)){$createEnabled = 1;}
+
+            $whereData = array('pageID' => $pageID, 'roleID' => $roleID);
+            $pageroleaccessmap = selectTable('tblpageroleaccessmap', $whereData);
+            if (isset($pageroleaccessmap) && $pageroleaccessmap->num_rows() > 0) {
+                $accessmap = $pageroleaccessmap->row();
+                $whereData = array('pageID' => $pageID, 'roleID' => $roleID);
+                $updateData = array(
+                    'createEnabled' => $createEnabled,
+                    'viewEnabled' => $viewEnabled,
+                    'modifyEnabled' => $modifyEnabled,
+                    'approveEnabled' => $approveEnabled,
+                    'deleteEnabled' => $deleteEnabled,
+                    'createby' => $this->session->userdata('SESS_userId'),
+                    'active' => 1);
+                $result = updateTable('tblpageroleaccessmap', $whereData, $updateData, $isStoreMod = 1, $modIdName = 'pageRoleMappingID', $modId = $accessmap->pageRoleMappingID);
+            } else {
+                $values = array('pageID' => $pageID,
+                    'roleID' => $roleID,
+                    'createEnabled' => $createEnabled,
+                    'viewEnabled' => $viewEnabled,
+                    'modifyEnabled' => $modifyEnabled,
+                    'approveEnabled' => $approveEnabled,
+                    'deleteEnabled' => $deleteEnabled,
+                    'dbentrystateID' => 0,
+                    'createby' => $this->session->userdata('SESS_userId'),
+                    'active' => 1);
+
+                $pageRoleMappingID = insertTable('tblpageroleaccessmap', $values, 1, 'pageRoleMappingID');
+            }
+
+            if ($pageRoleMappingID > 0) {
+                $this->session->set_userdata('suc', 'Form Access successfully added...!');
+                return TRUE;
+            } else {
+                //$this->session->set_userdata('err', 'Error! Please try again..!');
+                echo 'Error! Please try again..!';
+            }
+            return FALSE;
+        }
+        if ($userBranchID == 0) {
+            $whereData = array('temp.dbentrystateID' => 3, 'temp.active' => 1);
+        } else {
+            $whereData = array('temp.branchID' => $userBranchID, 'temp.dbentrystateID' => 3, 'temp.active' => 1);
+        }
+//        $joins = array(
+//            array(
+//                'table' => 'tbldept AS tdept',
+//                'condition' => 'tdept.deptID = temp.deptid',
+//                'jointype' => 'LEFT'
+//            ), array(
+//                'table' => 'tbldesignation AS tdes',
+//                'condition' => 'tdes.desigID = temp.designation',
+//                'jointype' => 'LEFT'
+//            ),
+//        );
+//        $columns = 'temp.*,tdes.name,tdept.department';
+//        $data['employee'] = get_joins('tblemployee AS temp', $columns, $joins, $whereData, $orWhereData = array(), $group = array());
+
+        $whereData = array('dbentrystateID' => 3, 'active' => 1);
+        $data['pages'] = selectTable('tblpages', $whereData);
+
+        $whereData = array('dbentrystateID' => 3, 'active' => 1, 'roleID !=' => 1);
+        $data['role'] = selectTable('tblrole', $whereData);
+
+        $data['pageTitle'] = "Form Access";
+        //$data['table'] = "Add Form";
+        $this->load->view('admin/form_access/add_form_access', $data);
     }
 
 }
