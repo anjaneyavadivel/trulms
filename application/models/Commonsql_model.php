@@ -272,6 +272,35 @@ class Commonsql_model extends CI_Model {
 		$query	=	$this->db->get();
 		return $query;
 	}
+	function select_all_vowner()
+	{
+		$this->db->select('a.ownerID,a.contactPer1,a.active,b.companyName,b.phone1');
+		$this->db->from('tblvehicleowner as a');
+		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
+		$this->db->order_by('ownerID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_all_vowner_edit($id)
+	{
+		$this->db->select('*');
+		$this->db->from('tblvehicleowner as a');
+		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
+		$this->db->where('a.ownerID',$id);
+		$this->db->order_by('ownerID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_all_vowner_mod($id)
+	{
+		$this->db->select('a.owner_modID,a.ownerID,a.contactPer1,a.active,b.name,b.companyName,b.phone1');
+		$this->db->from('tblvehicleowner_mod as a');
+		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
+		$this->db->where('a.ownerID',$id);
+		$this->db->order_by('a.owner_modID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
 
 }
 
