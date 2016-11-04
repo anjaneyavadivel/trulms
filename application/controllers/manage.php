@@ -2733,6 +2733,352 @@ class Manage extends CI_Controller {
 		}
 	}
 	/***********************************************************************************************************************************/
+	function vehicleowner()
+	{
+		if($this->uri->segment(3))
+		{
+			$whereData	=	array('ownerID'	=>	$this->uri->segment(3));
+			$updateData	=	array('active'	=>	$this->uri->segment(4));
+			$upt	=	$this->Commonsql_model->updateTable('tblvehicleowner', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','Designation Status Successfully  Changed...!');
+				redirect('vehicleowner');
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('vehicleowner');
+			}
+		}
+		else
+		{
+			$data['pageTitle']	=	"Designation";
+			$data['table']		=	"Designation";
+			$this->load->view('admin/vehicleowner/vehicleowner',$data);
+		}
+	}
+	function vehicleowner_json()
+	{
+		$result	=	$this->Commonsql_model->select_all_vowner();
+		//echo $this->db->last_query();exit;
+		$output = array();$i=1;
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['ID']				=	$value->ownerID;
+			$vaules['name'] 			= 	$value->contactPer1;
+			$vaules['companyName'] 		= 	$value->companyName;
+			$vaules['phone1'] 		= 	$value->phone1;
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
+			
+			if($value->active==1)
+			{
+				$view			 			=	"<a href='".base_url()."view_vehicleowner/".$value->ownerID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+				$APPROVE			 			=	"<a href='".base_url()."approve_vehicleowner/".$value->ownerID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/vehicleowner/".$value->ownerID."','0'");
+			}
+			else
+			{
+				$APPROVE		=	'';
+				$view		=	'';
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/vehicleowner/".$value->ownerID."','1'");
+			}
+			
+			$vaules['Action'] 			=	$view.$APPROVE."<a  href='".base_url()."edit_vehicleowner/".$value->ownerID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			
+			$output[] =$vaules;
+		}
+
+		 echo json_encode(array('data'=>$output), true);
+	}
+	function add_vehicleowner()
+	{
+		if($this->input->post('save'))
+		{
+			//echo "hi";exit;
+			$contact_values=array('name'		=>	$this->input->post('name'),
+								'companyName'		=>	$this->input->post('companyName'),
+								'addressline1'		=>	$this->input->post('addressline1'),
+								'addressline2'		=>	$this->input->post('addressline2'),
+								'city'				=>	$this->input->post('city'),
+								'state'				=>	$this->input->post('state'),
+								'country'			=>	$this->input->post('country'),
+								'email1'			=>	$this->input->post('email1'),
+								'email2'			=>	$this->input->post('email2'),
+								'phone1'			=>	$this->input->post('phone1'),
+								'phone2'			=>	$this->input->post('phone2'),
+								'fax'				=>	$this->input->post('fax'),
+								'website'			=>	$this->input->post('website'),
+								'dbentrystateID'	=>	3,
+								'createby'			=>	$this->session->userdata('SESS_userId'),
+								'active'			=>	1);
+								
+				$contactID	=	insertTable('tblcontactdetails', $contact_values,0);
+				
+			$values=array('contactID'				=>	$contactID,
+							'contactPer1'		=>	$this->input->post('name'),
+							'contactPer2'		=>	$this->input->post('contactPer2'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$query	=	insertTable('tblvehicleowner', $values,0);
+			if($query)
+			{
+				$this->session->set_userdata('suc','Vehicle Owner Successfully  Added...!');
+				redirect('manage/add_vehicleowner');
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('manage/add_vehicleowner');
+			}
+		}
+		$data['pageTitle']	=	"Add Designation";
+		$this->load->view('admin/vehicleowner/add_vehicleowner',$data);
+	}
+	function edit_vehicleowner()
+	{
+		if($this->input->post('save'))
+		{
+				$contact_values=array('name'		=>	$this->input->post('name'),
+								'companyName'		=>	$this->input->post('companyName'),
+								'addressline1'		=>	$this->input->post('addressline1'),
+								'addressline2'		=>	$this->input->post('addressline2'),
+								'city'				=>	$this->input->post('city'),
+								'state'				=>	$this->input->post('state'),
+								'country'			=>	$this->input->post('country'),
+								'email1'			=>	$this->input->post('email1'),
+								'email2'			=>	$this->input->post('email2'),
+								'phone1'			=>	$this->input->post('phone1'),
+								'phone2'			=>	$this->input->post('phone2'),
+								'fax'				=>	$this->input->post('fax'),
+								'website'			=>	$this->input->post('website'),
+								'dbentrystateID'	=>	0,
+								'createby'			=>	$this->session->userdata('SESS_userId'),
+								'active'			=>	1);
+								
+				$contactID_whereData	=	array('contactID'	=>	$this->input->post('contactID'));
+			$query1		= updateTable('tblcontactdetails', $contactID_whereData, $contact_values , 1,'contactID', $this->input->post('contactID'));
+				
+			$values=array('contactID'			=>	$this->input->post('contactID'),
+							'contactPer1'		=>	$this->input->post('name'),
+							'contactPer2'		=>	$this->input->post('contactPer2'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+							
+			$whereData	=	array('ownerID'	=>	$this->input->post('ownerID'));
+			$query		= updateTable('tblvehicleowner', $whereData, $values , 1,'ownerID', $this->input->post('ownerID'));
+			if($query || $query1)
+			{
+				$this->session->set_userdata('suc','Vehicle Owner Successfully  Updated...!');
+				redirect('edit_vehicleowner/'.$this->input->post('ownerID'));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('edit_vehicleowner/'.$this->input->post('ownerID'));
+			}
+		}
+		$data['pageTitle']	=	"Edit Designation";
+		$data['view']		=	$this->Commonsql_model->select_all_vowner_edit($this->uri->segment(2));
+		$this->load->view('admin/vehicleowner/edit_vehicleowner',$data);
+	}
+	function view_vehicleowner()
+	{
+		$data['pageTitle']	=	"View Designation";
+		$data['view']		=	$this->Commonsql_model->select_all_vowner_edit($this->uri->segment(2));
+		$this->load->view('admin/vehicleowner/view_vehicleowner',$data);
+	}
+	function approve_vehicleowner()
+	{
+		if($this->input->post('save'))
+		{
+			
+				$contact_values=array('name'		=>	$this->input->post('name'),
+								'companyName'		=>	$this->input->post('companyName'),
+								'addressline1'		=>	$this->input->post('addressline1'),
+								'addressline2'		=>	$this->input->post('addressline2'),
+								'city'				=>	$this->input->post('city'),
+								'state'				=>	$this->input->post('state'),
+								'country'			=>	$this->input->post('country'),
+								'email1'			=>	$this->input->post('emailss'),
+								'email2'			=>	$this->input->post('email2'),
+								'phone1'			=>	$this->input->post('phone1'),
+								'phone2'			=>	$this->input->post('phone2'),
+								'fax'				=>	$this->input->post('fax'),
+								'website'			=>	$this->input->post('website'),
+								'dbentrystateID'	=>	0,
+								'createby'			=>	$this->session->userdata('SESS_userId'),
+								'active'			=>	1);
+								
+								
+				$contactID_whereData	=	array('contactID'	=>	$this->input->post('contactID'));
+			$query1		= updateTable('tblcontactdetails', $contactID_whereData, $contact_values , 1,'contactID', $this->input->post('contactID'));
+			//echo $this->db->last_query();exit;
+				
+			$values=array('contactID'			=>	$this->input->post('contactID'),
+							'contactPer1'		=>	$this->input->post('name'),
+							'contactPer2'		=>	$this->input->post('contactPer2'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+							
+				$whereData	=	array('ownerID'	=>	$this->input->post('ownerID'));
+				$query		= updateTable('tblvehicleowner', $whereData, $values , 1,'ownerID', $this->input->post('ownerID'));
+			
+				
+				if($query || $query1)
+				{
+					$this->session->set_userdata('suc','vehicleowner Successfully  Updated...!');
+					redirect('approve_vehicleowner/'.$this->input->post('ownerID'));
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('approve_vehicleowner/'.$this->input->post('ownerID'));
+				}
+			
+		}
+		if($this->uri->segment(4))
+		{
+			$whereData	=	array('owner_modID'	=>	$this->uri->segment(4));
+			$updateData	=	array('active'	=>	$this->uri->segment(5));
+			$upt	=	$this->Commonsql_model->updateTable('tblvehicleowner_mod', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','Designation Status Successfully  Changed...!');
+				redirect('approve_vehicleowner/'.$this->uri->segment(3));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('approve_vehicleowner/'.$this->uri->segment(3));
+			}
+		}
+		else if($this->uri->segment(3))
+		{
+			$data['pageTitle']	=	"View vehicleowner";
+			$data['table']		=	"Designation";
+			$data['view']		=	$this->Commonsql_model->select_all_vowner_mod($this->uri->segment(3));
+			$this->load->view('admin/vehicleowner/approve_vehicleowner',$data);
+		}
+		else
+		{
+			$data['pageTitle']	=	"View vehicleowner";
+			$data['table']		=	"Designation";
+			$data['view']		=	$this->Commonsql_model->select_all_vowner_edit($this->uri->segment(2));
+			$this->load->view('admin/vehicleowner/approve_vehicleowner',$data);
+		}
+	}
+	function approve_vehicleowner_json()
+	{
+		$result	=	$this->Commonsql_model->select_all_vowner_mod($this->uri->segment(3));
+		//echo $this->db->last_query();exit;
+		$output = array();$i=1;$j=1;
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['ID']				=	$value->owner_modID;
+			$vaules['name'] 			= 	$value->name;
+			$vaules['companyName'] 		= 	$value->companyName;
+			$vaules['phone1'] 			= 	$value->phone1;
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
+			
+			if($value->active==1)
+			{
+				if($j++==1)
+				{
+					$Approve	=	approve_html("'".base_url()."manage/vehicleowner_mod_approve/".$value->owner_modID."','2'");
+				}
+				else
+				{
+					$Approve	=	'';
+				}
+				
+				$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_vehicleowner/".$value->ownerID."/".$value->owner_modID."','0'");
+			}
+			else
+			{
+				$Approve		=	'';
+				$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_vehicleowner/".$value->ownerID."/".$value->owner_modID."','1'");
+			}
+			
+			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_vehicleowner/".$value->ownerID.'/'.$value->owner_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			
+			$output[] =$vaules;
+		}
+
+		 echo json_encode(array('data'=>$output), true);
+	}
+	function vehicleowner_mod_approve()
+	{
+		//$mod_id	=	$this->uri->segment(3);
+		//$data	=	$this->Commonsql_model->select('tblvehicleowner_mod',array('owner_modID'=>$mod_id));
+		////if($data->num_rows()>0)
+		{
+			/*$val	=	$data->row();
+			
+				$values		=array('name'		=>	$val->name,
+								'description'		=>	$val->description,
+								'dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond		=	array('ownerID'	=>	$val->ownerID);
+				
+				$values_mod	=	array('dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond_mod	=	array('owner_modID'	=>	$mod_id);
+				$upt		=	$this->Commonsql_model->updateTable('tblvehicleowner', $cond , $values);
+				$upt_m		=	$this->Commonsql_model->updateTable('tblvehicleowner_mod', $cond_mod , $values_mod);*/
+				//echo $this->db->last_query();exit;
+				//if(1)
+				//{
+					$this->session->set_userdata('suc','Approved Successfully  Finished...!');
+					redirect('approve_vehicleowner/'.$this->uri->segment(3));
+					
+			//	}
+				//else
+				//{
+				//	$this->session->set_userdata('err','Error Please try again..!');
+				//	redirect('approve_vehicleowner/'.$val->ownerID);
+				//}
+							
+							
+						
+		}
+	}
+	/***********************************************************************************************************************************/
 	function contract_consignor()
 	{
 		if($this->uri->segment(3))

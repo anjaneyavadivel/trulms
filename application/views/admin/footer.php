@@ -93,6 +93,7 @@
                         { "data": "deptID" },
                         { "data": "department" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -108,6 +109,7 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -123,6 +125,7 @@
                         { "data": "ID" },
                         { "data": "roleName" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -138,6 +141,7 @@
                         { "data": "ID" },
                         { "data": "paymentMode" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -153,6 +157,7 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -168,6 +173,7 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -183,6 +189,7 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -198,6 +205,7 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -213,6 +221,7 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -228,6 +237,7 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -244,6 +254,7 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -259,6 +270,7 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -335,6 +347,7 @@
 						{ "data": "date" },
 						{ "data": "sign" },
                         { "data": "total" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -358,6 +371,7 @@
 						{ "data": "remarks" },
 						{ "data": "joiningdate" },
                         { "data": "releavingdate" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -381,6 +395,7 @@
 						{ "data": "remarks" },
 						{ "data": "joiningdate" },
                         { "data": "releavingdate" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -399,6 +414,7 @@
 						{ "data": "phone1" },
 						{ "data": "dlno" },
 						{ "data": "dlexpirydt" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -417,6 +433,7 @@
 						{ "data": "phone1" },
 						{ "data": "dlno" },
 						{ "data": "dlexpirydt" },
+						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
@@ -438,6 +455,40 @@
 						{ "data": "date" },
 						{ "data": "sign" },
                         { "data": "total" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+                    "dom": 'Rlfrtip'
+                });
+				<?php }else if($segment1=='vehicleowner'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/vehicleowner_json',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+						{ "data": "companyName" },
+						{ "data": "phone1" },
+                        { "data": "active" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+                    "dom": 'Rlfrtip'
+                });
+				<?php }else if($segment1=='approve_vehicleowner'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/approve_vehicleowner_json/<?php echo $this->uri->segment(2)?>',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+						{ "data": "companyName" },
+						{ "data": "phone1" },
+                        { "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
