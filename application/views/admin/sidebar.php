@@ -37,67 +37,102 @@
                             ==================================================== -->
                             <ul id="navigation">
                                 <li><a href="<?= base_url() ?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-                                <li>
-                                    <a href="#"><i class="fa fa-cubes"></i> <span>Master</span> </a>   
-                                    <ul>
+
+                                 <?php
+                                $loop = 0;
+                                $whereData = array('parentID' => 1, 'dbentrystateID' => 3, 'active' => 1);
+                                $master = selectTable('tblpages', $whereData);
+                                if (isset($master) && $master->num_rows() > 0) {
+                                    foreach ($master->result() as $value) {
+                                        if (checkpageaccess($value->url, 1, 'menu')) {
+                                            if ($loop == 0) {
+                                                ?>
+                                                <li>
+                                                    <a href="#"><i class="fa fa-cubes"></i> <span>Master</span> </a>   
+                                                    <ul><?php } ?> 
+
+                                                    <li><a href="<?= base_url() . $value->url ?>" title="<?= $value->tooltip ?>"><i class="<?= $value->icon ?>"></i> <?= ucwords($value->menuCaption) ?></a></li>
+                                                    <?php
+                                                    $loop = 1;
+                                                }
+                                            }if ($loop == 1) {
+                                                ?>   
+                                            </ul>
+                                        </li>
                                         <?php
-                                        $whereData = array('parentID' => 1, 'dbentrystateID' => 3, 'active' => 1);
-                                        $master = selectTable('tblpages', $whereData);
-                                        if (isset($master) && $master->num_rows() > 0) {
-                                            foreach ($master->result() as $value) {
+                                    }
+                                }
+                                $loop = 0;
+                                $whereData = array('parentID' => 2, 'dbentrystateID' => 3, 'active' => 1);
+                                $master = selectTable('tblpages', $whereData);
+                                if (isset($master) && $master->num_rows() > 0) {
+                                    foreach ($master->result() as $value) {
+                                        if (checkpageaccess($value->url, 1, 'menu')) {
+                                            if ($loop == 0) {
                                                 ?>
-                                        <li><a href="<?= base_url().$value->url ?>" title="<?= $value->tooltip ?>"><i class="<?= $value->icon ?>"></i> <?= ucwords($value->menuCaption) ?></a></li>
-                                                <?php
-                                            }
-                                        }
-                                        ?>
-                                   </ul>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa  fa-gear"></i> <span>Setup</span> </a>
-                                    <ul>
-                                   <?php
-                                        $whereData = array('parentID' => 2, 'dbentrystateID' => 3, 'active' => 1);
-                                        $master = selectTable('tblpages', $whereData);
-                                        if (isset($master) && $master->num_rows() > 0) {
-                                            foreach ($master->result() as $value) {
+                                                <li>
+                                                    <a href="#"><i class="fa  fa-gear"></i> <span>Setup</span> </a>
+                                                    <ul>
+                                                    <?php } ?> 
+                                                    <li><a href="<?= base_url() . $value->url ?>" title="<?= $value->tooltip ?>"><i class="<?= $value->icon ?>"></i> <?= ucwords($value->menuCaption) ?></a></li>
+                                                    <?php
+                                                    $loop = 1;
+                                                }
+                                            }if ($loop == 1) {
+                                                ?>   
+                                            </ul>
+                                        </li>
+                                        <?php
+                                    }
+                                }
+                                $loop = 0;
+                                $whereData = array('parentID' => 3, 'dbentrystateID' => 3, 'active' => 1);
+                                $master = selectTable('tblpages', $whereData);
+                                if (isset($master) && $master->num_rows() > 0) {
+                                    foreach ($master->result() as $value) {
+                                        if (checkpageaccess($value->url, 1, 'menu')) {
+                                            if ($loop == 0) {
                                                 ?>
-                                        <li><a href="<?= base_url().$value->url ?>" title="<?= $value->tooltip ?>"><i class="<?= $value->icon ?>"></i> <?= ucwords($value->menuCaption) ?></a></li>
-                                                <?php
-                                            }
-                                        }
-                                        ?> </ul>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa  fa-gear"></i> <span>Operations</span> </a>
-                                    <ul>
-                                    <?php
-                                        $whereData = array('parentID' => 3, 'dbentrystateID' => 3, 'active' => 1);
-                                        $master = selectTable('tblpages', $whereData);
-                                        if (isset($master) && $master->num_rows() > 0) {
-                                            foreach ($master->result() as $value) {
+                                                <li>
+                                                    <a href="#"><i class="fa  fa-gear"></i> <span>Operations</span> </a>
+                                                    <ul>
+
+                                                    <?php } ?> 
+                                                    <li><a href="<?= base_url() . $value->url ?>" title="<?= $value->tooltip ?>"><i class="<?= $value->icon ?>"></i> <?= ucwords($value->menuCaption) ?></a></li>
+                                                    <?php
+                                                    $loop = 1;
+                                                }
+                                            }if ($loop == 1) {
+                                                ?>   
+                                            </ul>
+                                        </li>
+                                        <?php
+                                    }
+                                }
+                                $loop = 0;
+                                $whereData = array('parentID' => 4, 'dbentrystateID' => 3, 'active' => 1);
+                                $master = selectTable('tblpages', $whereData);
+                                if (isset($master) && $master->num_rows() > 0) {
+                                    foreach ($master->result() as $value) {
+                                        if (checkpageaccess($value->url, 1, 'menu')) {
+                                            if ($loop == 0) {
                                                 ?>
-                                        <li><a href="<?= base_url().$value->url ?>" title="<?= $value->tooltip ?>"><i class="<?= $value->icon ?>"></i> <?= ucwords($value->menuCaption) ?></a></li>
-                                                <?php
-                                            }
-                                        }
-                                        ?></ul>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa  fa-gear"></i> <span>Report(later)</span> </a>
-                                    <ul>
-                                       <?php
-                                        $whereData = array('parentID' => 4, 'dbentrystateID' => 3, 'active' => 1);
-                                        $master = selectTable('tblpages', $whereData);
-                                        if (isset($master) && $master->num_rows() > 0) {
-                                            foreach ($master->result() as $value) {
-                                                ?>
-                                        <li><a href="<?= base_url().$value->url ?>" title="<?= $value->tooltip ?>"><i class="<?= $value->icon ?>"></i> <?= ucwords($value->menuCaption) ?></a></li>
-                                                <?php
-                                            }
-                                        }
-                                        ?> </ul>
-                                </li>
+                                                <li>
+                                                    <a href="#"><i class="fa  fa-gear"></i> <span>Report(later)</span> </a>
+                                                    <ul>
+                                                    <?php } ?>   
+                                                    <li><a href="<?= base_url() . $value->url ?>" title="<?= $value->tooltip ?>"><i class="<?= $value->icon ?>"></i> <?= ucwords($value->menuCaption) ?></a></li>
+                                                    <?php
+                                                    $loop = 1;
+                                                }
+                                            }if ($loop == 1) {
+                                                ?>   
+                                            </ul>
+                                        </li>
+                                        <?php
+                                    }
+                                }
+                                ?>
 
 
 

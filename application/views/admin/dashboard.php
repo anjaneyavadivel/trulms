@@ -49,6 +49,7 @@
         $checkpageaccess =  checkpageaccess('employee',0);
         print_r($checkpageaccess);
         echo checkpageaccess('employee',1,'create');
+        echo checkpageaccess('company',1,'menu');
         echo "<br><br>";
         //pagealterpermission($pageUrl='',$alterPermission='');
         echo pagealterpermission('employee', $alterPermission='');
