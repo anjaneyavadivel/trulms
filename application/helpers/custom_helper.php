@@ -61,7 +61,8 @@ if (!function_exists('checkpageaccess')) {
     /*
      * This function will return all parents of a user. 
      * $pageID -  which page need to access for login user
-     * $access -  check page access permission for login user (like : create,view,modify,approve,delete)
+     * $access -  0 - all, 1 -module leavel  check page access permission for login user (like : create,view,modify,approve,delete)
+     * $subpage - menu - default for menu acces OR screen name (create,view,modify,approve,delete) , Note: need to set $access=1
      * $format - json , array
      * $final_accessmap  - return  page role access following format array(0=>'create',1=>'view',2=>'modify',3=>'approve',4=>'delete');
      */
@@ -71,6 +72,10 @@ if (!function_exists('checkpageaccess')) {
         $finalaccessmap = array();
         // check vaild input
         if($pageUrl==''){return FALSE;}
+        $SESS_userRole = $CI->session->userdata('SESS_userRole');
+        if(in_array(1, $SESS_userRole)){
+             return TRUE;
+        }
         $SESS_accessmap = $CI->session->userdata('SESS_accessmap');
         $json = json_decode($SESS_accessmap, true);
        // print_r($SESS_accessmap);
@@ -84,8 +89,12 @@ if (!function_exists('checkpageaccess')) {
                 }
             }
             return FALSE;
-        }else{ 
-            if($subpage!=''){
+        }else if($access==1){
+            if($subpage=='menu'){
+                if(isset($json[$pageUrl]) && !empty($json[$pageUrl])){
+                    return TRUE;
+                }
+            }else if($subpage!=''){
                 if(isset($json[$pageUrl]) && in_array($subpage, $json[$pageUrl])){
                     return TRUE;
                 }
