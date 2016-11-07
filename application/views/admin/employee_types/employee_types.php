@@ -48,11 +48,12 @@
                                 <!-- tile header -->
                                 <div class="tile-header bg-greensea  dvd dvd-btm">
                                     <h1 class="custom-font"><strong>Employee Types</strong> Master</h1>
-                                    
+                                    <?php if(checkpageaccess('employee_types',1,'create')){?>
                                     <ul class="controls">
                                         
                                         <li><a href="<?= base_url()?>add_employee_types" title="Add Employee Types" role="button" tabindex="0" class="tile-close">Add New  <i class="fa fa-plus"></i></a></li>
                                     </ul>
+                                     <?php }?>
                                 </div>
                                 <!-- /tile header -->
 

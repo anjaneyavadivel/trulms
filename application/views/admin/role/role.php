@@ -46,11 +46,12 @@
                                 <!-- tile header -->
                                 <div class="tile-header bg-greensea  dvd dvd-btm">
                                     <h1 class="custom-font"><strong>Role</strong> Master</h1>
-                                    
+                                     <?php if(checkpageaccess('role',1,'create')){?>
                                     <ul class="controls">
                                         
                                         <li><a href="<?= base_url()?>add_role" title="Add Department" role="button" tabindex="0" >Add New  <i class="fa fa-plus"></i></a></li>
                                     </ul>
+                                     <?php }?>
                                 </div>
                                 <!-- /tile header -->
 
