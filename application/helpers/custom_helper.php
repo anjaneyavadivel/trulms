@@ -19,7 +19,7 @@ if (!function_exists('pageroleaccessmap')) {
         // check super admin role 
         
         $whereData = array('dbentrystateID' => 3, 'active' => 1);
-        $showField = array('pageID','menuCaption');
+        $showField = array('pageID','url','menuCaption');
         // Get user record
         $tblpages = selectTable('tblpages', $whereData, $showField);
 
@@ -47,7 +47,7 @@ if (!function_exists('pageroleaccessmap')) {
                     }
                     $final_accessmap = array_unique($final_accessmap);
                 }
-                $finalaccessmap[$pageslist->pageID]=$final_accessmap;
+                $finalaccessmap[$pageslist->url]=$final_accessmap;
             }
 
         }
@@ -66,27 +66,29 @@ if (!function_exists('checkpageaccess')) {
      * $final_accessmap  - return  page role access following format array(0=>'create',1=>'view',2=>'modify',3=>'approve',4=>'delete');
      */
 
-    function checkpageaccess($pageID='',$access='',$format='json') {
+    function checkpageaccess($pageUrl='',$access=0,$subpage='',$format='array') {
         $CI = & get_instance();
         $finalaccessmap = array();
         // check vaild input
-        if($pageID==''){return FALSE;}
+        if($pageUrl==''){return FALSE;}
         $SESS_accessmap = $CI->session->userdata('SESS_accessmap');
         $json = json_decode($SESS_accessmap, true);
-        print_r($SESS_accessmap);
+       // print_r($SESS_accessmap);
         // check particular page acess
-        if($access==''){
-            if(isset($json[$pageID])){
+        if($access==0){
+            if(isset($json[$pageUrl])){
                 if($format=='json'){
-                    return $finalaccessmap = json_encode($json[$pageID], true);
+                    return $finalaccessmap = json_encode($json[$pageUrl], true);
                 }else{
-                    return $json[$pageID];
+                    return $json[$pageUrl];
                 }
             }
             return FALSE;
         }else{ 
-            if(isset($json[$pageID]) && in_array($access, $json[$pageID])){
-                return TRUE;
+            if($subpage!=''){
+                if(isset($json[$pageUrl]) && in_array($subpage, $json[$pageUrl])){
+                    return TRUE;
+                }
             }
             return FALSE;
         }

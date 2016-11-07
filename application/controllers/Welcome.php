@@ -24,7 +24,7 @@ class Welcome extends CI_Controller {
 //        $SESS_userRole = $this->session->userdata('SESS_userRole');
 //        print_r($SESS_userRole);
 //        $SESS_accessmap = $this->session->userdata('SESS_accessmap');
-//        print_r($SESS_accessmap);
+//        //print_r($SESS_accessmap);
 //        
 //        
 //        

@@ -111,21 +111,26 @@ var Mainnew = function () {
                 e.preventDefault();
                 $('#ajaxLoadDiv').html('');
             });
+            $('#content').on('click', '.editviewcallform-btn', function (e) {
+                e.preventDefault();
+                var suburl = $(this).attr('data-ur');
+                var viewurl = $(this).attr('data-vur');
+                var id = $(this).attr('data-val');
+                var url = base_path + suburl;
+                $.post(url, {csrf_test_name: $.cookie('csrf_cookie_name'),
+                    id:id,
+                    viewurl:viewurl,
+                }, function (res) {
+                    //if (res.length>0) {
+                    $('#ajaxLoadDiv').html(res);
+                    $('.chosen-select').chosen();
+                    $('#form4').parsley();
+                    //$(".chosen-select").trigger("chosen:updated");
+                    //$(".chosen-select").trigger("liszt:updated");
+                    // }
+                });
 
-//            $('.tile-body').on('change', '#empID', function (e) {
-//                e.preventDefault();alert( $('option:selected', this).text() ); 
-//        alert( $(this).val() );
-//                type = $(this).attr('data-val');
-//                id = $(this).attr('data-id');
-//                tbname = $(this).attr('data-tb');
-//                tbcol = $(this).attr('data-col');
-//                if(type==0){
-//                   $('#confirmation-msg').html('Are you sure you would like to De-Active this record?');
-//                }else{
-//                   $('#confirmation-msg').html('Are you sure you would like to Active this record?');
-//                }
-//                $('#activedeactiveid').trigger("click");
-            //    });
+            });
 
         } // End of init()
     };

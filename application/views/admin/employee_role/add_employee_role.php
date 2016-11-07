@@ -107,7 +107,7 @@
                         <div class="tile-footer text-right bg-tr-black lter dvd dvd-top"> 
                             <!-- SUBMIT BUTTON -->
                                      <a href="<?=base_url().'employee-role'?>" class="btn btn-warning "><i class="fa fa-hand-o-left"></i> Go Back</a>
-                            <input type="submit" class="btn btn-greensea" id="form4Submit" value="Submit" name="save">
+                            <input type="submit" class="btn btn-greensea" id="form4Submit" value="Add" name="save">
                         </div>
                         <!-- /tile footer --> 
 

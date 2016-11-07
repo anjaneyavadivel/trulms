@@ -85,7 +85,7 @@ $route['edit-employee-role/(:num)'] = 'setup/edit_employee_role/$1';
 $route['form-access'] = 'setup/form_access';
 $route['form-access-json'] = 'setup/form_access_json';
 $route['add-form-access'] = 'setup/add_form_access';
-$route['view-form-access/(:num)'] = 'setup/view_form_access/$1';
+$route['view-form-access'] = 'setup/view_form_access';
 $route['edit-form-access/(:num)'] = 'setup/edit_form_access/$1';
 /*******************************************manage Controller*****************************/
 
