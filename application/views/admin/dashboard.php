@@ -45,9 +45,14 @@
         $pageroleaccessmap = pageroleaccessmap($SESS_userRole);
         print_r($pageroleaccessmap);
         echo "<br><br>";
-        echo checkpageaccess('employee',1,'approve');
        // echo checkpageaccess($pageUrl='',$access=0,$subpage='',$format='array');
+        $checkpageaccess =  checkpageaccess('employee',0);
+        print_r($checkpageaccess);
+        echo checkpageaccess('employee',1,'create');
         echo "<br><br>";
+        //pagealterpermission($pageUrl='',$alterPermission='');
+        echo pagealterpermission('employee', $alterPermission='');
+        echo pagealterpermission('employee', $alterPermission='createApprove');
 //        $finalaccessmap = checkpageaccess(2, '', 'array');
 //        print_r($finalaccessmap);
         ?>

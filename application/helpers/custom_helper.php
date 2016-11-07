@@ -11,45 +11,56 @@ if (!function_exists('pageroleaccessmap')) {
      * $final_accessmap  - return  page role access following format array(0=>'create',1=>'view',2=>'modify',3=>'approve',4=>'delete');
      */
 
-    function pageroleaccessmap($role_arr=array()) {
+    function pageroleaccessmap($role_arr = array()) {
         $CI = & get_instance();
         $finalaccessmap = array();
         // check vaild input
-        if(empty($role_arr)){return $final_accessmap;}
+        if (empty($role_arr)) {
+            return $final_accessmap;
+        }
         // check super admin role 
-        
+
         $whereData = array('dbentrystateID' => 3, 'active' => 1);
-        $showField = array('pageID','url','menuCaption');
+        $showField = array('pageID', 'url', 'menuCaption');
         // Get user record
         $tblpages = selectTable('tblpages', $whereData, $showField);
 
-        if ($tblpages->num_rows() >0) {
+        if ($tblpages->num_rows() > 0) {
             $pageslists = $tblpages->result();
-             foreach ($pageslists as $pageslist) {
+            foreach ($pageslists as $pageslist) {
                 $final_accessmap = array();
-                if(in_array(1, $role_arr)){
-                    $final_accessmap = array(0=>'create',1=>'view',2=>'modify',3=>'approve',4=>'delete');
-                }else{
-                    $whereData = array('pageID' => $pageslist->pageID,'dbentrystateID' => 3, 'active' => 1);
+                if (in_array(1, $role_arr)) {
+                    $final_accessmap = array(0 => 'create', 1 => 'view', 2 => 'modify', 3 => 'approve', 4 => 'delete');
+                } else {
+                    $whereData = array('pageID' => $pageslist->pageID, 'dbentrystateID' => 3, 'active' => 1);
                     $showField = array('*');
-                    $inWhereData = array('roleID',$role_arr);
+                    $inWhereData = array('roleID', $role_arr);
                     // Get user record
-                    $pageroleaccessmaps = selectTable('tblpageroleaccessmap', $whereData, $showField, $orWhereData = array(),$inWhereData);
+                    $pageroleaccessmaps = selectTable('tblpageroleaccessmap', $whereData, $showField, $orWhereData = array(), $inWhereData);
                     if (isset($pageroleaccessmaps) && $pageroleaccessmaps->num_rows() > 0) {
                         $pageroleaccessmaps = $pageroleaccessmaps->result();
                         foreach ($pageroleaccessmaps as $pageroleaccessmap) {
-                            if($pageroleaccessmap->createEnabled){$final_accessmap[]='create';}
-                            if($pageroleaccessmap->viewEnabled){$final_accessmap[]='view';}
-                            if($pageroleaccessmap->modifyEnabled){$final_accessmap[]='modify';}
-                            if($pageroleaccessmap->approveEnabled){$final_accessmap[]='approve';}
-                            if($pageroleaccessmap->deleteEnabled){$final_accessmap[]='delete';}
+                            if ($pageroleaccessmap->createEnabled) {
+                                $final_accessmap[] = 'create';
+                            }
+                            if ($pageroleaccessmap->viewEnabled) {
+                                $final_accessmap[] = 'view';
+                            }
+                            if ($pageroleaccessmap->modifyEnabled) {
+                                $final_accessmap[] = 'modify';
+                            }
+                            if ($pageroleaccessmap->approveEnabled) {
+                                $final_accessmap[] = 'approve';
+                            }
+                            if ($pageroleaccessmap->deleteEnabled) {
+                                $final_accessmap[] = 'delete';
+                            }
                         }
                     }
                     $final_accessmap = array_unique($final_accessmap);
                 }
-                $finalaccessmap[$pageslist->url]=$final_accessmap;
+                $finalaccessmap[$pageslist->url] = $final_accessmap;
             }
-
         }
         return $roleaccessmap = json_encode($finalaccessmap, true);
         //return $final_accessmap;
@@ -67,45 +78,108 @@ if (!function_exists('checkpageaccess')) {
      * $final_accessmap  - return  page role access following format array(0=>'create',1=>'view',2=>'modify',3=>'approve',4=>'delete');
      */
 
-    function checkpageaccess($pageUrl='',$access=0,$subpage='',$format='array') {
+    function checkpageaccess($pageUrl = '', $access = 0, $subpage = '', $format = 'array') {
         $CI = & get_instance();
         $finalaccessmap = array();
         // check vaild input
-        if($pageUrl==''){return FALSE;}
+        if ($pageUrl == '') {
+            return FALSE;
+        }
         $SESS_userRole = $CI->session->userdata('SESS_userRole');
-        if(in_array(1, $SESS_userRole)){
-             return TRUE;
+        if (in_array(1, $SESS_userRole)) {
+            return TRUE;
         }
         $SESS_accessmap = $CI->session->userdata('SESS_accessmap');
         $json = json_decode($SESS_accessmap, true);
-       // print_r($SESS_accessmap);
+        // print_r($SESS_accessmap);
         // check particular page acess
-        if($access==0){
-            if(isset($json[$pageUrl])){
-                if($format=='json'){
+        if ($access == 0) {
+            if (isset($json[$pageUrl])) {
+                if ($format == 'json') {
                     return $finalaccessmap = json_encode($json[$pageUrl], true);
-                }else{
+                } else {
                     return $json[$pageUrl];
                 }
             }
             return FALSE;
-        }else if($access==1){
-            if($subpage=='menu'){
-                if(isset($json[$pageUrl]) && !empty($json[$pageUrl])){
+        } else if ($access == 1) {
+            if ($subpage == 'menu') {
+                if (isset($json[$pageUrl]) && !empty($json[$pageUrl])) {
                     return TRUE;
                 }
-            }else if($subpage!=''){
-                if(isset($json[$pageUrl]) && in_array($subpage, $json[$pageUrl])){
+            } else if ($subpage != '') {
+                if (isset($json[$pageUrl]) && in_array($subpage, $json[$pageUrl])) {
                     return TRUE;
                 }
             }
             return FALSE;
         }
-         return FALSE;
+        return FALSE;
     }
 
 }
 
+if (!function_exists('pagealterpermission')) {
+    /*
+     * This function will return all parents of a user. 
+     * This includes children and input level users.
+     * $pageUrl  is page url name
+     * $alterPermission  is alter permission name, "createApprove","modifyApprove","selfEdit","selfApproval"
+     * it's return TRUE or FALSE
+     *  
+     */
+
+    function pagealterpermission($pageUrl = '', $alterPermission = '') {
+        $CI = & get_instance();
+
+        $final_accessmap = array();
+        $finalaccessmap = array();
+        if ($pageUrl == '') {
+            return FALSE;
+        }
+        $SESS_userRole = $CI->session->userdata('SESS_userRole');
+        if (in_array(1, $SESS_userRole)) {
+            $final_accessmap = array(0 => 'createApprove', 1 => 'modifyApprove', 2 => 'selfEdit', 3 => 'selfApproval');
+        } else {
+            $joins = array(
+                array(
+                    'table' => 'tblpages AS tp',
+                    'condition' => 'tp.pageID = tpa.pageID',
+                    'jointype' => 'LEFT'
+                ),
+            );
+            $columns = 'tpa.*,tp.menuCaption';
+            $whereData = array('tp.url' => $pageUrl, 'tpa.dbentrystateID' => 3, 'tpa.active' => 1);
+            $pagealterRow = get_joins('tblpagealterdetails AS tpa', $columns, $joins, $whereData);
+            if ($pagealterRow->num_rows() > 0) {
+                $pagealter = $pagealterRow->result();
+                if ($pagealter[0]->iscreateApproveRequired) {
+                    $final_accessmap[] = 'createApprove';
+                }
+                if ($pagealter[0]->ismodifyApproveRequired) {
+                    $final_accessmap[] = 'modifyApprove';
+                }
+                if ($pagealter[0]->isSelfEditAllowed) {
+                    $final_accessmap[] = 'selfEdit';
+                }
+                if ($pagealter[0]->isSelfApprovalAllowed) {
+                    $final_accessmap[] = 'selfApproval';
+                }
+            }
+        }
+        $finalaccessmap = array($pageUrl => $final_accessmap);
+        $accessmap = json_encode($finalaccessmap, true);
+        if ($alterPermission != '') {
+            if (isset($finalaccessmap[$pageUrl]) && in_array($alterPermission, $finalaccessmap[$pageUrl])) {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+        }
+        return $accessmap;
+    }
+
+}
 //
 //if (!function_exists('pageroleaccessmap')) {
 //    /*
@@ -407,7 +481,7 @@ if (!function_exists('formatarrayvalue')) {
 
         if (is_array($array)) {
             foreach ($array as $value) {
-                    $results[] = $value;
+                $results[] = $value;
             }
         }
 
@@ -757,26 +831,23 @@ if (!function_exists('group_dh_time_ago')) {
 
 if (!function_exists('enable_disable_approve_deactive_html')) {
 
-    function disable_approve_deactive_html($onclick_values)
-	{
-		return '<a href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" class=" text-danger text-uppercase text-strong text-sm mr-10 " onclick="active_deactive_class('.$onclick_values.')">De-Active</a>';
-	}
+    function disable_approve_deactive_html($onclick_values) {
+        return '<a href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" class=" text-danger text-uppercase text-strong text-sm mr-10 " onclick="active_deactive_class(' . $onclick_values . ')">De-Active</a>';
+    }
 
 }
 if (!function_exists('enable_approve_deactive_html')) {
 
-    function enable_approve_deactive_html($onclick_values)
-	{
-		return '<a href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" class="text-success text-uppercase text-strong text-sm mr-10" onclick="active_deactive_class('.$onclick_values.')">Active</a>';
-	}
+    function enable_approve_deactive_html($onclick_values) {
+        return '<a href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" class="text-success text-uppercase text-strong text-sm mr-10" onclick="active_deactive_class(' . $onclick_values . ')">Active</a>';
+    }
 
 }
 if (!function_exists('approve_html')) {
 
-    function approve_html($onclick_values)
-	{
-		return '<a href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" class="text-primary text-uppercase text-strong text-sm mr-10" onclick="active_deactive_class('.$onclick_values.')">Approved</a>';
-	}
+    function approve_html($onclick_values) {
+        return '<a href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" class="text-primary text-uppercase text-strong text-sm mr-10" onclick="active_deactive_class(' . $onclick_values . ')">Approved</a>';
+    }
 
 }
 
