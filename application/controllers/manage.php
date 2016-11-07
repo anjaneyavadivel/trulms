@@ -69,15 +69,44 @@ class Manage extends CI_Controller {
 			
 			if($value->active==1)
 			{
-				$view			 			=	"<a href='".base_url()."view_department/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
-				$APPROVE			 			=	"<a href='".base_url()."approve_department/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
-				$active	=	disable_approve_deactive_html("'".base_url()."manage/department/".$value->deptID."','0'");
+				if(checkpageaccess('department',1,'view'))
+				{
+					$view			 			=	"<a href='".base_url()."view_department/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+				}
+				else
+				{
+					$view			 			=	'';
+				}
+				if(checkpageaccess('department',1,'approve'))
+				{
+					$APPROVE			 			=	"<a href='".base_url()."approve_department/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
+				}
+				else
+				{
+					$APPROVE			 			= "";
+					
+				}
+				if(checkpageaccess('department',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/department/".$value->deptID."','0'");
+				}
+				else
+				{
+					$active	=	'';
+				}
 			}
 			else
 			{
 				$APPROVE		=	'';
 				$view			 =	'';
-				$active	=	enable_approve_deactive_html("'".base_url()."manage/department/".$value->deptID."','1'");
+				if(checkpageaccess('department',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/department/".$value->deptID."','1'");
+				}
+				else
+				{
+					$active	=	'';
+				}
 			}
 			
 			$vaules['Action'] 			=	$view.$APPROVE."<a href='".base_url()."edit_department/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
