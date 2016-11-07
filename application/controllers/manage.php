@@ -108,8 +108,15 @@ class Manage extends CI_Controller {
 					$active	=	'';
 				}
 			}
-			
-			$vaules['Action'] 			=	$view.$APPROVE."<a href='".base_url()."edit_department/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			if(checkpageaccess('department',1,'modify'))
+			{
+				$edit	=	"<a href='".base_url()."edit_department/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+			$vaules['Action'] 			=	$view.$APPROVE.$edit.$active;
 			
 			$output[] =$vaules;
 		}
@@ -118,6 +125,10 @@ class Manage extends CI_Controller {
 	}
 	function add_department()
 	{
+		if(!checkpageaccess('department',1,'create'))
+		{			
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			$values=array('department'			=>	$this->input->post('department'),
@@ -144,6 +155,10 @@ class Manage extends CI_Controller {
 	}
 	function edit_department()
 	{
+		if(!checkpageaccess('department',1,'modify'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			
@@ -176,12 +191,20 @@ class Manage extends CI_Controller {
 	}
 	function view_department()
 	{
+		if(!checkpageaccess('department',1,'view'))
+		{
+			redirect();
+		}
 		$data['pageTitle']	=	"View Department";
 		$data['view']		=	$this->Commonsql_model->select('tbldept',array('deptID'=>$this->uri->segment(2)));
 		$this->load->view('admin/dept/view_department',$data);
 	}
 	function approve_department()
 	{
+		if(!checkpageaccess('department',1,'approve'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			
@@ -252,6 +275,9 @@ class Manage extends CI_Controller {
 	}
 	function approve_department_json()
 	{
+		if (!$this->session->userdata('SESS_userId')) {
+            return FALSE;
+        }
 		$result	=	$this->Commonsql_model->select_desc('tbldept_mod',array('deptID'=>$this->uri->segment(3)),'dept_modID');
 		//echo $this->db->last_query();
 		$output = array();$i=1;$j=1;
@@ -275,22 +301,49 @@ class Manage extends CI_Controller {
 			{
 				if($j++==1)
 				{
-					$Approve	=	approve_html("'".base_url()."manage/department_mod_approve/".$value->dept_modID."','2'");
+					if(checkpageaccess('department',1,'approve'))
+					{
+						$Approve	=	approve_html("'".base_url()."manage/department_mod_approve/".$value->dept_modID."','2'");
+					}
+					else
+					{
+						$Approve	=	'';
+					}
 				}
 				else
 				{
 					$Approve	=	'';
 				}
-				
-				$active	=	disable_approve_deactive_html("'".base_url()."manage/designation/".$value->deptID."/".$value->dept_modID."','0'");
+				if(checkpageaccess('department',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/designation/".$value->deptID."/".$value->dept_modID."','0'");
+				}
+				else
+				{
+					$active	=	"";
+				}
 			}
 			else
 			{
 				$Approve		=	'';
-				$active	=	enable_approve_deactive_html("'".base_url()."manage/designation/".$value->deptID."/".$value->dept_modID."','1'");
+				if(checkpageaccess('department',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/designation/".$value->deptID."/".$value->dept_modID."','1'");
+				}
+				else
+				{
+					$active	=	"";
+				}
 			}
-			
-			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_department/".$value->deptID.'/'.$value->dept_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			if(checkpageaccess('department',1,'modify'))
+			{
+				$edit	=	"<a href='".base_url()."approve_department/".$value->deptID.'/'.$value->dept_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+			$vaules['Action'] 			=	$Approve.$edit.$active;
 			
 			$output[] =$vaules;
 		}
@@ -387,18 +440,57 @@ class Manage extends CI_Controller {
 			
 			if($value->active==1)
 			{
-				$view			 			=	"<a href='".base_url()."view_designation/".$value->desigID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
-				$APPROVE			 			=	"<a href='".base_url()."approve_designation/".$value->desigID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
-				$active	=	disable_approve_deactive_html("'".base_url()."manage/designation/".$value->desigID."','0'");
+				
+				if(checkpageaccess('designation',1,'view'))
+				{
+					$view			 			=	"<a href='".base_url()."view_designation/".$value->desigID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+				}
+				else
+				{
+					$view			 			=	'';
+				}
+				if(checkpageaccess('designation',1,'approve'))
+				{
+					$APPROVE			 			=	"<a href='".base_url()."approve_designation/".$value->desigID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
+				}
+				else
+				{
+					$APPROVE			 			= "";
+					
+				}
+				if(checkpageaccess('designation',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/designation/".$value->desigID."','0'");
+				}
+				else
+				{
+					$active	=	'';
+				}
 			}
+			
 			else
 			{
 				$APPROVE		=	'';
 				$view		=	'';
-				$active	=	enable_approve_deactive_html("'".base_url()."manage/designation/".$value->desigID."','1'");
+				if(checkpageaccess('designation',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/designation/".$value->desigID."','1'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
 			}
-			
-			$vaules['Action'] 			=	$view.$APPROVE."<a  href='".base_url()."edit_designation/".$value->desigID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			if(checkpageaccess('designation',1,'modify'))
+			{
+				$edit	=	"<a  href='".base_url()."edit_designation/".$value->desigID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+			$vaules['Action'] 			=	$view.$APPROVE.$edit.$active;
 			
 			$output[] =$vaules;
 		}
@@ -407,6 +499,10 @@ class Manage extends CI_Controller {
 	}
 	function add_designation()
 	{
+		if(!checkpageaccess('designation',1,'create'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			$values=array('name'				=>	$this->input->post('name'),
@@ -433,6 +529,10 @@ class Manage extends CI_Controller {
 	}
 	function edit_designation()
 	{
+		if(!checkpageaccess('designation',1,'modify'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 				$values=array('name'			=>	$this->input->post('name'),
@@ -461,12 +561,20 @@ class Manage extends CI_Controller {
 	}
 	function view_designation()
 	{
+		if(!checkpageaccess('designation',1,'view'))
+		{
+			redirect();
+		}
 		$data['pageTitle']	=	"View Designation";
 		$data['view']		=	$this->Commonsql_model->select('tbldesignation',array('desigID'=>$this->uri->segment(2)));
 		$this->load->view('admin/designation/view_designation',$data);
 	}
 	function approve_designation()
 	{
+		if(!checkpageaccess('designation',1,'approve'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			
@@ -560,22 +668,53 @@ class Manage extends CI_Controller {
 			{
 				if($j++==1)
 				{
-					$Approve	=	approve_html("'".base_url()."manage/designation_mod_approve/".$value->desig_modID."','2'");
+					if(checkpageaccess('designation',1,'approve'))
+					{
+						$Approve	=	approve_html("'".base_url()."manage/designation_mod_approve/".$value->desig_modID."','2'");
+					}
+					else
+					{
+						$Approve			 			= "";
+						
+					}
+					
 				}
 				else
 				{
 					$Approve	=	'';
 				}
+				if(checkpageaccess('designation',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_designation/".$value->desigID."/".$value->desig_modID."','0'");
+				}
+				else
+				{
+					$active	=	'';
+				}
 				
-				$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_designation/".$value->desigID."/".$value->desig_modID."','0'");
 			}
 			else
 			{
 				$Approve		=	'';
-				$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_designation/".$value->desigID."/".$value->desig_modID."','1'");
+				if(checkpageaccess('designation',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_designation/".$value->desigID."/".$value->desig_modID."','1'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
 			}
-			
-			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_designation/".$value->desigID.'/'.$value->desig_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			if(checkpageaccess('designation',1,'modify'))
+			{
+				$edit	=	"<a href='".base_url()."approve_designation/".$value->desigID.'/'.$value->desig_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+			$vaules['Action'] 			=	$Approve.$edit.$active;
 			
 			$output[] =$vaules;
 		}
@@ -672,18 +811,56 @@ class Manage extends CI_Controller {
 			
 			if($value->active==1)
 			{
-				$view			 			=	"<a href='".base_url()."view_role/".$value->roleID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
-				$APPROVE			 			=	"<a href='".base_url()."approve_role/".$value->roleID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
-				$active	=	disable_approve_deactive_html("'".base_url()."manage/role/".$value->roleID."','0'");
+				
+				if(checkpageaccess('role',1,'view'))
+				{
+					$view			 			=	"<a href='".base_url()."view_role/".$value->roleID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+				}
+				else
+				{
+					$view			 			=	'';
+				}
+				if(checkpageaccess('role',1,'approve'))
+				{
+					$APPROVE			 			=	"<a href='".base_url()."approve_role/".$value->roleID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
+				}
+				else
+				{
+					$APPROVE			 			= "";
+					
+				}
+				if(checkpageaccess('role',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/role/".$value->roleID."','0'");
+				}
+				else
+				{
+					$active	=	'';
+				}
 			}
 			else
 			{
 				$view		=	'';
 				$APPROVE		=	'';
-				$active	=	enable_approve_deactive_html("'".base_url()."manage/role/".$value->roleID."','1'");
+				if(checkpageaccess('role',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/role/".$value->roleID."','1'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
 			}
-			
-			$vaules['Action'] 			=	$view.$APPROVE."<a href='".base_url()."edit_role/".$value->roleID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			if(checkpageaccess('role',1,'modify'))
+			{
+				$edit	=	"<a href='".base_url()."edit_role/".$value->roleID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+			$vaules['Action'] 			=	$view.$APPROVE.$edit.$active;
 			
 			$output[] =$vaules;
 		}
@@ -692,6 +869,10 @@ class Manage extends CI_Controller {
 	}
 	function add_role()
 	{
+		if(!checkpageaccess('role',1,'create'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			$values=array('roleName'				=>	$this->input->post('roleName'),
@@ -718,6 +899,10 @@ class Manage extends CI_Controller {
 	}
 	function edit_role()
 	{
+		if(!checkpageaccess('role',1,'modify'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 				$values=array('roleName'			=>	$this->input->post('roleName'),
@@ -746,12 +931,20 @@ class Manage extends CI_Controller {
 	}
 	function view_role()
 	{
+		if(!checkpageaccess('role',1,'view'))
+		{
+			redirect();
+		}
 		$data['pageTitle']	=	"View Role";
 		$data['view']		=	$this->Commonsql_model->select('tblrole',array('roleID'=>$this->uri->segment(2)));
 		$this->load->view('admin/role/view_role',$data);
 	}
 	function approve_role()
 	{
+		if(!checkpageaccess('role',1,'approve'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			
@@ -845,22 +1038,53 @@ class Manage extends CI_Controller {
 			{
 				if($j++==1)
 				{
-					$Approve	=	approve_html("'".base_url()."manage/role_mod_approve/".$value->role_modID."','2'");
+					if(checkpageaccess('role',1,'approve'))
+					{
+						$Approve	=	approve_html("'".base_url()."manage/role_mod_approve/".$value->role_modID."','2'");
+					}
+					else
+					{
+						$Approve			 			= "";
+						
+					}
+					
 				}
 				else
 				{
 					$Approve	=	'';
 				}
+				if(checkpageaccess('role',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_role/".$value->roleID."/".$value->role_modID."','0'");
+				}
+				else
+				{
+					$active	=	'';
+				}
 				
-				$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_role/".$value->roleID."/".$value->role_modID."','0'");
 			}
 			else
 			{
 				$Approve		=	'';
-				$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_role/".$value->roleID."/".$value->role_modID."','1'");
+				if(checkpageaccess('role',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_role/".$value->roleID."/".$value->role_modID."','1'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
 			}
-			
-			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_role/".$value->roleID.'/'.$value->role_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			if(checkpageaccess('role',1,'modify'))
+			{
+				$edit	=	"<a href='".base_url()."approve_role/".$value->roleID.'/'.$value->role_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+			$vaules['Action'] 			=	$Approve.$edit.$active;
 			
 			$output[] =$vaules;
 		}
@@ -869,6 +1093,10 @@ class Manage extends CI_Controller {
 	}
 	function role_mod_approve()
 	{
+		if(!checkpageaccess('role',1,'approve'))
+		{
+			redirect();
+		}
 		$mod_id	=	$this->uri->segment(3);
 		$data	=	$this->Commonsql_model->select('tblrole_mod',array('role_modID'=>$mod_id));
 		if($data->num_rows()>0)
@@ -957,18 +1185,55 @@ class Manage extends CI_Controller {
 			
 			if($value->active==1)
 			{
-				$view			 			=	"<a href='".base_url()."view_payment_mode/".$value->paymentModeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
-				$APPROVE			 			=	"<a href='".base_url()."approve_payment_mode/".$value->paymentModeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
-				$active	=	disable_approve_deactive_html("'".base_url()."manage/payment_mode/".$value->paymentModeID."','0'");
+				if(checkpageaccess('payment_mode',1,'view'))
+				{
+					$view			 			=	"<a href='".base_url()."view_payment_mode/".$value->paymentModeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+				}
+				else
+				{
+					$view			 			=	'';
+				}
+				if(checkpageaccess('payment_mode',1,'approve'))
+				{
+					$APPROVE			 			=	"<a href='".base_url()."approve_payment_mode/".$value->paymentModeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
+				}
+				else
+				{
+					$APPROVE			 			= "";
+					
+				}
+				if(checkpageaccess('payment_mode',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/payment_mode/".$value->paymentModeID."','0'");
+				}
+				else
+				{
+					$active	=	'';
+				}
 			}
 			else
 			{
 				$view		=	'';
 				$APPROVE		=	'';
-				$active	=	enable_approve_deactive_html("'".base_url()."manage/payment_mode/".$value->paymentModeID."','1'");
+				if(checkpageaccess('payment_mode',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/payment_mode/".$value->paymentModeID."','1'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
 			}
-			
-			$vaules['Action'] 			=	$view.$APPROVE."<a href='".base_url()."edit_payment_mode/".$value->paymentModeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			if(checkpageaccess('payment_mode',1,'modify'))
+			{
+				$edit	=	"<a href='".base_url()."edit_payment_mode/".$value->paymentModeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+			$vaules['Action'] 			=	$view.$APPROVE.$edit.$active;
 			
 			$output[] =$vaules;
 		}
@@ -977,6 +1242,10 @@ class Manage extends CI_Controller {
 	}
 	function add_payment_mode()
 	{
+		if(!checkpageaccess('payment_mode',1,'create'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			$values=array('paymentMode'				=>	$this->input->post('paymentMode'),
@@ -1003,6 +1272,10 @@ class Manage extends CI_Controller {
 	}
 	function edit_payment_mode()
 	{
+		if(!checkpageaccess('payment_mode',1,'modify'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 				$values=array('paymentMode'				=>	$this->input->post('paymentMode'),
@@ -1032,12 +1305,20 @@ class Manage extends CI_Controller {
 	}
 	function view_payment_mode()
 	{
+		if(!checkpageaccess('payment_mode',1,'view'))
+		{
+			redirect();
+		}
 		$data['pageTitle']	=	"View Payment Mode";
 		$data['view']		=	$this->Commonsql_model->select('tblpaymentmode',array('paymentModeID'=>$this->uri->segment(2)));
 		$this->load->view('admin/payment_mode/view_payment_mode',$data);
 	}
 	function approve_payment_mode()
 	{
+		if(!checkpageaccess('payment_mode',1,'approve'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			
@@ -1131,21 +1412,53 @@ class Manage extends CI_Controller {
 			{
 				if($j++==1)
 				{
-					$Approve	=	approve_html("'".base_url()."manage/payment_mode_mod_approve/".$value->paymentMode_modID."','2'");
+					if(checkpageaccess('payment_mode',1,'approve'))
+					{
+						$Approve	=	approve_html("'".base_url()."manage/payment_mode_mod_approve/".$value->paymentMode_modID."','2'");
+					}
+					else
+					{
+						$Approve			 			= "";
+						
+					}
+					
 				}
 				else
 				{
 					$Approve	=	'';
 				}
-				$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_payment_mode/".$value->paymentModeID."/".$value->paymentMode_modID."','0'");
+				if(checkpageaccess('payment_mode',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_payment_mode/".$value->paymentModeID."/".$value->paymentMode_modID."','0'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
 			}
 			else
 			{
 				$Approve		=	'';
-				$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_payment_mode/".$value->paymentModeID."/".$value->paymentMode_modID."','1'");
+				if(checkpageaccess('payment_mode',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_payment_mode/".$value->paymentModeID."/".$value->paymentMode_modID."','1'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
 			}
-			
-			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_payment_mode/".$value->paymentModeID.'/'.$value->paymentMode_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			if(checkpageaccess('payment_mode',1,'modify'))
+			{
+				$edit	=	"<a href='".base_url()."approve_payment_mode/".$value->paymentModeID.'/'.$value->paymentMode_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+			$vaules['Action'] 			=	$Approve.$edit.$active;
 			
 			$output[] =$vaules;
 		}
@@ -1154,6 +1467,10 @@ class Manage extends CI_Controller {
 	}
 	function payment_mode_mod_approve()
 	{
+		if(!checkpageaccess('payment_mode',1,'approve'))
+		{
+			redirect();
+		}
 		$mod_id	=	$this->uri->segment(3);
 		$data	=	$this->Commonsql_model->select('tblpaymentmode_mod',array('paymentMode_modID'=>$mod_id));
 		if($data->num_rows()>0)
@@ -1242,18 +1559,56 @@ class Manage extends CI_Controller {
 			
 			if($value->active==1)
 			{
-				$view			 			=	"<a href='".base_url()."view_payment_status/".$value->payStatusID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
-				$APPROVE			 			=	"<a href='".base_url()."approve_payment_status/".$value->payStatusID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
-				$active	=	disable_approve_deactive_html("'".base_url()."manage/payment_status/".$value->payStatusID."','0'");
+				
+				if(checkpageaccess('payment_status',1,'view'))
+				{
+					$view			 			=	"<a href='".base_url()."view_payment_status/".$value->payStatusID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+				}
+				else
+				{
+					$view			 			=	'';
+				}
+				if(checkpageaccess('payment_status',1,'approve'))
+				{
+					$APPROVE			 			=	"<a href='".base_url()."approve_payment_status/".$value->payStatusID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
+				}
+				else
+				{
+					$APPROVE			 			= "";
+					
+				}
+				if(checkpageaccess('payment_status',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/payment_status/".$value->payStatusID."','0'");
+				}
+				else
+				{
+					$active	=	'';
+				}
 			}
 			else
 			{
 				$view		=	'';
 				$APPROVE		=	'';
-				$active	=	enable_approve_deactive_html("'".base_url()."manage/payment_status/".$value->payStatusID."','1'");
+				if(checkpageaccess('payment_status',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/payment_status/".$value->payStatusID."','1'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
 			}
-			
-			$vaules['Action'] 			=	$view.$APPROVE."<a href='".base_url()."edit_payment_status/".$value->payStatusID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			if(checkpageaccess('payment_status',1,'modify'))
+			{
+				$edit	=	"<a href='".base_url()."edit_payment_status/".$value->payStatusID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+			$vaules['Action'] 			=	$view.$APPROVE.$edit.$active;
 			
 			$output[] =$vaules;
 		}
@@ -1262,6 +1617,10 @@ class Manage extends CI_Controller {
 	}
 	function add_payment_status()
 	{
+		if(!checkpageaccess('payment_status',1,'create'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			$values=array('payStatus'				=>	$this->input->post('payStatus'),
@@ -1288,6 +1647,10 @@ class Manage extends CI_Controller {
 	}
 	function edit_payment_status()
 	{
+		if(!checkpageaccess('payment_status',1,'modify'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 				$values=array('payStatus'				=>	$this->input->post('payStatus'),
@@ -1316,12 +1679,20 @@ class Manage extends CI_Controller {
 	}
 	function view_payment_status()
 	{
+		if(!checkpageaccess('payment_status',1,'view'))
+		{
+			redirect();
+		}
 		$data['pageTitle']	=	"View Payment Status";
 		$data['view']		=	$this->Commonsql_model->select('tblpaymentstatus',array('payStatusID'=>$this->uri->segment(2)));
 		$this->load->view('admin/payment_mode/view_payment_status',$data);;
 	}
 	function approve_payment_status()
 	{
+		if(!checkpageaccess('payment_status',1,'approve'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			
@@ -1438,6 +1809,10 @@ class Manage extends CI_Controller {
 	}
 	function payment_statu_mod_approve()
 	{
+		if(!checkpageaccess('payment_status',1,'approve'))
+		{
+			redirect();
+		}
 		$mod_id	=	$this->uri->segment(3);
 		$data	=	$this->Commonsql_model->select('tblpaymentstatus_mod',array('payStatus_modID'=>$mod_id));
 		if($data->num_rows()>0)
@@ -1526,18 +1901,56 @@ class Manage extends CI_Controller {
 			
 			if($value->active==1)
 			{
-				$view		=	"<a href='".base_url()."view_employee_types/".$value->employetypeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
-				$Approve		=	"<a href='".base_url()."approve_employee_types/".$value->employetypeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approve</a>";
-				$active	=	disable_approve_deactive_html("'".base_url()."manage/employee_types/".$value->employetypeID."','0'");
+				
+				if(checkpageaccess('employee_types',1,'view'))
+				{
+					$view		=	"<a href='".base_url()."view_employee_types/".$value->employetypeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+				}
+				else
+				{
+					$view			 			=	'';
+				}
+				if(checkpageaccess('employee_types',1,'approve'))
+				{
+					$Approve		=	"<a href='".base_url()."approve_employee_types/".$value->employetypeID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approve</a>";
+				}
+				else
+				{
+					$APPROVE			 			= "";
+					
+				}
+				if(checkpageaccess('employee_types',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/employee_types/".$value->employetypeID."','0'");
+				}
+				else
+				{
+					$active	=	'';
+				}
 			}
 			else
 			{
 				$view		=	'';
 				$Approve		=	'';
-				$active	=	enable_approve_deactive_html("'".base_url()."manage/employee_types/".$value->employetypeID."','1'");
+				if(checkpageaccess('employee_types',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/employee_types/".$value->employetypeID."','1'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
 			}
-			
-			$vaules['Action'] 			=	$view.$Approve."<a  href='".base_url()."edit_employee_types/".$value->employetypeID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			if(checkpageaccess('employee_types',1,'modify'))
+			{
+				$edit	=	"<a  href='".base_url()."edit_employee_types/".$value->employetypeID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+			$vaules['Action'] 			=	$view.$Approve.$edit.$active;
 			
 			$output[] =$vaules;
 		}
@@ -1546,6 +1959,10 @@ class Manage extends CI_Controller {
 	}
 	function add_employee_types()
 	{
+		if(!checkpageaccess('employee_types',1,'create'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			$values=array('typename'				=>	$this->input->post('typename'),
@@ -1572,6 +1989,10 @@ class Manage extends CI_Controller {
 	}
 	function edit_employee_types()
 	{
+		if(!checkpageaccess('employee_types',1,'modify'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 				$values=array('typename'				=>	$this->input->post('typename'),
@@ -1601,12 +2022,20 @@ class Manage extends CI_Controller {
 	}
 	function view_employee_types()
 	{
+		if(!checkpageaccess('employee_types',1,'view'))
+		{
+			redirect();
+		}
 		$data['pageTitle']	=	"View Emplyee Types";
 		$data['view']		=	$this->Commonsql_model->select('tblemployetypes',array('employetypeID'=>$this->uri->segment(2)));
 		$this->load->view('admin/employee_types/view_employee_types',$data);
 	}
 	function approve_employee_types()
 	{
+		if(!checkpageaccess('employee_types',1,'approve'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			
@@ -1725,6 +2154,10 @@ class Manage extends CI_Controller {
 	}
 	function employee_types_mod_approve()
 	{
+		if(!checkpageaccess('employee_types',1,'approve'))
+		{
+			redirect();
+		}
 		$mod_id	=	$this->uri->segment(3);
 		$data	=	$this->Commonsql_model->select('tblemployetypes_mod',array('employetype_modID'=>$mod_id));
 		if($data->num_rows()>0)
@@ -1844,18 +2277,56 @@ class Manage extends CI_Controller {
 			
 			if($value->active==1)
 			{
-				$view			 			=	"<a href='".base_url()."view_employee/".$value->empID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
-				$APPROVE			 			=	"<a href='".base_url()."approve_employee/".$value->empID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
-				$active	=	disable_approve_deactive_html("'".base_url()."manage/employee/".$value->empID."','0'");
+				
+				if(checkpageaccess('employee',1,'view'))
+				{
+					$view			 			=	"<a href='".base_url()."view_employee/".$value->empID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+				}
+				else
+				{
+					$view			 			=	'';
+				}
+				if(checkpageaccess('employee',1,'approve'))
+				{
+					$APPROVE			 			=	"<a href='".base_url()."approve_employee/".$value->empID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
+				}
+				else
+				{
+					$APPROVE			 			= "";
+					
+				}
+				if(checkpageaccess('employee',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/employee/".$value->empID."','0'");
+				}
+				else
+				{
+					$active	=	'';
+				}
 			}
 			else
 			{
 				$APPROVE		=	'';
 				$view			 =	'';
-				$active	=	enable_approve_deactive_html("'".base_url()."manage/employee/".$value->empID."','1'");
+				if(checkpageaccess('employee',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/employee/".$value->empID."','1'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
 			}
-			
-			$vaules['Action'] 			=	$view.$APPROVE."<a href='".base_url()."edit_employee/".$value->empID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			if(checkpageaccess('employee',1,'modify'))
+			{
+				$edit	=	"<a href='".base_url()."edit_employee/".$value->empID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+			$vaules['Action'] 			=	$view.$APPROVE.$edit.$active;
 			
 			$output[] =$vaules;
 		}
@@ -1864,6 +2335,10 @@ class Manage extends CI_Controller {
 	}
 	function add_employee()
 	{
+		if(!checkpageaccess('employee',1,'create'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			
@@ -1946,6 +2421,10 @@ class Manage extends CI_Controller {
 	}
 	function edit_employee()
 	{
+		if(!checkpageaccess('employee',1,'modify'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			$photo=$_FILES['photo']['name'];
@@ -2043,6 +2522,10 @@ class Manage extends CI_Controller {
 	}
 	function view_employee()
 	{
+		if(!checkpageaccess('employee',1,'view'))
+		{
+			redirect();
+		}
 		$data['pageTitle']	=	"View employee";
 		$data['dept']		=	$this->Commonsql_model->select('tbldept',array('dbentrystateID'=>3,'active'=>1));
 		$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID'=>3,'active'=>1));
@@ -2053,6 +2536,10 @@ class Manage extends CI_Controller {
 	}
 	function approve_employee()
 	{
+		if(!checkpageaccess('employee',1,'approve'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			$photo=$_FILES['photo']['name'];
@@ -2256,6 +2743,10 @@ class Manage extends CI_Controller {
 	}
 	function employee_mod_approve()
 	{
+		if(!checkpageaccess('employee',1,'approve'))
+		{
+			redirect();
+		}
 		$mod_id	=	$this->uri->segment(3);
 		$data	=	$this->Commonsql_model->select('tblemployee_mod',array('emp_modID'=>$mod_id));
 		if($data->num_rows()>0)
@@ -2388,18 +2879,57 @@ class Manage extends CI_Controller {
 			
 			if($value->active==1)
 			{
-				$view			 			=	"<a href='".base_url()."view_driver/".$value->driverID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
-				$APPROVE			 			=	"<a href='".base_url()."approve_driver/".$value->driverID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
-				$active	=	disable_approve_deactive_html("'".base_url()."manage/driver/".$value->driverID."','0'");
+				
+				if(checkpageaccess('driver',1,'view'))
+				{
+					$view			 			=	"<a href='".base_url()."view_driver/".$value->driverID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+				}
+				else
+				{
+					$view			 			=	'';
+				}
+				if(checkpageaccess('driver',1,'approve'))
+				{
+					$APPROVE			 			=	"<a href='".base_url()."approve_driver/".$value->driverID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
+				}
+				else
+				{
+					$APPROVE			 			= "";
+					
+				}
+				if(checkpageaccess('driver',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/driver/".$value->driverID."','0'");
+				}
+				else
+				{
+					$active	=	'';
+				}
 			}
 			else
 			{
 				$APPROVE		=	'';
 				$view			 =	'';
-				$active	=	enable_approve_deactive_html("'".base_url()."manage/driver/".$value->driverID."','1'");
+				if(checkpageaccess('driver',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/driver/".$value->driverID."','1'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
 			}
-			
-			$vaules['Action'] 			=	$view.$APPROVE."<a href='".base_url()."edit_driver/".$value->driverID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			if(checkpageaccess('driver',1,'modify'))
+			{
+				$edit	=	"<a href='".base_url()."edit_driver/".$value->driverID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+				
+			$vaules['Action'] 			=	$view.$APPROVE.$edit.$active;
 			
 			$output[] =$vaules;
 		}
@@ -2408,6 +2938,10 @@ class Manage extends CI_Controller {
 	}
 	function add_driver()
 	{
+		if(!checkpageaccess('driver',1,'create'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			
@@ -2466,6 +3000,10 @@ class Manage extends CI_Controller {
 	}
 	function edit_driver()
 	{
+		if(!checkpageaccess('driver',1,'modify'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			$dlImage=$_FILES['dlImage']['name'];
@@ -2535,12 +3073,20 @@ class Manage extends CI_Controller {
 	}
 	function view_driver()
 	{
+		if(!checkpageaccess('driver',1,'view'))
+		{
+			redirect();
+		}
 		$data['pageTitle']	=	"View driver";
 		$data['view']		=	$this->Commonsql_model->select_driver_edit($this->uri->segment(2));
 		$this->load->view('admin/driver/view_driver',$data);
 	}
 	function approve_driver()
 	{
+		if(!checkpageaccess('driver',1,'approve'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			$dlImage=$_FILES['dlImage']['name'];
@@ -2690,6 +3236,10 @@ class Manage extends CI_Controller {
 	}
 	function driver_mod_approve()
 	{
+		if(!checkpageaccess('driver',1,'approve'))
+		{
+			redirect();
+		}
 		$mod_id	=	$this->uri->segment(3);
 		$data	=	$this->Commonsql_model->select('tbldriver_mod',array('driver_modID'=>$mod_id));
 		if($data->num_rows()>0)
@@ -2813,18 +3363,56 @@ class Manage extends CI_Controller {
 			
 			if($value->active==1)
 			{
-				$view			 			=	"<a href='".base_url()."view_vehicleowner/".$value->ownerID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
-				$APPROVE			 			=	"<a href='".base_url()."approve_vehicleowner/".$value->ownerID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
-				$active	=	disable_approve_deactive_html("'".base_url()."manage/vehicleowner/".$value->ownerID."','0'");
+				if(checkpageaccess('vehicleowner',1,'view'))
+				{
+					$view			 			=	"<a href='".base_url()."view_vehicleowner/".$value->ownerID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+				}
+				else
+				{
+					$view			 			=	'';
+				}
+				if(checkpageaccess('vehicleowner',1,'approve'))
+				{
+					$APPROVE			 			=	"<a href='".base_url()."approve_vehicleowner/".$value->ownerID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
+				}
+				else
+				{
+					$APPROVE			 			= "";
+					
+				}
+				if(checkpageaccess('vehicleowner',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/vehicleowner/".$value->ownerID."','0'");
+				}
+				else
+				{
+					$active	=	'';
+				}
 			}
 			else
 			{
 				$APPROVE		=	'';
 				$view		=	'';
-				$active	=	enable_approve_deactive_html("'".base_url()."manage/vehicleowner/".$value->ownerID."','1'");
+				if(checkpageaccess('vehicleowner',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/vehicleowner/".$value->ownerID."','1'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
 			}
-			
-			$vaules['Action'] 			=	$view.$APPROVE."<a  href='".base_url()."edit_vehicleowner/".$value->ownerID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			if(checkpageaccess('vehicleowner',1,'modify'))
+			{
+				$edit	=	"<a  href='".base_url()."edit_vehicleowner/".$value->ownerID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+				
+			$vaules['Action'] 			=	$view.$APPROVE.$edit.$active;
 			
 			$output[] =$vaules;
 		}
@@ -2833,6 +3421,10 @@ class Manage extends CI_Controller {
 	}
 	function add_vehicleowner()
 	{
+		if(!checkpageaccess('vehicleowner',1,'create'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			//echo "hi";exit;
@@ -2880,6 +3472,10 @@ class Manage extends CI_Controller {
 	}
 	function edit_vehicleowner()
 	{
+		if(!checkpageaccess('vehicleowner',1,'modify'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 				$contact_values=array('name'		=>	$this->input->post('name'),
@@ -2930,12 +3526,20 @@ class Manage extends CI_Controller {
 	}
 	function view_vehicleowner()
 	{
+		if(!checkpageaccess('vehicleowner',1,'view'))
+		{
+			redirect();
+		}
 		$data['pageTitle']	=	"View Designation";
 		$data['view']		=	$this->Commonsql_model->select_all_vowner_edit($this->uri->segment(2));
 		$this->load->view('admin/vehicleowner/view_vehicleowner',$data);
 	}
 	function approve_vehicleowner()
 	{
+		if(!checkpageaccess('vehicleowner',1,'approve'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			
@@ -3060,7 +3664,16 @@ class Manage extends CI_Controller {
 				$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_vehicleowner/".$value->ownerID."/".$value->owner_modID."','1'");
 			}
 			
-			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_vehicleowner/".$value->ownerID.'/'.$value->owner_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			if(checkpageaccess('vehicleowner',1,'modify'))
+			{
+				$edit	=	"<a href='".base_url()."approve_vehicleowner/".$value->ownerID.'/'.$value->owner_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+				
+			$vaules['Action'] 			=	$Approve.$edit.$active;
 			
 			$output[] =$vaules;
 		}
@@ -3166,18 +3779,57 @@ class Manage extends CI_Controller {
 			
 			if($value->active==1)
 			{
-				$view		=	"<a href='".base_url()."view_contract_consignor/".$value->consignorID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
-				$Approve		=	"<a href='".base_url()."approve-contract-consignor/".$value->consignorID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approve</a>";
-				$active	=	disable_approve_deactive_html("'".base_url()."manage/contract_consignor/".$value->consignorID."','0'");
+				
+				if(checkpageaccess('contract-consignor',1,'view'))
+				{
+					$view		=	"<a href='".base_url()."view_contract_consignor/".$value->consignorID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+				}
+				else
+				{
+					$view			 			=	'';
+				}
+				if(checkpageaccess('contract-consignor',1,'approve'))
+				{
+					$Approve		=	"<a href='".base_url()."approve-contract-consignor/".$value->consignorID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approve</a>";
+				}
+				else
+				{
+					$APPROVE			 			= "";
+					
+				}
+				if(checkpageaccess('contract-consignor',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/contract_consignor/".$value->consignorID."','0'");
+				}
+				else
+				{
+					$active	=	'';
+				}
 			}
 			else
 			{
 				$view		=	'';
 				$Approve		=	'';
-				$active	=	enable_approve_deactive_html("'".base_url()."manage/contract_consignor/".$value->consignorID."','1'");
+				if(checkpageaccess('contract-consignor',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/contract_consignor/".$value->consignorID."','1'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
 			}
-			
-			$vaules['Action'] 			=	$view.$Approve."<a  href='".base_url()."edit-contract-consignor/".$value->consignorID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			if(checkpageaccess('contract-consignor',1,'modify'))
+			{
+				$edit	=	"<a  href='".base_url()."edit-contract-consignor/".$value->consignorID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+				
+			$vaules['Action'] 			=	$view.$Approve.$edit.$active;
 			
 			$output[] =$vaules;
 		}
@@ -3186,6 +3838,10 @@ class Manage extends CI_Controller {
 	}
 	function add_contract_consignor()
 	{
+		if(!checkpageaccess('contract-consignor',1,'create'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			if (is_numeric($this->input->post('name'))) 
@@ -3287,6 +3943,10 @@ class Manage extends CI_Controller {
 	}
 	function edit_contract_consignor()
 	{
+		if(!checkpageaccess('contract-consignor',1,'modify'))
+		{
+			redirect();
+		}
 		if($this->input->post('save'))
 		{
 			$whereData	= array('consignorID'=>$this->input->post('consignorID'));

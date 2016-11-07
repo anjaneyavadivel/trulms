@@ -40,10 +40,7 @@
                                 <div class="tile-header bg-greensea  dvd dvd-btm">
                                     <h1 class="custom-font"><strong>Payment Mode Master</strong></h1>
                                     
-                                    <ul class="controls">
-                                        
-                                        <li><a href="<?= base_url()?>add_payment_mode" title="Add Department" role="button" tabindex="0" >Add New  <i class="fa fa-plus"></i></a></li>
-                                    </ul>
+                                   
                                 </div>
                                 <!-- /tile header -->
 

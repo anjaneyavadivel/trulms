@@ -48,11 +48,12 @@
                                 <!-- tile header -->
                                 <div class="tile-header bg-greensea  dvd dvd-btm">
                                     <h1 class="custom-font"><strong>Vehicle Owner</strong> Master</h1>
-                                    
+                                     <?php if(checkpageaccess('vehicleowner',1,'create')){?>
                                     <ul class="controls">
                                         
                                         <li><a href="<?= base_url()?>add_vehicleowner" title="Add Vehicle Owner" role="button" tabindex="0" class="tile-close">Add New  <i class="fa fa-plus"></i></a></li>
                                     </ul>
+                                     <?php }?>
                                 </div>
                                 <!-- /tile header -->
 
