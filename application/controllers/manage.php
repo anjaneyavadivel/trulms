@@ -11,6 +11,46 @@ class Manage extends CI_Controller {
 	{
 		$this->load->view('admin/lock_screen');
 	}
+	function profile()
+	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
+		if($this->input->post('save'))
+		{
+			$password = TRIM($this->input->post('password', true));
+			$whereData = array('password' => do_hash(do_hash(do_hash($password))),'empID'=>$this->session->userdata('SESS_userId'));
+			$check	=	$this->Commonsql_model->select('tbllogin',$whereData);
+			if($check->num_rows()>0)
+			{
+				if($this->input->post('new_pass')==$this->input->post('pass1'))
+				{
+					$query	=	$this->Commonsql_model->updateTable('tbllogin', array('empID'=>$this->session->userdata('SESS_userId')), array('password'=>do_hash(do_hash(do_hash($this->input->post('new_pass'))))));
+					if($query)
+					{
+						$this->session->set_userdata('suc','Password Changed Successfully ...!');
+						redirect('profile');
+						
+					}
+					else
+					{
+						$this->session->set_userdata('err','Error Please try again..!');
+						redirect('profile');
+					}
+				}
+				else
+				{
+					$this->session->set_userdata('err','Mismatch Confirm Pasword..!');
+					redirect('profile');
+				}
+			}
+			else
+			{
+				$this->session->set_userdata('err','Wrongly Entered Current Password..! Please try again');
+				redirect('profile');
+			}
+		}
+		$data['pageTitle']	=	"Update profile";
+		$this->load->view('admin/profile',$data);
+	}
 	function department()
 	{
 		if (!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}

@@ -310,7 +310,7 @@
                             <ul class="dropdown-menu animated littleFadeInRight" role="menu">
 
                                 <li>
-                                    <a href="#">
+                                    <a href="<?=base_url()?>profile">
                                         
                                         <i class="fa fa-user"></i>Profile
                                     </a>

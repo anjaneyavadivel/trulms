@@ -91,6 +91,8 @@ $route['edit-form-access/(:num)'] = 'setup/edit_form_access/$1';
 
 $route['lock-screeen'] 								=		'manage/lock_screeen';
 
+$route['profile']	 								=		'manage/profile';
+
 $route['department'] 								=		'manage/department';
 $route['add_department'] 							=		'manage/add_department';
 $route['edit_department/([a-zA-Z0-9---_%])+'] 		=		'manage/edit_department/$1';
