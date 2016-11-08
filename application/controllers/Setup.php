@@ -19,7 +19,7 @@ class Setup extends CI_Controller {
 
     ////////// employee role
     function form_master() {
-        if (!$this->session->userdata('SESS_userId')) {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-master', 1, 'view')) {
             redirect(base_url() . "login");
         }
         if ($_POST) {
@@ -41,7 +41,7 @@ class Setup extends CI_Controller {
     }
 
     function add_form_master() {
-        if (!$this->session->userdata('SESS_userId')) {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-master', 1, 'create')) {
             redirect(base_url() . "login");
         }
         if ($_POST) {
@@ -108,7 +108,7 @@ class Setup extends CI_Controller {
     }
 
     function form_master_json() {
-        if (!$this->session->userdata('SESS_userId')) {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-master', 1, 'view')) {
             return FALSE;
         }
         $output = array();
@@ -137,18 +137,27 @@ class Setup extends CI_Controller {
                 }
 
                 $vaules['active'] = $row;
-
-                if ($value->active == 1) {
+                $view = '';
+                $APPROVE = '';
+                $active = '';
+                $edit = '';
+                if (checkpageaccess('form-master', 1, 'view')) {
                     $view = "<a href='" . base_url() . "view-form-master/" . $value->pageID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
-                    $APPROVE = ''; //"<a href='" . base_url() . "approve-form-master/" . $value->pageID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
-                    $active = '<a href="javascript:void(0)" data-tb="pages" data-val="0" data-id="' . $value->pageID . '"  data-col="pageID" role="button" tabindex="0" class="active-deactive-btn text-danger text-uppercase text-strong text-sm mr-10 ">De-Active</a>';
-                } else {
-                    $APPROVE = '';
-                    $view = '';
-                    $active = '<a href="javascript:void(0)" data-tb="pages" data-val="1" data-id="' . $value->pageID . '"  data-col="pageID" role="button" tabindex="0" class="active-deactive-btn text-success text-uppercase text-strong text-sm mr-10">Active</a>';
                 }
-
-                $vaules['Action'] = $view . $APPROVE . "<a href='" . base_url() . "edit-form-master/" . $value->pageID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>" . $active;
+                if (checkpageaccess('form-master', 1, 'approve')) {
+                    $APPROVE = '';
+                }
+                if (checkpageaccess('form-master', 1, 'delete')) {
+                    if ($value->active == 1) {
+                        $active = '<a href="javascript:void(0)" data-tb="pages" data-val="0" data-id="' . $value->pageID . '"  data-col="pageID" role="button" tabindex="0" class="active-deactive-btn text-danger text-uppercase text-strong text-sm mr-10 ">De-Active</a>';
+                    } else {
+                        $active = '<a href="javascript:void(0)" data-tb="pages" data-val="1" data-id="' . $value->pageID . '"  data-col="pageID" role="button" tabindex="0" class="active-deactive-btn text-success text-uppercase text-strong text-sm mr-10">Active</a>';
+                    }
+                }
+                if (checkpageaccess('form-master', 1, 'modify')) {
+                    $edit = "<a href='" . base_url() . "edit-form-master/" . $value->pageID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+                }
+                $vaules['Action'] = $view . $edit . $APPROVE . $active;
 
                 $output[] = $vaules;
             }
@@ -158,7 +167,7 @@ class Setup extends CI_Controller {
     }
 
     function edit_form_master($pageID = '') {
-        if (!$this->session->userdata('SESS_userId') || $pageID == '') {
+        if (!$this->session->userdata('SESS_userId') || $pageID == '' || !checkpageaccess('form-master', 1, 'modify')) {
             redirect(base_url() . "login");
         }
         if ($_POST) {
@@ -230,7 +239,7 @@ class Setup extends CI_Controller {
     }
 
     function view_form_master() {
-        if (!$this->session->userdata('SESS_userId')) {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-master', 1, 'view')) {
             redirect(base_url() . "login");
         }
         $data['pageTitle'] = "View Form Master";
@@ -241,7 +250,7 @@ class Setup extends CI_Controller {
 
     ////////// employee role
     function employee_role() {
-        if (!$this->session->userdata('SESS_userId')) {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('employee-role', 1, 'view')) {
             redirect(base_url() . "login");
         }
         if ($_POST) {
@@ -263,7 +272,7 @@ class Setup extends CI_Controller {
     }
 
     function employee_role_json() {
-        if (!$this->session->userdata('SESS_userId')) {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('employee-role', 1, 'view')) {
             return FALSE;
         }
         $output = array();
@@ -306,18 +315,27 @@ class Setup extends CI_Controller {
                 }
 
                 $vaules['active'] = $row;
-
-                if ($value->active == 1) {
+                $view = '';
+                $APPROVE = '';
+                $active = '';
+                $edit = '';
+                if (checkpageaccess('employee-role', 1, 'view')) {
                     $view = "<a href='" . base_url() . "view-employee-role/" . $value->empRoleMapID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
-                    $APPROVE = "<a href='" . base_url() . "approve-employee-role/" . $value->empRoleMapID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
-                    $active = '<a href="javascript:void(0)" data-tb="emprolemap" data-val="0" data-id="' . $value->empRoleMapID . '"  data-col="empRoleMapID" role="button" tabindex="0" class="active-deactive-btn text-danger text-uppercase text-strong text-sm mr-10 ">De-Active</a>';
-                } else {
-                    $APPROVE = '';
-                    $view = '';
-                    $active = '<a href="javascript:void(0)" data-tb="emprolemap" data-val="1" data-id="' . $value->empRoleMapID . '"  data-col="empRoleMapID" role="button" tabindex="0" class="active-deactive-btn text-success text-uppercase text-strong text-sm mr-10">Active</a>';
                 }
-
-                $vaules['Action'] = $view . $APPROVE . "<a href='" . base_url() . "edit-employee-role/" . $value->empRoleMapID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>" . $active;
+                if (checkpageaccess('employee-role', 1, 'approve')) {
+                    $APPROVE = "<a href='" . base_url() . "approve-employee-role/" . $value->empRoleMapID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
+                }
+                if (checkpageaccess('employee-role', 1, 'delete')) {
+                    if ($value->active == 1) {
+                        $active = '<a href="javascript:void(0)" data-tb="emprolemap" data-val="0" data-id="' . $value->empRoleMapID . '"  data-col="empRoleMapID" role="button" tabindex="0" class="active-deactive-btn text-danger text-uppercase text-strong text-sm mr-10 ">De-Active</a>';
+                    } else {
+                        $active = '<a href="javascript:void(0)" data-tb="emprolemap" data-val="1" data-id="' . $value->empRoleMapID . '"  data-col="empRoleMapID" role="button" tabindex="0" class="active-deactive-btn text-success text-uppercase text-strong text-sm mr-10">Active</a>';
+                    }
+                }
+                if (checkpageaccess('employee-role', 1, 'modify')) {
+                    $edit = "<a href='" . base_url() . "edit-employee-role/" . $value->empRoleMapID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+                }
+                $vaules['Action'] = $view . $edit . $APPROVE . $active;
 
                 $output[] = $vaules;
             }
@@ -327,7 +345,7 @@ class Setup extends CI_Controller {
     }
 
     function add_employee_role() {
-        if (!$this->session->userdata('SESS_userId')) {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('employee-role', 1, 'create')) {
             redirect(base_url() . "login");
         }
         $userBranchID = $this->session->userdata('SESS_userBranchID');
@@ -396,7 +414,7 @@ class Setup extends CI_Controller {
     }
 
     function view_employee_role() {
-        if (!$this->session->userdata('SESS_userId')) {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('employee-role', 1, 'view')) {
             redirect(base_url() . "login");
         }
         $userBranchID = $this->session->userdata('SESS_userBranchID');
@@ -447,7 +465,7 @@ class Setup extends CI_Controller {
     }
 
     function edit_employee_role() {
-        if (!$this->session->userdata('SESS_userId')) {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('employee-role', 1, 'modify')) {
             redirect(base_url() . "login");
         }
         $userBranchID = $this->session->userdata('SESS_userBranchID');
@@ -538,7 +556,7 @@ class Setup extends CI_Controller {
 
 ////////// form access
     function form_access() {
-        if (!$this->session->userdata('SESS_userId')) {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-access', 1, 'view')) {
             redirect(base_url() . "login");
         }
         if ($_POST) {
@@ -560,7 +578,7 @@ class Setup extends CI_Controller {
     }
 
     function form_access_json() {
-        if (!$this->session->userdata('SESS_userId')) {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-access', 1, 'view')) {
             return FALSE;
         }
         $output = array();
@@ -591,19 +609,28 @@ class Setup extends CI_Controller {
                 }
 
                 $vaules['active'] = $row;
-
-                $view = "<a href='javascript:void(0);' data-val='" . $value->pageRoleMappingID . "'  data-ur='view-form-access' data-vur='view-form-access' id='editviewcallform-btn' role='button' tabindex='0'  class='editviewcallform-btn edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
-                $edit = "<a href='javascript:void(0);' data-val='" . $value->pageRoleMappingID . "'  data-ur='view-form-access' data-vur='edit-form-access' id='editviewcallform-btn' role='button' tabindex='0' class='editviewcallform-btn edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
-    
-                if ($value->active == 1) {
-                    $APPROVE = "<a href='javascript:void(0);' data-val='" . $value->pageRoleMappingID . "'  data-ur='approve-form-access' id='editviewcallform-btn' role='button' tabindex='0' class='editviewcallform-btn edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
-                    $active = '<a href="javascript:void(0)" data-tb="pageroleaccessmap" data-val="0" data-id="' . $value->pageRoleMappingID . '"  data-col="pageRoleMappingID" role="button" tabindex="0" class="active-deactive-btn text-danger text-uppercase text-strong text-sm mr-10 ">De-Active</a>';
-                } else {
-                    $APPROVE = '';
-                    $active = '<a href="javascript:void(0)" data-tb="pageroleaccessmap" data-val="1" data-id="' . $value->pageRoleMappingID . '"  data-col="pageRoleMappingID" role="button" tabindex="0" class="active-deactive-btn text-success text-uppercase text-strong text-sm mr-10">Active</a>';
+                $view = '';
+                $APPROVE = '';
+                $active = '';
+                $edit = '';
+                if (checkpageaccess('employee-role', 1, 'view')) {
+                    $view = "<a href='javascript:void(0);' data-val='" . $value->pageRoleMappingID . "'  data-ur='view-form-access' data-vur='view-form-access' id='editviewcallform-btn' role='button' tabindex='0'  class='editviewcallform-btn edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
                 }
+                if (checkpageaccess('employee-role', 1, 'approve')) {
+                    $APPROVE = "<a href='javascript:void(0);' data-val='" . $value->pageRoleMappingID . "'  data-ur='approve-form-access' id='editviewcallform-btn' role='button' tabindex='0' class='editviewcallform-btn edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
+                }
+                if (checkpageaccess('employee-role', 1, 'delete')) {
+                    if ($value->active == 1) {
+                        $active = '<a href="javascript:void(0)" data-tb="pageroleaccessmap" data-val="0" data-id="' . $value->pageRoleMappingID . '"  data-col="pageRoleMappingID" role="button" tabindex="0" class="active-deactive-btn text-danger text-uppercase text-strong text-sm mr-10 ">De-Active</a>';
+                    } else {
+                        $active = '<a href="javascript:void(0)" data-tb="pageroleaccessmap" data-val="1" data-id="' . $value->pageRoleMappingID . '"  data-col="pageRoleMappingID" role="button" tabindex="0" class="active-deactive-btn text-success text-uppercase text-strong text-sm mr-10">Active</a>';
+                    }
+                }
+                if (checkpageaccess('employee-role', 1, 'modify')) {
+                    $edit = "<a href='javascript:void(0);' data-val='" . $value->pageRoleMappingID . "'  data-ur='view-form-access' data-vur='edit-form-access' id='editviewcallform-btn' role='button' tabindex='0' class='editviewcallform-btn edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+                }
+                $vaules['Action'] = $view . $edit . $APPROVE . $active;
 
-                $vaules['Action'] = $view  . $edit . $APPROVE . $active;
 
                 $output[] = $vaules;
             }
@@ -613,7 +640,7 @@ class Setup extends CI_Controller {
     }
 
     function add_form_access() {
-        if (!$this->session->userdata('SESS_userId')) {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-access', 1, 'create')) {
             return FALSE;
         }
         $userBranchID = $this->session->userdata('SESS_userBranchID');
@@ -685,7 +712,7 @@ class Setup extends CI_Controller {
     }
 
     function edit_form_access() {
-        if (!$this->session->userdata('SESS_userId')) {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-access', 1, 'modify')) {
             return FALSE;
         }
         $userBranchID = $this->session->userdata('SESS_userBranchID');
@@ -727,14 +754,13 @@ class Setup extends CI_Controller {
                 $this->session->set_userdata('suc', 'Form Access Setup successfully updated...!');
                 return TRUE;
             }
-            
         }
         echo 'Error! Please try again..!';
         return FALSE;
     }
 
     function view_form_access() {
-        if (!$this->session->userdata('SESS_userId')) {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-access', 1, 'view')) {
             return FALSE;
         }
         $this->form_validation->set_rules('id', 'ID', 'trim|required');
@@ -745,7 +771,7 @@ class Setup extends CI_Controller {
             return FALSE;
         }
         extract($this->input->post());
-        
+
         $whereData = array('dbentrystateID' => 3, 'active' => 1);
         $data['pages'] = selectTable('tblpages', $whereData);
 
@@ -757,7 +783,7 @@ class Setup extends CI_Controller {
 
         $data['pageTitle'] = "Form Access";
         $data['pageRoleMappingID'] = $id;
-        $this->load->view('admin/form_access/'.$viewurl, $data);
+        $this->load->view('admin/form_access/' . $viewurl, $data);
     }
 
 }

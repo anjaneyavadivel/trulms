@@ -45,12 +45,13 @@
                                 <!-- tile header -->
                                 <div class="tile-header bg-greensea  dvd dvd-btm">
                                     <h1 class="custom-font"><strong><?=$pageTitle?></strong> Setup</h1>
-                                    
+                                    <?php if(checkpageaccess('form-access',1,'create')){?>
                                     <ul class="controls">
                                         
 <!--                                        <li><a href="<?= base_url()?>add-form-access" title="Add <?=$pageTitle?>" role="button" tabindex="0" class="tile-close">Add New  <i class="fa fa-plus"></i></a></li>-->
                                         <li><a href="javascript:void(0);" class="addcallform-btn" id="addcallform-btn" data-ur="add-form-access" title="Add <?=$pageTitle?>" role="button" tabindex="0">Add New  <i class="fa fa-plus"></i></a></li>
                                     </ul>
+                                    <?php }?>
                                 </div>
                                 <!-- /tile header -->
 
