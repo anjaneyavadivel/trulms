@@ -14,20 +14,22 @@
 
                 <div class="page page-tables-datatables">
 
+                    
+
                     <div class="pageheader">
 
-                        <h2>Designation </h2>
+                        <h2> Consignor </h2>
 
                         <div class="page-bar">
 
                             <ul class="page-breadcrumb">
-                               <li>
+                                 <li>
                                     <a href="<?= base_url()?>"><i class="fa fa-home"></i> Home</a>
                                 </li>
                                 <li>
-                                    <a href="#">Designation</a>
+                                    <a href="#"> Consignor</a>
                                 </li>
-                                
+                               
                             </ul>
 
                         </div>
@@ -44,14 +46,13 @@
                             <section class="tile">
 
                                 <!-- tile header -->
-                                <div class="tile-header bg-greensea  dvd dvd-btm">
-                                    <h1 class="custom-font"><strong>Designation</strong> Master</h1>
-                                    <?php if(checkpageaccess('designation',1,'create')){?>
+                                <div class="tile-header bg-greensea dvd dvd-btm">
+                                    <h1 class="custom-font"><strong> Consignor</strong> Master</h1>
+                                    
                                     <ul class="controls">
                                         
-                                        <li><a href="<?= base_url()?>add_designation" title="Add Department" role="button" tabindex="0" >Add New  <i class="fa fa-plus"></i></a></li>
+                                        <li><a href="<?= base_url()?>add-consignor" title="Add  Consignor" role="button" tabindex="0" >Add New  <i class="fa fa-plus"></i></a></li>
                                     </ul>
-                                     <?php }?>
                                 </div>
                                 <!-- /tile header -->
 
@@ -62,11 +63,13 @@
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Description</th>
+                                                <th>Consioner Name</th>
+                                                
+                                               
                                                 <th>State</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
+                                               
                                             </tr>
                                             </thead>
 
@@ -82,7 +85,6 @@
                         </div>
                         <!-- /col -->
                     </div>
-                    <!-- /row -->
 
                 </div>
                 

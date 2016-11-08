@@ -453,13 +453,29 @@ class Manage extends CI_Controller {
 	}
 	function designation_json()
 	{
-		$result	=	$this->Commonsql_model->select_all('tbldesignation','desigID');
+		$result	=	$this->Commonsql_model->select_all_state('tbldesignation','desigID');
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
 			$vaules['ID']				=	$value->desigID;
 			$vaules['name'] 			= 	$value->name;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->name.'</span>';
+			}
 			if ($value->active == 1) 
 			{
               
@@ -682,7 +698,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_designation_json()
 	{
-		$result	=	$this->Commonsql_model->select_desc('tbldesignation_mod',array('desigID'=>$this->uri->segment(3)),'desig_modID');
+		$result	=	$this->Commonsql_model->select_desc_state('tbldesignation_mod',array('desigID'=>$this->uri->segment(3)),'desig_modID');
 		//echo $this->db->last_query();
 		$output = array();$i=1;$j=1;
 		foreach($result->result() as  $value) {
@@ -690,6 +706,22 @@ class Manage extends CI_Controller {
 			$vaules['ID']				=	$value->desig_modID;
 			$vaules['name'] 			= 	$value->name;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->name.'</span>';
+			}
 			if ($value->active == 1) 
 			{
               
@@ -830,13 +862,29 @@ class Manage extends CI_Controller {
 	}
 	function role_json()
 	{
-		$result	=	$this->Commonsql_model->select_all('tblrole','roleID');
+		$result	=	$this->Commonsql_model->select_all_state('tblrole','roleID');
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
 			$vaules['ID']				=	$value->roleID;
 			$vaules['roleName'] 		= 	$value->roleName;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->name.'</span>';
+			}
 			if ($value->active == 1) 
 			{
               
@@ -1058,7 +1106,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_role_json()
 	{
-		$result	=	$this->Commonsql_model->select_desc('tblrole_mod',array('roleID'=>$this->uri->segment(3)),'role_modID');
+		$result	=	$this->Commonsql_model->select_desc_state('tblrole_mod',array('roleID'=>$this->uri->segment(3)),'role_modID');
 		//echo $this->db->last_query();
 		$output = array();$i=1;$j=1;
 		foreach($result->result() as  $value) {
@@ -1066,6 +1114,22 @@ class Manage extends CI_Controller {
 			$vaules['ID']				=	$value->role_modID;
 			$vaules['name'] 			= 	$value->roleName;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->name.'</span>';
+			}
 			if ($value->active == 1) 
 			{
               
@@ -1210,13 +1274,29 @@ class Manage extends CI_Controller {
 	}
 	function payment_mode_json()
 	{
-		$result	=	$this->Commonsql_model->select_all('tblpaymentmode','paymentModeID');
+		$result	=	$this->Commonsql_model->select_all_state('tblpaymentmode','paymentModeID');
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
 			$vaules['ID']				=	$value->paymentModeID;
 			$vaules['paymentMode'] 		= 	$value->paymentMode;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->name.'</span>';
+			}
 			if ($value->active == 1) 
 			{
               
@@ -1438,7 +1518,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_payment_mode_json()
 	{
-		$result	=	$this->Commonsql_model->select_desc('tblpaymentmode_mod',array('paymentModeID'=>$this->uri->segment(3)),'paymentMode_modID');
+		$result	=	$this->Commonsql_model->select_desc_state('tblpaymentmode_mod',array('paymentModeID'=>$this->uri->segment(3)),'paymentMode_modID');
 		//echo $this->db->last_query();
 		$output = array();$i=1;$j=1;
 		foreach($result->result() as  $value) {
@@ -1446,6 +1526,22 @@ class Manage extends CI_Controller {
 			$vaules['ID']				=	$value->paymentMode_modID;
 			$vaules['name'] 			= 	$value->paymentMode;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->name.'</span>';
+			}
 			if ($value->active == 1) 
 			{
               
@@ -1590,13 +1686,29 @@ class Manage extends CI_Controller {
 	}
 	function payment_status_json()
 	{
-		$result	=	$this->Commonsql_model->select_all('tblpaymentstatus','payStatusID');
+		$result	=	$this->Commonsql_model->select_all_state('tblpaymentstatus','payStatusID');
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
 			$vaules['ID']				=	$value->payStatusID;
 			$vaules['name'] 			= 	$value->payStatus;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->name.'</span>';
+			}
 			if ($value->active == 1) 
 			{
               
@@ -1819,7 +1931,7 @@ class Manage extends CI_Controller {
 	function approve_payment_status_json()
 	{
 		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
-		$result	=	$this->Commonsql_model->select_desc('tblpaymentstatus_mod',array('payStatusID'=>$this->uri->segment(3)),'payStatus_modID');
+		$result	=	$this->Commonsql_model->select_desc_state('tblpaymentstatus_mod',array('payStatusID'=>$this->uri->segment(3)),'payStatus_modID');
 		//echo $this->db->last_query();
 		$output = array();$i=1;$j=1;
 		foreach($result->result() as  $value) {
@@ -1827,6 +1939,22 @@ class Manage extends CI_Controller {
 			$vaules['ID']				=	$value->payStatus_modID;
 			$vaules['name'] 			= 	$value->payStatus;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->name.'</span>';
+			}
 			if ($value->active == 1) 
 			{
               
@@ -1972,13 +2100,29 @@ class Manage extends CI_Controller {
 	function employee_types_json()
 	{
 		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
-		$result	=	$this->Commonsql_model->select_all('tblemployetypes','employetypeID');
+		$result	=	$this->Commonsql_model->select_all_state('tblemployetypes','employetypeID');
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
 			$vaules['ID']				=	$value->employetypeID;
 			$vaules['name'] 			= 	$value->typename;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->name.'</span>';
+			}
 			if ($value->active == 1) 
 			{
               
@@ -2201,7 +2345,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_employee_types_json()
 	{
-		$result	=	$this->Commonsql_model->select_desc('tblemployetypes_mod',array('employetypeID'=>$this->uri->segment(3)),'employetype_modID');
+		$result	=	$this->Commonsql_model->select_desc_state('tblemployetypes_mod',array('employetypeID'=>$this->uri->segment(3)),'employetype_modID');
 		//echo $this->db->last_query();
 		$output = array();
 		$i=1;$j=1;
@@ -2210,6 +2354,22 @@ class Manage extends CI_Controller {
 			$vaules['ID']				=	$value->employetype_modID;
 			$vaules['name'] 			= 	$value->typename;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->name.'</span>';
+			}
 			
 			if ($value->active == 1) 
 			{
@@ -2359,7 +2519,7 @@ class Manage extends CI_Controller {
 	}
 	function employee_json()
 	{
-		$result	=	$this->Commonsql_model->select_all_employee();
+		$result	=	$this->Commonsql_model->select_all_employee_state();
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
@@ -2403,7 +2563,22 @@ class Manage extends CI_Controller {
 				$row = '<span class="label bg-red">De-Active</span>';
 			}
 			$vaules['active'] = $row;
-			
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->sta_name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->sta_name.'</span>';
+			}
 			if($value->active==1)
 			{
 				
@@ -2803,7 +2978,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_employee_json()
 	{
-		$result	=	$this->Commonsql_model->select_all_employee_mod($this->uri->segment(3));
+		$result	=	$this->Commonsql_model->select_all_employee_mod_state($this->uri->segment(3));
 		//echo $this->db->last_query();
 		$output = array();$i=1;$j=1;
 		foreach($result->result() as  $value) {
@@ -2847,6 +3022,23 @@ class Manage extends CI_Controller {
 				$row = '<span class="label bg-red">De-Active</span>';
 			}
 			$vaules['active'] = $row;
+			
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->sta_name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->sta_name.'</span>';
+			}
 			
 			if($value->active==1)
 			{
@@ -3020,7 +3212,8 @@ class Manage extends CI_Controller {
 	}
 	function driver_json()
 	{
-		$result	=	$this->Commonsql_model->select_all_driver();
+		$result	=	$this->Commonsql_model->select_all_driver_state();
+		//echo $this->db->last_query();exit;
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
@@ -3032,6 +3225,22 @@ class Manage extends CI_Controller {
 			$vaules['dlno'] 			= 	$value->dlno;
 			$vaules['dlexpirydt'] 		= 	date('m-d-Y',strtotime($value->dlexpirydt));
 			
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->sta_name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->sta_name.'</span>';
+			}
 			if ($value->active == 1) 
 			{
               
@@ -3354,7 +3563,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_driver_json()
 	{
-		$result	=	$this->Commonsql_model->select_all_driver_mod($this->uri->segment(3));
+		$result	=	$this->Commonsql_model->select_all_driver_mod_state($this->uri->segment(3));
 		//echo $this->db->last_query();
 		$output = array();$i=1;$j=1;
 		foreach($result->result() as  $value) {
@@ -3366,7 +3575,22 @@ class Manage extends CI_Controller {
 			
 			$vaules['dlno'] 			= 	$value->dlno;
 			$vaules['dlexpirydt'] 		= 	date('m-d-Y',strtotime($value->dlexpirydt));
-			
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->sta_name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->sta_name.'</span>';
+			}
 			if ($value->active == 1) 
 			{
               
@@ -3544,7 +3768,7 @@ class Manage extends CI_Controller {
 	}
 	function vehicleowner_json()
 	{
-		$result	=	$this->Commonsql_model->select_all_vowner();
+		$result	=	$this->Commonsql_model->select_all_vowner_state();
 		//echo $this->db->last_query();exit;
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
@@ -3552,7 +3776,23 @@ class Manage extends CI_Controller {
 			$vaules['ID']				=	$value->ownerID;
 			$vaules['name'] 			= 	$value->contactPer1;
 			$vaules['companyName'] 		= 	$value->companyName;
-			$vaules['phone1'] 		= 	$value->phone1;
+			$vaules['phone1'] 			= 	$value->phone1;
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->sta_name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->sta_name.'</span>';
+			}
 			if ($value->active == 1) 
 			{
               
@@ -3832,7 +4072,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_vehicleowner_json()
 	{
-		$result	=	$this->Commonsql_model->select_all_vowner_mod($this->uri->segment(3));
+		$result	=	$this->Commonsql_model->select_all_vowner_mod_state($this->uri->segment(3));
 		//echo $this->db->last_query();exit;
 		$output = array();$i=1;$j=1;
 		foreach($result->result() as  $value) {
@@ -3841,6 +4081,22 @@ class Manage extends CI_Controller {
 			$vaules['name'] 			= 	$value->name;
 			$vaules['companyName'] 		= 	$value->companyName;
 			$vaules['phone1'] 			= 	$value->phone1;
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->sta_name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->sta_name.'</span>';
+			}
 			if ($value->active == 1) 
 			{
               
@@ -3952,6 +4208,437 @@ class Manage extends CI_Controller {
 		}
 	}
 	/***********************************************************************************************************************************/
+	function consignor()
+	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
+		if($this->uri->segment(3))
+		{
+			$whereData	=	array('consignorID'	=>	$this->uri->segment(3));
+			$updateData	=	array('active'	=>	$this->uri->segment(4));
+			$upt	=	$this->Commonsql_model->updateTable('tblconsignor', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','consignor Status Successfully  Changed...!');
+				redirect('consignor');
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('consignor');
+			}
+		}
+		else
+		{
+			$data['pageTitle']	=	"consignor";
+			$data['table']		=	"consignor";
+			$this->load->view('admin/consignor/consignor',$data);
+		}
+	}
+	function consignor_json()
+	{
+		$result	=	$this->Commonsql_model->select_conginor_state();
+		$output = array();$i=1;
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['ID']			=	$value->consignorID;
+			$vaules['name'] 		= 	$value->name;
+			
+			
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->sta_name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->sta_name.'</span>';
+			}
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
+			
+			if($value->active==1)
+			{
+				
+				if(checkpageaccess('contract-consignor',1,'view'))
+				{
+					$view		=	"<a href='".base_url()."view-consignor/".$value->consignorID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+				}
+				else
+				{
+					$view			 			=	'';
+				}
+				if(checkpageaccess('contract-consignor',1,'approve'))
+				{
+					$Approve		=	"<a href='".base_url()."approve-consignor/".$value->consignorID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Approve</a>";
+				}
+				else
+				{
+					$APPROVE			 			= "";
+					
+				}
+				if(checkpageaccess('contract-consignor',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/consignor/".$value->consignorID."','0'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+			}
+			else
+			{
+				$view		=	'';
+				$Approve		=	'';
+				if(checkpageaccess('contract-consignor',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/consignor/".$value->consignorID."','1'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
+			}
+			if(checkpageaccess('contract-consignor',1,'modify'))
+			{
+				$edit	=	"<a  href='".base_url()."edit-consignor/".$value->consignorID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+				
+			$vaules['Action'] 			=	$view.$Approve.$edit.$active;
+			
+			$output[] =$vaules;
+		}
+
+		 echo json_encode(array('data'=>$output), true);
+	}
+	function add_consignor()
+	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
+		if(!checkpageaccess('contract-consignor',1,'create'))
+		{
+			redirect();
+		}
+		if($this->input->post('save'))
+		{
+			
+				$contact_values=array('name'		=>	$this->input->post('name'),
+								'companyName'		=>	$this->input->post('companyName'),
+								'addressline1'		=>	$this->input->post('addressline1'),
+								'addressline2'		=>	$this->input->post('addressline2'),
+								'city'				=>	$this->input->post('city'),
+								'state'				=>	$this->input->post('state'),
+								'country'			=>	$this->input->post('country'),
+								'email1'			=>	$this->input->post('email1'),
+								'email2'			=>	$this->input->post('email2'),
+								'phone1'			=>	$this->input->post('phone1'),
+								'phone2'			=>	$this->input->post('phone2'),
+								'fax'				=>	$this->input->post('fax'),
+								'website'			=>	$this->input->post('website'),
+								'dbentrystateID'	=>	0,
+								'createby'			=>	$this->session->userdata('SESS_userId'),
+								'active'			=>	1);
+								
+				$contactID	=	insertTable('tblcontactdetails', $contact_values,0);
+			
+			
+			$values_cons=array('contactID'		=>	$contactID,
+							'contactPer1'		=>	$this->input->post('name'),
+							'contactPer1'		=>	$this->input->post('contactPer2'),
+							'csttinno'			=>	$this->input->post('csttinno'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$consignorID	=	insertTable('tblconsignor', $values_cons,0);
+			
+			
+			
+			
+			
+			if($consignorID)
+			{
+				$this->session->set_userdata('suc','Employee Types Successfully  Added...!');
+				redirect('add-consignor');
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('add-consignor');
+			}
+		}
+		$data['pageTitle']	=	"Add Contract Consignor";
+		$data['view']		=	$this->Commonsql_model->select_exist_conginor_contract();
+		$this->load->view('admin/consignor/add_consignor',$data);
+	}
+	function edit_consignor()
+	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
+		if(!checkpageaccess('contract-consignor',1,'modify'))
+		{
+			redirect();
+		}
+		if($this->input->post('save'))
+		{
+			$whereData	= array('consignorID'=>$this->input->post('consignorID'));
+			$contac_wh	= array('contactID'=>$this->input->post('contactID'));
+			$contact_values=array('name'		=>	$this->input->post('name'),
+							'companyName'		=>	$this->input->post('companyName'),
+							'addressline1'		=>	$this->input->post('addressline1'),
+							'addressline2'		=>	$this->input->post('addressline2'),
+							'city'				=>	$this->input->post('city'),
+							'state'				=>	$this->input->post('state'),
+							'country'			=>	$this->input->post('country'),
+							'email1'			=>	$this->input->post('email1'),
+							'email2'			=>	$this->input->post('email2'),
+							'phone1'			=>	$this->input->post('phone1'),
+							'phone2'			=>	$this->input->post('phone2'),
+							'fax'				=>	$this->input->post('fax'),
+							'website'			=>	$this->input->post('website'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$query1		= updateTables('tblcontactdetails', $contac_wh, $contact_values , 1,'contactID', $this->input->post('contactID'));
+			
+			$values_cons=array('contactID'		=>	$this->input->post('contactID'),
+							'contactPer1'		=>	$this->input->post('name'),
+							'contactPer2'		=>	$this->input->post('contactPer2'),
+							'csttinno'			=>	$this->input->post('csttinno'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$query2		= updateTables('tblconsignor', $whereData, $values_cons , 1,'consignorID', $this->input->post('consignorID'));
+			
+			if($query1 || $query2 )
+			{
+				$this->session->set_userdata('suc','Consioner Types Successfully  Added...!');
+				redirect('edit-consignor/'.$this->input->post('consignorID'));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('edit-consignor/'.$this->input->post('consignorID'));
+			}
+		}
+		$data['view']		=	$this->Commonsql_model->select_conginor(array('a.consignorID'=>$this->uri->segment(2)));
+		$data['pageTitle']	=	"Edit consignor";
+		$this->load->view('admin/consignor/edit_consignor',$data);
+	}
+	function view_consignor()
+	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
+		$data['view']		=	$this->Commonsql_model->select_conginor(array('a.consignorID'=>$this->uri->segment(2)));
+		$data['pageTitle']	=	"View consignor";
+		$this->load->view('admin/consignor/view_consignor',$data);
+	}
+	function approve_consignor()
+	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
+		if(!checkpageaccess('consignor',1,'approve'))
+		{
+			redirect();
+		}
+		if($this->input->post('save'))
+		{
+			$whereData	= array('consignorID'=>$this->input->post('consignorID'));
+			$contac_wh	= array('contactID'=>$this->input->post('contactID'));
+			$contact_values=array('name'		=>	$this->input->post('name'),
+							'companyName'		=>	$this->input->post('companyName'),
+							'addressline1'		=>	$this->input->post('addressline1'),
+							'addressline2'		=>	$this->input->post('addressline2'),
+							'city'				=>	$this->input->post('city'),
+							'state'				=>	$this->input->post('state'),
+							'country'			=>	$this->input->post('country'),
+							'email1'			=>	$this->input->post('email1'),
+							'email2'			=>	$this->input->post('email2'),
+							'phone1'			=>	$this->input->post('phone1'),
+							'phone2'			=>	$this->input->post('phone2'),
+							'fax'				=>	$this->input->post('fax'),
+							'website'			=>	$this->input->post('website'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$query1		= updateTables('tblcontactdetails', $contac_wh, $contact_values , 1,'contactID', $this->input->post('contactID'));
+			
+			$values_cons=array('contactID'		=>	$this->input->post('contactID'),
+							'contactPer1'		=>	$this->input->post('name'),
+							'contactPer2'		=>	$this->input->post('contactPer2'),
+							'csttinno'			=>	$this->input->post('csttinno'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+			$query2		= updateTables('tblconsignor', $whereData, $values_cons , 1,'consignorID', $this->input->post('consignorID'));
+			
+			if($query1 || $query2 )
+			{
+				$this->session->set_userdata('suc','Consioner Types Successfully  Added...!');
+				redirect('approve-consignor/'.$this->input->post('consignorID'));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('approve-consignor/'.$this->input->post('consignorID'));
+			}
+		}
+		if($this->uri->segment(4))
+		{
+			$whereData	=	array('consignor_modID'	=>	$this->uri->segment(4));
+			$updateData	=	array('active'	=>	$this->uri->segment(5));
+			$upt	=	$this->Commonsql_model->updateTable('tblconsignor_mod', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','Designation Status Successfully  Changed...!');
+				redirect('approve-consignor/'.$this->uri->segment(3));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('approve-consignor/'.$this->uri->segment(3));
+			}
+		}
+		else if($this->uri->segment(3))
+		{
+			$data['pageTitle']	=	"View vehicleowner";
+			$data['table']		=	"Designation";
+			$data['view']		=	$this->Commonsql_model->select_all_consigonr_mod($this->uri->segment(3));
+			//echo $this->db->last_query();exit;	
+			$this->load->view('admin/consignor/approve_consignor',$data);
+		}
+		else
+		{
+			$data['pageTitle']	=	"View vehicleowner";
+			$data['table']		=	"Designation";
+			$data['view']		=	$this->Commonsql_model->select_conginor(array('a.consignorID'=>$this->uri->segment(2)));
+			$this->load->view('admin/consignor/approve_consignor',$data);
+		}
+	}
+	function approve_consignor_json()
+	{
+		$result	=	$this->Commonsql_model->select_all_consigonr_mod_state($this->uri->segment(3));
+		//echo $this->db->last_query();exit;
+		$output = array();$i=1;$j=1;
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['ID']			=	$value->consignor_modID;
+			$vaules['name'] 		= 	$value->name;
+			
+			
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->sta_name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->sta_name.'</span>';
+			}
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
+			
+			if($value->active==1)
+			{
+				if($j++==1)
+				{
+					if(checkpageaccess('consignor',1,'approve'))
+					{
+						$Approve	=	approve_html("'".base_url()."manage/consignor_mod_approve/".$value->consignor_modID."','2'");
+					}
+					else
+					{
+						$Approve	=	'';
+					}
+				}
+				else
+				{
+					$Approve	=	'';
+				}
+				if(checkpageaccess('consignor',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_consignor/".$value->consignorID."/".$value->consignor_modID."','0'");
+				}
+				else
+				{
+					$active	=	"";
+				}
+				
+				
+			}
+			else
+			{
+				$Approve		=	'';
+				if(checkpageaccess('consignor',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_consignor/".$value->consignorID."/".$value->consignor_modID."','1'");
+				}
+				else
+				{
+					$active	=	"";
+				}
+				
+				
+			}
+			
+			if(checkpageaccess('consignor',1,'modify'))
+			{
+				$edit	=	"<a  href='".base_url()."approve-consignor/".$value->consignorID."/".$value->consignor_modID."' role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+				
+			$vaules['Action'] 			=	$Approve.$edit.$active;
+			
+			$output[] =$vaules;
+		}
+
+		 echo json_encode(array('data'=>$output), true);
+	}
+	/***********************************************************************************************************************************/
 	function contract_consignor()
 	{
 		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
@@ -3982,7 +4669,7 @@ class Manage extends CI_Controller {
 	}
 	function contract_consignor_json()
 	{
-		$result	=	$this->Commonsql_model->select_conginor_contract();
+		$result	=	$this->Commonsql_model->select_conginor_contract_state();
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
@@ -3998,6 +4685,22 @@ class Manage extends CI_Controller {
 			$vaules['sign'] 		= 	$value->signedby;
 			$vaules['total'] 		= 	$value->grandTotal;
 			
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->sta_name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->sta_name.'</span>';
+			}
 			if ($value->active == 1) 
 			{
               

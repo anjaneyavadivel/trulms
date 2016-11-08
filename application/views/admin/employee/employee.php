@@ -77,7 +77,7 @@
                                                 <th>Joining Date</th>
                                                 
                                                 <th>Releaving Date</th>
-                                                
+                                                <th>State</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                                

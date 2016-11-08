@@ -64,12 +64,12 @@
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Code</th>
+                                               
                                                 <th>Name</th>
                                                 <th>Company Name</th>
                                                 
                                                 <th>Phone</th>
-                                                
+                                                  <th>State</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                                

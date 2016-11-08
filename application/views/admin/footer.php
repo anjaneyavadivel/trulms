@@ -100,6 +100,7 @@
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
                     ],
+					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				<?php }else if($segment1=='designation'){
@@ -110,12 +111,14 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "state" },
 						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
                     ],
+					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				<?php }else if($segment1=='role'){
@@ -126,12 +129,14 @@
                         { "data": "ID" },
                         { "data": "roleName" },
                         { "data": "description" },
+						{ "data": "state" },
 						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
                     ],
+					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				<?php }else if($segment1=='payment_mode'){
@@ -142,12 +147,14 @@
                         { "data": "ID" },
                         { "data": "paymentMode" },
                         { "data": "description" },
+						{ "data": "state" },
 						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
                     ],
+					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				<?php }else if($segment1=='payment_status'){
@@ -158,12 +165,14 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "state" },
 						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
                     ],
+					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				<?php }else if($segment1=='employee_types'){
@@ -174,12 +183,14 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "state" },
 						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
                     ],
+					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				<?php }else if($segment1=='approve_department'){
@@ -197,6 +208,7 @@
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
                     ],
+					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				<?php }else if($segment1=='approve_designation'){
@@ -207,12 +219,14 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "state" },
 						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
                     ],
+					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				<?php }else if($segment1=='approve_role'){
@@ -223,12 +237,14 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "state" },
 						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
                     ],
+					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				<?php }else if($segment1=='approve_payment_mode'){
@@ -239,12 +255,14 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "state" },
 						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
                     ],
+					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				
@@ -256,12 +274,14 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "state" },
 						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
                     ],
+					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				<?php }else if($segment1=='approve_employee_types'){
@@ -272,12 +292,14 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "state" },
 						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
                     ],
+					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 					<?php }else if($segment1=='form-master'){
@@ -349,12 +371,14 @@
 						{ "data": "date" },
 						{ "data": "sign" },
                         { "data": "total" },
+						{ "data": "state" },
 						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
                     ],
+					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				<?php }else if($segment1=='employee'){
@@ -373,12 +397,14 @@
 						{ "data": "remarks" },
 						{ "data": "joiningdate" },
                         { "data": "releavingdate" },
+						{ "data": "state" },
 						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
                     ],
+					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				<?php }else if($segment1=='approve_employee'){
@@ -397,12 +423,14 @@
 						{ "data": "remarks" },
 						{ "data": "joiningdate" },
                         { "data": "releavingdate" },
+						{ "data": "state" },
 						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
                     ],
+					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				<?php }else if($segment1=='driver'){
@@ -416,12 +444,14 @@
 						{ "data": "phone1" },
 						{ "data": "dlno" },
 						{ "data": "dlexpirydt" },
+						{ "data": "state" },
 						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
                     ],
+					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				<?php }else if($segment1=='approve_driver'){
@@ -435,12 +465,14 @@
 						{ "data": "phone1" },
 						{ "data": "dlno" },
 						{ "data": "dlexpirydt" },
+						{ "data": "state" },
 						{ "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
                     ],
+					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				<?php }else if($segment1=='approve-contract-consignor'){
@@ -462,6 +494,7 @@
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
                     ],
+					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				<?php }else if($segment1=='vehicleowner'){
@@ -473,12 +506,14 @@
                         { "data": "name" },
 						{ "data": "companyName" },
 						{ "data": "phone1" },
+						{ "data": "state" },
                         { "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
                     ],
+					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				<?php }else if($segment1=='approve_vehicleowner'){
@@ -490,12 +525,50 @@
                         { "data": "name" },
 						{ "data": "companyName" },
 						{ "data": "phone1" },
+						{ "data": "state" },
                         { "data": "active" },
 						{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
                       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
                     ],
+					"order": [[0, 'desc' ]],
+                    "dom": 'Rlfrtip'
+                });
+				<?php }else if($segment1=='consignor'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/consignor_json',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+						
+						{ "data": "state" },
+						{ "data": "active" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+					"order": [[0, 'desc' ]],
+                    "dom": 'Rlfrtip'
+                });
+				<?php }else if($segment1=='approve-consignor'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/approve_consignor_json/<?php echo $this->uri->segment(2)?>',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+						
+						{ "data": "state" },
+						{ "data": "active" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
 				<?php }else{?>

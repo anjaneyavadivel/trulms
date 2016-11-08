@@ -322,6 +322,155 @@ class Commonsql_model extends CI_Model {
 		$query	=	$this->db->get();
 		return $query;
 	}
+	function select_all_employee_state()
+	{
+		$this->db->select('a.empID,a.empCode,a.empname,a.qualification,a.mobile,a.mailoffice,a.remarks,a.active,a.joiningdate,a.releavingdate,a.dbentrystateID,b.department,c.name,d.name as sta_name');
+		$this->db->from('tblemployee as a');
+		$this->db->join('tbldept as b','a.deptID=b.deptID','inner');
+		$this->db->join('tbldesignation as c','a.designation=c.desigID','inner');
+		$this->db->join('tbldbentrystates as d','a.dbentrystateID=d.dbentrystateID','inner');
+		$this->db->order_by('empID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_all_employee_mod_state($id)
+	{
+		$this->db->select('a.emp_modID,a.empID,a.empCode,a.empname,a.qualification,a.mobile,a.mailoffice,a.remarks,a.active,a.joiningdate,a.releavingdate,a.dbentrystateID,b.department,c.name,d.name as sta_name');
+		$this->db->from('tblemployee_mod as a');
+		$this->db->join('tbldept as b','a.deptID=b.deptID','inner');
+		$this->db->join('tbldesignation as c','a.designation=c.desigID','inner');
+		$this->db->join('tbldbentrystates as d','a.dbentrystateID=d.dbentrystateID','inner');
+		$this->db->where('a.empID',$id);
+		$this->db->order_by('emp_modID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_all_driver_state()
+	{
+		$this->db->select('a.driverID,a.dlno,a.dlexpirydt,a.active,a.dbentrystateID,b.name,b.phone1,b.addressline1,d.name as sta_name');
+		$this->db->from('tbldriver as a');
+		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
+		$this->db->join('tbldbentrystates as d','a.dbentrystateID=d.dbentrystateID','inner');
+		$this->db->order_by('driverID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_all_driver_mod_state($id)
+	{
+		$this->db->select('a.driver_modID,a.driverID,a.dlno,a.dlexpirydt,a.active,a.dbentrystateID,b.name,b.phone1,b.addressline1,d.name as sta_name');
+		$this->db->from('tbldriver_mod as a');
+		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
+		$this->db->join('tbldbentrystates as d','a.dbentrystateID=d.dbentrystateID','inner');
+		$this->db->where('a.driverID',$id);
+		$this->db->order_by('driver_modID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_all_vowner_state()
+	{
+		$this->db->select('a.ownerID,a.contactPer1,a.active,a.dbentrystateID,b.companyName,b.phone1,d.name as sta_name');
+		$this->db->from('tblvehicleowner as a');
+		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
+		$this->db->join('tbldbentrystates as d','a.dbentrystateID=d.dbentrystateID','inner');
+		$this->db->order_by('ownerID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_all_vowner_mod_state($id)
+	{
+		$this->db->select('a.owner_modID,a.ownerID,a.contactPer1,a.active,a.dbentrystateID,b.name,b.companyName,b.phone1,d.name as sta_name');
+		$this->db->from('tblvehicleowner_mod as a');
+		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
+		$this->db->join('tbldbentrystates as d','a.dbentrystateID=d.dbentrystateID','inner');
+		$this->db->where('a.ownerID',$id);
+		$this->db->order_by('a.owner_modID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_conginor_contract_state($cond=array())
+	{
+		if(!empty($cond))
+		{
+			$this->db->select('*');
+		}
+		else
+		{
+			$this->db->select('a.*,b.from,b.to,b.vehicleLength,b.vehicleCapacity,b.dated,b.signedby,c.grandTotal,d.name,e.name as sta_name');
+		}
+		$this->db->from('tblconsignor as a');
+		$this->db->join('tblcontract as b','a.consignorID=b.consignorID','inner');
+		$this->db->join('tblcontractversionmap as c','b.contractID=c.contractID','inner');
+		$this->db->join('tblcontactdetails as d','a.contactID=d.contactID','inner');
+		$this->db->join('tbldbentrystates as e','a.dbentrystateID=e.dbentrystateID','inner');
+		if(!empty($cond))
+		{
+			$this->db->where($cond);
+		}
+		$this->db->order_by('a.consignorID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_conginor_state($cond=array())
+	{
+		if(!empty($cond))
+		{
+			$this->db->select('*');
+		}
+		else
+		{
+			$this->db->select('a.*,d.name,e.name as sta_name');
+		}
+		$this->db->from('tblconsignor as a');
+		$this->db->join('tblcontactdetails as d','a.contactID=d.contactID','inner');
+		$this->db->join('tbldbentrystates as e','a.dbentrystateID=e.dbentrystateID','inner');
+		if(!empty($cond))
+		{
+			$this->db->where($cond);
+		}
+		$this->db->order_by('a.consignorID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_conginor($cond=array())
+	{
+		if(!empty($cond))
+		{
+			$this->db->select('*');
+		}
+		else
+		{
+			$this->db->select('a.*,b.from,d.name');
+		}
+		$this->db->from('tblconsignor as a');
+		$this->db->join('tblcontactdetails as d','a.contactID=d.contactID','inner');
+		if(!empty($cond))
+		{
+			$this->db->where($cond);
+		}
+		$this->db->order_by('a.consignorID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_all_consigonr_mod_state($id)
+	{
+		$this->db->select('a.*,b.name,b.companyName,b.phone1,d.name as sta_name');
+		$this->db->from('tblconsignor_mod as a');
+		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
+		$this->db->join('tbldbentrystates as d','a.dbentrystateID=d.dbentrystateID','inner');
+		$this->db->where('a.consignorID',$id);
+		$this->db->order_by('a.consignor_modID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_all_consigonr_mod($id)
+	{
+		$this->db->select('*');
+		$this->db->from('tblconsignor_mod as a');
+		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
+		$this->db->where('a.consignor_modID',$id);
+		$query	=	$this->db->get();
+		return $query;
+	}
 
 }
 

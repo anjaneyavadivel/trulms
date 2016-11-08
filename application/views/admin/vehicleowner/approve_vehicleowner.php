@@ -175,7 +175,7 @@
                                                 <th>Company Name</th>
                                                 
                                                 <th>Phone</th>
-                                                
+                                                  <th>State</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                                

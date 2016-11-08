@@ -64,6 +64,7 @@
                                                 <th>ID</th>
                                                 <th>Mode</th>
                                                 <th>Description</th>
+                                                <th>State</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>

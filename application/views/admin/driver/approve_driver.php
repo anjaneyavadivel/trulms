@@ -253,6 +253,7 @@
                                                 <th>Driving Liscense</th>
                                                 <th>Expiry Date</th>
                                                 
+                                                <th>State</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                                

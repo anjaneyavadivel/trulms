@@ -73,7 +73,7 @@
                                                 <th>Dated</th>
                                                 <th>Signed by</th>
                                                 <th>Grand Total</th>
-                                               
+                                                <th>State</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                                
