@@ -13,9 +13,23 @@ class Operation extends CI_Controller {
     
     function index() 
 	{
-        $data['view']		=	$this->Commonsql_model->select_exist_conginor_contract();
 		$data['pageTitle']	=	"Booking";
 	    $this->load->view('admin/operation/add_booking',$data);
     }
+	 function create_trip_sheet() 
+	{
+		$data['pageTitle']	=	"Booking";
+	    $this->load->view('admin/operation/create_trip_sheet',$data);
+    }
+	function delivery_closure()
+	{
+		$data['pageTitle']	=	"Delivery Closure";
+	    $this->load->view('admin/operation/delivery_closure',$data);
+	}
+	function trip_payment_update()
+	{
+		$data['pageTitle']	=	"Trip Payment Update";
+	    $this->load->view('admin/operation/trip_payment_update',$data);
+	}
   
 }
