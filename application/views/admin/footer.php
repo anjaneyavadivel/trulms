@@ -93,6 +93,7 @@
                         { "data": "deptID" },
                         { "data": "department" },
                         { "data": "description" },
+						{ "data": "state" },
 						{ "data": "active" },
 						{ "data": "Action" }
                     ],
@@ -189,6 +190,7 @@
                         { "data": "ID" },
                         { "data": "name" },
                         { "data": "description" },
+						{ "data": "state" },
 						{ "data": "active" },
 						{ "data": "Action" }
                     ],

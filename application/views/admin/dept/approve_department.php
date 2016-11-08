@@ -70,6 +70,7 @@
                                                 <th>ID</th>
                                                 <th>Department</th>
                                                 <th>Description</th>
+                                                <th>State</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>

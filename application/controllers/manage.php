@@ -3,10 +3,7 @@ class Manage extends CI_Controller {
    
     function __construct() {
         parent::__construct();
-        if (!$this->session->userdata('SESS_userId')) 
-		{
-            redirect(base_url() . "login");
-        }
+        
     }
     
    /***********************************************************************************************************************************/
@@ -16,6 +13,7 @@ class Manage extends CI_Controller {
 	}
 	function department()
 	{
+		if (!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if($this->uri->segment(3))
 		{
 			$whereData	=	array('deptID'	=>	$this->uri->segment(3));
@@ -49,17 +47,32 @@ class Manage extends CI_Controller {
 	}
 	function department_json()
 	{
-		$result	=	$this->Commonsql_model->select_all('tbldept','deptID');
+		$result	=	$this->Commonsql_model->select_all_state('tbldept','deptID');
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
 			$vaules['deptID']			=	$value->deptID;
 			$vaules['department'] 		= 	$value->department;
 			$vaules['description'] 		= 	$value->description;
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->name.'</span>';
+			}
 			if ($value->active == 1) 
 			{
-              
-			  $row = '<span class="label bg-greensea">Active</span>';
+			   $row = '<span class="label bg-greensea">Active</span>';
 			}
 			else
 			{
@@ -125,10 +138,8 @@ class Manage extends CI_Controller {
 	}
 	function add_department()
 	{
-		if(!checkpageaccess('department',1,'create'))
-		{			
-			redirect();
-		}
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
+		if(!checkpageaccess('department',1,'create')){	redirect();		}
 		if($this->input->post('save'))
 		{
 			$values=array('department'			=>	$this->input->post('department'),
@@ -155,6 +166,7 @@ class Manage extends CI_Controller {
 	}
 	function edit_department()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('department',1,'modify'))
 		{
 			redirect();
@@ -191,6 +203,7 @@ class Manage extends CI_Controller {
 	}
 	function view_department()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('department',1,'view'))
 		{
 			redirect();
@@ -201,6 +214,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_department()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('department',1,'approve'))
 		{
 			redirect();
@@ -278,7 +292,7 @@ class Manage extends CI_Controller {
 		if (!$this->session->userdata('SESS_userId')) {
             return FALSE;
         }
-		$result	=	$this->Commonsql_model->select_desc('tbldept_mod',array('deptID'=>$this->uri->segment(3)),'dept_modID');
+		$result	=	$this->Commonsql_model->select_desc_state('tbldept_mod',array('deptID'=>$this->uri->segment(3)),'dept_modID');
 		//echo $this->db->last_query();
 		$output = array();$i=1;$j=1;
 		foreach($result->result() as  $value) {
@@ -286,6 +300,23 @@ class Manage extends CI_Controller {
 			$vaules['ID']				=	$value->dept_modID;
 			$vaules['name'] 			= 	$value->department;
 			$vaules['description'] 		= 	$value->description;
+			
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->name.'</span>';
+			}
 			if ($value->active == 1) 
 			{
               
@@ -352,6 +383,7 @@ class Manage extends CI_Controller {
 	}
 	function department_mod_approve()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		$mod_id	=	$this->uri->segment(3);
 		$data	=	$this->Commonsql_model->select('tbldept_mod',array('dept_modID'=>$mod_id));
 		if($data->num_rows()>0)
@@ -393,6 +425,7 @@ class Manage extends CI_Controller {
 	/***********************************************************************************************************************************/
 	function designation()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if($this->uri->segment(3))
 		{
 			$whereData	=	array('desigID'	=>	$this->uri->segment(3));
@@ -499,6 +532,7 @@ class Manage extends CI_Controller {
 	}
 	function add_designation()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('designation',1,'create'))
 		{
 			redirect();
@@ -529,6 +563,7 @@ class Manage extends CI_Controller {
 	}
 	function edit_designation()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('designation',1,'modify'))
 		{
 			redirect();
@@ -561,6 +596,7 @@ class Manage extends CI_Controller {
 	}
 	function view_designation()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('designation',1,'view'))
 		{
 			redirect();
@@ -571,6 +607,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_designation()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('designation',1,'approve'))
 		{
 			redirect();
@@ -723,6 +760,7 @@ class Manage extends CI_Controller {
 	}
 	function designation_mod_approve()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		$mod_id	=	$this->uri->segment(3);
 		$data	=	$this->Commonsql_model->select('tbldesignation_mod',array('desig_modID'=>$mod_id));
 		if($data->num_rows()>0)
@@ -764,6 +802,7 @@ class Manage extends CI_Controller {
 	/***********************************************************************************************************************************/
 	function role()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if($this->uri->segment(3))
 		{
 			$whereData	=	array('roleID'	=>	$this->uri->segment(3));
@@ -869,6 +908,7 @@ class Manage extends CI_Controller {
 	}
 	function add_role()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('role',1,'create'))
 		{
 			redirect();
@@ -899,6 +939,7 @@ class Manage extends CI_Controller {
 	}
 	function edit_role()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('role',1,'modify'))
 		{
 			redirect();
@@ -931,6 +972,7 @@ class Manage extends CI_Controller {
 	}
 	function view_role()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('role',1,'view'))
 		{
 			redirect();
@@ -941,6 +983,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_role()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('role',1,'approve'))
 		{
 			redirect();
@@ -1093,6 +1136,7 @@ class Manage extends CI_Controller {
 	}
 	function role_mod_approve()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('role',1,'approve'))
 		{
 			redirect();
@@ -1138,6 +1182,7 @@ class Manage extends CI_Controller {
 	/***********************************************************************************************************************************/
 	function payment_mode()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if($this->uri->segment(3))
 		{
 			$whereData	=	array('paymentModeID'	=>	$this->uri->segment(3));
@@ -1242,6 +1287,7 @@ class Manage extends CI_Controller {
 	}
 	function add_payment_mode()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('payment_mode',1,'create'))
 		{
 			redirect();
@@ -1272,6 +1318,7 @@ class Manage extends CI_Controller {
 	}
 	function edit_payment_mode()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('payment_mode',1,'modify'))
 		{
 			redirect();
@@ -1305,6 +1352,7 @@ class Manage extends CI_Controller {
 	}
 	function view_payment_mode()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('payment_mode',1,'view'))
 		{
 			redirect();
@@ -1315,6 +1363,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_payment_mode()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('payment_mode',1,'approve'))
 		{
 			redirect();
@@ -1467,6 +1516,7 @@ class Manage extends CI_Controller {
 	}
 	function payment_mode_mod_approve()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('payment_mode',1,'approve'))
 		{
 			redirect();
@@ -1512,6 +1562,7 @@ class Manage extends CI_Controller {
 	/***********************************************************************************************************************************/
 	function payment_status()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if($this->uri->segment(3))
 		{
 			$whereData	=	array('payStatusID'	=>	$this->uri->segment(3));
@@ -1617,6 +1668,7 @@ class Manage extends CI_Controller {
 	}
 	function add_payment_status()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('payment_status',1,'create'))
 		{
 			redirect();
@@ -1647,6 +1699,7 @@ class Manage extends CI_Controller {
 	}
 	function edit_payment_status()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('payment_status',1,'modify'))
 		{
 			redirect();
@@ -1679,6 +1732,7 @@ class Manage extends CI_Controller {
 	}
 	function view_payment_status()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('payment_status',1,'view'))
 		{
 			redirect();
@@ -1689,6 +1743,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_payment_status()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('payment_status',1,'approve'))
 		{
 			redirect();
@@ -1763,6 +1818,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_payment_status_json()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		$result	=	$this->Commonsql_model->select_desc('tblpaymentstatus_mod',array('payStatusID'=>$this->uri->segment(3)),'payStatus_modID');
 		//echo $this->db->last_query();
 		$output = array();$i=1;$j=1;
@@ -1786,21 +1842,53 @@ class Manage extends CI_Controller {
 			{
 				if($j++==1)
 				{
-					$Approve	=	approve_html("'".base_url()."manage/payment_statu_mod_approve/".$value->payStatus_modID."','2'");
+					if(checkpageaccess('payment_status',1,'approve'))
+					{
+						$Approve	=	approve_html("'".base_url()."manage/payment_statu_mod_approve/".$value->payStatus_modID."','2'");
+					}
+					else
+					{
+						$Approve			 			= "";
+						
+					}
+					
 				}
 				else
 				{
 					$Approve	=	'';
 				}
-				$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_payment_status/".$value->payStatusID."/".$value->payStatus_modID."','0'");
+				if(checkpageaccess('payment_status',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_payment_status/".$value->payStatusID."/".$value->payStatus_modID."','0'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
 			}
 			else
 			{
 				$Approve		=	'';
-				$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_payment_status/".$value->payStatusID."/".$value->payStatus_modID."','1'");
+				if(checkpageaccess('payment_status',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_payment_status/".$value->payStatusID."/".$value->payStatus_modID."','1'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
 			}
-			
-			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_payment_status/".$value->payStatusID.'/'.$value->payStatus_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			if(checkpageaccess('payment_status',1,'modify'))
+			{
+				$edit	=	"<a href='".base_url()."approve_payment_status/".$value->payStatusID.'/'.$value->payStatus_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+			$vaules['Action'] 			=	$Approve.$edit.$active;
 			
 			$output[] =$vaules;
 		}
@@ -1809,6 +1897,7 @@ class Manage extends CI_Controller {
 	}
 	function payment_statu_mod_approve()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('payment_status',1,'approve'))
 		{
 			redirect();
@@ -1854,6 +1943,7 @@ class Manage extends CI_Controller {
 	/***********************************************************************************************************************************/
 	function employee_types()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if($this->uri->segment(3))
 		{
 			$whereData	=	array('employetypeID'	=>	$this->uri->segment(3));
@@ -1881,6 +1971,7 @@ class Manage extends CI_Controller {
 	}
 	function employee_types_json()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		$result	=	$this->Commonsql_model->select_all('tblemployetypes','employetypeID');
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
@@ -1959,6 +2050,7 @@ class Manage extends CI_Controller {
 	}
 	function add_employee_types()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('employee_types',1,'create'))
 		{
 			redirect();
@@ -1989,6 +2081,7 @@ class Manage extends CI_Controller {
 	}
 	function edit_employee_types()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('employee_types',1,'modify'))
 		{
 			redirect();
@@ -2022,6 +2115,7 @@ class Manage extends CI_Controller {
 	}
 	function view_employee_types()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('employee_types',1,'view'))
 		{
 			redirect();
@@ -2032,6 +2126,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_employee_types()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('employee_types',1,'approve'))
 		{
 			redirect();
@@ -2131,21 +2226,53 @@ class Manage extends CI_Controller {
 			{
 				if($j++==1)
 				{
-					$Approve	=	approve_html("'".base_url()."manage/employee_types_mod_approve/".$value->employetype_modID."','2'");
+					if(checkpageaccess('employee_types',1,'approve'))
+					{
+						$Approve	=	approve_html("'".base_url()."manage/employee_types_mod_approve/".$value->employetype_modID."','2'");
+					}
+					else
+					{
+						$Approve			 			= "";
+						
+					}
+					
 				}
 				else
 				{
 					$Approve	=	'';
 				}
-				$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_employee_types/".$value->employetypeID."/".$value->employetype_modID."','0'");
+				if(checkpageaccess('employee_types',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_employee_types/".$value->employetypeID."/".$value->employetype_modID."','0'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
 			}
 			else
 			{
 				$Approve	=	'';
-				$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_employee_types/".$value->employetypeID."/".$value->employetype_modID."','1'");
+				if(checkpageaccess('employee_types',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_employee_types/".$value->employetypeID."/".$value->employetype_modID."','1'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
 			}
-			
-			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_employee_types/".$value->employetypeID.'/'.$value->employetype_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			if(checkpageaccess('employee_types',1,'modify'))
+			{
+				$edit	=	"<a href='".base_url()."approve_employee_types/".$value->employetypeID.'/'.$value->employetype_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+			$vaules['Action'] 			=	$Approve.$edit.$active;
 			
 			$output[] =$vaules;
 		}
@@ -2154,6 +2281,7 @@ class Manage extends CI_Controller {
 	}
 	function employee_types_mod_approve()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('employee_types',1,'approve'))
 		{
 			redirect();
@@ -2197,6 +2325,7 @@ class Manage extends CI_Controller {
 	/***********************************************************************************************************************************/
 	function employee()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if($this->uri->segment(3))
 		{
 			$whereData	=	array('empID'	=>	$this->uri->segment(3));
@@ -2335,6 +2464,7 @@ class Manage extends CI_Controller {
 	}
 	function add_employee()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('employee',1,'create'))
 		{
 			redirect();
@@ -2421,6 +2551,7 @@ class Manage extends CI_Controller {
 	}
 	function edit_employee()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('employee',1,'modify'))
 		{
 			redirect();
@@ -2522,6 +2653,7 @@ class Manage extends CI_Controller {
 	}
 	function view_employee()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('employee',1,'view'))
 		{
 			redirect();
@@ -2536,6 +2668,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_employee()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('employee',1,'approve'))
 		{
 			redirect();
@@ -2719,22 +2852,53 @@ class Manage extends CI_Controller {
 			{
 				if($j++==1)
 				{
-					$Approve	=	approve_html("'".base_url()."manage/employee_mod_approve/".$value->emp_modID."','2'");
+					if(checkpageaccess('employee',1,'approve'))
+					{
+						$Approve	=	approve_html("'".base_url()."manage/employee_mod_approve/".$value->emp_modID."','2'");
+					}
+					else
+					{
+						$Approve			 			= "";
+						
+					}
+					
 				}
 				else
 				{
 					$Approve	=	'';
 				}
+				if(checkpageaccess('employee',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_employee/".$value->empID."/".$value->emp_modID."','0'");
+				}
+				else
+				{
+					$active	=	'';
+				}
 				
-				$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_employee/".$value->empID."/".$value->emp_modID."','0'");
 			}
 			else
 			{
 				$Approve		=	'';
-				$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_employee/".$value->empID."/".$value->emp_modID."','1'");
+				if(checkpageaccess('employee',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_employee/".$value->empID."/".$value->emp_modID."','1'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
 			}
-			
-			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_employee/".$value->empID.'/'.$value->emp_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			if(checkpageaccess('employee',1,'modify'))
+			{
+				$edit	=	"<a href='".base_url()."approve_employee/".$value->empID.'/'.$value->emp_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+			$vaules['Action'] 			=	$Approve.$edit.$active;
 			
 			$output[] =$vaules;
 		}
@@ -2743,6 +2907,7 @@ class Manage extends CI_Controller {
 	}
 	function employee_mod_approve()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('employee',1,'approve'))
 		{
 			redirect();
@@ -2821,6 +2986,7 @@ class Manage extends CI_Controller {
 	/***********************************************************************************************************************************/
 	function driver()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if($this->uri->segment(3))
 		{
 			$whereData	=	array('driverID'	=>	$this->uri->segment(3));
@@ -2938,6 +3104,7 @@ class Manage extends CI_Controller {
 	}
 	function add_driver()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('driver',1,'create'))
 		{
 			redirect();
@@ -3000,6 +3167,7 @@ class Manage extends CI_Controller {
 	}
 	function edit_driver()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('driver',1,'modify'))
 		{
 			redirect();
@@ -3073,6 +3241,7 @@ class Manage extends CI_Controller {
 	}
 	function view_driver()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('driver',1,'view'))
 		{
 			redirect();
@@ -3083,6 +3252,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_driver()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('driver',1,'approve'))
 		{
 			redirect();
@@ -3212,22 +3382,53 @@ class Manage extends CI_Controller {
 			{
 				if($j++==1)
 				{
-					$Approve	=	approve_html("'".base_url()."manage/driver_mod_approve/".$value->driver_modID."','2'");
+					if(checkpageaccess('driver',1,'approve'))
+					{
+						$Approve	=	approve_html("'".base_url()."manage/driver_mod_approve/".$value->driver_modID."','2'");
+					}
+					else
+					{
+						$Approve			 			= "";
+						
+					}
+					
 				}
 				else
 				{
 					$Approve	=	'';
 				}
+				if(checkpageaccess('driver',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_driver/".$value->driverID."/".$value->driver_modID."','0'");
+				}
+				else
+				{
+					$active	=	'';
+				}
 				
-				$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_driver/".$value->driverID."/".$value->driver_modID."','0'");
 			}
 			else
 			{
 				$Approve		=	'';
-				$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_driver/".$value->driverID."/".$value->driver_modID."','1'");
+				if(checkpageaccess('driver',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_driver/".$value->driverID."/".$value->driver_modID."','1'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
 			}
-			
-			$vaules['Action'] 			=	$Approve."<a href='".base_url()."approve_driver/".$value->driverID.'/'.$value->driver_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>".$active;
+			if(checkpageaccess('driver',1,'modify'))
+			{
+				$edit	=	"<a href='".base_url()."approve_driver/".$value->driverID.'/'.$value->driver_modID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+			}
+			else
+			{
+				$edit	=	"";
+			}
+			$vaules['Action'] 			=	$Approve.$edit.$active;
 			
 			$output[] =$vaules;
 		}
@@ -3236,6 +3437,7 @@ class Manage extends CI_Controller {
 	}
 	function driver_mod_approve()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('driver',1,'approve'))
 		{
 			redirect();
@@ -3314,6 +3516,7 @@ class Manage extends CI_Controller {
 	/***********************************************************************************************************************************/
 	function vehicleowner()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if($this->uri->segment(3))
 		{
 			$whereData	=	array('ownerID'	=>	$this->uri->segment(3));
@@ -3421,6 +3624,7 @@ class Manage extends CI_Controller {
 	}
 	function add_vehicleowner()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('vehicleowner',1,'create'))
 		{
 			redirect();
@@ -3472,6 +3676,7 @@ class Manage extends CI_Controller {
 	}
 	function edit_vehicleowner()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('vehicleowner',1,'modify'))
 		{
 			redirect();
@@ -3526,6 +3731,7 @@ class Manage extends CI_Controller {
 	}
 	function view_vehicleowner()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('vehicleowner',1,'view'))
 		{
 			redirect();
@@ -3536,6 +3742,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_vehicleowner()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('vehicleowner',1,'approve'))
 		{
 			redirect();
@@ -3649,19 +3856,43 @@ class Manage extends CI_Controller {
 			{
 				if($j++==1)
 				{
-					$Approve	=	approve_html("'".base_url()."manage/vehicleowner_mod_approve/".$value->owner_modID."','2'");
+					if(checkpageaccess('vehicleowner',1,'approve'))
+					{
+						$Approve	=	approve_html("'".base_url()."manage/vehicleowner_mod_approve/".$value->owner_modID."','2'");
+					}
+					else
+					{
+						$Approve			 			= "";
+						
+					}
+					
 				}
 				else
 				{
 					$Approve	=	'';
 				}
+				if(checkpageaccess('vehicleowner',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_vehicleowner/".$value->ownerID."/".$value->owner_modID."','0'");
+				}
+				else
+				{
+					$active	=	'';
+				}
 				
-				$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_vehicleowner/".$value->ownerID."/".$value->owner_modID."','0'");
 			}
 			else
 			{
 				$Approve		=	'';
-				$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_vehicleowner/".$value->ownerID."/".$value->owner_modID."','1'");
+				if(checkpageaccess('vehicleowner',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_vehicleowner/".$value->ownerID."/".$value->owner_modID."','1'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
 			}
 			
 			if(checkpageaccess('vehicleowner',1,'modify'))
@@ -3723,6 +3954,7 @@ class Manage extends CI_Controller {
 	/***********************************************************************************************************************************/
 	function contract_consignor()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if($this->uri->segment(3))
 		{
 			$whereData	=	array('consignorID'	=>	$this->uri->segment(3));
@@ -3838,6 +4070,7 @@ class Manage extends CI_Controller {
 	}
 	function add_contract_consignor()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('contract-consignor',1,'create'))
 		{
 			redirect();
@@ -3943,6 +4176,7 @@ class Manage extends CI_Controller {
 	}
 	function edit_contract_consignor()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('contract-consignor',1,'modify'))
 		{
 			redirect();
@@ -4038,6 +4272,7 @@ class Manage extends CI_Controller {
 	}
 	function view_contract_consignor()
 	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		$data['pageTitle']	=	"View Emplyee Types";
 		$data['view']		=	$this->Commonsql_model->select('tblemployetypes',array('employetypeID'=>$this->uri->segment(2)));
 		$this->load->view('admin/contract_consignor/view_contract_consignor',$data);
