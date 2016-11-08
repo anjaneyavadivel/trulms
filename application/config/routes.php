@@ -176,5 +176,8 @@ $route['approve_vehicleowner/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'man
 /**************************************************/
 
 $route['booking'] 									=		'operation/index';
+$route['create-trip-sheet'] 						=		'operation/create_trip_sheet';
+$route['delivery-closure'] 							=		'operation/delivery_closure';
+$route['trip-payment-update'] 						=		'operation/trip_payment_update';
 
 /*****/
