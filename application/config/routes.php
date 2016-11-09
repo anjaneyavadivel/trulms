@@ -173,6 +173,14 @@ $route['view_vehicleowner/([a-zA-Z0-9---_%])+'] 	=		'manage/view_vehicleowner/$1
 $route['approve_vehicleowner/([a-zA-Z0-9---_%])+']	=		'manage/approve_vehicleowner/$1';
 $route['approve_vehicleowner/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_vehicleowner/$1/$1';
 
+
+$route['vehicleagent'] 								=		'manage/vehicleagent';
+$route['add_vehicleagent'] 							=		'manage/add_vehicleagent';
+$route['edit_vehicleagent/([a-zA-Z0-9---_%])+'] 	=		'manage/edit_vehicleagent/$1';
+$route['view_vehicleagent/([a-zA-Z0-9---_%])+'] 	=		'manage/view_vehicleagent/$1';
+$route['approve_vehicleagent/([a-zA-Z0-9---_%])+']	=		'manage/approve_vehicleagent/$1';
+$route['approve_vehicleagent/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_vehicleagent/$1/$1';
+
 /**************************************************/
 
 $route['booking'] 									=		'operation/index';
