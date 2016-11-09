@@ -571,6 +571,44 @@
 					"order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
+				<?php }else if($segment1=='vehicleagent'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/vehicleagent_json',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+						{ "data": "companyName" },
+						{ "data": "phone1" },
+						{ "data": "state" },
+                        { "data": "active" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+					"order": [[0, 'desc' ]],
+                    "dom": 'Rlfrtip'
+                });
+				<?php }else if($segment1=='approve_vehicleagent'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>manage/approve_vehicleagent_json/<?php echo $this->uri->segment(2)?>',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "name" },
+						{ "data": "companyName" },
+						{ "data": "phone1" },
+						{ "data": "state" },
+                        { "data": "active" },
+						{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+                    ],
+					"order": [[0, 'desc' ]],
+                    "dom": 'Rlfrtip'
+                });
 				<?php }else{?>
 						
                 var table = $('#basic-usage').DataTable({

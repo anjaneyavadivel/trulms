@@ -293,7 +293,7 @@ class Commonsql_model extends CI_Model {
 	}
 	function select_all_vowner_mod($id)
 	{
-		$this->db->select('a.owner_modID,a.ownerID,a.contactPer1,a.active,b.name,b.companyName,b.phone1');
+		$this->db->select('*');
 		$this->db->from('tblvehicleowner_mod as a');
 		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
 		$this->db->where('a.ownerID',$id);
@@ -468,6 +468,47 @@ class Commonsql_model extends CI_Model {
 		$this->db->from('tblconsignor_mod as a');
 		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
 		$this->db->where('a.consignor_modID',$id);
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_all_vagent_state()
+	{
+		$this->db->select('a.agentID,a.active,a.dbentrystateID,b.name,b.companyName,b.phone1,d.name as sta_name');
+		$this->db->from('tblvehicleagent as a');
+		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
+		$this->db->join('tbldbentrystates as d','a.dbentrystateID=d.dbentrystateID','inner');
+		$this->db->order_by('agentID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_all_vagent_edit($id)
+	{
+		$this->db->select('*');
+		$this->db->from('tblvehicleagent as a');
+		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
+		$this->db->where('a.agentID',$id);
+		$this->db->order_by('agentID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_all_vagent_mod_state($id)
+	{
+		$this->db->select('a.agent_modID,a.agentID,a.active,a.dbentrystateID,b.name,b.companyName,b.phone1,d.name as sta_name');
+		$this->db->from('tblvehicleagent_mod as a');
+		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
+		$this->db->join('tbldbentrystates as d','a.dbentrystateID=d.dbentrystateID','inner');
+		$this->db->where('a.agentID',$id);
+		$this->db->order_by('a.agent_modID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_all_vagent_mod($id)
+	{
+		$this->db->select('*');
+		$this->db->from('tblvehicleagent_mod as a');
+		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
+		$this->db->where('a.agentID',$id);
+		$this->db->order_by('a.agent_modID','desc');
 		$query	=	$this->db->get();
 		return $query;
 	}
