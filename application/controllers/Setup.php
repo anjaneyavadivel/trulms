@@ -111,8 +111,13 @@ class Setup extends CI_Controller {
         if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-master', 1, 'view')) {
             return FALSE;
         }
+        $userBranchID = $this->session->userdata('SESS_userBranchID');
         $output = array();
-        $whereData = array();
+        if ($userBranchID == 0) {
+            $whereData = array();
+        } else {
+            $whereData = array('active' => 1);
+        }
         // Get user record
         $pages = selectTable('tblpages', $whereData);
         if (isset($pages) && $pages->num_rows() > 0) {
@@ -179,6 +184,7 @@ class Setup extends CI_Controller {
                 $this->session->set_userdata('err', validation_errors());
                 redirect('edit-form-master/' . $pageID);
             }
+            $userBranchID = $this->session->userdata('SESS_userBranchID');
 
             extract($this->input->post());
 
@@ -191,8 +197,11 @@ class Setup extends CI_Controller {
                 'createby' => $this->session->userdata('SESS_userId'),
                 'active' => 1);
 
-            $whereData = array('pageID' => $pageID);
-
+            if ($userBranchID == 0) {
+                $whereData = array('pageID' => $pageID);
+            } else {
+                $whereData = array('active' => 1, 'pageID' => $pageID);
+            }
             $query = updateTable('tblpages', $whereData, $values, 1, 'pageID', $pageID);
 
             // insert data into tblpagealterdetails
@@ -242,9 +251,15 @@ class Setup extends CI_Controller {
         if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-master', 1, 'view')) {
             redirect(base_url() . "login");
         }
+        $userBranchID = $this->session->userdata('SESS_userBranchID');
         $data['pageTitle'] = "View Form Master";
-        $data['pages'] = $this->Commonsql_model->select('tblpages', array('pageID' => $this->uri->segment(2)));
-        $data['pagealt'] = $this->Commonsql_model->select('tblpagealterdetails', array('pageID' => $this->uri->segment(2)));
+        if ($userBranchID == 0) {
+            $data['pages'] = $this->Commonsql_model->select('tblpages', array('pageID' => $this->uri->segment(2)));
+            $data['pagealt'] = $this->Commonsql_model->select('tblpagealterdetails', array('pageID' => $this->uri->segment(2)));
+        } else {
+            $data['pages'] = $this->Commonsql_model->select('tblpages', array('active' => 1, 'pageID' => $this->uri->segment(2)));
+            $data['pagealt'] = $this->Commonsql_model->select('tblpagealterdetails', array('active' => 1, 'pageID' => $this->uri->segment(2)));
+        }
         $this->load->view('admin/form_master/view_form_master', $data);
     }
 
@@ -275,7 +290,13 @@ class Setup extends CI_Controller {
         if (!$this->session->userdata('SESS_userId') || !checkpageaccess('employee-role', 1, 'view')) {
             return FALSE;
         }
+        $userBranchID = $this->session->userdata('SESS_userBranchID');
         $output = array();
+        if ($userBranchID == 0) {
+            $whereData = array();
+        } else {
+            $whereData = array('temprole.active' => 1);
+        }
         $joins = array(
             array(
                 'table' => 'tbldept AS tdept',
@@ -297,7 +318,7 @@ class Setup extends CI_Controller {
             ),
         );
         $columns = 'temprole.*,temp.empCode,temp.empname,tdes.name,tdept.department,trole.roleName';
-        $employeeRolw = get_joins('tblemployee AS temp', $columns, $joins, $whereData = array(), $orWhereData = array(), $group = array(), $order = 'empRoleMapID DESC');
+        $employeeRolw = get_joins('tblemployee AS temp', $columns, $joins, $whereData, $orWhereData = array(), $group = array(), $order = 'empRoleMapID DESC');
 
         if (isset($employeeRolw) && $employeeRolw->num_rows() > 0) {
             foreach ($employeeRolw->result() as $value) {
@@ -423,7 +444,7 @@ class Setup extends CI_Controller {
         if ($userBranchID == 0) {
             $whereData = array('temp.dbentrystateID' => 3, 'temprole.empRoleMapID' => $roleID, 'temp.active' => 1);
         } else {
-            $whereData = array('temp.branchID' => $userBranchID, 'temprole.empRoleMapID' => $roleID, 'temp.dbentrystateID' => 3, 'temp.active' => 1);
+            $whereData = array('temp.branchID' => $userBranchID, 'temprole.empRoleMapID' => $roleID, 'temprole.active' => 1, 'temp.dbentrystateID' => 3, 'temp.active' => 1);
         }
         $joins = array(
             array(
@@ -512,7 +533,7 @@ class Setup extends CI_Controller {
         if ($userBranchID == 0) {
             $whereData = array('temp.dbentrystateID' => 3, 'temprole.empRoleMapID' => $empRoleMapID, 'temp.active' => 1);
         } else {
-            $whereData = array('temp.branchID' => $userBranchID, 'temprole.empRoleMapID' => $empRoleMapID, 'temp.dbentrystateID' => 3, 'temp.active' => 1);
+            $whereData = array('temp.branchID' => $userBranchID, 'temprole.empRoleMapID' => $empRoleMapID, 'temprole.active' => 1, 'temp.dbentrystateID' => 3, 'temp.active' => 1);
         }
         $joins = array(
             array(
@@ -581,7 +602,13 @@ class Setup extends CI_Controller {
         if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-access', 1, 'view')) {
             return FALSE;
         }
+        $userBranchID = $this->session->userdata('SESS_userBranchID');
         $output = array();
+        if ($userBranchID == 0) {
+            $whereData = array();
+        } else {
+            $whereData = array('tpram.active' => 1);
+        }
         $joins = array(
             array(
                 'table' => 'tblpages AS tp',
@@ -613,20 +640,20 @@ class Setup extends CI_Controller {
                 $APPROVE = '';
                 $active = '';
                 $edit = '';
-                if (checkpageaccess('employee-role', 1, 'view')) {
+                if (checkpageaccess('form-access', 1, 'view')) {
                     $view = "<a href='javascript:void(0);' data-val='" . $value->pageRoleMappingID . "'  data-ur='view-form-access' data-vur='view-form-access' id='editviewcallform-btn' role='button' tabindex='0'  class='editviewcallform-btn edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
                 }
-                if (checkpageaccess('employee-role', 1, 'approve')) {
+                if (checkpageaccess('form-access', 1, 'approve')) {
                     $APPROVE = "<a href='javascript:void(0);' data-val='" . $value->pageRoleMappingID . "'  data-ur='approve-form-access' id='editviewcallform-btn' role='button' tabindex='0' class='editviewcallform-btn edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
                 }
-                if (checkpageaccess('employee-role', 1, 'delete')) {
+                if (checkpageaccess('form-access', 1, 'delete')) {
                     if ($value->active == 1) {
                         $active = '<a href="javascript:void(0)" data-tb="pageroleaccessmap" data-val="0" data-id="' . $value->pageRoleMappingID . '"  data-col="pageRoleMappingID" role="button" tabindex="0" class="active-deactive-btn text-danger text-uppercase text-strong text-sm mr-10 ">De-Active</a>';
                     } else {
                         $active = '<a href="javascript:void(0)" data-tb="pageroleaccessmap" data-val="1" data-id="' . $value->pageRoleMappingID . '"  data-col="pageRoleMappingID" role="button" tabindex="0" class="active-deactive-btn text-success text-uppercase text-strong text-sm mr-10">Active</a>';
                     }
                 }
-                if (checkpageaccess('employee-role', 1, 'modify')) {
+                if (checkpageaccess('form-access', 1, 'modify')) {
                     $edit = "<a href='javascript:void(0);' data-val='" . $value->pageRoleMappingID . "'  data-ur='view-form-access' data-vur='edit-form-access' id='editviewcallform-btn' role='button' tabindex='0' class='editviewcallform-btn edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
                 }
                 $vaules['Action'] = $view . $edit . $APPROVE . $active;
@@ -778,7 +805,12 @@ class Setup extends CI_Controller {
         $whereData = array('dbentrystateID' => 3, 'active' => 1, 'roleID !=' => 1);
         $data['role'] = selectTable('tblrole', $whereData);
 
-        $whereData = array('pageRoleMappingID' => $id);
+        $userBranchID = $this->session->userdata('SESS_userBranchID');
+        if ($userBranchID == 0) {
+            $whereData = array('pageRoleMappingID' => $id);
+        } else {
+            $whereData = array('pageRoleMappingID' => $id, 'active' => 1);
+        }
         $data['pageroleaccessmap'] = selectTable('tblpageroleaccessmap', $whereData);
 
         $data['pageTitle'] = "Form Access";
