@@ -96,9 +96,26 @@ var Mainnew = function () {
                         data: values,
                         success: function (data) {
                             if (data.substring(0, 5) == "Error") {
-                                $('#form4SubmitMsg').html('<font style="color: #fa3031">'+data+'</font>');
-                            }else{
+                                $('#form4SubmitMsg').html('<font style="color: #fa3031">' + data + '</font>');
+                            } else {
+                                $('#basic-usage').dataTable().fnDestroy();
                                 $('#addcallform-btn').click();
+                                var table = $('#basic-usage').DataTable({
+                                    "ajax": base_path + 'form-access-json',
+                                    "columns": [
+                                        {"data": "ID"},
+                                        {"data": "menuCaption"},
+                                        {"data": "roleName"},
+                                        {"data": "active"},
+                                        {"data": "Action"}
+                                    ],
+                                    "aoColumnDefs": [
+                                        {'bSortable': false, 'aTargets': [4]}
+                                    ],
+                                    "order": [[0, 'desc']],
+                                    "dom": 'Rlfrtip'
+                                });
+                                //table.ajax.reload();
                             }
                         }
                     });
@@ -118,8 +135,8 @@ var Mainnew = function () {
                 var id = $(this).attr('data-val');
                 var url = base_path + suburl;
                 $.post(url, {csrf_test_name: $.cookie('csrf_cookie_name'),
-                    id:id,
-                    viewurl:viewurl,
+                    id: id,
+                    viewurl: viewurl,
                 }, function (res) {
                     //if (res.length>0) {
                     $('#ajaxLoadDiv').html(res);
