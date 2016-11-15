@@ -74,6 +74,9 @@ $route['form-master-json'] = 'setup/form_master_json';
 $route['add-form-master'] = 'setup/add_form_master';
 $route['view-form-master/(:num)'] = 'setup/view_form_master/$1';
 $route['edit-form-master/(:num)'] = 'setup/edit_form_master/$1';
+$route['approve-form-master-list/(:num)'] = 'setup/approve_form_master/$1';
+$route['approve-form-master-json/(:num)'] = 'setup/approve_form_master_json/$1';
+$route['view-form-master-history/(:num)'] = 'setup/view_form_master_history/$1';
 
 $route['employee-role'] = 'setup/employee_role';
 $route['employee-role-json'] = 'setup/employee_role_json';

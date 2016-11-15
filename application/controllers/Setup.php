@@ -17,15 +17,15 @@ class Setup extends CI_Controller {
         }
     }
 
-    ////////// employee role
+    ////////// form master
     function form_master() {
         if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-master', 1, 'view')) {
             redirect(base_url() . "login");
         }
         if ($_POST) {
-            $whereData = array('deptID' => $this->uri->segment(3));
+            $whereData = array('pageID' => $this->uri->segment(3));
             $updateData = array('active' => $this->uri->segment(4));
-            $upt = updateTable('tbldept', $whereData, $updateData, $isStoreMod = 1, $modIdName = 'deptID', $modId = $this->uri->segment(3));
+            $upt = updateTable('tblpages', $whereData, $updateData, $isStoreMod = 1, $modIdName = 'pageID', $modId = $this->uri->segment(3));
             if ($upt) {
                 $this->session->set_userdata('suc', 'Forms status successfully cshanged...!');
                 redirect('employee-role');
@@ -150,7 +150,7 @@ class Setup extends CI_Controller {
                     $view = "<a href='" . base_url() . "view-form-master/" . $value->pageID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
                 }
                 if (checkpageaccess('form-master', 1, 'approve')) {
-                    $APPROVE = '';
+                    $APPROVE = "<a href='" . base_url() . "approve-form-master-list/" . $value->pageID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Form History</a>";
                 }
                 if (checkpageaccess('form-master', 1, 'delete')) {
                     if ($value->active == 1) {
@@ -261,6 +261,98 @@ class Setup extends CI_Controller {
             $data['pagealt'] = $this->Commonsql_model->select('tblpagealterdetails', array('active' => 1, 'pageID' => $this->uri->segment(2)));
         }
         $this->load->view('admin/form_master/view_form_master', $data);
+    }
+
+    function approve_form_master($pageID = '') {
+        if (trim($pageID) == '' || !$this->session->userdata('SESS_userId') || !checkpageaccess('form-master', 1, 'view')) {
+            redirect(base_url() . "login");
+        }
+
+        $data['pageTitle'] = "History Form";
+        $data['table'] = "History Form";
+        $this->load->view('admin/form_master/approve_form_master', $data);
+    }
+
+    function approve_form_master_json($pageID = '') {
+        if (trim($pageID) == '' || !$this->session->userdata('SESS_userId') || !checkpageaccess('form-master', 1, 'view')) {
+            return FALSE;
+        }
+        $userBranchID = $this->session->userdata('SESS_userBranchID');
+        $output = array();
+        if ($userBranchID == 0) {
+            $whereData = array('tlpagemod.pageID' => $pageID);
+        } else {
+            $whereData = array('tlpagemod.pageID' => $pageID, 'tlpagemod.active' => 1);
+        }
+        // Get user record
+        $joins = array(
+            array(
+                'table' => 'tblemployee AS tlemp',
+                'condition' => 'tlemp.empID = tlpagemod.createby',
+                'jointype' => 'LEFT'
+            ),
+        );
+        $columns = 'tlpagemod.*,tlemp.empname';
+        $pages = get_joins('tblpages_mod AS tlpagemod', $columns, $joins, $whereData, $orWhereData = array(), $group = array(), $order = 'page_modID DESC');
+
+        if (isset($pages) && $pages->num_rows() > 0) {
+            foreach ($pages->result() as $value) {
+                $vaules = array();
+                $vaules['page_modID'] = $value->page_modID;
+                $vaules['createdon'] = date("d-m-Y", strtotime($value->createdon));
+                if ($value->parentID == 1) {
+                    $vaules['parentID'] = 'Master';
+                } else if ($value->parentID == 2) {
+                    $vaules['parentID'] = 'Setup';
+                } else if ($value->parentID == 3) {
+                    $vaules['parentID'] = 'Operations';
+                } else if ($value->parentID == 4) {
+                    $vaules['parentID'] = 'Report';
+                }
+                $vaules['menuCaption'] = $value->menuCaption;
+                $vaules['url'] = $value->url;
+                $vaules['createby'] = $value->empname;
+                if ($value->active == 1) {
+                    $row = '<span class="label bg-greensea">Active</span>';
+                } else {
+                    $row = '<span class="label bg-red">De-Active</span>';
+                }
+
+                $vaules['active'] = $row;
+                $view = '';
+                $APPROVE = '';
+                $active = '';
+                $edit = '';
+                if (checkpageaccess('form-master', 1, 'view')) {
+                    $view = "<a href='" . base_url() . "view-form-master-history/" . $value->page_modID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+                }
+                $APPROVE = "";
+                $active = "";
+                $edit = "";
+                $vaules['Action'] = $view . $edit . $APPROVE . $active;
+
+                $output[] = $vaules;
+            }
+        }
+
+        echo json_encode(array('data' => $output), true);
+    }
+    function view_form_master_history() {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-master', 1, 'view')) {
+            redirect(base_url() . "login");
+        }
+        $userBranchID = $this->session->userdata('SESS_userBranchID');
+        $data['pageTitle'] = "View Form Master";
+        if ($userBranchID == 0) {
+            $data['pages'] = $this->Commonsql_model->select('tblpages_mod', array('page_modID' => $this->uri->segment(2)));
+            //$data['pagealt'] = $this->Commonsql_model->select('tblpagealterdetails_mod', array('pageAlterDetailsID' => $this->uri->segment(2)));
+        } else {
+            $data['pages'] = $this->Commonsql_model->select('tblpages_mod', array('active' => 1, 'page_modID' => $this->uri->segment(2)));
+            //$data['pagealt'] = $this->Commonsql_model->select('tblpagealterdetails_mod', array('active' => 1, 'pageAlterDetailsID' => $this->uri->segment(2)));
+        }
+        $v=$data['pages']->row();
+        $data['pagesID'] = $v->pageID;
+        $this->load->view('admin/form_master/view_form_master_history', $data);
     }
 
     ////////// employee role
