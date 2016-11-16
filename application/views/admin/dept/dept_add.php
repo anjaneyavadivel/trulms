@@ -589,7 +589,7 @@
                                             </ul>
 
                                         </li>
-                                        <li class="remove"><a role="button" tabindex="0" class="tile-close"><i class="fa fa-times"></i></a></li>
+                                        <li class="remove"><a role="button" tabindex="0" ><i class="fa fa-times"></i></a></li>
                                     </ul>
                                 </div>
                                 <!-- /tile header -->

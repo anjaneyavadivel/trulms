@@ -55,7 +55,7 @@
                                     
                                     <ul class="controls">
                                         
-                                        <li><a href="<?= base_url()?>add_designation" title="Add Department" role="button" tabindex="0" class="tile-close">Add New  <i class="fa fa-plus"></i></a></li>
+                                        <li><a href="<?= base_url()?>add_designation" title="Add Department" role="button" tabindex="0" >Add New  <i class="fa fa-plus"></i></a></li>
                                     </ul>
                                 </div>
                                 <!-- /tile header -->
