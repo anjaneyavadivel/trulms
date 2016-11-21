@@ -28,10 +28,10 @@ class Setup extends CI_Controller {
             $upt = updateTable('tblpages', $whereData, $updateData, $isStoreMod = 1, $modIdName = 'pageID', $modId = $this->uri->segment(3));
             if ($upt) {
                 $this->session->set_userdata('suc', 'Forms status successfully cshanged...!');
-                redirect('employee-role');
+                redirect('form-master');
             } else {
                 $this->session->set_userdata('err', 'Error Please try again..!');
-                redirect('employee-role');
+                redirect('form-master');
             }
         }
 
@@ -389,7 +389,12 @@ class Setup extends CI_Controller {
         } else {
             $whereData = array('temprole.active' => 1);
         }
-        $joins = array(
+        $joins = array( 
+            array(
+                'table' => 'tblemployee AS temp',
+                'condition' => 'temprole.empID = temp.empID',
+                'jointype' => 'LEFT'
+            ),
             array(
                 'table' => 'tbldept AS tdept',
                 'condition' => 'tdept.deptID = temp.deptid',
@@ -397,10 +402,6 @@ class Setup extends CI_Controller {
             ), array(
                 'table' => 'tbldesignation AS tdes',
                 'condition' => 'tdes.desigID = temp.designation',
-                'jointype' => 'LEFT'
-            ), array(
-                'table' => 'tblemprolemap AS temprole',
-                'condition' => 'temprole.empID = temp.empID',
                 'jointype' => 'LEFT'
             ),
             array(
@@ -410,11 +411,11 @@ class Setup extends CI_Controller {
             ),
         );
         $columns = 'temprole.*,temp.empCode,temp.empname,tdes.name,tdept.department,trole.roleName';
-        $employeeRolw = get_joins('tblemployee AS temp', $columns, $joins, $whereData, $orWhereData = array(), $group = array(), $order = 'empRoleMapID DESC');
+        $employeeRolw = get_joins('tblemprolemap AS temprole', $columns, $joins, $whereData, $orWhereData = array(), $group = array(), $order = 'empRoleMapID DESC');
 
+                $vaules = array();
         if (isset($employeeRolw) && $employeeRolw->num_rows() > 0) {
             foreach ($employeeRolw->result() as $value) {
-                $vaules = array();
                 $vaules['ID'] = $value->empRoleMapID;
                 $vaules['empCode'] = $value->empCode;
                 $vaules['empname'] = $value->empname;
@@ -436,7 +437,7 @@ class Setup extends CI_Controller {
                     $view = "<a href='" . base_url() . "view-employee-role/" . $value->empRoleMapID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
                 }
                 if (checkpageaccess('employee-role', 1, 'approve')) {
-                    $APPROVE = "<a href='" . base_url() . "approve-employee-role/" . $value->empRoleMapID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
+                    $APPROVE = "<a href='" . base_url() . "approve-employee-role/" . $value->empRoleMapID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>History / APPROVE</a>";
                 }
                 if (checkpageaccess('employee-role', 1, 'delete')) {
                     if ($value->active == 1) {
@@ -539,7 +540,11 @@ class Setup extends CI_Controller {
             $whereData = array('temp.branchID' => $userBranchID, 'temprole.empRoleMapID' => $roleID, 'temprole.active' => 1, 'temp.dbentrystateID' => 3, 'temp.active' => 1);
         }
         $joins = array(
-            array(
+             array(
+                'table' => 'tblemployee AS temp',
+                'condition' => 'temprole.empID = temp.empID',
+                'jointype' => 'LEFT'
+            ),array(
                 'table' => 'tbldept AS tdept',
                 'condition' => 'tdept.deptID = temp.deptid',
                 'jointype' => 'LEFT'
@@ -548,17 +553,13 @@ class Setup extends CI_Controller {
                 'condition' => 'tdes.desigID = temp.designation',
                 'jointype' => 'LEFT'
             ), array(
-                'table' => 'tblemprolemap AS temprole',
-                'condition' => 'temprole.empID = temp.empID',
-                'jointype' => 'LEFT'
-            ), array(
                 'table' => 'tblrole AS trole',
                 'condition' => 'trole.roleID = temprole.roleID',
                 'jointype' => 'LEFT'
             ),
         );
         $columns = 'temprole.*,temp.empCode,temp.empname,tdes.name,tdept.department,trole.roleName';
-        $data['employeeRolw'] = get_joins('tblemployee AS temp', $columns, $joins, $whereData, $orWhereData = array(), $group = array(), $order = 'empRoleMapID DESC');
+        $data['employeeRolw'] = get_joins('tblemprolemap AS temprole', $columns, $joins, $whereData, $orWhereData = array(), $group = array(), $order = 'empRoleMapID DESC');
 
         $whereData = array('dbentrystateID' => 3, 'active' => 1);
         // Get user record
@@ -665,6 +666,108 @@ class Setup extends CI_Controller {
         $data['empRoleMapID'] = $empRoleMapID;
         $data['pageTitle'] = "Edit Eployee Role Setup";
         $this->load->view('admin/employee_role/edit_employee_role', $data);
+    }
+    
+    function approve_employee_role($employee_role_id='') {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('employee-role', 1, 'approve')) {
+            redirect(base_url() . "login");
+        }
+        if ($_POST) {
+            $whereData = array('empRoleMapID' => $this->uri->segment(3));
+            $updateData = array('active' => $this->uri->segment(4));
+            $upt = updateTable('tblemprolemap', $whereData, $updateData, $isStoreMod = 1, $modIdName = 'empRoleMapID', $modId = $this->uri->segment(3));
+            if ($upt) {
+                $this->session->set_userdata('suc', 'Eployee Role Setup status successfully changed...!');
+                redirect('approve-employee-role/'.$employee_role_id);
+            } else {
+                $this->session->set_userdata('err', 'Error Please try again..!');
+                redirect('approve-employee-role/'.$employee_role_id);
+            }
+        }
+
+        $data['pageTitle'] = "Employee Role";
+        $data['table'] = "Employee Role";
+        $this->load->view('admin/employee_role/approve_employee_role', $data);
+    }
+
+    function approve_employee_role_json($employee_role_id='') {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('employee-role', 1, 'approve')) {
+            return FALSE;
+        }
+        $userBranchID = $this->session->userdata('SESS_userBranchID');
+        $output = array();
+        if ($userBranchID == 0) {
+            $whereData = array('empRoleMapID'=>$employee_role_id);
+        } else {
+            $whereData = array('empRoleMapID'=>$employee_role_id,'temprole.active' => 1);
+        }
+        $joins = array(
+            array(
+                'table' => 'tbldept AS tdept',
+                'condition' => 'tdept.deptID = temp.deptid',
+                'jointype' => 'LEFT'
+            ), array(
+                'table' => 'tbldesignation AS tdes',
+                'condition' => 'tdes.desigID = temp.designation',
+                'jointype' => 'LEFT'
+            ), array(
+                'table' => 'tblemprolemap_mod AS temprole',
+                'condition' => 'temprole.empID = temp.empID',
+                'jointype' => 'LEFT'
+            ),
+            array(
+                'table' => 'tblrole AS trole',
+                'condition' => 'trole.roleID = temprole.roleID',
+                'jointype' => 'LEFT'
+            ),
+        );
+        $columns = 'temprole.*,temp.empCode,temp.empname,tdes.name,tdept.department,trole.roleName';
+        $employeeRolw = get_joins('tblemployee AS temp', $columns, $joins, $whereData, $orWhereData = array(), $group = array(), $order = 'empRoleMapID DESC');
+
+        if (isset($employeeRolw) && $employeeRolw->num_rows() > 0) {
+            foreach ($employeeRolw->result() as $value) {
+                $vaules = array();
+                $vaules['ID'] = $value->empRoleMapID;
+                $vaules['createdon'] = date("d-m-Y", strtotime($value->createdon));
+                $vaules['empCode'] = $value->empCode;
+                $vaules['empname'] = $value->empname;
+                $vaules['name'] = $value->name;
+                $vaules['department'] = $value->department;
+                $vaules['roleName'] = $value->roleName;
+                if ($value->active == 1) {
+                    $row = '<span class="label bg-greensea">Active</span>';
+                } else {
+                    $row = '<span class="label bg-red">De-Active</span>';
+                }
+
+                $vaules['active'] = $row;
+                $view = '';
+                $APPROVE = '';
+                $active = '';
+                $edit = '';
+                if (checkpageaccess('employee-role', 1, 'view')) {
+                    $view = "<a href='" . base_url() . "view-employee-role/" . $value->empRoleMapID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+                }
+                if (checkpageaccess('employee-role', 1, 'approve')) {
+                    $APPROVE = "<a href='" . base_url() . "approve-employee-role/" . $value->empRoleMapID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>History / APPROVE</a>";
+                }
+                if (checkpageaccess('employee-role', 1, 'delete')) {
+                    if ($value->active == 1) {
+                        $active = '<a href="javascript:void(0)" data-tb="emprolemap" data-val="0" data-id="' . $value->empRoleMapID . '"  data-col="empRoleMapID" role="button" tabindex="0" class="active-deactive-btn text-danger text-uppercase text-strong text-sm mr-10 ">De-Active</a>';
+                    } else {
+                        $active = '<a href="javascript:void(0)" data-tb="emprolemap" data-val="1" data-id="' . $value->empRoleMapID . '"  data-col="empRoleMapID" role="button" tabindex="0" class="active-deactive-btn text-success text-uppercase text-strong text-sm mr-10">Active</a>';
+                    }
+                }
+                if (checkpageaccess('employee-role', 1, 'modify')) {
+                    $edit = "<a href='" . base_url() . "edit-employee-role/" . $value->empRoleMapID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+                }
+                $vaules['Action'] = $view . $edit . $APPROVE . $active;
+
+                $output[] = $vaules;
+            }
+        }
+
+        echo json_encode(array('data' => $output), true);
     }
 
 ////////// form access

@@ -343,9 +343,32 @@
 				<?php }else if($segment1=='employee-role'){
 					?>
 					var table = $('#basic-usage').DataTable({
+                                            "processing": true,
+        "serverSide": true,
                     "ajax": '<?php echo base_url()?>employee-role-json',
                     "columns": [
                         { "data": "ID" },
+                        { "data": "empCode" },
+                        { "data": "empname" },
+                        { "data": "name" },
+                        { "data": "department" },
+                        { "data": "roleName" },
+                        { "data": "active" },
+			{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ 7] }
+                    ],
+                    "order": [[0, 'desc' ]],
+                    "dom": 'Rlfrtip'
+                });
+				<?php }else if($segment1=='approve-employee-role'){
+					?>
+					var table = $('#basic-usage').DataTable({
+                    "ajax": '<?php echo base_url()?>approve-employee-role-json/<?php echo $this->uri->segment(2)?>',
+                    "columns": [
+                        { "data": "ID" },
+                        { "data": "createdon" },
                         { "data": "empCode" },
                         { "data": "empname" },
                         { "data": "name" },
