@@ -80,7 +80,7 @@ class Welcome extends CI_Controller {
         $check_column = $this->input->post('tbcol', TRUE);
         $whereData = array($check_column => $id);
         $updateData = array('active' => $status);
-        $upt = $this->Commonsql_model->updateTable($table_name, $whereData, $updateData);
+        $upt = updateTable($table_name, $whereData, $updateData, $isStoreMod = 1, $check_column, $id);
         if ($upt > 0) {
             if($status){
             $this->session->set_userdata('suc','Success! Activated successfully.');

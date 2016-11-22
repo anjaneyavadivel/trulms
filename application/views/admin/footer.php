@@ -340,6 +340,24 @@
                     "order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'
                 });
+                var table = $('#basic-usage1').DataTable({
+                    "ajax": '<?php echo base_url()?>approve-page-alter-json/<?= $this->uri->segment(2)?>',
+                    "columns": [
+                        { "data": "page_modID" },
+                        { "data": "createdon" },
+                        { "data": "parentID" },
+                        { "data": "menuCaption" },
+                        { "data": "url" },
+                        { "data": "createby" },
+                        { "data": "active" },
+			{ "data": "Action" }
+                    ],
+                    "aoColumnDefs": [
+                      { 'bSortable': false, 'aTargets': [ 7] }
+                    ],
+                    "order": [[0, 'desc' ]],
+                    "dom": 'Rlfrtip'
+                });
 				<?php }else if($segment1=='employee-role'){
 					?>
 					var table = $('#basic-usage').DataTable({

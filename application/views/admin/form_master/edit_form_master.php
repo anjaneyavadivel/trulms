@@ -166,15 +166,26 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!--                            <div class="form-group col-md-6">
-                                                                    <label class="col-sm-10 control-label">Default Approver RoleID</label>
-                                                                    <div class="col-sm-2">
-                                                                        <div class="onoffswitch labeled  greensea inline-block">
-                                                                            <input type="checkbox" name="defaultApproverRoleID" class="onoffswitch-checkbox" id="defaultApproverRoleID" checked="" value="1">
-                                                                            <label class="onoffswitch-label" for="defaultApproverRoleID"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>-->
+                                   <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="col-sm-4 control-label">Default Approver Role</label>
+                                
+                                <div class="col-sm-6">
+                                    <select name="defaultApproverRoleID" class="form-control mb-10" data-parsley-trigger="change" >
+                                    <option value="">Select option...</option>
+                                     <?php
+                                    if (isset($role) && $role->num_rows() > 0){
+                                        foreach ($role->result() AS $rol) {
+                                            ?>
+                                    <option value="<?= $rol->roleID ?>" <?php if ($v1->defaultApproverRoleID == $rol->roleID) { echo 'selected';} ?>><?= $rol->roleName ?></option>
+                                    <?php
+                                    }}
+                                    ?>
+                                </select>
+                                </div> 
+                                
+                            </div>
+                        </div>
                                 </div>
                             </div>
                             <!-- /tile body --> 

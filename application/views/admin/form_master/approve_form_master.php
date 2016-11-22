@@ -16,7 +16,7 @@
 
         <div class="pageheader">
 
-            <h2><?= $pageTitle ?> Master</h2>
+            <h2><?= $pageTitle ?> Master History</h2>
 
             <div class="page-bar">
 
@@ -28,7 +28,7 @@
                         <a href="<?= base_url() ?>form-master">Form Master</a>
                     </li>
                     <li>
-                        <a href="#"><?= $pageTitle ?> Master</a>
+                        <a href="#"><?= $pageTitle ?> Master History</a>
                     </li>
 
                 </ul>
@@ -48,8 +48,8 @@
 
                     <!-- tile header -->
                     <div class="tile-header bg-greensea dvd dvd-btm">
-                        <h1 class="custom-font"><strong><?= $pageTitle ?></strong> Master</h1>
-                        
+                        <h1 class="custom-font"><strong><?= $pageTitle ?></strong> History</h1>
+
                     </div>
                     <!-- /tile header -->
 
@@ -72,12 +72,45 @@
 
                             </table>
                         </div>
+
                     </div>
                     <!-- /tile body -->
 
                 </section>
                 <!-- /tile -->
+                <section class="tile">
 
+                    <!-- tile header -->
+                    <div class="tile-header bg-greensea dvd dvd-btm">
+                        <h1 class="custom-font"><strong><?= $pageTitle1 ?></strong> History</h1>
+
+                    </div>
+                    <!-- /tile header -->
+
+                    <!-- tile body -->
+                    <div class="tile-body">
+                        <div class="table-responsive">
+                            <table class="table table-custom" id="basic-usage">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Updated Date</th>
+                                        <th>Menu Name</th>
+                                        <th>Form Name</th>
+                                        <th>Url</th>
+                                        <th>Updated By</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                            </table>
+                        </div>
+
+                    </div>
+                    <!-- /tile body -->
+
+                </section>
 
             </div>
             <!-- /col -->
