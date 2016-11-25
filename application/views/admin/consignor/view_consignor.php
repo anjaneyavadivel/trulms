@@ -34,6 +34,11 @@
           <!-- /tile header --> 
           <div class="tile-header dvd bg-greensea dvd-btm">
                                     <h1 class="custom-font"><strong>Consignor</strong> </h1>
+                                     <?php if(checkpageaccess('consignor',1,'modify'))
+										{
+											?>
+                                        <li><a href="<?= base_url()?>edit-consignor" title="Edit Consignor" role="button" tabindex="0" >Edit  <i class="fa fa-pencil-square-o"></i></a></li>
+                                        <?php }?>
                                     
                                 </div>
           <!-- tile body -->
@@ -143,7 +148,7 @@
               </div>
               <div class="tile-footer text-right bg-tr-black lter col-md-3 dvd dvd-top"> 
               <!-- SUBMIT BUTTON -->
-              <a  href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="active_deactive_class('<?= base_url()?>consignor','3')" class="btn btn-lightred">Back</a>
+              <a  href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="active_deactive_class('<?= base_url()?>consignor','3')" class="btn btn-warning"><i class="fa fa-hand-o-left"></i> Go Back</a>
             </div>
             </div>
             

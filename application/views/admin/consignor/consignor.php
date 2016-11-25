@@ -50,8 +50,11 @@
                                     <h1 class="custom-font"><strong> Consignor</strong> Master</h1>
                                     
                                     <ul class="controls">
-                                        
+                                        <?php if(checkpageaccess('consignor',1,'create'))
+										{
+											?>
                                         <li><a href="<?= base_url()?>add-consignor" title="Add  Consignor" role="button" tabindex="0" >Add New  <i class="fa fa-plus"></i></a></li>
+                                        <?php }?>
                                     </ul>
                                 </div>
                                 <!-- /tile header -->
