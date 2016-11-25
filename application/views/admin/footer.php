@@ -343,17 +343,18 @@
                 var table = $('#basic-usage1').DataTable({
                     "ajax": '<?php echo base_url()?>approve-page-alter-json/<?= $this->uri->segment(2)?>',
                     "columns": [
-                        { "data": "page_modID" },
+                        { "data": "pageAlterDetails_modID" },
                         { "data": "createdon" },
-                        { "data": "parentID" },
-                        { "data": "menuCaption" },
-                        { "data": "url" },
+                        { "data": "iscreateApproveRequired" },
+                        { "data": "ismodifyApproveRequired" },
+                        { "data": "isSelfEditAllowed" },
+                        { "data": "isSelfApprovalAllowed" },
                         { "data": "createby" },
                         { "data": "active" },
 			{ "data": "Action" }
                     ],
                     "aoColumnDefs": [
-                      { 'bSortable': false, 'aTargets': [ 7] }
+                      { 'bSortable': false, 'aTargets': [ 8] }
                     ],
                     "order": [[0, 'desc' ]],
                     "dom": 'Rlfrtip'

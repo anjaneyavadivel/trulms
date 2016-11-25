@@ -61,9 +61,10 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Updated Date</th>
-                                        <th>Menu Name</th>
-                                        <th>Form Name</th>
-                                        <th>Url</th>
+                                        <th>Create Approve</th>
+                                        <th>Modify Approve</th>
+                                        <th>Self Edit Allowed</th>
+                                        <th>Self Approval Allowed</th>
                                         <th>Updated By</th>
                                         <th>Status</th>
                                         <th>Action</th>

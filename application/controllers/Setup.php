@@ -339,7 +339,7 @@ class Setup extends CI_Controller {
                 $APPROVE = '';
                 $active = '';
                 $edit = '';
-                if (checkpageaccess('form-master', 1, 'view')) {
+                if (checkpageaccess('form-master', 1, 'approve')) {
                     $view = "<a href='" . base_url() . "view-form-master-history/" . $value->page_modID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
                 }
                 $APPROVE = "";
@@ -377,37 +377,46 @@ class Setup extends CI_Controller {
         $userBranchID = $this->session->userdata('SESS_userBranchID');
         $output = array();
         if ($userBranchID == 0) {
-            $whereData = array('tlpagemod.pageID' => $pageID);
+            $whereData = array('tlpagealtmod.pageID' => $pageID);
         } else {
-            $whereData = array('tlpagemod.pageID' => $pageID, 'tlpagemod.active' => 1);
+            $whereData = array('tlpagealtmod.pageID' => $pageID, 'tlpagealtmod.active' => 1);
         }
         // Get user record
         $joins = array(
             array(
                 'table' => 'tblemployee AS tlemp',
-                'condition' => 'tlemp.empID = tlpagemod.createby',
+                'condition' => 'tlemp.empID = tlpagealtmod.createby',
                 'jointype' => 'LEFT'
             ),
         );
-        $columns = 'tlpagemod.*,tlemp.empname';
-        $pages = get_joins('tblpages_mod AS tlpagemod', $columns, $joins, $whereData, $orWhereData = array(), $group = array(), $order = 'page_modID DESC');
+        $columns = 'tlpagealtmod.*,tlemp.empname';
+        $pages = get_joins('tblpagealterdetails_mod AS tlpagealtmod', $columns, $joins, $whereData, $orWhereData = array(), $group = array(), $order = 'pageAlterDetails_modID DESC');
 
         if (isset($pages) && $pages->num_rows() > 0) {
             foreach ($pages->result() as $value) {
                 $vaules = array();
-                $vaules['page_modID'] = $value->page_modID;
+                $vaules['pageAlterDetails_modID'] = $value->pageAlterDetails_modID;
                 $vaules['createdon'] = date("d-m-Y", strtotime($value->createdon));
-                if ($value->parentID == 1) {
-                    $vaules['parentID'] = 'Master';
-                } else if ($value->parentID == 2) {
-                    $vaules['parentID'] = 'Setup';
-                } else if ($value->parentID == 3) {
-                    $vaules['parentID'] = 'Operations';
-                } else if ($value->parentID == 4) {
-                    $vaules['parentID'] = 'Report';
+                if ($value->iscreateApproveRequired == 1) {
+                    $vaules['iscreateApproveRequired'] = 'Yes';
+                } else {
+                    $vaules['iscreateApproveRequired'] = 'No';
                 }
-                $vaules['menuCaption'] = $value->menuCaption;
-                $vaules['url'] = $value->url;
+                if ($value->ismodifyApproveRequired == 1) {
+                    $vaules['ismodifyApproveRequired'] = 'Yes';
+                } else {
+                    $vaules['ismodifyApproveRequired'] = 'No';
+                }
+                if ($value->isSelfEditAllowed == 1) {
+                    $vaules['isSelfEditAllowed'] = 'Yes';
+                } else {
+                    $vaules['isSelfEditAllowed'] = 'No';
+                }
+                if ($value->isSelfApprovalAllowed == 1) {
+                    $vaules['isSelfApprovalAllowed'] = 'Yes';
+                } else {
+                    $vaules['isSelfApprovalAllowed'] = 'No';
+                }
                 $vaules['createby'] = $value->empname;
                 if ($value->active == 1) {
                     $row = '<span class="label bg-greensea">Active</span>';
@@ -420,8 +429,8 @@ class Setup extends CI_Controller {
                 $APPROVE = '';
                 $active = '';
                 $edit = '';
-                if (checkpageaccess('form-master', 1, 'view')) {
-                    $view = "<a href='" . base_url() . "view-form-master-history/" . $value->page_modID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+                if (checkpageaccess('form-master', 1, 'approve')) {
+                    $view = "<a href='" . base_url() . "view-form-alter-history/" . $value->pageAlterDetails_modID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
                 }
                 $APPROVE = "";
                 $active = "";
