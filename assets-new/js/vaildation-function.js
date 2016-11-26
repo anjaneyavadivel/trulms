@@ -52,20 +52,7 @@ $().ready(function() {
 		});
 		
 		// form4 signup form on keyup and submit
-		$("#add_depatment").validate({
-			rules: {
-				department: {
-					required: true,
-					maxlength: 4
-				},
-				description: {
-					required: true,
-					maxlength: 4
-				},
-				
-			},
-			
-		});
+		
 
 		
 

@@ -27,7 +27,7 @@
                                     <a href="<?= base_url()?>department">Department</a>
                                 </li>
                                 <li>
-                                    <a href="javascript::">Approve Department</a>
+                                    <a href="javascript::">Department  History</a>
                                 </li>
                             </ul>
                             
@@ -50,7 +50,7 @@
 
                                 <!-- tile header -->
                                 <div class="tile-header bg-greensea dvd dvd-btm">
-                                    <h1 class="custom-font"><strong>Department Master</strong></h1>
+                                    <h1 class="custom-font"><strong>Department History</strong></h1>
                                      <?php if(checkpageaccess('department',1,'create')){?>
                                     <ul class="controls">
                                        
@@ -131,7 +131,7 @@
                                 <div class="tile-footer text-right bg-tr-black lter dvd dvd-top">
                                     <!-- SUBMIT BUTTON -->
                                     <a  href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="active_deactive_class('<?= base_url()?>department','3')" class="btn btn-warning"><i class="fa fa-hand-o-left"></i> Go Back</a>
-                                    <input type="submit" class="btn btn-default" id="form4Submit" value="Submit" name="save">
+                                    <input type="submit" class="btn bg-greensea" id="form4Submit" value="Submit" name="save">
                                 </div>
                                 <!-- /tile footer -->
 

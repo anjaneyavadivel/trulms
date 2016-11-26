@@ -32,6 +32,23 @@
         </div>
     </div>
 </div>
+<div class="modal splash fade" id="form-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title custom-font">Confirmation!</h3>
+            </div>
+            <div class="modal-body">
+                <p id="confirmation-msg1">Are you sure you would like to Add this record?</p>
+            </div>
+            
+            <div class="modal-footer" id="form_sub_enable">
+                <a href="javascript::" class="btn btn-default btn-border submit-form-btn">Yes</a>
+                <button class="btn btn-default btn-border activedeactiveconf-close" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
 <?php $segment1= $this->uri->segment(1);
 		
 		if(isset($table)){

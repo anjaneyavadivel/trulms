@@ -132,7 +132,7 @@ class Manage extends CI_Controller {
 				}
 				if(checkpageaccess('department',1,'approve'))
 				{
-					$APPROVE			 			=	"<a href='".base_url()."approve_department/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>APPROVE</a>";
+					$APPROVE			 			=	"<a href='".base_url()."approve_department/".$value->deptID."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>HISTORY</a>";
 				}
 				else
 				{
@@ -179,8 +179,9 @@ class Manage extends CI_Controller {
 	{
 		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		if(!checkpageaccess('department',1,'create')){	redirect();		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
+			
 			$values=array('department'			=>	$this->input->post('department'),
 							'description'		=>	$this->input->post('description'),
 							'dbentrystateID'	=>	0,
@@ -202,6 +203,18 @@ class Manage extends CI_Controller {
 		}
 		$data['pageTitle']	=	"Add Department";
 		$this->load->view('admin/dept/add_department',$data);
+	}
+	function department_vaildation()
+	{
+		$query=$this->Commonsql_model->select('tbldept',array('department'=>trim($_POST['department'])));
+		if($query->num_rows()>0)
+		{
+			echo "false";
+		}
+		else
+		{
+			echo "true";
+		}
 	}
 	function edit_department()
 	{
