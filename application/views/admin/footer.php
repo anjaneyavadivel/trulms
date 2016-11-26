@@ -65,6 +65,8 @@
         <script src="<?= base_url()?>assets/js/vendor/datatables/extensions/ColVis/js/dataTables.colVis.min.js"></script>
         <script src="<?= base_url()?>assets/js/vendor/datatables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
         <script src="<?= base_url()?>assets/js/vendor/datatables/extensions/dataTables.bootstrap.js"></script>
+         <script src="<?= base_url()?>assets/js/jquery.validate.min.js"></script>
+          <script src="<?= base_url()?>assets-new/js/vaildation-function.js"></script>
 
         <!--/ vendor javascripts -->
 
@@ -749,6 +751,8 @@
          <script src="<?= base_url()?>assets/js/vendor/daterangepicker/moment.min.js"></script>
 
         <script src="<?= base_url()?>assets/js/vendor/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="<?= base_url()?>assets/js/jquery.validate.min.js"></script>
+          <script src="<?= base_url()?>assets-new/js/vaildation-function.js"></script>
 
 
         <!--/ vendor javascripts -->

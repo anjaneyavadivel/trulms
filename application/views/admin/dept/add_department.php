@@ -57,14 +57,12 @@
                                 <div class="tile-body">
 								
                                  	                                    
-                                    <?=form_open_multipart(base_url().'add_department',array('class'=>'form-horizontal','id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
+                                    <?=form_open_multipart(base_url().'add_department',array('class'=>'form-horizontal','id'=>'add_depatment','role'=>'form'));?>
 
                                         <div class="form-group">
                                             <label class="control-label">Department Name</label>
                                             
-                                                <input type="text" name="department" class="form-control" placeholder="Department Name"
-                                                       data-parsley-trigger="change"
-                                                       required>
+                                                <input type="text" name="department" class="form-control" placeholder="Department Name" >
                                             
                                         </div>
 
@@ -73,9 +71,7 @@
                                         <div class="form-group">
                                             <label class="control-label">Department Description</label>
                                            
-                                                <input type="text" name="description" class="form-control" placeholder="Department Description"
-                                                       data-parsley-trigger="change"
-                                                       required>
+                                                <input type="text" name="description" class="form-control" placeholder="Department Description">
                                             
                                         </div>
 
