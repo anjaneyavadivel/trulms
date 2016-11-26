@@ -95,10 +95,30 @@
                     <div class="tile-body">
                         <div class="row">
                             <div class="form-group col-md-6">
+                                <label class="col-sm-10 control-label">Is Self Edit Allowed</label>
+                                <div class="col-sm-2">
+                                    <div class="onoffswitch labeled greensea inline-block">
+                                        <input type="checkbox" name="isSelfEditAllowed" class="onoffswitch-checkbox" id="isSelfEditAllowed" checked="checked" value="1">
+                                        <label class="onoffswitch-label" for="isSelfEditAllowed"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-sm-10 control-label">Is Self Approval Allowed</label>
+                                <div class="col-sm-2">
+                                    <div class="onoffswitch labeled greensea inline-block">
+                                        <input type="checkbox" name="isSelfApprovalAllowed" class="onoffswitch-checkbox" id="isSelfApprovalAllowed" checked="checked" value="1">
+                                        <label class="onoffswitch-label" for="isSelfApprovalAllowed"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
                                 <label class="col-sm-10 control-label">Is Create Approve Required</label>
                                 <div class="col-sm-1">
                                     <div class="onoffswitch labeled  greensea inline-block">
-                                        <input type="checkbox" name="iscreateApproveRequired" class="onoffswitch-checkbox" id="iscreateApproveRequired" checked="" value="1">
+                                        <input type="checkbox" name="iscreateApproveRequired" class="onoffswitch-checkbox" id="iscreateApproveRequired" value="1">
                                         <label class="onoffswitch-label" for="iscreateApproveRequired"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
                                     </div>
                                 </div>
@@ -107,7 +127,7 @@
                                 <label class="col-sm-10 control-label">Is Modify Approve Required</label>
                                 <div class="col-sm-1">
                                     <div class="onoffswitch labeled  greensea inline-block">
-                                        <input type="checkbox" name="ismodifyApproveRequired" class="onoffswitch-checkbox" id="ismodifyApproveRequired" checked="" value="1">
+                                        <input type="checkbox" name="ismodifyApproveRequired" class="onoffswitch-checkbox" id="ismodifyApproveRequired" value="1">
                                         <label class="onoffswitch-label" for="ismodifyApproveRequired"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
                                     </div>
                                 </div>
@@ -118,31 +138,12 @@
                                 <label class="col-sm-10 control-label">Is Reporting User Approve Allowed</label>
                                 <div class="col-sm-2">
                                     <div class="onoffswitch labeled  greensea inline-block">
-                                        <input type="checkbox" name="isReportingUserApproveAllowed" class="onoffswitch-checkbox" id="isReportingUserApproveAllowed" checked="" value="1">
+                                        <input type="checkbox" name="isReportingUserApproveAllowed" class="onoffswitch-checkbox" id="isReportingUserApproveAllowed" value="1">
                                         <label class="onoffswitch-label" for="isReportingUserApproveAllowed"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label class="col-sm-10 control-label">Is Self Edit Allowed</label>
-                                <div class="col-sm-2">
-                                    <div class="onoffswitch labeled greensea inline-block">
-                                        <input type="checkbox" name="isSelfEditAllowed" class="onoffswitch-checkbox" id="isSelfEditAllowed" checked="checked" value="1">
-                                        <label class="onoffswitch-label" for="isSelfEditAllowed"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label class="col-sm-10 control-label">Is Self Approval Allowed</label>
-                                <div class="col-sm-2">
-                                    <div class="onoffswitch labeled greensea inline-block">
-                                        <input type="checkbox" name="isSelfApprovalAllowed" class="onoffswitch-checkbox" id="isSelfApprovalAllowed" checked="" value="1">
-                                        <label class="onoffswitch-label" for="isSelfApprovalAllowed"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                         <div class="row">
                             <div class="form-group col-md-12">
@@ -188,8 +189,8 @@
                         <!-- tile footer -->
                         <div class="tile-footer text-right bg-tr-black lter dvd dvd-top"> 
                             <!-- SUBMIT BUTTON -->
-                            <a href="<?=base_url().'form-master'?>" class="btn btn-warning "><i class="fa fa-hand-o-left"></i> Go Back</a>
-                           <input type="submit" class="btn btn-greensea" id="form4Submit" value="Add" name="save">
+                           <a  href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="active_deactive_class('<?= base_url()?>form-master','3')" class="btn btn-warning"><i class="fa fa-hand-o-left"></i> Go Back</a> 
+                           <input type="submit" class="btn btn-greensea" id="form4Submit" value="Add Form" name="save">
                         </div>
                         <!-- /tile footer --> 
 
