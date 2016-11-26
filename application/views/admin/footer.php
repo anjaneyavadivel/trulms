@@ -121,7 +121,10 @@ if (isset($table)) {
                         {'bSortable': false, 'aTargets': ["no-sort"]}
                     ],
                     "order": [[0, 'desc']],
-                    "dom": 'Rlfrtip'
+                    "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
                 });
     <?php } else if ($segment1 == 'designation') {
         ?>
@@ -139,7 +142,10 @@ if (isset($table)) {
                         {'bSortable': false, 'aTargets': ["no-sort"]}
                     ],
                     "order": [[0, 'desc']],
-                    "dom": 'Rlfrtip'
+                    "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
                 });
     <?php } else if ($segment1 == 'role') {
         ?>
@@ -157,7 +163,10 @@ if (isset($table)) {
                         {'bSortable': false, 'aTargets': ["no-sort"]}
                     ],
                     "order": [[0, 'desc']],
-                    "dom": 'Rlfrtip'
+                    "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
                 });
     <?php } else if ($segment1 == 'payment_mode') {
         ?>
@@ -175,7 +184,10 @@ if (isset($table)) {
                         {'bSortable': false, 'aTargets': ["no-sort"]}
                     ],
                     "order": [[0, 'desc']],
-                    "dom": 'Rlfrtip'
+                    "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
                 });
     <?php } else if ($segment1 == 'payment_status') {
         ?>
@@ -193,7 +205,10 @@ if (isset($table)) {
                         {'bSortable': false, 'aTargets': ["no-sort"]}
                     ],
                     "order": [[0, 'desc']],
-                    "dom": 'Rlfrtip'
+                    "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
                 });
     <?php } else if ($segment1 == 'employee_types') {
         ?>
@@ -211,7 +226,10 @@ if (isset($table)) {
                         {'bSortable': false, 'aTargets': ["no-sort"]}
                     ],
                     "order": [[0, 'desc']],
-                    "dom": 'Rlfrtip'
+                    "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
                 });
     <?php } else if ($segment1 == 'approve_department') {
         ?>
@@ -229,7 +247,10 @@ if (isset($table)) {
                             {'bSortable': false, 'aTargets': ["no-sort"]}
                         ],
                         "order": [[0, 'desc']],
-                        "dom": 'Rlfrtip'
+                        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
                     });
     <?php } else if ($segment1 == 'approve_designation') {
         ?>
@@ -247,7 +268,10 @@ if (isset($table)) {
                                 {'bSortable': false, 'aTargets': ["no-sort"]}
                             ],
                             "order": [[0, 'desc']],
-                            "dom": 'Rlfrtip'
+                            "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
                         });
     <?php } else if ($segment1 == 'approve_role') {
         ?>
@@ -265,7 +289,10 @@ if (isset($table)) {
                                 {'bSortable': false, 'aTargets': ["no-sort"]}
                             ],
                             "order": [[0, 'desc']],
-                            "dom": 'Rlfrtip'
+                            "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
                         });
     <?php } else if ($segment1 == 'approve_payment_mode') {
         ?>
@@ -283,7 +310,10 @@ if (isset($table)) {
                             {'bSortable': false, 'aTargets': ["no-sort"]}
                         ],
                         "order": [[0, 'desc']],
-                        "dom": 'Rlfrtip'
+                        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
                     });
 
     <?php } else if ($segment1 == 'approve_payment_status') {
@@ -302,7 +332,10 @@ if (isset($table)) {
                     {'bSortable': false, 'aTargets': ["no-sort"]}
                     ],
                     "order": [[0, 'desc']],
-                    "dom": 'Rlfrtip'
+                    "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
                     });
 <?php } else if ($segment1 == 'approve_employee_types') {
                 ?>
@@ -320,7 +353,10 @@ if (isset($table)) {
         {'bSortable': false, 'aTargets': ["no-sort"]}
         ],
         "order": [[0, 'desc']],
-        "dom": 'Rlfrtip'
+        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
         });
             <?php } else if ($segment1 == 'form-master') {
                 ?>
@@ -361,7 +397,10 @@ if (isset($table)) {
         {'bSortable': false, 'aTargets': [7]}
         ],
         "order": [[0, 'desc']],
-        "dom": 'Rlfrtip'
+        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
         });
         var table = $('#basic-usage1').DataTable({
         "ajax": '<?php echo base_url() ?>approve-page-alter-json/<?= $this->uri->segment(2) ?>',
@@ -380,7 +419,10 @@ if (isset($table)) {
         {'bSortable': false, 'aTargets': [8]}
         ],
         "order": [[0, 'desc']],
-        "dom": 'Rlfrtip'
+        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
         });
             <?php } else if ($segment1 == 'employee-role') {
                 ?>
@@ -402,7 +444,10 @@ if (isset($table)) {
         {'bSortable': false, 'aTargets': [7]}
         ],
         "order": [[0, 'desc']],
-        "dom": 'Rlfrtip'
+        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
         });
             <?php } else if ($segment1 == 'approve-employee-role') {
                 ?>
@@ -423,7 +468,10 @@ if (isset($table)) {
         {'bSortable': false, 'aTargets': [7]}
         ],
         "order": [[0, 'desc']],
-        "dom": 'Rlfrtip'
+        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
         });
             <?php } else if ($segment1 == 'form-access') {
                 ?>
@@ -440,7 +488,10 @@ if (isset($table)) {
         {'bSortable': false, 'aTargets': [4]}
         ],
         "order": [[0, 'desc']],
-        "dom": 'Rlfrtip'
+        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
         });
             <?php } else if ($segment1 == 'contract-consignor') {
                 ?>
@@ -464,7 +515,10 @@ if (isset($table)) {
         {'bSortable': false, 'aTargets': ["no-sort"]}
         ],
         "order": [[0, 'desc']],
-        "dom": 'Rlfrtip'
+        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
         });
             <?php } else if ($segment1 == 'employee') {
                 ?>
@@ -490,7 +544,10 @@ if (isset($table)) {
         {'bSortable': false, 'aTargets': ["no-sort"]}
         ],
         "order": [[0, 'desc']],
-        "dom": 'Rlfrtip'
+        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
         });
             <?php } else if ($segment1 == 'approve_employee') {
                 ?>
@@ -516,7 +573,10 @@ if (isset($table)) {
         {'bSortable': false, 'aTargets': ["no-sort"]}
         ],
         "order": [[0, 'desc']],
-        "dom": 'Rlfrtip'
+        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
         });
             <?php } else if ($segment1 == 'driver') {
                 ?>
@@ -537,7 +597,10 @@ if (isset($table)) {
         {'bSortable': false, 'aTargets': ["no-sort"]}
         ],
         "order": [[0, 'desc']],
-        "dom": 'Rlfrtip'
+        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
         });
             <?php } else if ($segment1 == 'approve_driver') {
                 ?>
@@ -558,7 +621,10 @@ if (isset($table)) {
         {'bSortable': false, 'aTargets': ["no-sort"]}
         ],
         "order": [[0, 'desc']],
-        "dom": 'Rlfrtip'
+        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
         });
             <?php } else if ($segment1 == 'approve-contract-consignor') {
                 ?>
@@ -580,7 +646,10 @@ if (isset($table)) {
         {'bSortable': false, 'aTargets': ["no-sort"]}
         ],
         "order": [[0, 'desc']],
-        "dom": 'Rlfrtip'
+        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
         });
             <?php } else if ($segment1 == 'vehicleowner') {
                 ?>
@@ -599,7 +668,10 @@ if (isset($table)) {
         {'bSortable': false, 'aTargets': ["no-sort"]}
         ],
         "order": [[0, 'desc']],
-        "dom": 'Rlfrtip'
+        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
         });
             <?php } else if ($segment1 == 'approve_vehicleowner') {
                 ?>
@@ -618,7 +690,10 @@ if (isset($table)) {
         {'bSortable': false, 'aTargets': ["no-sort"]}
         ],
         "order": [[0, 'desc']],
-        "dom": 'Rlfrtip'
+        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
         });
             <?php } else if ($segment1 == 'consignor') {
                 ?>
@@ -635,7 +710,10 @@ if (isset($table)) {
         {'bSortable': false, 'aTargets': ["no-sort"]}
         ],
         "order": [[0, 'desc']],
-        "dom": 'Rlfrtip'
+        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
         });
             <?php } else if ($segment1 == 'approve-consignor') {
                 ?>
@@ -652,7 +730,10 @@ if (isset($table)) {
                     {'bSortable': false, 'aTargets': ["no-sort"]}
                 ],
                 "order": [[0, 'desc']],
-                "dom": 'Rlfrtip'
+                "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
             });
             <?php } else if ($segment1 == 'vehicleagent') {
 ?>
@@ -671,7 +752,10 @@ if (isset($table)) {
             {'bSortable': false, 'aTargets': ["no-sort"]}
         ],
         "order": [[0, 'desc']],
-        "dom": 'Rlfrtip'
+        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
     });
     <?php } else if ($segment1 == 'approve_vehicleagent') {
     ?>
@@ -690,7 +774,10 @@ if (isset($table)) {
             {'bSortable': false, 'aTargets': ["no-sort"]}
         ],
         "order": [[0, 'desc']],
-        "dom": 'Rlfrtip'
+        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
     });
     <?php } else { ?>
 
@@ -704,7 +791,10 @@ if (isset($table)) {
                     "aoColumnDefs": [
                         {'bSortable': false, 'aTargets': ["no-sort"]}
                     ],
-                    "dom": 'Rlfrtip'
+                    "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
                 });
 <?php } ?>
 
