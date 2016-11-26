@@ -99,6 +99,7 @@ $route['lock-screeen'] 								=		'manage/lock_screeen';
 $route['profile']	 								=		'manage/profile';
 
 $route['department'] 								=		'manage/department';
+$route['department_vaildation'] 					=		'manage/department_vaildation';
 $route['add_department'] 							=		'manage/add_department';
 $route['edit_department/([a-zA-Z0-9---_%])+'] 		=		'manage/edit_department/$1';
 $route['view_department/([a-zA-Z0-9---_%])+'] 		=		'manage/view_department/$1';

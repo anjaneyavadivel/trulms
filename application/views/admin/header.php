@@ -65,7 +65,7 @@
             <!-- ===============================================
             ================= HEADER Content ===================
             ================================================ -->
-            <section id="header">
+            <section id="header" class="<?= base_url();?>">
                 <header class="clearfix">
 
                     <!-- Branding -->

@@ -32,6 +32,23 @@
         </div>
     </div>
 </div>
+<div class="modal splash fade" id="form-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title custom-font">Confirmation!</h3>
+            </div>
+            <div class="modal-body">
+                <p id="confirmation-msg1">Are you sure you would like to Add this record?</p>
+            </div>
+            
+            <div class="modal-footer" id="form_sub_enable">
+                <a href="javascript::" class="btn btn-default btn-border submit-form-btn">Yes</a>
+                <button class="btn btn-default btn-border activedeactiveconf-close" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
 <?php $segment1= $this->uri->segment(1);
 		
 		if(isset($table)){
@@ -65,6 +82,8 @@
         <script src="<?= base_url()?>assets/js/vendor/datatables/extensions/ColVis/js/dataTables.colVis.min.js"></script>
         <script src="<?= base_url()?>assets/js/vendor/datatables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
         <script src="<?= base_url()?>assets/js/vendor/datatables/extensions/dataTables.bootstrap.js"></script>
+         <script src="<?= base_url()?>assets/js/jquery.validate.min.js"></script>
+          <script src="<?= base_url()?>assets-new/js/vaildation-function.js"></script>
 
         <!--/ vendor javascripts -->
 
@@ -752,6 +771,8 @@
          <script src="<?= base_url()?>assets/js/vendor/daterangepicker/moment.min.js"></script>
 
         <script src="<?= base_url()?>assets/js/vendor/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="<?= base_url()?>assets/js/jquery.validate.min.js"></script>
+          <script src="<?= base_url()?>assets-new/js/vaildation-function.js"></script>
 
 
         <!--/ vendor javascripts -->

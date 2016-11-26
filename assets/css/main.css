@@ -17611,3 +17611,6 @@ hr.line-full {
     font-size: 12px;
     padding-left: 2px;
 }
+.error{
+	    color: #ff7b76 !important;
+}

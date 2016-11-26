@@ -57,38 +57,34 @@
                                 <div class="tile-body">
 								
                                  	                                    
-                                    <?=form_open_multipart(base_url().'add_department',array('class'=>'form-horizontal','id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
+                                    <?=form_open_multipart(base_url().'add_department',array('class'=>'form-horizontal','id'=>'add_depatment','role'=>'form'));?>
 
                                         <div class="form-group">
                                             <label class="control-label">Department Name</label>
-                                            
-                                                <input type="text" name="department" class="form-control" placeholder="Department Name"
-                                                       data-parsley-trigger="change"
-                                                       required>
-                                            
+                                                <input type="text" name="department" class="form-control" placeholder="Department Name" >
                                         </div>
-
-                                      
-
                                         <div class="form-group">
                                             <label class="control-label">Department Description</label>
-                                           
-                                                <input type="text" name="description" class="form-control" placeholder="Department Description"
-                                                       data-parsley-trigger="change"
-                                                       required>
-                                            
+                                                <input type="text" name="description" class="form-control" placeholder="Department Description">
                                         </div>
 
                                        <!-- tile footer -->
                                 <div class="tile-footer text-right bg-tr-black lter dvd dvd-top">
                                     <!-- SUBMIT BUTTON -->
-                                   <a  href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="active_deactive_class('<?= base_url()?>department','3')" class="btn btn-lightred">Back</a>
-                                    <input type="submit" class="btn btn-default" id="form4Submit" value="Submit" name="save">
+                                   <a  href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="active_deactive_class('<?= base_url()?>department','3')" class="btn btn-warning"><i class="fa fa-hand-o-left"></i> Go Back</a>
+                                    <input type="submit" class="btn bg-greensea" id="add_form" value="Add Department" >
+                                   
+                                   <a  href="javascript::" data-toggle="modal" data-target="#form-submit" id="form_submiting" data-options="splash-2 splash-ef-11" role="button" tabindex="0"  class="btn btn-greensea" style="display:none">Submit</a>
+                                    <input type="submit" class="btn btn-default" id="new_button" onclick="form_submit('add_depatment')" value="Submit" style="display:none" >
+                                    
+                                   
                                 </div>
                                 <!-- /tile footer -->
+                                
 
                                     <?php echo form_close(); ?> 
 </div>
+
                                
                                 <!-- /tile body -->
 
@@ -111,5 +107,7 @@
             <!--/ CONTENT -->
         </div>
         <!--/ Application Content -->
+        
+        
 
   <?php $this->load->view('admin/footer')?>
