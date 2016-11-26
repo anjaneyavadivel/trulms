@@ -173,7 +173,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function add_department()
@@ -382,6 +381,7 @@ class Manage extends CI_Controller {
 					}
 				}
 				else
+
 				{
 					$Approve	=	'';
 				}
@@ -418,7 +418,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function department_mod_approve()
@@ -583,7 +582,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function add_designation()
@@ -827,7 +825,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function designation_mod_approve()
@@ -991,7 +988,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function add_role()
@@ -1235,7 +1231,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function role_mod_approve()
@@ -1402,7 +1397,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function add_payment_mode()
@@ -1647,7 +1641,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function payment_mode_mod_approve()
@@ -1815,7 +1808,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function add_payment_status()
@@ -2060,7 +2052,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function payment_statu_mod_approve()
@@ -2229,7 +2220,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function add_employee_types()
@@ -2476,7 +2466,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function employee_types_mod_approve()
@@ -2674,7 +2663,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function add_employee()
@@ -3134,7 +3122,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function employee_mod_approve()
@@ -3348,7 +3335,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function add_driver()
@@ -3696,7 +3682,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function driver_mod_approve()
@@ -3899,7 +3884,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function add_vehicleowner()
@@ -4204,7 +4188,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function vehicleowner_mod_approve()
@@ -4254,6 +4237,7 @@ class Manage extends CI_Controller {
 		if($this->uri->segment(3))
 		{
 			$whereData	=	array('agentID'	=>	$this->uri->segment(3));
+
 			$updateData	=	array('active'	=>	$this->uri->segment(4));
 			$upt	=	$this->Commonsql_model->updateTable('tblvehicleagent', $whereData , $updateData);
 			//echo $this->db->last_query();exit;
@@ -4369,7 +4353,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function add_vehicleagent()
@@ -4671,7 +4654,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	/***********************************************************************************************************************************/
@@ -4796,7 +4778,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function add_consignor()
@@ -5102,7 +5083,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	/***********************************************************************************************************************************/
@@ -5235,7 +5215,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function add_contract_consignor()
@@ -5619,7 +5598,6 @@ class Manage extends CI_Controller {
 			
 			$output[] =$vaules;
 		}
-
 		 echo json_encode(array('data'=>$output), true);
 	}
 	function contract_consignor_mod_approve()
@@ -5657,6 +5635,11 @@ class Manage extends CI_Controller {
 					$this->session->set_userdata('err','Error Please try again..!');
 					redirect('approve-contract-consignor/'.$val->employetypeID);
 				}
+				/*else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('approve-contract-consignor/'.$val->employetypeID);
+				}*/
 						
 		}
 	}
