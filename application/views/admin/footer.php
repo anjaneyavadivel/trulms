@@ -318,7 +318,10 @@
                       { 'bSortable': false, 'aTargets': [ 5] }
                     ],
                     "order": [[0, 'desc' ]],
-                    "dom": 'Rlfrtip'
+                    "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
                 });
 				<?php }else if($segment1=='approve-form-master-list'){
 					?>

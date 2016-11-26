@@ -86,7 +86,7 @@ if (!function_exists('checkpageaccess')) {
             return FALSE;
         }
         $SESS_userRole = $CI->session->userdata('SESS_userRole');
-        if (in_array(1, $SESS_userRole)) {
+        if (in_array(1, $SESS_userRole) && $access != 0) {
             return TRUE;
         }
         $SESS_accessmap = $CI->session->userdata('SESS_accessmap');
@@ -124,7 +124,7 @@ if (!function_exists('pagealterpermission')) {
      * This function will return all parents of a user. 
      * This includes children and input level users.
      * $pageUrl  is page url name
-     * $alterPermission  is alter permission name, "createApprove","modifyApprove","selfEdit","selfApproval"
+     * $alterPermission  is alter permission name, "1 (defaultApproverRoleID)" "createApprove","modifyApprove","selfEdit","selfApproval","ReportingUserApprove"
      * it's return TRUE or FALSE
      *  
      */
@@ -138,9 +138,11 @@ if (!function_exists('pagealterpermission')) {
             return FALSE;
         }
         $SESS_userRole = $CI->session->userdata('SESS_userRole');
-        if (in_array(1, $SESS_userRole)) {
-            $final_accessmap = array(0 => 'createApprove', 1 => 'modifyApprove', 2 => 'selfEdit', 3 => 'selfApproval');
-        } else {
+        $SESS_userId = $CI->session->userdata('SESS_userId');
+        $SESS_userReportingTo = $CI->session->userdata('SESS_userReportingTo');
+        if (in_array(1, $SESS_userRole)) {// admin access
+            $final_accessmap = array(0 => 'defaultApprover',1 => 'createApprove', 2 => 'modifyApprove', 3 => 'selfEdit', 4 => 'selfApproval', 5=>'ReportingUserApprove');
+        } else {// other user access
             $joins = array(
                 array(
                     'table' => 'tblpages AS tp',
@@ -153,6 +155,9 @@ if (!function_exists('pagealterpermission')) {
             $pagealterRow = get_joins('tblpagealterdetails AS tpa', $columns, $joins, $whereData);
             if ($pagealterRow->num_rows() > 0) {
                 $pagealter = $pagealterRow->result();
+                if (in_array($pagealter[0]->defaultApproverRoleID, $SESS_userRole)) {
+                    $final_accessmap[] = 'defaultApprover';
+                }
                 if ($pagealter[0]->iscreateApproveRequired) {
                     $final_accessmap[] = 'createApprove';
                 }
@@ -164,6 +169,9 @@ if (!function_exists('pagealterpermission')) {
                 }
                 if ($pagealter[0]->isSelfApprovalAllowed) {
                     $final_accessmap[] = 'selfApproval';
+                }
+                if ($pagealter[0]->isReportingUserApproveAllowed ==1 && $SESS_userId==$SESS_userReportingTo) {
+                    $final_accessmap[] = 'ReportingUserApprove';
                 }
             }
         }

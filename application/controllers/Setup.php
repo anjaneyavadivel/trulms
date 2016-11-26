@@ -153,20 +153,20 @@ class Setup extends CI_Controller {
                 $active = '';
                 $edit = '';
                 if (checkpageaccess('form-master', 1, 'view')) {
-                    $view = "<a href='" . base_url() . "view-form-master/" . $value->pageID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>View</a>";
+                    $view = "<a href='" . base_url() . "view-form-master/" . $value->pageID . "'role='button' tabindex='0' class='edit' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-file-text-o'></i></a>&nbsp;";
                 }
                 if (checkpageaccess('form-master', 1, 'approve')) {
-                    $APPROVE = "<a href='" . base_url() . "approve-form-master-list/" . $value->pageID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>History</a>";
+                    $APPROVE = "<a href='" . base_url() . "approve-form-master-list/" . $value->pageID . "'role='button' tabindex='0' class='edit' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View History'><i class='fa fa-clock-o'></i></a>&nbsp;";
                 }
                 if (checkpageaccess('form-master', 1, 'delete')) {
                     if ($value->active == 1) {
-                        $active = '<a href="javascript:void(0)" data-tb="pages" data-val="0" data-id="' . $value->pageID . '"  data-col="pageID" role="button" tabindex="0" class="active-deactive-btn text-danger text-uppercase text-strong text-sm mr-10 ">De-Active</a>';
+                        $active = '<a href="javascript:void(0)" data-tb="pages" data-val="0" data-id="' . $value->pageID . '"  data-col="pageID" role="button" tabindex="0" class="active-deactive-btn text-danger" data-toggle="tooltip" data-placement="top" title data-original-title="Click to De-Active"><i class="fa fa-times-circle"></i></a>&nbsp;';
                     } else {
-                        $active = '<a href="javascript:void(0)" data-tb="pages" data-val="1" data-id="' . $value->pageID . '"  data-col="pageID" role="button" tabindex="0" class="active-deactive-btn text-success text-uppercase text-strong text-sm mr-10">Active</a>';
+                        $active = '<a href="javascript:void(0)" data-tb="pages" data-val="1" data-id="' . $value->pageID . '"  data-col="pageID" role="button" tabindex="0" class="active-deactive-btn text-success data-toggle="tooltip" data-placement="top" title data-original-title="Click to Active"><i class="fa fa-check-square"></i></a>&nbsp;';
                     }
                 }
                 if (checkpageaccess('form-master', 1, 'modify')) {
-                    $edit = "<a href='" . base_url() . "edit-form-master/" . $value->pageID . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'>Edit</a>";
+                    $edit = "<a href='" . base_url() . "edit-form-master/" . $value->pageID . "'role='button' tabindex='0' class='edit'  data-toggle='tooltip' data-placement='top' title data-original-title='Click to Update'><i class='fa fa-edit'></i></a>&nbsp;";
                 }
                 $vaules['Action'] = $view . $edit . $APPROVE . $active;
 

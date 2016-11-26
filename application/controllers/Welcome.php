@@ -129,6 +129,7 @@ class Welcome extends CI_Controller {
                     $this->session->set_userdata('SESS_userCode', $userview['empCode']);
                     $this->session->set_userdata('SESS_userName', $userview['empname']);
                     $this->session->set_userdata('SESS_userBranchID', $userview['branchID']);
+                    $this->session->set_userdata('SESS_userReportingTo', $userview['reportingto']);
                     $this->session->set_userdata('SESS_userPic', $userview['photo']);
                     // Check user role for login user and set in session
                     $role=array();
