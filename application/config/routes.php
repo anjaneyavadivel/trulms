@@ -109,6 +109,8 @@ $route['approve_department/([a-zA-Z0-9---_%])+'] 	=		'manage/approve_department/
 $route['approve_department/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_department/$1/$1';
 
 $route['designation'] 								=		'manage/designation';
+$route['designation_vaildation'] 					=		'manage/designation_vaildation';
+$route['edit_designation_vaildation'] 				=		'manage/edit_designation_vaildation';
 $route['add_designation'] 							=		'manage/add_designation';
 $route['edit_designation/([a-zA-Z0-9---_%])+'] 		=		'manage/edit_designation/$1';
 $route['view_designation/([a-zA-Z0-9---_%])+'] 		=		'manage/view_designation/$1';
