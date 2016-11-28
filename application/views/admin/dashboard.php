@@ -97,7 +97,17 @@
 //        $finalaccessmap = checkpageaccess(2, '', 'array');
 //        print_r($finalaccessmap);
         echo "<br><br>";
+        ?><?php
+        echo "Page self Allowed to Approve and Modify: ('selfApprovalAllowed', 'selfEditAllowed')";
         ?>
+        <code>selfAllowed($pagealterpermission = array(),$alterpermission = '',$selfApprovalUserID = '');</code>
+        <?php
+         echo "<br><br>";
+         ?>
+        <code>if (selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('form-master', 1, 'approve')) {}</code>
+        <?php
+        echo "<br>";
+         ?>
     </div>
 
 </section>
