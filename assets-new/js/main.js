@@ -36,6 +36,7 @@ function form_submit(val){
 	document.getElementById(val).submit();
 }
 $('#add_form').click(function(){
+	alert();
 $.validator.addMethod("loginRegex", function(value, element) 
 {
    return this.optional(element) || /^[\w\d\s-]+$/i.test(value);
@@ -50,6 +51,30 @@ $.validator.addMethod("loginRegex", function(value, element)
 					remote:{
 					 type:"post",
 					 url:base_path+"department_vaildation",
+				 },
+				},
+			},
+			messages:{
+				department:{
+					required:"This field is required",
+					remote:"Already Exists this one..!",
+				},
+			},
+			 submitHandler: function (form) {
+				$('#form_submiting').trigger('click');
+				 return false;
+			 }
+		});
+	 $("#edit_depatment").validate({
+			rules: {
+				department: {
+					required: true,
+					maxlength: 49,
+					loginRegex:true,
+					remote:{
+					 type:"post",
+					 url:base_path+"edit_department_vaildation",
+					 data: { 'deptID': $('#deptID').val() },
 				 },
 				},
 			},

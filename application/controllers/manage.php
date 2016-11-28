@@ -216,6 +216,18 @@ class Manage extends CI_Controller {
 			echo "true";
 		}
 	}
+	function edit_department_vaildation()
+	{
+		$query=$this->Commonsql_model->select('tbldept',array('department'=>trim($_POST['department']),'deptID !='=>$_POST['deptID']));
+		if($query->num_rows()>0)
+		{
+			echo "false";
+		}
+		else
+		{
+			echo "true";
+		}
+	}
 	function edit_department()
 	{
 		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
@@ -223,7 +235,7 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
 			
 			
