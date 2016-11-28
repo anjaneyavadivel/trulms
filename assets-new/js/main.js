@@ -29,6 +29,13 @@ function active_deactive_class(url,type)
 		$('#form_sub_enable').html('<a href="'+url+'/'+type+'" class="btn btn-default btn-border activedeactiveconf-btn">Yes</a><button class="btn btn-default btn-border activedeactiveconf-close" data-dismiss="modal">No</button>');
 	}
 }
+function form_action_msg(type)
+{
+	if(type==1)
+	{
+		$('#confirmation-msg2').html('Are you sure you would like to Update this record?');
+	}
+}
 $('.submit-form-btn').click(function(){
 	$('#new_button').trigger('click');
 });
@@ -79,6 +86,56 @@ $.validator.addMethod("loginRegex", function(value, element)
 			},
 			messages:{
 				department:{
+					required:"This field is required",
+					remote:"Already Exists this one..!",
+				},
+			},
+			 submitHandler: function (form) {
+				$('#form_submiting').trigger('click');
+				 return false;
+			 }
+		});
+		
+		/*Designation*/
+		
+		$("#add_designation").validate({
+			rules: {
+				name: {
+					required: true,
+					maxlength: 99,
+					loginRegex:true,
+					remote:{
+					 type:"post",
+					 url:base_path+"designation_vaildation",
+				 },
+				},
+			},
+			messages:{
+				name:{
+					required:"This field is required",
+					remote:"Already Exists this one..!",
+				},
+			},
+			 submitHandler: function (form) {
+				$('#form_submiting').trigger('click');
+				 return false;
+			 }
+		});
+	 $("#edit_designation").validate({
+			rules: {
+				name: {
+					required: true,
+					maxlength: 49,
+					loginRegex:true,
+					remote:{
+					 type:"post",
+					 url:base_path+"edit_designation_vaildation",
+					 data: { 'desigID': $('#desigID').val() },
+				 },
+				},
+			},
+			messages:{
+				name:{
 					required:"This field is required",
 					remote:"Already Exists this one..!",
 				},

@@ -52,7 +52,7 @@
                                      <?php if(checkpageaccess('department',1,'modify')){?>
                                     <ul class="controls">
                                         
-                                       <li><a href="<?= base_url()?>edit_department/<?=$this->uri->segment(2)?>" title="Edit Department" role="button" tabindex="0" >Edit  <i class="fa fa-pencil-square-o"></i></a></li>
+                                       <li><a href="<?= base_url()?>edit_department/<?=$this->uri->segment(2)?>" title="Edit Department" role="button" tabindex="0" data-toggle='tooltip' data-placement='top' data-original-title='Click to Update' >Update  <i class="fa fa-pencil-square-o"></i></a></li>
                                     </ul>
                                     <?php }?>
                                 </div>

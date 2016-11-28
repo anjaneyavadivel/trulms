@@ -181,7 +181,11 @@ class Manage extends CI_Controller {
 		if(!checkpageaccess('department',1,'create')){	redirect();		}
 		if($_POST)
 		{
-			
+			$this->form_validation->set_rules('department', 'Department Name', 'trim|required');
+			if ($this->form_validation->run($this) == FALSE) {
+                $this->session->set_userdata('err', validation_errors());
+                redirect('add_department');
+            }
 			$values=array('department'			=>	$this->input->post('department'),
 							'description'		=>	$this->input->post('description'),
 							'dbentrystateID'	=>	0,
@@ -192,13 +196,13 @@ class Manage extends CI_Controller {
 			if($query)
 			{
 				$this->session->set_userdata('suc','Department Successfully  Added...!');
-				redirect('manage/add_department');
+				redirect('add_department');
 				
 			}
 			else
 			{
 				$this->session->set_userdata('err','Error Please try again..!');
-				redirect('manage/add_department');
+				redirect('add_department');
 			}
 		}
 		$data['pageTitle']	=	"Add Department";
@@ -238,7 +242,11 @@ class Manage extends CI_Controller {
 		if($_POST)
 		{
 			
-			
+				$this->form_validation->set_rules('department', 'Department Name', 'trim|required');
+				if ($this->form_validation->run($this) == FALSE) {
+					$this->session->set_userdata('err', validation_errors());
+					redirect('edit_department/'.$this->input->post('deptID'));
+				}
 				$values_mod=array('department'		=>	$this->input->post('department'),
 							'description'		=>	$this->input->post('description'),
 							'dbentrystateID'	=>	0,
@@ -622,8 +630,13 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
+			$this->form_validation->set_rules('name', 'Designation Name', 'trim|required');
+			if ($this->form_validation->run($this) == FALSE) {
+				$this->session->set_userdata('err', validation_errors());
+				redirect('add_designation');
+			}
 			$values=array('name'				=>	$this->input->post('name'),
 							'description'		=>	$this->input->post('description'),
 							'dbentrystateID'	=>	0,
@@ -634,17 +647,41 @@ class Manage extends CI_Controller {
 			if($query)
 			{
 				$this->session->set_userdata('suc','Designation Successfully  Added...!');
-				redirect('manage/add_designation');
+				redirect('add_designation');
 				
 			}
 			else
 			{
 				$this->session->set_userdata('err','Error Please try again..!');
-				redirect('manage/add_designation');
+				redirect('add_designation');
 			}
 		}
 		$data['pageTitle']	=	"Add Designation";
 		$this->load->view('admin/designation/add_designation',$data);
+	}
+	function designation_vaildation()
+	{
+		$query=$this->Commonsql_model->select('tbldesignation',array('name'=>trim($_POST['name'])));
+		if($query->num_rows()>0)
+		{
+			echo "false";
+		}
+		else
+		{
+			echo "true";
+		}
+	}
+	function edit_designation_vaildation()
+	{
+		$query=$this->Commonsql_model->select('tbldesignation',array('name'=>trim($_POST['name']),'desigID !='=>$_POST['desigID']));
+		if($query->num_rows()>0)
+		{
+			echo "false";
+		}
+		else
+		{
+			echo "true";
+		}
 	}
 	function edit_designation()
 	{
@@ -653,8 +690,13 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
+				$this->form_validation->set_rules('name', 'Designation Name', 'trim|required');
+				if ($this->form_validation->run($this) == FALSE) {
+				$this->session->set_userdata('err', validation_errors());
+				redirect('edit_designation/'.$this->input->post('desigID'));
+				}
 				$values=array('name'			=>	$this->input->post('name'),
 							'description'		=>	$this->input->post('description'),
 							'dbentrystateID'	=>	0,
@@ -1031,6 +1073,11 @@ class Manage extends CI_Controller {
 		}
 		if($this->input->post('save'))
 		{
+			$this->form_validation->set_rules('roleName', 'Role Name', 'trim|required');
+			if ($this->form_validation->run($this) == FALSE) {
+			$this->session->set_userdata('err', validation_errors());
+			redirect('add_role');
+			}
 			$values=array('roleName'				=>	$this->input->post('roleName'),
 							'description'		=>	$this->input->post('description'),
 							'dbentrystateID'	=>	0,
@@ -1041,7 +1088,7 @@ class Manage extends CI_Controller {
 			if($query)
 			{
 				$this->session->set_userdata('suc','Role Successfully  Added...!');
-				redirect('manage/add_role');
+				redirect('add_role');
 				
 			}
 			else
@@ -1062,6 +1109,11 @@ class Manage extends CI_Controller {
 		}
 		if($this->input->post('save'))
 		{
+				$this->form_validation->set_rules('roleName', 'Role Name', 'trim|required');
+				if ($this->form_validation->run($this) == FALSE) {
+				$this->session->set_userdata('err', validation_errors());
+				redirect('edit_role/'.$this->input->post('roleID'));
+				}
 				$values=array('roleName'			=>	$this->input->post('roleName'),
 								'description'		=>	$this->input->post('description'),
 								'dbentrystateID'	=>	0,
@@ -1440,6 +1492,11 @@ class Manage extends CI_Controller {
 		}
 		if($this->input->post('save'))
 		{
+			$this->form_validation->set_rules('paymentMode', 'Payment Mode Name', 'trim|required');
+			if ($this->form_validation->run($this) == FALSE) {
+			$this->session->set_userdata('err', validation_errors());
+			redirect('add_payment_mode');
+			}
 			$values=array('paymentMode'				=>	$this->input->post('paymentMode'),
 							'description'		=>	$this->input->post('description'),
 							'dbentrystateID'	=>	0,
@@ -1450,13 +1507,13 @@ class Manage extends CI_Controller {
 			if($query)
 			{
 				$this->session->set_userdata('suc','Payment Mode Successfully  Added...!');
-				redirect('manage/add_payment_mode');
+				redirect('add_payment_mode');
 				
 			}
 			else
 			{
 				$this->session->set_userdata('err','Error Please try again..!');
-				redirect('manage/add_payment_mode');
+				redirect('add_payment_mode');
 			}
 		}
 		$data['pageTitle']	=	"Add Payment Mode";
@@ -1471,6 +1528,11 @@ class Manage extends CI_Controller {
 		}
 		if($this->input->post('save'))
 		{
+				$this->form_validation->set_rules('paymentMode', 'Payment Mode Name', 'trim|required');
+				if ($this->form_validation->run($this) == FALSE) {
+				$this->session->set_userdata('err', validation_errors());
+				redirect('edit_payment_mode/'.$this->input->post('paymentModeID'));
+				}
 				$values=array('paymentMode'				=>	$this->input->post('paymentMode'),
 								'description'		=>	$this->input->post('description'),
 								'paymentModeID'	=>	$this->input->post('paymentModeID'),
@@ -1851,6 +1913,11 @@ class Manage extends CI_Controller {
 		}
 		if($this->input->post('save'))
 		{
+			$this->form_validation->set_rules('payStatus', 'Payment Status Name', 'trim|required');
+			if ($this->form_validation->run($this) == FALSE) {
+			$this->session->set_userdata('err', validation_errors());
+			redirect('add_payment_status');
+			}
 			$values=array('payStatus'				=>	$this->input->post('payStatus'),
 							'description'		=>	$this->input->post('description'),
 							'dbentrystateID'	=>	0,
@@ -1861,13 +1928,13 @@ class Manage extends CI_Controller {
 			if($query)
 			{
 				$this->session->set_userdata('suc','Payment Status Successfully  Added...!');
-				redirect('manage/add_payment_status');
+				redirect('add_payment_status');
 				
 			}
 			else
 			{
 				$this->session->set_userdata('err','Error Please try again..!');
-				redirect('manage/add_payment_status');
+				redirect('add_payment_status');
 			}
 		}
 		$data['pageTitle']	=	"Add Payment Status";
@@ -1882,6 +1949,11 @@ class Manage extends CI_Controller {
 		}
 		if($this->input->post('save'))
 		{
+				$this->form_validation->set_rules('payStatus', 'Payment Status Name', 'trim|required');
+				if ($this->form_validation->run($this) == FALSE) {
+				$this->session->set_userdata('err', validation_errors());
+				redirect('edit_payment_status/'.$this->input->post('payStatusID'));
+				}
 				$values=array('payStatus'				=>	$this->input->post('payStatus'),
 								'description'		=>	$this->input->post('description'),
 								'dbentrystateID'	=>	0,
@@ -2261,8 +2333,13 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
+			$this->form_validation->set_rules('typename', 'Employee Types Name', 'trim|required');
+			if ($this->form_validation->run($this) == FALSE) {
+			$this->session->set_userdata('err', validation_errors());
+			redirect('add_employee_types');
+			}
 			$values=array('typename'				=>	$this->input->post('typename'),
 							'description'		=>	$this->input->post('description'),
 							'dbentrystateID'	=>	0,
@@ -2273,18 +2350,19 @@ class Manage extends CI_Controller {
 			if($query)
 			{
 				$this->session->set_userdata('suc','Employee Types Successfully  Added...!');
-				redirect('manage/add_employee_types');
+				redirect('add_employee_types');
 				
 			}
 			else
 			{
 				$this->session->set_userdata('err','Error Please try again..!');
-				redirect('manage/add_employee_types');
+				redirect('add_employee_types');
 			}
 		}
 		$data['pageTitle']	=	"Add Emplyee Types";
 		$this->load->view('admin/employee_types/add_employee_types',$data);
 	}
+	
 	function edit_employee_types()
 	{
 		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
@@ -2294,6 +2372,11 @@ class Manage extends CI_Controller {
 		}
 		if($this->input->post('save'))
 		{
+				$this->form_validation->set_rules('typename', 'Employee Types Name', 'trim|required');
+				if ($this->form_validation->run($this) == FALSE) {
+				$this->session->set_userdata('err', validation_errors());
+				redirect('edit_employee_types/'.$this->input->post('employetypeID'));
+				}
 				$values=array('typename'				=>	$this->input->post('typename'),
 								'description'		=>	$this->input->post('description'),
 								'employetypeID'		=>	$this->input->post('employetypeID'),

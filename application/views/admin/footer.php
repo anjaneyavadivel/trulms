@@ -39,7 +39,7 @@
                 <h3 class="modal-title custom-font">Confirmation!</h3>
             </div>
             <div class="modal-body">
-                <p id="confirmation-msg1">Are you sure you would like to Add this record?</p>
+                <p id="confirmation-msg2">Are you sure you would like to Add this record?</p>
             </div>
 
             <div class="modal-footer" id="form_sub_enable">
