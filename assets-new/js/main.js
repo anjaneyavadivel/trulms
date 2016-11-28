@@ -36,7 +36,6 @@ function form_submit(val){
 	document.getElementById(val).submit();
 }
 $('#add_form').click(function(){
-	alert();
 $.validator.addMethod("loginRegex", function(value, element) 
 {
    return this.optional(element) || /^[\w\d\s-]+$/i.test(value);

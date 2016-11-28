@@ -64,8 +64,7 @@
                                             
                                                 <input type="text" name="department" class="form-control" placeholder="Department Name"
                                                        required value="<?= $v->department?>">
-                                                       
-                                                         <input type="hidden" value="<?= $v->deptID?>" id="deptID">
+                                                         <input type="hidden" value="<?= $v->deptID?>" id="deptID" name="deptID">
                                             
                                         </div>
 
@@ -73,21 +72,16 @@
 
                                         <div class="form-group">
                                             <label class="control-label">Department Description</label>
-                                            
                                                 <input type="text" name="description" class="form-control" placeholder="Department Description"
-                                                      
                                                       value="<?=$v->description?>">
                                                        
-                                                       <input type="hidden" name="deptID" class="form-control" 
-                                                        value="<?=$v->deptID?>">
-                                          
                                         </div>
 
                                        <!-- tile footer -->
                                 <div class="tile-footer text-right bg-tr-black lter dvd dvd-top">
                                     <!-- SUBMIT BUTTON -->
                                     <a  href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="active_deactive_class('<?= base_url()?>department','3')" class="btn btn-warning"><i class="fa fa-hand-o-left"></i> Go Back</a>
-                                    <input type="submit" class="btn bg-greensea" id="add_form" value="Save" >
+                                    <input type="submit" class="btn bg-greensea" id="add_form" value="Update" >
                                    
                                    <a  href="javascript::" data-toggle="modal" data-target="#form-submit" id="form_submiting" data-options="splash-2 splash-ef-11" role="button" tabindex="0"  class="btn btn-greensea" style="display:none">Submit</a>
                                     <input type="submit" class="btn btn-default" id="new_button" onclick="form_submit('edit_depatment')" value="Submit" style="display:none" >
