@@ -71,6 +71,7 @@ $route['ajax/active-deactive'] = 'welcome/active_deactive';
 
 $route['form-master'] = 'setup/form_master';
 $route['form-master-json'] = 'setup/form_master_json';
+$route['check-form-master-url'] = 'setup/check_form_master_url';
 $route['add-form-master'] = 'setup/add_form_master';
 $route['view-form-master/(:num)'] = 'setup/view_form_master/$1';
 $route['edit-form-master/(:num)'] = 'setup/edit_form_master/$1';

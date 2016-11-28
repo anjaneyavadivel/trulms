@@ -71,7 +71,7 @@
                     <!-- Branding -->
                     <div class="branding">
                         <a class="brand" href="<?= base_url(); ?>">
-                            <span><strong>Tru</strong>LMS</span>
+                            <span><strong>Tru</strong>LMS <sub>0.1</sub></span> 
                         </a>
                         <a href="#" class="offcanvas-toggle visible-xs-inline"><i class="fa fa-bars"></i></a>
                     </div>

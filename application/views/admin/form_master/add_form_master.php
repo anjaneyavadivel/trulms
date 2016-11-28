@@ -12,23 +12,23 @@
 <section id="content">
     <div class="page page-forms-validate">
         <div class="pageheader">
-            <h2>Add <?=$pageTitle?></h2>
+            <h2>Add <?= $pageTitle ?></h2>
             <div class="page-bar">
                 <ul class="page-breadcrumb">
                     <li> <a href="<?= base_url() ?>"><i class="fa fa-home"></i> HOME</a> </li>
-                    <li> <a href="<?= base_url() ?>form-master"><?=$pageTitle?> Master</a> </li>
-                    <li> <a href="javascript::">Add <?=$pageTitle?></a> </li>
+                    <li> <a href="<?= base_url() ?>form-master"><?= $pageTitle ?> Master</a> </li>
+                    <li> <a href="javascript::">Add <?= $pageTitle ?></a> </li>
                 </ul>
             </div>
         </div>
 
         <!-- row -->
         <div class="row"> 
-             <?= form_open_multipart(base_url() . 'add-form-master',array('id'=>'add-form-master','role'=>'form','data-parsley-validate'=>''));?>
+            <?= form_open_multipart(base_url() . 'add-form-master', array('id' => 'add-form-master', 'role' => 'form', 'data-parsley-validate' => '')); ?>
             <!-- col -->
-            <?php $this->load->view('admin/msg')?>
-          <div class="col-md-6">
-               
+            <?php $this->load->view('admin/msg') ?>
+            <div class="col-md-6">
+
                 <section class="tile"> 
 
                     <!-- tile header --> 
@@ -74,7 +74,7 @@
                                 <input type="text" name="tooltip" id="tooltip" class="form-control" >
                             </div>
                         </div>
-                        
+
                     </div>
                     <!-- /tile body --> 
 
@@ -143,26 +143,27 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                         <div class="row">
                             <div class="form-group col-md-12">
                                 <label class="col-sm-4 control-label">Default Approver Role</label>
-                                
+
                                 <div class="col-sm-6">
                                     <select name="defaultApproverRoleID" class="form-control mb-10" data-parsley-trigger="change" >
-                                    <option value="">Select option...</option>
-                                     <?php
-                                    if (isset($role) && $role->num_rows() > 0){
-                                        foreach ($role->result() AS $rol) {
-                                            ?>
-                                    <option value="<?= $rol->roleID ?>"><?= $rol->roleName ?></option>
-                                    <?php
-                                    }}
-                                    ?>
-                                </select>
+                                        <option value="">Select option...</option>
+                                        <?php
+                                        if (isset($role) && $role->num_rows() > 0) {
+                                            foreach ($role->result() AS $rol) {
+                                                ?>
+                                                <option value="<?= $rol->roleID ?>"><?= $rol->roleName ?></option>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                    </select>
                                 </div> 
-                                
+
                             </div>
                         </div>
                     </div>
@@ -189,8 +190,13 @@
                         <!-- tile footer -->
                         <div class="tile-footer text-right bg-tr-black lter dvd dvd-top"> 
                             <!-- SUBMIT BUTTON -->
-                           <a  href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="active_deactive_class('<?= base_url()?>form-master','3')" class="btn btn-warning"><i class="fa fa-hand-o-left"></i> Go Back</a> 
-                           <input type="submit" class="btn btn-greensea" id="form4Submit" value="Add Form" name="save">
+                            <a  href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="active_deactive_class('<?= base_url() ?>form-master', '3')" class="btn btn-warning"><i class="fa fa-hand-o-left"></i> Go Back</a> 
+<!--                            <input type="submit" class="btn btn-greensea" id="form4Submit" value="Add Form" name="save">-->
+
+                            <input type="submit" class="btn bg-greensea" id="formSubmit" value="Add Form" >
+                            <a  href="javascript::" data-toggle="modal" data-target="#form-submit" id="formsubmiting" data-options="splash-2 splash-ef-11" role="button" tabindex="0"  class="btn btn-greensea" style="display:none">Submit</a>
+                            <input type="submit" class="btn btn-default" id="new_button" onclick="form_submit('add-form-master')" value="Submit" style="display:none" >
+
                         </div>
                         <!-- /tile footer --> 
 
@@ -201,7 +207,7 @@
                 <!-- /tile --> 
 
             </div>
-            <?php echo form_close(); ?> 
+<?php echo form_close(); ?> 
             <!-- /col --> 
 
         </div>

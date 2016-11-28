@@ -152,8 +152,9 @@ var Mainnew = function () {
         } // End of init()
     };
 }();
-function active_deactive_class(url, type)
+function activdeactiveclass(url, type)
 {
+    //alert(type);
     if (type == 0)
     {
         $('#confirmation-msg1').html('Are you sure you would like to De-Active this record?');
@@ -162,9 +163,28 @@ function active_deactive_class(url, type)
     {
         $('#confirmation-msg1').html('Are you sure you would like to Approve this record?');
     }
+    else if (type == 3)
+    {
+        $('#confirmation-msg1').html('Are you sure you would like to Back From this page?');
+    }
     else
     {
         $('#confirmation-msg1').html('Are you sure you would like to Active this record?');
     }
-    $('#form_sub_enable').html('<a href="' + url + '/' + type + '" class="btn btn-default btn-border activedeactiveconf-btn">Yes</a><button class="btn btn-default btn-border activedeactiveconf-close" data-dismiss="modal">No</button>');
+    if (type == 3)
+    {
+
+        $('#form_sub_enable').html('<a href="' + url + '" class="btn btn-default btn-border activedeactiveconf-btn">Yes</a><button class="btn btn-default btn-border activedeactiveconf-close" data-dismiss="modal">No</button>');
+    }
+    else
+    {
+        $('#form_sub_enable').html('<a href="' + url + '/' + type + '" class="btn btn-default btn-border activedeactiveconf-btn">Yes</a><button class="btn btn-default btn-border activedeactiveconf-close" data-dismiss="modal">No</button>');
+    }
+
+}
+$('.submitformbtn').click(function () {
+    $('#submitform_button').trigger('click');
+});
+function submitform(val) {
+    document.getElementById(val).submit();
 }

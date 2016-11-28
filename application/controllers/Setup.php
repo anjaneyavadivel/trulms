@@ -39,7 +39,25 @@ class Setup extends CI_Controller {
         $data['table'] = "Form";
         $this->load->view('admin/form_master/form_master', $data);
     }
-
+    function check_form_master_url()
+	{
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-master', 1, 'create')) {
+            return FALSE;
+        }
+            if(isset($_POST['pageID']) && trim($_POST['pageID'])!=''){
+		  	$query=$this->Commonsql_model->select('tblpages',array('url'=>trim($_POST['url']),'pageID !='=>$_POST['pageID']));
+            }else{
+                $query=$this->Commonsql_model->select('tblpages',array('url'=>trim($_POST['url'])));
+            }
+            if($query->num_rows()>0)
+		{
+			echo "false";
+		}
+		else
+		{
+			echo "true";
+		}
+	}
     function add_form_master() {
         if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-master', 1, 'create')) {
             redirect(base_url() . "login");

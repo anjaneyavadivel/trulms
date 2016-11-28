@@ -863,13 +863,15 @@ if (isset($table)) {
     <script src="<?= base_url() ?>assets/js/jquery.validate.min.js"></script>
     <script src="<?= base_url() ?>assets-new/js/vaildation-function.js"></script>
 
-
+    <?php if ($segment1 == 'add-form-master'||$segment1 == 'edit-form-master') {
+        ?>
         <script src="<?= base_url() ?>assets-new/validation/formValidation.js"></script>
          <script>
             $(window).load(function () {
                 FormValidation.init();
             });
         </script>
+    <?php } ?>
     <!--/ vendor javascripts -->
     <!-- ============================================
     ============== Custom JavaScripts ===============
