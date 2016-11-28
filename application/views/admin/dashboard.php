@@ -78,8 +78,12 @@
         echo checkpageaccess('employee',1,'menu');
         echo "<br><br>";
         echo "Loging User Page Alter Permission: ";
-        echo "<br>";
         ?>
+        <code>array(0 => 'defaultApprover',1 => 'createApproveRequired', 2 => 'modifyApproveRequired', 3 => 'selfEditAllowed', 4 => 'selfApprovalAllowed', 5=>'reportingUserApprove');
+             </code>
+        <?php
+        echo "<br>";
+         ?>
         <code>pagealterpermission('employee', $alterPermission='');</code>
         <?php
         echo "<br>";
@@ -87,9 +91,9 @@
         echo pagealterpermission('employee', $alterPermission='');
         echo "<br>";
         ?>
-        <code>pagealterpermission('employee', $alterPermission='createApprove');</code>
+        <code>pagealterpermission('employee', $alterPermission='createApproveRequired');</code>
         <?php
-        echo pagealterpermission('employee', $alterPermission='createApprove');
+        echo pagealterpermission('employee', $alterPermission='createApproveRequired');
 //        $finalaccessmap = checkpageaccess(2, '', 'array');
 //        print_r($finalaccessmap);
         echo "<br><br>";

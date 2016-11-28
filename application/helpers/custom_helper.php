@@ -141,7 +141,8 @@ if (!function_exists('pagealterpermission')) {
         $SESS_userId = $CI->session->userdata('SESS_userId');
         $SESS_userReportingTo = $CI->session->userdata('SESS_userReportingTo');
         if (in_array(1, $SESS_userRole)) {// admin access
-            $final_accessmap = array(0 => 'defaultApprover',1 => 'createApprove', 2 => 'modifyApprove', 3 => 'selfEdit', 4 => 'selfApproval', 5=>'ReportingUserApprove');
+            //       $final_accessmap = array(0 => 'defaultApprover',1 => 'createApproveRequired', 2 => 'modifyApproveRequired', 3 => 'selfEditAllowed', 4 => 'selfApprovalAllowed', 5=>'reportingUserApprove');
+            $final_accessmap = array(0 => 'defaultApprover', 1 => 'selfEditAllowed', 2 => 'selfApprovalAllowed', 3 => 'reportingUserApprove');
         } else {// other user access
             $joins = array(
                 array(
@@ -158,20 +159,20 @@ if (!function_exists('pagealterpermission')) {
                 if (in_array($pagealter[0]->defaultApproverRoleID, $SESS_userRole)) {
                     $final_accessmap[] = 'defaultApprover';
                 }
-                if ($pagealter[0]->iscreateApproveRequired) {
-                    $final_accessmap[] = 'createApprove';
+                if ($pagealter[0]->iscreateApproveRequired == 0) {
+                    $final_accessmap[] = 'createApproveRequired';
                 }
-                if ($pagealter[0]->ismodifyApproveRequired) {
-                    $final_accessmap[] = 'modifyApprove';
+                if ($pagealter[0]->ismodifyApproveRequired == 0) {
+                    $final_accessmap[] = 'modifyApproveRequired';
                 }
                 if ($pagealter[0]->isSelfEditAllowed) {
-                    $final_accessmap[] = 'selfEdit';
+                    $final_accessmap[] = 'selfEditAllowed';
                 }
                 if ($pagealter[0]->isSelfApprovalAllowed) {
-                    $final_accessmap[] = 'selfApproval';
+                    $final_accessmap[] = 'selfApprovalAllowed';
                 }
-                if ($pagealter[0]->isReportingUserApproveAllowed ==1 && $SESS_userId==$SESS_userReportingTo) {
-                    $final_accessmap[] = 'ReportingUserApprove';
+                if ($pagealter[0]->isReportingUserApproveAllowed == 1 && $SESS_userId == $SESS_userReportingTo) {
+                    $final_accessmap[] = 'reportingUserApprove';
                 }
             }
         }
@@ -185,6 +186,40 @@ if (!function_exists('pagealterpermission')) {
             }
         }
         return $accessmap;
+    }
+
+}
+if (!function_exists('selfAllowed')) {
+    /*
+     * This function will return all parents of a user. 
+     * This includes children and input level users.
+     * $pageUrl  is page url name
+     * $alterPermission  is alter permission name, "1 (defaultApproverRoleID)" "createApprove","modifyApprove","selfEdit","selfApproval","ReportingUserApprove"
+     * it's return TRUE or FALSE
+     *  
+     */
+
+    function selfAllowed($pagealterpermission = array(),$alterpermission = '',$selfApprovalUserID = '') {
+        $CI = & get_instance();
+        if ($selfApprovalUserID == '' || $alterpermission == '' || empty($pagealterpermission)) {
+            return FALSE;
+        }
+        $SESS_userId = $CI->session->userdata('SESS_userId');
+        $SESS_userRole = $CI->session->userdata('SESS_userRole');
+        
+        if (in_array(1, $SESS_userRole)) {
+            return TRUE;
+        }
+        if ($alterpermission=='selfApprovalAllowed' && isset($pagealterpermission['defaultApprover'])) {
+            return TRUE;
+        }
+        if ($alterpermission=='selfApprovalAllowed' && isset($pagealterpermission['reportingUserApprove'])) {
+            return TRUE;
+        }
+        if (isset($pagealterpermission[$alterpermission]) && $SESS_userId == $selfApprovalUserID) {
+            return TRUE;
+        }
+        return FALSE;
     }
 
 }
@@ -861,21 +896,22 @@ if (!function_exists('approve_html')) {
 if (!function_exists('edit_html')) {
 
     function edit_html($link_and_id) {
-        return "<a href='".base_url().$link_and_id."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'class='edit'  data-toggle='tooltip' data-placement='top' title data-original-title='Click to Update'><i class='fa fa-edit'></i></a>";;
+        return "<a href='" . base_url() . $link_and_id . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'class='edit'  data-toggle='tooltip' data-placement='top' title data-original-title='Click to Update'><i class='fa fa-edit'></i></a>";
+        ;
     }
 
 }
 if (!function_exists('view_html')) {
 
     function view_html($link_and_id) {
-        return "<a href='".base_url().$link_and_id."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10' class='edit' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-file-text-o'></i></a>";
+        return "<a href='" . base_url() . $link_and_id . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10' class='edit' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-file-text-o'></i></a>";
     }
 
 }
 if (!function_exists('history_html')) {
 
     function history_html($link_and_id) {
-        return "<a href='".base_url().$link_and_id."'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'class='edit' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View History'><i class='fa fa-clock-o'></i></a>";
+        return "<a href='" . base_url() . $link_and_id . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'class='edit' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View History'><i class='fa fa-clock-o'></i></a>";
     }
 
 }

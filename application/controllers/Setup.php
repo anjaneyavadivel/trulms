@@ -39,25 +39,23 @@ class Setup extends CI_Controller {
         $data['table'] = "Form";
         $this->load->view('admin/form_master/form_master', $data);
     }
-    function check_form_master_url()
-	{
+
+    function check_form_master_url() {
         if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-master', 1, 'create')) {
             return FALSE;
         }
-            if(isset($_POST['pageID']) && trim($_POST['pageID'])!=''){
-		  	$query=$this->Commonsql_model->select('tblpages',array('url'=>trim($_POST['url']),'pageID !='=>$_POST['pageID']));
-            }else{
-                $query=$this->Commonsql_model->select('tblpages',array('url'=>trim($_POST['url'])));
-            }
-            if($query->num_rows()>0)
-		{
-			echo "false";
-		}
-		else
-		{
-			echo "true";
-		}
-	}
+        if (isset($_POST['pageID']) && trim($_POST['pageID']) != '') {
+            $query = $this->Commonsql_model->select('tblpages', array('url' => trim($_POST['url']), 'pageID !=' => $_POST['pageID']));
+        } else {
+            $query = $this->Commonsql_model->select('tblpages', array('url' => trim($_POST['url'])));
+        }
+        if ($query->num_rows() > 0) {
+            echo "false";
+        } else {
+            echo "true";
+        }
+    }
+
     function add_form_master() {
         if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-master', 1, 'create')) {
             redirect(base_url() . "login");
@@ -79,11 +77,10 @@ class Setup extends CI_Controller {
                 'icon' => $icon,
                 'tooltip' => $tooltip,
                 'parentID' => $parentID,
-                'dbentrystateID' => 3,
                 'createby' => $this->session->userdata('SESS_userId'),
                 'active' => 1);
 
-            $pageID = insertTable('tblpages', $values, 1, 'pageID');
+            $pageID = insertTable('tblpages', $values, 1, 'pageID', 'form-master');
             // insert data into tblpagealterdetails
             if (!isset($iscreateApproveRequired)) {
                 $iscreateApproveRequired = 0;
@@ -111,7 +108,6 @@ class Setup extends CI_Controller {
                 'isSelfEditAllowed' => $isSelfEditAllowed,
                 'isSelfApprovalAllowed' => $isSelfApprovalAllowed,
                 'defaultApproverRoleID' => $defaultApproverRoleID,
-                'dbentrystateID' => 3,
                 'createby' => $this->session->userdata('SESS_userId'),
                 'active' => 1);
 
@@ -135,6 +131,7 @@ class Setup extends CI_Controller {
         if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-master', 1, 'view')) {
             return FALSE;
         }
+        $pagealterpermission = pagealterpermission('form-master', $alterPermission = '');
         $userBranchID = $this->session->userdata('SESS_userBranchID');
         $output = array();
         if ($userBranchID == 0) {
@@ -173,18 +170,19 @@ class Setup extends CI_Controller {
                 if (checkpageaccess('form-master', 1, 'view')) {
                     $view = "<a href='" . base_url() . "view-form-master/" . $value->pageID . "'role='button' tabindex='0' class='edit' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-file-text-o'></i></a>&nbsp;";
                 }
-                if (checkpageaccess('form-master', 1, 'approve')) {
+                if (selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('form-master', 1, 'approve')) {
                     $APPROVE = "<a href='" . base_url() . "approve-form-master-list/" . $value->pageID . "'role='button' tabindex='0' class='edit' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View History'><i class='fa fa-clock-o'></i></a>&nbsp;";
                 }
-                if (checkpageaccess('form-master', 1, 'delete')) {
-                    if ($value->active == 1) {
-                        $active = '<a href="javascript:void(0)" data-tb="pages" data-val="0" data-id="' . $value->pageID . '"  data-col="pageID" role="button" tabindex="0" class="active-deactive-btn text-danger" data-toggle="tooltip" data-placement="top" title data-original-title="Click to De-Active"><i class="fa fa-times-circle"></i></a>&nbsp;';
-                    } else {
-                        $active = '<a href="javascript:void(0)" data-tb="pages" data-val="1" data-id="' . $value->pageID . '"  data-col="pageID" role="button" tabindex="0" class="active-deactive-btn text-success data-toggle="tooltip" data-placement="top" title data-original-title="Click to Active"><i class="fa fa-check-square"></i></a>&nbsp;';
-                    }
-                }
-                if (checkpageaccess('form-master', 1, 'modify')) {
+                if (selfAllowed($pagealterpermission, 'selfEditAllowed', $value->createby) && checkpageaccess('form-master', 1, 'modify')) {
                     $edit = "<a href='" . base_url() . "edit-form-master/" . $value->pageID . "'role='button' tabindex='0' class='edit'  data-toggle='tooltip' data-placement='top' title data-original-title='Click to Update'><i class='fa fa-edit'></i></a>&nbsp;";
+                    
+                    if (checkpageaccess('form-master', 1, 'delete')) {
+                        if ($value->active == 1) {
+                            $active = '<a href="javascript:void(0)" data-tb="pages" data-val="0" data-id="' . $value->pageID . '"  data-col="pageID" role="button" tabindex="0" class="active-deactive-btn text-danger" data-toggle="tooltip" data-placement="top" title data-original-title="Click to De-Active"><i class="fa fa-times-circle"></i></a>&nbsp;';
+                        } else {
+                            $active = '<a href="javascript:void(0)" data-tb="pages" data-val="1" data-id="' . $value->pageID . '"  data-col="pageID" role="button" tabindex="0" class="active-deactive-btn text-success data-toggle="tooltip" data-placement="top" title data-original-title="Click to Active"><i class="fa fa-check-square"></i></a>&nbsp;';
+                        }
+                    }
                 }
                 $vaules['Action'] = $view . $edit . $APPROVE . $active;
 
@@ -226,7 +224,7 @@ class Setup extends CI_Controller {
             } else {
                 $whereData = array('active' => 1, 'pageID' => $pageID);
             }
-            $query = updateTable('tblpages', $whereData, $values, 1, 'pageID', $pageID);
+            $query = updateTable('tblpages', $whereData, $values, 1, 'pageID', $pageID, 'form-master');
 
             // insert data into tblpagealterdetails
             if (!isset($iscreateApproveRequired)) {
@@ -259,7 +257,7 @@ class Setup extends CI_Controller {
 
             $whereData = array('pageID' => $pageID);
 
-            $query1 = updateTable('tblpagealterdetails', $whereData, $values1, 1, 'pageID', $pageID);
+            $query1 = updateTable('tblpagealterdetails', $whereData, $values1, 1, 'pageID', $pageID, 'form-master');
             if ($query > 0 || $query1 > 0) {
                 $this->session->set_userdata('suc', 'Form Master successfully updated...!');
                 redirect('edit-form-master/' . $pageID);
@@ -371,6 +369,7 @@ class Setup extends CI_Controller {
 
         echo json_encode(array('data' => $output), true);
     }
+
     function view_form_master_history() {
         if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-master', 1, 'approve')) {
             redirect(base_url() . "login");
@@ -384,10 +383,11 @@ class Setup extends CI_Controller {
             $data['pages'] = $this->Commonsql_model->select('tblpages_mod', array('active' => 1, 'page_modID' => $this->uri->segment(2)));
             //$data['pagealt'] = $this->Commonsql_model->select('tblpagealterdetails_mod', array('active' => 1, 'pageAlterDetailsID' => $this->uri->segment(2)));
         }
-        $v=$data['pages']->row();
+        $v = $data['pages']->row();
         $data['pagesID'] = $v->pageID;
         $this->load->view('admin/form_master/view_form_master_history', $data);
     }
+
     function approve_page_alter_json($pageID = '') {
         if (trim($pageID) == '' || !$this->session->userdata('SESS_userId') || !checkpageaccess('form-master', 1, 'approve')) {
             return FALSE;
@@ -496,7 +496,7 @@ class Setup extends CI_Controller {
         } else {
             $whereData = array('temprole.active' => 1);
         }
-        $joins = array( 
+        $joins = array(
             array(
                 'table' => 'tblemployee AS temp',
                 'condition' => 'temprole.empID = temp.empID',
@@ -520,7 +520,7 @@ class Setup extends CI_Controller {
         $columns = 'temprole.*,temp.empCode,temp.empname,tdes.name,tdept.department,trole.roleName';
         $employeeRolw = get_joins('tblemprolemap AS temprole', $columns, $joins, $whereData, $orWhereData = array(), $group = array(), $order = 'empRoleMapID DESC');
 
-                $vaules = array();
+        $vaules = array();
         if (isset($employeeRolw) && $employeeRolw->num_rows() > 0) {
             foreach ($employeeRolw->result() as $value) {
                 $vaules['ID'] = $value->empRoleMapID;
@@ -647,11 +647,11 @@ class Setup extends CI_Controller {
             $whereData = array('temp.branchID' => $userBranchID, 'temprole.empRoleMapID' => $roleID, 'temprole.active' => 1, 'temp.dbentrystateID' => 3, 'temp.active' => 1);
         }
         $joins = array(
-             array(
+            array(
                 'table' => 'tblemployee AS temp',
                 'condition' => 'temprole.empID = temp.empID',
                 'jointype' => 'LEFT'
-            ),array(
+            ), array(
                 'table' => 'tbldept AS tdept',
                 'condition' => 'tdept.deptID = temp.deptid',
                 'jointype' => 'LEFT'
@@ -774,8 +774,8 @@ class Setup extends CI_Controller {
         $data['pageTitle'] = "Edit Eployee Role Setup";
         $this->load->view('admin/employee_role/edit_employee_role', $data);
     }
-    
-    function approve_employee_role($employee_role_id='') {
+
+    function approve_employee_role($employee_role_id = '') {
         if (!$this->session->userdata('SESS_userId') || !checkpageaccess('employee-role', 1, 'approve')) {
             redirect(base_url() . "login");
         }
@@ -785,10 +785,10 @@ class Setup extends CI_Controller {
             $upt = updateTable('tblemprolemap', $whereData, $updateData, $isStoreMod = 1, $modIdName = 'empRoleMapID', $modId = $this->uri->segment(3));
             if ($upt) {
                 $this->session->set_userdata('suc', 'Eployee Role Setup status successfully changed...!');
-                redirect('approve-employee-role/'.$employee_role_id);
+                redirect('approve-employee-role/' . $employee_role_id);
             } else {
                 $this->session->set_userdata('err', 'Error Please try again..!');
-                redirect('approve-employee-role/'.$employee_role_id);
+                redirect('approve-employee-role/' . $employee_role_id);
             }
         }
 
@@ -797,16 +797,16 @@ class Setup extends CI_Controller {
         $this->load->view('admin/employee_role/approve_employee_role', $data);
     }
 
-    function approve_employee_role_json($employee_role_id='') {
+    function approve_employee_role_json($employee_role_id = '') {
         if (!$this->session->userdata('SESS_userId') || !checkpageaccess('employee-role', 1, 'approve')) {
             return FALSE;
         }
         $userBranchID = $this->session->userdata('SESS_userBranchID');
         $output = array();
         if ($userBranchID == 0) {
-            $whereData = array('empRoleMapID'=>$employee_role_id);
+            $whereData = array('empRoleMapID' => $employee_role_id);
         } else {
-            $whereData = array('empRoleMapID'=>$employee_role_id,'temprole.active' => 1);
+            $whereData = array('empRoleMapID' => $employee_role_id, 'temprole.active' => 1);
         }
         $joins = array(
             array(

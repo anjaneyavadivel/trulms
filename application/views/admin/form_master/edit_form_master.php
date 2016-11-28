@@ -240,7 +240,7 @@
 <!--                            <input type="submit" class="btn btn-greensea" id="form4Submit" value="Add Form" name="save">-->
 
                             <input type="submit" class="btn bg-greensea" id="formSubmit" value="Update" >
-                            <a  href="javascript::" data-toggle="modal" data-target="#form-submit" id="formsubmiting" data-options="splash-2 splash-ef-11" role="button" tabindex="0"  class="btn btn-greensea" style="display:none">Submit</a>
+                            <a  href="javascript::" data-toggle="modal" data-target="#form-edit-submit" id="formsubmiting" data-options="splash-2 splash-ef-11" role="button" tabindex="0"  class="btn btn-greensea" style="display:none">Submit</a>
                             <input type="submit" class="btn btn-default" id="new_button" onclick="form_submit('edit-form-master')" value="Submit" style="display:none" >
                  </div>
                             <!-- /tile footer --> 

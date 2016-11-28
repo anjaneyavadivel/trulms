@@ -14,9 +14,18 @@ if (!defined('BASEPATH'))
  *  */
 if (!function_exists('insertTable')) {
 
-    function insertTable($tableName, $tableData, $isStoreMod=0, $modIdName='') {
+    function insertTable($tableName, $tableData, $isStoreMod=0, $modIdName='', $pageUrlName='') {
         $CI = & get_instance();
         $CI->load->model('commonsql_model');
+        $pagealterpermission=array();
+        if($pageUrlName!=''){
+            $pagealterpermission = pagealterpermission($pageUrlName, $alterPermission='');
+        }
+        if (!empty($pagealterpermission) && isset($pagealterpermission['createApproveRequired'])) {
+                $tableData['dbentrystateID']=0;
+        }  else {
+                $tableData['dbentrystateID']=3;
+        }
         $insertid = $CI->commonsql_model->insert_table($tableName, $tableData);
         if($insertid>0 && $isStoreMod==1){
             $tableData[$modIdName]=$insertid;
@@ -57,9 +66,18 @@ if (!function_exists('selectTable')) {
  *  */
 if (!function_exists('updateTable')) {
 
-    function updateTable($tableName, $whereData = array(), $updateData = array(), $isStoreMod=0, $modIdName='', $modId='') {
+    function updateTable($tableName, $whereData = array(), $updateData = array(), $isStoreMod=0, $modIdName='', $modId='', $pageUrlName='') {
         $CI = & get_instance();
         $CI->load->model('commonsql_model');
+        $pagealterpermission=array();
+        if($pageUrlName!=''){
+            $pagealterpermission = pagealterpermission($pageUrlName, $alterPermission='');
+        }
+        if (!empty($pagealterpermission) && isset($pagealterpermission['modifyApproveRequired'])) {
+                $updateData['dbentrystateID']=2;
+        }  else {
+                $updateData['dbentrystateID']=3;
+        }
         $resultData = $CI->commonsql_model->updateTable($tableName, $whereData, $updateData);
 		//echo $CI->db->last_query();exit;
         if($resultData>0 && $isStoreMod==1){
@@ -74,9 +92,18 @@ if (!function_exists('updateTable')) {
 
 if (!function_exists('updateTables')) {
 
-    function updateTables($tableName, $whereData = array(), $updateData = array(), $isStoreMod=0, $modIdName='', $modId='') {
+    function updateTables($tableName, $whereData = array(), $updateData = array(), $isStoreMod=0, $modIdName='', $modId='', $pageUrlName='') {
         $CI = & get_instance();
         $CI->load->model('commonsql_model');
+        $pagealterpermission=array();
+        if($pageUrlName!=''){
+            $pagealterpermission = pagealterpermission($pageUrlName, $alterPermission='');
+        }
+        if (!empty($pagealterpermission) && isset($pagealterpermission['modifyApproveRequired'])) {
+                $updateData['dbentrystateID']=2;
+        }  else {
+                $updateData['dbentrystateID']=3;
+        }
         $resultData = $CI->commonsql_model->updateTable($tableName, $whereData, $updateData);
 		//echo $CI->db->last_query();exit;
         if($isStoreMod==1){
