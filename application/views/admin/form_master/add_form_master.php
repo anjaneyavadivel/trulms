@@ -24,7 +24,7 @@
 
         <!-- row -->
         <div class="row"> 
-             <?= form_open_multipart(base_url() . 'add-form-master',array('id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
+             <?= form_open_multipart(base_url() . 'add-form-master',array('id'=>'add-form-master','role'=>'form','data-parsley-validate'=>''));?>
             <!-- col -->
             <?php $this->load->view('admin/msg')?>
           <div class="col-md-6">
