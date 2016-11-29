@@ -95,7 +95,7 @@
 
                                 <!-- tile header -->
                                 <div class="tile-header bg-greensea  dvd dvd-btm">
-                                    <h1 class="custom-font"><strong>Edit</strong> Employee Types</h1>
+                                    <h1 class="custom-font"><strong>Update</strong> Employee Types</h1>
                                     
                                 </div>
                                 <!-- /tile header -->
@@ -105,24 +105,20 @@
 
 
                                     
- <?=form_open_multipart(base_url().'approve_employee_types/'.$v->employetypeID,array('class'=>'form-horizontal','id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
+ <?=form_open_multipart(base_url().'approve_employee_types/'.$v->employetypeID,array('class'=>'form-horizontal','id'=>'edit_employee_types','role'=>'form'));?>
                                         <div class="form-group">
                                             <label class="control-label">Employee Types Name</label>
                                            
-                                                <input type="text" name="typename" class="form-control" placeholder="Employee Types Name"
-                                                       data-parsley-trigger="change"
-                                                       required value="<?=$v->typename?>">
+                                                <input type="text" name="typename" class="form-control" placeholder="Employee Types " value="<?=$v->typename?>">
                                             
                                         </div>
-<input type="hidden" value="<?=$v->employetypeID?>" name="employetypeID" />
+<input type="hidden" value="<?=$v->employetypeID?>" name="employetypeID" id="employetypeID" />
                                       
 
                                         <div class="form-group">
                                             <label class="control-label">Employee Types Description</label>
                                             
-                                                <input type="text" name="description" class="form-control" placeholder="Employee Types Description"
-                                                       data-parsley-trigger="change"
-                                                       required value="<?=$v->description?>">
+                                                <input type="text" name="description" class="form-control" placeholder="Employee Types Description" value="<?=$v->description?>">
                                             
                                         </div>
 
@@ -130,7 +126,10 @@
                                 <div class="tile-footer text-right bg-tr-black lter dvd dvd-top">
                                     <!-- SUBMIT BUTTON -->
                                      <a  href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="active_deactive_class('<?= base_url()?>employee_types','3')" class="btn btn-warning"><i class="fa fa-hand-o-left"></i> Go Back</a>
-                                    <input type="submit" class="btn btn-default" id="form4Submit" value="Submit" name="save">
+                                   <input type="submit" class="btn bg-greensea" id="add_form" value="Update Employee Types" >
+                                   
+                                   <a  href="javascript::" data-toggle="modal" data-target="#form-submit" id="form_submiting" data-options="splash-2 splash-ef-11" role="button" tabindex="0"  onclick="form_action_msg(1)"class="btn btn-greensea" style="display:none">Submit</a>
+                                    <input type="submit" class="btn btn-default" id="new_button" onclick="form_submit('edit_employee_types')" value="Submit" style="display:none" >
                                 </div>
                                 <!-- /tile footer -->
 

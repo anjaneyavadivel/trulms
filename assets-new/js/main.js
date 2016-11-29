@@ -47,7 +47,8 @@ $.validator.addMethod("loginRegex", function(value, element)
 {
    return this.optional(element) || /^[\w\d\s-]+$/i.test(value);
    //return this.optional(element) || /^[a-z0-9\\-]+$/i.test(value); -----for login script
-}, "Department must contain only letters, numbers, or dashes.");	
+}, "Department must contain only letters, numbers, or dashes.");
+var vaildation	=	'_vaildation';	
  $("#add_depatment").validate({
 			rules: {
 				department: {
@@ -56,7 +57,7 @@ $.validator.addMethod("loginRegex", function(value, element)
 					loginRegex:true,
 					remote:{
 					 type:"post",
-					 url:base_path+"department_vaildation",
+					 url:base_path+"department"+vaildation,
 				 },
 				},
 			},
@@ -79,7 +80,7 @@ $.validator.addMethod("loginRegex", function(value, element)
 					loginRegex:true,
 					remote:{
 					 type:"post",
-					 url:base_path+"edit_department_vaildation",
+					 url:base_path+"edit_department"+vaildation,
 					 data: { 'deptID': $('#deptID').val() },
 				 },
 				},
@@ -106,7 +107,7 @@ $.validator.addMethod("loginRegex", function(value, element)
 					loginRegex:true,
 					remote:{
 					 type:"post",
-					 url:base_path+"designation_vaildation",
+					 url:base_path+"designation"+vaildation,
 				 },
 				},
 			},
@@ -129,13 +130,209 @@ $.validator.addMethod("loginRegex", function(value, element)
 					loginRegex:true,
 					remote:{
 					 type:"post",
-					 url:base_path+"edit_designation_vaildation",
+					 url:base_path+"edit_designation"+vaildation,
 					 data: { 'desigID': $('#desigID').val() },
 				 },
 				},
 			},
 			messages:{
 				name:{
+					required:"This field is required",
+					remote:"Already Exists this one..!",
+				},
+			},
+			 submitHandler: function (form) {
+				$('#form_submiting').trigger('click');
+				 return false;
+			 }
+		});
+		/*Role*/
+		
+		$("#add_role").validate({
+			rules: {
+				roleName: {
+					required: true,
+					maxlength: 49,
+					loginRegex:true,
+					remote:{
+					 type:"post",
+					 url:base_path+"role"+vaildation,
+				 },
+				},
+			},
+			messages:{
+				roleName:{
+					required:"This field is required",
+					remote:"Already Exists this one..!",
+				},
+			},
+			 submitHandler: function (form) {
+				$('#form_submiting').trigger('click');
+				 return false;
+			 }
+		});
+	 $("#edit_role").validate({
+			rules: {
+				roleName: {
+					required: true,
+					maxlength: 49,
+					loginRegex:true,
+					remote:{
+					 type:"post",
+					 url:base_path+"edit_role"+vaildation,
+					 data: { 'desigID': $('#desigID').val() },
+				 },
+				},
+			},
+			messages:{
+				roleName:{
+					required:"This field is required",
+					remote:"Already Exists this one..!",
+				},
+			},
+			 submitHandler: function (form) {
+				$('#form_submiting').trigger('click');
+				 return false;
+			 }
+		});
+		/*Payment Mode*/
+		
+		$("#add_payment_mode").validate({
+			rules: {
+				paymentMode: {
+					required: true,
+					maxlength: 49,
+					loginRegex:true,
+					remote:{
+					 type:"post",
+					 url:base_path+"payment_mode"+vaildation,
+				 },
+				},
+			},
+			messages:{
+				paymentMode:{
+					required:"This field is required",
+					remote:"Already Exists this one..!",
+				},
+			},
+			 submitHandler: function (form) {
+				$('#form_submiting').trigger('click');
+				 return false;
+			 }
+		});
+	 $("#edit_payment_mode").validate({
+			rules: {
+				paymentMode: {
+					required: true,
+					maxlength: 49,
+					loginRegex:true,
+					remote:{
+					 type:"post",
+					 url:base_path+"edit_payment_mode_vaildation",
+					 data: { 'paymentModeID': $('#paymentModeID').val() },
+				 },
+				},
+			},
+			messages:{
+				paymentMode:{
+					required:"This field is required",
+					remote:"Already Exists this one..!",
+				},
+			},
+			 submitHandler: function (form) {
+				$('#form_submiting').trigger('click');
+				 return false;
+			 }
+		});
+		/*Payment status*/
+		
+		$("#add_payment_status").validate({
+			rules: {
+				payStatus: {
+					required: true,
+					maxlength: 49,
+					loginRegex:true,
+					remote:{
+					 type:"post",
+					 url:base_path+"payment_status"+vaildation,
+				 },
+				},
+			},
+			messages:{
+				payStatus:{
+					required:"This field is required",
+					remote:"Already Exists this one..!",
+				},
+			},
+			 submitHandler: function (form) {
+				$('#form_submiting').trigger('click');
+				 return false;
+			 }
+		});
+	 $("#edit_payment_status").validate({
+			rules: {
+				payStatus: {
+					required: true,
+					maxlength: 49,
+					loginRegex:true,
+					remote:{
+					 type:"post",
+					 url:base_path+"edit_payment_status"+vaildation,
+					 data: { 'payStatusID': $('#payStatusID').val() },
+				 },
+				},
+			},
+			messages:{
+				payStatus:{
+					required:"This field is required",
+					remote:"Already Exists this one..!",
+				},
+			},
+			 submitHandler: function (form) {
+				$('#form_submiting').trigger('click');
+				 return false;
+			 }
+		});
+		/*Employee Types*/
+		
+		$("#add_employee_types").validate({
+			rules: {
+				typename: {
+					required: true,
+					maxlength: 49,
+					loginRegex:true,
+					remote:{
+					 type:"post",
+					 url:base_path+"employee_types"+vaildation,
+				 },
+				},
+			},
+			messages:{
+				typename:{
+					required:"This field is required",
+					remote:"Already Exists this one..!",
+				},
+			},
+			 submitHandler: function (form) {
+				$('#form_submiting').trigger('click');
+				 return false;
+			 }
+		});
+	 $("#edit_employee_types").validate({
+			rules: {
+				typename: {
+					required: true,
+					maxlength: 49,
+					loginRegex:true,
+					remote:{
+					 type:"post",
+					 url:base_path+"edit_employee_types"+vaildation,
+					 data: { 'payStatusID': $('#payStatusID').val() },
+				 },
+				},
+			},
+			messages:{
+				typename:{
 					required:"This field is required",
 					remote:"Already Exists this one..!",
 				},

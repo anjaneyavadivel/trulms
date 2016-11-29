@@ -118,6 +118,8 @@ $route['approve_designation/([a-zA-Z0-9---_%])+'] 	=		'manage/approve_designatio
 $route['approve_designation/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_designation/$1/$1';
 
 $route['role'] 										=		'manage/role';
+$route['role_vaildation'] 							=		'manage/role_vaildation';
+$route['edit_role_vaildation'] 						=		'manage/edit_role_vaildation';
 $route['add_role'] 									=		'manage/add_role';
 $route['edit_role/([a-zA-Z0-9---_%])+'] 			=		'manage/edit_role/$1';
 $route['view_role/([a-zA-Z0-9---_%])+'] 			=		'manage/view_role/$1';
@@ -125,6 +127,8 @@ $route['approve_role/([a-zA-Z0-9---_%])+'] 			=		'manage/approve_role/$1';
 $route['approve_role/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_role/$1/$1';
 
 $route['payment_mode'] 								=		'manage/payment_mode';
+$route['payment_mode_vaildation'] 					=		'manage/payment_mode_vaildation';
+$route['edit_payment_mode_vaildation'] 				=		'manage/edit_payment_mode_vaildation';
 $route['add_payment_mode'] 							=		'manage/add_payment_mode';
 $route['edit_payment_mode/([a-zA-Z0-9---_%])+'] 	=		'manage/edit_payment_mode/$1';
 $route['view_payment_mode/([a-zA-Z0-9---_%])+'] 	=		'manage/view_payment_mode/$1';
@@ -132,6 +136,8 @@ $route['approve_payment_mode/([a-zA-Z0-9---_%])+'] 	=		'manage/approve_payment_m
 $route['approve_payment_mode/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_payment_mode/$1/$1';
 
 $route['payment_status'] 							=		'manage/payment_status';
+$route['payment_status_vaildation'] 				=		'manage/payment_status_vaildation';
+$route['edit_payment_status_vaildation'] 			=		'manage/edit_payment_status_vaildation';
 $route['add_payment_status'] 						=		'manage/add_payment_status';
 $route['edit_payment_status/([a-zA-Z0-9---_%])+'] 	=		'manage/edit_payment_status/$1';
 $route['view_payment_status/([a-zA-Z0-9---_%])+'] 	=		'manage/view_payment_status/$1';
@@ -139,6 +145,8 @@ $route['approve_payment_status/([a-zA-Z0-9---_%])+']=		'manage/approve_payment_s
 $route['approve_payment_status/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_payment_status/$1/$1';
 
 $route['employee_types'] 							=		'manage/employee_types';
+$route['employee_types_vaildation'] 				=		'manage/employee_types_vaildation';
+$route['edit_employee_types_vaildation'] 			=		'manage/edit_employee_types_vaildation';
 $route['add_employee_types'] 						=		'manage/add_employee_types';
 $route['edit_employee_types/([a-zA-Z0-9---_%])+'] 	=		'manage/edit_employee_types/$1';
 $route['view_employee_types/([a-zA-Z0-9---_%])+'] 	=		'manage/view_employee_types/$1';

@@ -15,7 +15,7 @@
 
                     <div class="pageheader">
 
-                        <h2>Validation Elements </h2>
+                        <h2>Payment status </h2>
 
                         <div class="page-bar">
 
@@ -27,7 +27,7 @@
                                     <a href="<?= base_url()?>payment_status"> Payment status</a>
                                 </li>
                                 <li>
-                                    <a href="javascript::">Edit Payment status</a>
+                                    <a href="javascript::">Update Payment status</a>
                                 </li>
                             </ul>
                             
@@ -54,7 +54,7 @@
 
                                 <!-- tile header -->
                                 <div class="tile-header bg-greensea  dvd dvd-btm">
-                                    <h1 class="custom-font"><strong>Edit</strong> Payment Status</h1>
+                                    <h1 class="custom-font"><strong>Update</strong> Payment Status</h1>
                                     
                                 </div>
                                 <!-- /tile header -->
@@ -64,25 +64,21 @@
 
 
                                    
-                                     <?=form_open_multipart(base_url().'edit_payment_status/'.$v->payStatusID,array('class'=>'form-horizontal','id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
+                                     <?=form_open_multipart(base_url().'edit_payment_status/'.$v->payStatusID,array('class'=>'form-horizontal','id'=>'edit_payment_status','role'=>'form'));?>
 
                                         <div class="form-group">
                                             <label class="control-label">Payment Status Name</label>
                                            
-                                                <input type="text" name="payStatus" class="form-control" placeholder="Payment Status Name"
-                                                       data-parsley-trigger="change"
-                                                       required value="<?=$v->payStatus?>">
+                                                <input type="text" name="payStatus" class="form-control" placeholder="Payment Status Name"required value="<?=$v->payStatus?>">
                                            
                                         </div>
-<input type="hidden" value="<?=$v->payStatusID?>" name="payStatusID" />
+<input type="hidden" value="<?=$v->payStatusID?>" name="payStatusID" id="payStatusID" />
                                       
 
                                         <div class="form-group">
                                             <label class="control-label">Payment Status Description</label>
                                            
-                                                <input type="text" name="description" class="form-control" placeholder="Payment Status Description"
-                                                       data-parsley-trigger="change"
-                                                       required value="<?=$v->description?>">
+                                                <input type="text" name="description" class="form-control" placeholder="Payment Status Description" value="<?=$v->description?>">
                                             
                                         </div>
 
@@ -90,7 +86,10 @@
                                 <div class="tile-footer text-right bg-tr-black lter dvd dvd-top">
                                     <!-- SUBMIT BUTTON -->
                                      <a  href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="active_deactive_class('<?= base_url()?>payment_status','3')" class="btn btn-warning"><i class="fa fa-hand-o-left"></i> Go Back</a>
-                                    <input type="submit" class="btn btn-default" id="form4Submit" value="Submit" name="save">
+                                     <input type="submit" class="btn bg-greensea" id="add_form" value="Update Payment Status" >
+                                   
+                                   <a  href="javascript::" data-toggle="modal" data-target="#form-submit" id="form_submiting" data-options="splash-2 splash-ef-11" role="button" tabindex="0"  onclick="form_action_msg(1)"class="btn btn-greensea" style="display:none">Submit</a>
+                                    <input type="submit" class="btn btn-default" id="new_button" onclick="form_submit('edit_payment_status')" value="Submit" style="display:none" >
                                 </div>
                                 <!-- /tile footer -->
 

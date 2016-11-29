@@ -531,7 +531,7 @@ class Manage extends CI_Controller {
 	}
 	function designation_json()
 	{
-		$result	=	$this->Commonsql_model->select_all_state('tbldesignation','desigID');
+		$result	=	$this->Commonsql_model->select_all_state_confilct('tbldesignation','desigID');
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
@@ -540,19 +540,19 @@ class Manage extends CI_Controller {
 			$vaules['description'] 		= 	$value->description;
 			if ($value->dbentrystateID == 0) 
 			{
-				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->name.'</span>';
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->state_names.'</span>';
 			}
 			elseif ($value->dbentrystateID == 1) 
 			{
-				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->name.'</span>';
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->state_names.'</span>';
 			}
 			elseif ($value->dbentrystateID == 2) 
 			{
-				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->name.'</span>';
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->state_names.'</span>';
 			}
 			else
 			{
-				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->name.'</span>';
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->state_names.'</span>';
 			}
 			if ($value->active == 1) 
 			{
@@ -739,7 +739,7 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
 			
 			$check 	=	$this->Commonsql_model->select('tbldesignation',array('desigID'	=>	$this->input->post('desigID'),'name'		=>	$this->input->post('name'),
@@ -809,7 +809,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_designation_json()
 	{
-		$result	=	$this->Commonsql_model->select_desc_state('tbldesignation_mod',array('desigID'=>$this->uri->segment(3)),'desig_modID');
+		$result	=	$this->Commonsql_model->select_desc_state_confilct('tbldesignation_mod',array('desigID'=>$this->uri->segment(3)),'desig_modID');
 		//echo $this->db->last_query();
 		$output = array();$i=1;$j=1;
 		foreach($result->result() as  $value) {
@@ -819,19 +819,19 @@ class Manage extends CI_Controller {
 			$vaules['description'] 		= 	$value->description;
 			if ($value->dbentrystateID == 0) 
 			{
-				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->name.'</span>';
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->state_names.'</span>';
 			}
 			elseif ($value->dbentrystateID == 1) 
 			{
-				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->name.'</span>';
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->state_names.'</span>';
 			}
 			elseif ($value->dbentrystateID == 2) 
 			{
-				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->name.'</span>';
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->state_names.'</span>';
 			}
 			else
 			{
-				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->name.'</span>';
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->state_names.'</span>';
 			}
 			if ($value->active == 1) 
 			{
@@ -1064,6 +1064,7 @@ class Manage extends CI_Controller {
 		}
 		 echo json_encode(array('data'=>$output), true);
 	}
+	
 	function add_role()
 	{
 		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
@@ -1071,7 +1072,7 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
 			$this->form_validation->set_rules('roleName', 'Role Name', 'trim|required');
 			if ($this->form_validation->run($this) == FALSE) {
@@ -1100,6 +1101,30 @@ class Manage extends CI_Controller {
 		$data['pageTitle']	=	"Add Role";
 		$this->load->view('admin/role/add_role',$data);
 	}
+	function role_vaildation()
+	{
+		$query=$this->Commonsql_model->select('tblrole',array('roleName'=>trim($_POST['roleName'])));
+		if($query->num_rows()>0)
+		{
+			echo "false";
+		}
+		else
+		{
+			echo "true";
+		}
+	}
+	function edit_role_vaildation()
+	{
+		$query=$this->Commonsql_model->select('tblrole',array('roleName'=>trim($_POST['roleName']),'roleID !='=>$_POST['roleID']));
+		if($query->num_rows()>0)
+		{
+			echo "false";
+		}
+		else
+		{
+			echo "true";
+		}
+	}
 	function edit_role()
 	{
 		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
@@ -1107,7 +1132,7 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
 				$this->form_validation->set_rules('roleName', 'Role Name', 'trim|required');
 				if ($this->form_validation->run($this) == FALSE) {
@@ -1156,7 +1181,7 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
 			
 			$check 	=	$this->Commonsql_model->select('tblrole',array('roleID'	=>	$this->input->post('roleID'),'roleName'		=>	$this->input->post('roleName'),
@@ -1490,7 +1515,7 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
 			$this->form_validation->set_rules('paymentMode', 'Payment Mode Name', 'trim|required');
 			if ($this->form_validation->run($this) == FALSE) {
@@ -1519,6 +1544,30 @@ class Manage extends CI_Controller {
 		$data['pageTitle']	=	"Add Payment Mode";
 		$this->load->view('admin/payment_mode/add_payment_mode',$data);
 	}
+	function payment_mode_vaildation()
+	{
+		$query=$this->Commonsql_model->select('tblpaymentmode',array('paymentMode'=>trim($_POST['paymentMode'])));
+		if($query->num_rows()>0)
+		{
+			echo "false";
+		}
+		else
+		{
+			echo "true";
+		}
+	}
+	function edit_payment_mode_vaildation()
+	{
+		$query=$this->Commonsql_model->select('tblpaymentmode',array('paymentMode'=>trim($_POST['paymentMode']),'paymentModeID !='=>$_POST['paymentModeID']));
+		if($query->num_rows()>0)
+		{
+			echo "false";
+		}
+		else
+		{
+			echo "true";
+		}
+	}
 	function edit_payment_mode()
 	{
 		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
@@ -1526,7 +1575,7 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
 				$this->form_validation->set_rules('paymentMode', 'Payment Mode Name', 'trim|required');
 				if ($this->form_validation->run($this) == FALSE) {
@@ -1576,7 +1625,7 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
 			
 			$check 	=	$this->Commonsql_model->select('tblpaymentmode',array('paymentModeID'	=>	$this->input->post('paymentModeID'),'paymentMode'		=>	$this->input->post('paymentMode'),
@@ -1911,7 +1960,7 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
 			$this->form_validation->set_rules('payStatus', 'Payment Status Name', 'trim|required');
 			if ($this->form_validation->run($this) == FALSE) {
@@ -1940,6 +1989,30 @@ class Manage extends CI_Controller {
 		$data['pageTitle']	=	"Add Payment Status";
 		$this->load->view('admin/payment_mode/add_payment_status',$data);;
 	}
+	function payment_status_vaildation()
+	{
+		$query=$this->Commonsql_model->select('tblpaymentstatus',array('payStatus'=>trim($_POST['payStatus'])));
+		if($query->num_rows()>0)
+		{
+			echo "false";
+		}
+		else
+		{
+			echo "true";
+		}
+	}
+	function edit_payment_status_vaildation()
+	{
+		$query=$this->Commonsql_model->select('tblpaymentstatus',array('payStatus'=>trim($_POST['payStatus']),'payStatusID !='=>$_POST['payStatusID']));
+		if($query->num_rows()>0)
+		{
+			echo "false";
+		}
+		else
+		{
+			echo "true";
+		}
+	}
 	function edit_payment_status()
 	{
 		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
@@ -1947,7 +2020,7 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
 				$this->form_validation->set_rules('payStatus', 'Payment Status Name', 'trim|required');
 				if ($this->form_validation->run($this) == FALSE) {
@@ -1996,7 +2069,7 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
 			
 			$check 	=	$this->Commonsql_model->select('tblpaymentstatus',array('payStatusID'	=>	$this->input->post('payStatusID'),'payStatus'		=>	$this->input->post('payStatus'),
@@ -2362,7 +2435,30 @@ class Manage extends CI_Controller {
 		$data['pageTitle']	=	"Add Emplyee Types";
 		$this->load->view('admin/employee_types/add_employee_types',$data);
 	}
-	
+	function employee_types_vaildation()
+	{
+		$query=$this->Commonsql_model->select('tblemployetypes',array('typename'=>trim($_POST['typename'])));
+		if($query->num_rows()>0)
+		{
+			echo "false";
+		}
+		else
+		{
+			echo "true";
+		}
+	}
+	function edit_employee_types_vaildation()
+	{
+		$query=$this->Commonsql_model->select('tblemployetypes',array('typename'=>trim($_POST['typename']),'employetypeID !='=>$_POST['employetypeID']));
+		if($query->num_rows()>0)
+		{
+			echo "false";
+		}
+		else
+		{
+			echo "true";
+		}
+	}
 	function edit_employee_types()
 	{
 		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
