@@ -63,7 +63,7 @@
                                      <?php if(checkpageaccess('payment_status',1,'modify')){?>
                                     <ul class="controls">
                                         
-                                        <li><a href="<?= base_url()?>edit_payment_status/<?=$this->uri->segment(2)?>" title="Edit Payment Status" role="button" tabindex="0" >Edit  <i class="fa fa-pencil-square-o"></i></a></li>
+                                        <li><a href="<?= base_url()?>edit_payment_status/<?=$this->uri->segment(2)?>" title="Update Payment Status" role="button" tabindex="0" >Update  <i class="fa fa-pencil-square-o"></i></a></li>
                                     </ul>
                                      <?php }?>
                                     

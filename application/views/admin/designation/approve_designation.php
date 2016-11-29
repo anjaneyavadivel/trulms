@@ -109,24 +109,19 @@
 
 
                                 
- <?=form_open_multipart(base_url().'approve_designation/'.$v->desigID,array('class'=>'form-horizontal','id'=>'form4','role'=>'form','data-parsley-validate'=>''));?>
+ <?=form_open_multipart(base_url().'approve_designation/'.$v->desigID,array('class'=>'form-horizontal','id'=>'edit_designation','role'=>'form'));?>
                                         <div class="form-group">
                                             <label class="control-label">Designation Name</label>
                                            
-                                                <input type="text" name="name" class="form-control" placeholder="Designation Name"
-                                                       data-parsley-trigger="change"
-                                                       required value="<?=$v->name?>">
+                                                <input type="text" name="name" class="form-control" placeholder="Designation Name" value="<?=$v->name?>">
                                            
                                         </div>
-<input type="hidden" value="<?=$v->desigID?>" name="desigID" />
-                                       
+<input type="hidden" value="<?=$v->desigID?>" name="desigID" id="desigID" />
 
                                         <div class="form-group">
                                             <label class="control-label">Designation Description</label>
                                             
-                                                <input type="text" name="description" class="form-control" placeholder="Designation Description"
-                                                       data-parsley-trigger="change"
-                                                       required value="<?=$v->description?>">
+                                                <input type="text" name="description" class="form-control" placeholder="Designation Description" value="<?=$v->description?>">
                                           
                                         </div>
 
@@ -134,7 +129,10 @@
                                 <div class="tile-footer text-right bg-tr-black lter dvd dvd-top">
                                     <!-- SUBMIT BUTTON -->
                                     <a  href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="active_deactive_class('<?= base_url()?>designation','3')" class="btn btn-warning"><i class="fa fa-hand-o-left"></i> Go Back</a>
-                                    <input type="submit" class="btn btn-default" id="form4Submit" value="Submit" name="save">
+                                    <input type="submit" class="btn bg-greensea" id="add_form" value="Update Designation" >
+                                   
+                                   <a  href="javascript::" data-toggle="modal" data-target="#form-submit" id="form_submiting" data-options="splash-2 splash-ef-11" role="button" tabindex="0"  onclick="form_action_msg(1)"class="btn btn-greensea" style="display:none">Submit</a>
+                                    <input type="submit" class="btn btn-default" id="new_button" onclick="form_submit('edit_designation')" value="Submit" style="display:none" >
                                 </div>
                                 <!-- /tile footer -->
 

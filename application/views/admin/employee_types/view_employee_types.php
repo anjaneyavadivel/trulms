@@ -62,7 +62,7 @@
                                      <?php if(checkpageaccess('employee_types',1,'modify')){?>
                                     <ul class="controls">
                                         
-                                        <li><a href="<?= base_url()?>edit_employee_types/<?=$this->uri->segment(2)?>" title="Edit Employee Types" role="button" tabindex="0" >Edit  <i class="fa fa-pencil-square-o"></i></a></li>
+                                        <li><a href="<?= base_url()?>edit_employee_types/<?=$this->uri->segment(2)?>" title="Update Employee Types" role="button" tabindex="0" >Update  <i class="fa fa-pencil-square-o"></i></a></li>
                                     </ul>
                                      <?php }?>
                                 </div>

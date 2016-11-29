@@ -312,9 +312,30 @@ class Commonsql_model extends CI_Model {
 		//echo $this->db->last_query();exit;
 		return $query;
 	}
+	function select_all_state_confilct($table,$feild='')
+	{
+		$this->db->select('a.*,b.name as state_names');
+		$this->db->from($table.' as a');
+		$this->db->join('tbldbentrystates as b','a.dbentrystateID=b.dbentrystateID','inner');
+		if($feild !='')
+		$this->db->order_by($feild,'desc');
+		$query	=	$this->db->get();
+		//echo $this->db->last_query();exit;
+		return $query;
+	}
 	function select_desc_state($table,$condtion,$feild)
 	{
 		$this->db->select('a.*,b.name');
+		$this->db->from($table.' as a');
+		$this->db->join('tbldbentrystates as b','a.dbentrystateID=b.dbentrystateID','inner');
+		$this->db->where($condtion);
+		$this->db->order_by($feild,'desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_desc_state_confilct($table,$condtion,$feild)
+	{
+		$this->db->select('a.*,b.name as state_names');
 		$this->db->from($table.' as a');
 		$this->db->join('tbldbentrystates as b','a.dbentrystateID=b.dbentrystateID','inner');
 		$this->db->where($condtion);

@@ -62,7 +62,7 @@
                                     <?php if(checkpageaccess('designation',1,'modify')){?>
                                     <ul class="controls">
                                         
-                                        <li><a href="<?= base_url()?>edit_designation/<?=$this->uri->segment(2)?>" title="Edit Designation" role="button" tabindex="0" >edit  <i class="fa fa-pencil-square-o"></i></a></li>
+                                        <li><a href="<?= base_url()?>edit_designation/<?=$this->uri->segment(2)?>" title="Edit Designation" role="button" tabindex="0" >Update  <i class="fa fa-pencil-square-o"></i></a></li>
                                     </ul>
                                      <?php }?>
                                 </div>
