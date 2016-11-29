@@ -8,12 +8,12 @@
 <section id="content">
   <div class="page page-forms-validate">
     <div class="pageheader">
-      <h2>Approve Vehicle Agent</h2>
+      <h2>Vehicle Agent History</h2>
       <div class="page-bar">
         <ul class="page-breadcrumb">
           <li> <a href="<?= base_url()?>"><i class="fa fa-home"></i> HOME</a> </li>
           <li> <a href="<?= base_url()?>vehicleowner">Vehicle Agent</a> </li>
-          <li> <a href="javascript::">Approve Vehicle Agent</a> </li>
+          <li> <a href="javascript::">Vehicle Agent History</a> </li>
         </ul>
       </div>
     </div>

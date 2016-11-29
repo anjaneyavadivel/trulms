@@ -163,7 +163,7 @@ class Manage extends CI_Controller {
 					$active	=	'';
 				}
 			}
-			if(checkpageaccess('department',1,'modify'))
+			if(selfAllowed($pagealterpermission, 'selfEditAllowed', $value->createby) && checkpageaccess('department',1,'modify'))
 			{
 				$edit	=	edit_html("edit_department/".$value->deptID);
 			}
@@ -363,9 +363,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_department_json()
 	{
-		if (!$this->session->userdata('SESS_userId')) {
-            return FALSE;
-        }
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
 		$result	=	$this->Commonsql_model->select_desc_state('tbldept_mod',array('deptID'=>$this->uri->segment(3)),'dept_modID');
 		//echo $this->db->last_query();
 		$output = array();$i=1;$j=1;
@@ -428,7 +426,7 @@ class Manage extends CI_Controller {
 				}
 				if(checkpageaccess('department',1,'delete'))
 				{
-					$active	=	disable_approve_deactive_html("'".base_url()."manage/designation/".$value->deptID."/".$value->dept_modID."','0'");
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_department/".$value->deptID."/".$value->dept_modID."','0'");
 				}
 				else
 				{
@@ -440,7 +438,7 @@ class Manage extends CI_Controller {
 				$Approve		=	'';
 				if(checkpageaccess('department',1,'delete'))
 				{
-					$active	=	enable_approve_deactive_html("'".base_url()."manage/designation/".$value->deptID."/".$value->dept_modID."','1'");
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_department/".$value->deptID."/".$value->dept_modID."','1'");
 				}
 				else
 				{
@@ -533,8 +531,10 @@ class Manage extends CI_Controller {
 	}
 	function designation_json()
 	{
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
 		$result	=	$this->Commonsql_model->select_all_state_confilct('tbldesignation','desigID');
 		$output = array();$i=1;
+		$pagealterpermission = pagealterpermission('designation', $alterPermission = '');
 		foreach($result->result() as  $value) {
 			$vaules=array();
 			$vaules['ID']				=	$value->desigID;
@@ -578,7 +578,7 @@ class Manage extends CI_Controller {
 				{
 					$view			 			=	'';
 				}
-				if(checkpageaccess('designation',1,'approve'))
+				if(selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('designation',1,'approve'))
 				{
 					$APPROVE			 		=	history_html("approve_designation/".$value->desigID);
 				}
@@ -589,7 +589,7 @@ class Manage extends CI_Controller {
 				}
 				if(checkpageaccess('designation',1,'delete'))
 				{
-					$active	=	disable_approve_deactive_html("'".base_url()."manage/designation/".$value->desigID."','0'");
+					$active	=	status_main_table($value->desigID,'desigID','designation','designation',1);
 				}
 				else
 				{
@@ -603,7 +603,7 @@ class Manage extends CI_Controller {
 				$view		=	'';
 				if(checkpageaccess('designation',1,'delete'))
 				{
-					$active	=	enable_approve_deactive_html("'".base_url()."manage/designation/".$value->desigID."','1'");
+					$active	=	status_main_table($value->desigID,'desigID','designation','designation',0);
 				}
 				else
 				{
@@ -611,7 +611,7 @@ class Manage extends CI_Controller {
 				}
 				
 			}
-			if(checkpageaccess('designation',1,'modify'))
+			if(selfAllowed($pagealterpermission, 'selfEditAllowed', $value->createby) && checkpageaccess('designation',1,'modify'))
 			{
 				$edit	=	edit_html("edit_designation/".$value->desigID);
 			}
@@ -645,7 +645,7 @@ class Manage extends CI_Controller {
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$query	=	insertTable('tbldesignation', $values,0);
+			$query	=	insertTable('tbldesignation', $values,0,'designation');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Designation Successfully  Added...!');
@@ -706,7 +706,7 @@ class Manage extends CI_Controller {
 							'active'			=>	1);
 							
 			$whereData	=	array('desigID'	=>	$this->input->post('desigID'));
-			$query		= updateTable('tbldesignation', $whereData, $values , 1,'desigID', $this->input->post('desigID'));
+			$query		= updateTable('tbldesignation', $whereData, $values , 1,'desigID', $this->input->post('desigID'),'designation');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Designation Successfully  Added...!');
@@ -811,6 +811,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_designation_json()
 	{
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
 		$result	=	$this->Commonsql_model->select_desc_state_confilct('tbldesignation_mod',array('desigID'=>$this->uri->segment(3)),'desig_modID');
 		//echo $this->db->last_query();
 		$output = array();$i=1;$j=1;
@@ -974,7 +975,9 @@ class Manage extends CI_Controller {
 	}
 	function role_json()
 	{
-		$result	=	$this->Commonsql_model->select_all_state('tblrole','roleID');
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
+		$result					=	$this->Commonsql_model->select_all_state('tblrole','roleID');
+		$pagealterpermission 	= pagealterpermission('role', $alterPermission = '');
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
@@ -1019,7 +1022,7 @@ class Manage extends CI_Controller {
 				{
 					$view			 			=	'';
 				}
-				if(checkpageaccess('role',1,'approve'))
+				if(selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('role',1,'approve'))
 				{
 					$APPROVE			 			=	history_html("approve_role/".$value->roleID);
 				}
@@ -1030,7 +1033,7 @@ class Manage extends CI_Controller {
 				}
 				if(checkpageaccess('role',1,'delete'))
 				{
-					$active	=	disable_approve_deactive_html("'".base_url()."manage/role/".$value->roleID."','0'");
+					$active	=	status_main_table($value->roleID,'roleID','role','role',1);
 				}
 				else
 				{
@@ -1043,7 +1046,7 @@ class Manage extends CI_Controller {
 				$APPROVE		=	'';
 				if(checkpageaccess('role',1,'delete'))
 				{
-					$active	=	enable_approve_deactive_html("'".base_url()."manage/role/".$value->roleID."','1'");
+					$active	=	status_main_table($value->roleID,'roleID','role','role',0);
 				}
 				else
 				{
@@ -1051,7 +1054,7 @@ class Manage extends CI_Controller {
 				}
 				
 			}
-			if(checkpageaccess('role',1,'modify'))
+			if(selfAllowed($pagealterpermission, 'selfEditAllowed', $value->createby) && checkpageaccess('role',1,'modify'))
 			{
 				$edit	=	edit_html("edit_role/".$value->roleID);
 				
@@ -1087,7 +1090,7 @@ class Manage extends CI_Controller {
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$query	=	insertTable('tblrole', $values,0);
+			$query	=	insertTable('tblrole', $values,0,'role');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Role Successfully  Added...!');
@@ -1148,7 +1151,7 @@ class Manage extends CI_Controller {
 								'active'			=>	1);
 			
 			$whereData	=	array('roleID'	=>	$this->input->post('roleID'));
-			$query		= updateTable('tblrole', $whereData, $values , 1,'roleID', $this->input->post('roleID'));
+			$query		= updateTable('tblrole', $whereData, $values , 1,'roleID', $this->input->post('roleID'),'role');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Role Successfully  Updated...!');
@@ -1253,6 +1256,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_role_json()
 	{
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
 		$result	=	$this->Commonsql_model->select_desc_state('tblrole_mod',array('roleID'=>$this->uri->segment(3)),'role_modID');
 		//echo $this->db->last_query();
 		$output = array();$i=1;$j=1;
@@ -1420,7 +1424,9 @@ class Manage extends CI_Controller {
 	}
 	function payment_mode_json()
 	{
-		$result	=	$this->Commonsql_model->select_all_state('tblpaymentmode','paymentModeID');
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
+		$result					=	$this->Commonsql_model->select_all_state('tblpaymentmode','paymentModeID');
+		$pagealterpermission	= pagealterpermission('payment_mode', $alterPermission = '');
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
@@ -1464,7 +1470,7 @@ class Manage extends CI_Controller {
 				{
 					$view			 			=	'';
 				}
-				if(checkpageaccess('payment_mode',1,'approve'))
+				if(selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('payment_mode',1,'approve'))
 				{
 					$APPROVE			 			=	history_html("approve_payment_mode/".$value->paymentModeID);
 				}
@@ -1475,7 +1481,7 @@ class Manage extends CI_Controller {
 				}
 				if(checkpageaccess('payment_mode',1,'delete'))
 				{
-					$active	=	disable_approve_deactive_html("'".base_url()."manage/payment_mode/".$value->paymentModeID."','0'");
+					$active	=	status_main_table($value->paymentModeID,'paymentModeID','paymentmode','payment_mode',1);
 				}
 				else
 				{
@@ -1488,7 +1494,7 @@ class Manage extends CI_Controller {
 				$APPROVE		=	'';
 				if(checkpageaccess('payment_mode',1,'delete'))
 				{
-					$active	=	enable_approve_deactive_html("'".base_url()."manage/payment_mode/".$value->paymentModeID."','1'");
+					$active	=	status_main_table($value->paymentModeID,'paymentModeID','paymentmode','payment_mode',0);
 				}
 				else
 				{
@@ -1496,7 +1502,7 @@ class Manage extends CI_Controller {
 				}
 				
 			}
-			if(checkpageaccess('payment_mode',1,'modify'))
+			if(selfAllowed($pagealterpermission, 'selfEditAllowed', $value->createby) && checkpageaccess('payment_mode',1,'modify'))
 			{
 				$edit	=	edit_html("edit_payment_mode/".$value->paymentModeID);
 			}
@@ -1530,7 +1536,7 @@ class Manage extends CI_Controller {
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$query	=	insertTable('tblpaymentmode', $values,0);
+			$query	=	insertTable('tblpaymentmode', $values,0,'payment_mode');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Payment Mode Successfully  Added...!');
@@ -1592,7 +1598,7 @@ class Manage extends CI_Controller {
 								'active'			=>	1);
 								
 			$whereData	=	array('paymentModeID'	=>	$this->input->post('paymentModeID'));
-			$query		= updateTable('tblpaymentmode', $whereData, $values , 1,'paymentModeID', $this->input->post('paymentModeID'));
+			$query		= updateTable('tblpaymentmode', $whereData, $values , 1,'paymentModeID', $this->input->post('paymentModeID'),'payment_mode');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Payment Mode Successfully  Updated...!');
@@ -1697,6 +1703,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_payment_mode_json()
 	{
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
 		$result	=	$this->Commonsql_model->select_desc_state('tblpaymentmode_mod',array('paymentModeID'=>$this->uri->segment(3)),'paymentMode_modID');
 		//echo $this->db->last_query();
 		$output = array();$i=1;$j=1;
@@ -1734,7 +1741,7 @@ class Manage extends CI_Controller {
 			
 			if($value->active==1)
 			{
-				if($j++==1)
+				if($j++>0)
 				{
 					if(checkpageaccess('payment_mode',1,'approve'))
 					{
@@ -1864,7 +1871,9 @@ class Manage extends CI_Controller {
 	}
 	function payment_status_json()
 	{
-		$result	=	$this->Commonsql_model->select_all_state('tblpaymentstatus','payStatusID');
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
+		$result					=	$this->Commonsql_model->select_all_state('tblpaymentstatus','payStatusID');
+		$pagealterpermission 	=	pagealterpermission('payment_status', $alterPermission = '');
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
@@ -1909,7 +1918,7 @@ class Manage extends CI_Controller {
 				{
 					$view			 			=	'';
 				}
-				if(checkpageaccess('payment_status',1,'approve'))
+				if(selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('payment_status',1,'approve'))
 				{
 					$APPROVE			 			=	history_html("approve_payment_status/".$value->payStatusID);
 				}
@@ -1920,7 +1929,7 @@ class Manage extends CI_Controller {
 				}
 				if(checkpageaccess('payment_status',1,'delete'))
 				{
-					$active	=	disable_approve_deactive_html("'".base_url()."manage/payment_status/".$value->payStatusID."','0'");
+					$active	=	status_main_table($value->payStatusID,'payStatusID','paymentstatus','payment_status',1);
 				}
 				else
 				{
@@ -1933,7 +1942,7 @@ class Manage extends CI_Controller {
 				$APPROVE		=	'';
 				if(checkpageaccess('payment_status',1,'delete'))
 				{
-					$active	=	enable_approve_deactive_html("'".base_url()."manage/payment_status/".$value->payStatusID."','1'");
+					$active	=	status_main_table($value->payStatusID,'payStatusID','paymentstatus','payment_status',0);
 				}
 				else
 				{
@@ -1941,7 +1950,7 @@ class Manage extends CI_Controller {
 				}
 				
 			}
-			if(checkpageaccess('payment_status',1,'modify'))
+			if(selfAllowed($pagealterpermission, 'selfEditAllowed', $value->createby) && checkpageaccess('payment_status',1,'modify'))
 			{
 				$edit	=	edit_html("edit_payment_status/".$value->payStatusID);
 			}
@@ -1975,7 +1984,7 @@ class Manage extends CI_Controller {
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$query	=	insertTable('tblpaymentstatus', $values,0);
+			$query	=	insertTable('tblpaymentstatus', $values,0,'payment_status');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Payment Status Successfully  Added...!');
@@ -2036,7 +2045,7 @@ class Manage extends CI_Controller {
 								'active'			=>	1);
 								
 			$whereData	=	array('payStatusID'	=>	$this->input->post('payStatusID'));
-			$query		= updateTable('tblpaymentstatus', $whereData, $values , 1,'payStatusID', $this->input->post('payStatusID'));
+			$query		= updateTable('tblpaymentstatus', $whereData, $values , 1,'payStatusID', $this->input->post('payStatusID'),'payment_status');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Payment Status Successfully  Updated...!');
@@ -2141,6 +2150,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_payment_status_json()
 	{
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
 		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
 		$result	=	$this->Commonsql_model->select_desc_state('tblpaymentstatus_mod',array('payStatusID'=>$this->uri->segment(3)),'payStatus_modID');
 		//echo $this->db->last_query();
@@ -2179,7 +2189,7 @@ class Manage extends CI_Controller {
 			
 			if($value->active==1)
 			{
-				if($j++==1)
+				if($j++>0)
 				{
 					if(checkpageaccess('payment_status',1,'approve'))
 					{
@@ -2309,8 +2319,9 @@ class Manage extends CI_Controller {
 	}
 	function employee_types_json()
 	{
-		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
 		$result	=	$this->Commonsql_model->select_all_state('tblemployetypes','employetypeID');
+		$pagealterpermission = pagealterpermission('employee_types', $alterPermission = '');
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
@@ -2355,7 +2366,7 @@ class Manage extends CI_Controller {
 				{
 					$view			 			=	'';
 				}
-				if(checkpageaccess('employee_types',1,'approve'))
+				if(selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('employee_types',1,'approve'))
 				{
 					$Approve		=	history_html("approve_employee_types/".$value->employetypeID);
 				}
@@ -2366,7 +2377,7 @@ class Manage extends CI_Controller {
 				}
 				if(checkpageaccess('employee_types',1,'delete'))
 				{
-					$active	=	disable_approve_deactive_html("'".base_url()."manage/employee_types/".$value->employetypeID."','0'");
+					$active	=	status_main_table($value->employetypeID,'employetypeID','employetypes','employee_types',1);
 				}
 				else
 				{
@@ -2379,7 +2390,7 @@ class Manage extends CI_Controller {
 				$Approve		=	'';
 				if(checkpageaccess('employee_types',1,'delete'))
 				{
-					$active	=	enable_approve_deactive_html("'".base_url()."manage/employee_types/".$value->employetypeID."','1'");
+					$active	=	status_main_table($value->employetypeID,'employetypeID','employetypes','employee_types',0);
 				}
 				else
 				{
@@ -2387,7 +2398,7 @@ class Manage extends CI_Controller {
 				}
 				
 			}
-			if(checkpageaccess('employee_types',1,'modify'))
+			if(selfAllowed($pagealterpermission, 'selfEditAllowed', $value->createby) && checkpageaccess('employee_types',1,'modify'))
 			{
 				$edit	=	edit_html("edit_employee_types/".$value->employetypeID);
 			}
@@ -2421,7 +2432,7 @@ class Manage extends CI_Controller {
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$query	=	insertTable('tblemployetypes', $values,0);
+			$query	=	insertTable('tblemployetypes', $values,0,'employee_types');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Employee Types Successfully  Added...!');
@@ -2482,7 +2493,7 @@ class Manage extends CI_Controller {
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
-			$whereData	=	array('employetypeID'	=>	$this->input->post('employetypeID'));
+			$whereData	=	array('employetypeID'	=>	$this->input->post('employetypeID'),'employee_types');
 			$query		= updateTable('tblemployetypes', $whereData, $values , 1,'employetypeID', $this->input->post('employetypeID'));
 			if($query)
 			{
@@ -2588,6 +2599,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_employee_types_json()
 	{
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
 		$result	=	$this->Commonsql_model->select_desc_state('tblemployetypes_mod',array('employetypeID'=>$this->uri->segment(3)),'employetype_modID');
 		//echo $this->db->last_query();
 		$output = array();
@@ -2627,7 +2639,7 @@ class Manage extends CI_Controller {
 			
 			if($value->active==1)
 			{
-				if($j++==1)
+				if($j++>0)
 				{
 					if(checkpageaccess('employee_types',1,'approve'))
 					{
@@ -2761,7 +2773,9 @@ class Manage extends CI_Controller {
 	}
 	function employee_json()
 	{
-		$result	=	$this->Commonsql_model->select_all_employee_state();
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
+		$result					=	$this->Commonsql_model->select_all_employee_state();
+		$pagealterpermission 	=	pagealterpermission('employee', $alterPermission = '');
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
@@ -2832,7 +2846,7 @@ class Manage extends CI_Controller {
 				{
 					$view			 			=	'';
 				}
-				if(checkpageaccess('employee',1,'approve'))
+				if(selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('employee',1,'approve'))
 				{
 					$APPROVE			 			=	history_html("approve_employee/".$value->empID);
 				}
@@ -2843,7 +2857,7 @@ class Manage extends CI_Controller {
 				}
 				if(checkpageaccess('employee',1,'delete'))
 				{
-					$active	=	disable_approve_deactive_html("'".base_url()."manage/employee/".$value->empID."','0'");
+					$active	=	status_main_table($value->empID,'empID','employee','employee',1);
 				}
 				else
 				{
@@ -2856,7 +2870,7 @@ class Manage extends CI_Controller {
 				$view			 =	'';
 				if(checkpageaccess('employee',1,'delete'))
 				{
-					$active	=	enable_approve_deactive_html("'".base_url()."manage/employee/".$value->empID."','1'");
+					$active	=	status_main_table($value->empID,'empID','employee','employee',0);
 				}
 				else
 				{
@@ -2864,7 +2878,7 @@ class Manage extends CI_Controller {
 				}
 				
 			}
-			if(checkpageaccess('employee',1,'modify'))
+			if(selfAllowed($pagealterpermission, 'selfEditAllowed', $value->createby) && checkpageaccess('employee',1,'modify'))
 			{
 				$edit	=	edit_html("edit_employee/".$value->empID);
 			}
@@ -2908,7 +2922,7 @@ class Manage extends CI_Controller {
 			}
 			$values=array('empCode'						=>	$this->input->post('empCode'),
 							'empname'					=>	$this->input->post('empname'),
-							'branchID'					=>	$this->input->post('branchID'),
+							'branchID'					=>	$this->session->userdata('SESS_userBranchID'),
 							
 							'dob'						=>	date('Y-m-d',strtotime($this->input->post('dob'))),
 							'sex'						=>	$this->input->post('sex'),
@@ -2945,7 +2959,7 @@ class Manage extends CI_Controller {
 							'createby'					=>	$this->session->userdata('SESS_userId'),
 							'active'					=>	1);
 							
-			$query	=	insertTable('tblemployee', $values,1,'empID');
+			$query	=	insertTable('tblemployee', $values,1,'empID','employee');
 			if($query)
 			{
 				$this->session->set_userdata('suc','employee Successfully  Added...!');
@@ -2958,10 +2972,10 @@ class Manage extends CI_Controller {
 				redirect('add_employee');
 			}
 		}
-		$data['dept']		=	$this->Commonsql_model->select('tbldept',array('dbentrystateID'=>3,'active'=>1));
-		$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID'=>3,'active'=>1));
-		$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID'=>3,'active'=>1));
-		$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID'=>3,'active'=>1));
+		$data['dept']		=	$this->Commonsql_model->select('tbldept',array('dbentrystateID >'=>STATEID,'active'=>1));
+		$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID >'=>STATEID,'active'=>1));
+		$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID >'=>STATEID,'active'=>1));
+		$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID >'=>STATEID,'active'=>1));
 		$data['pageTitle']	=	"Add employee";
 		$this->load->view('admin/employee/add_employee',$data);
 	}
@@ -3004,9 +3018,9 @@ class Manage extends CI_Controller {
 			{
 				$proof2	=	$this->input->post('proof21');
 			}
-				$values_mod=array('empCode'						=>	$this->input->post('empCode'),
+				$values_mod=array('empCode'				=>	$this->input->post('empCode'),
 							'empname'					=>	$this->input->post('empname'),
-							'branchID'					=>	$this->input->post('branchID'),
+							'branchID'					=>	$this->session->userdata('SESS_userBranchID'),
 							
 							'dob'						=>	date('Y-m-d',strtotime($this->input->post('dob'))),
 							'sex'						=>	$this->input->post('sex'),
@@ -3045,7 +3059,7 @@ class Manage extends CI_Controller {
 							
 			$whereData	=	array('empID'	=>	$this->input->post('empID'));
 			
-			$query		= updateTable('tblemployee', $whereData, $values_mod , 1,'empID', $this->input->post('empID'));
+			$query		= updateTable('tblemployee', $whereData, $values_mod , 1,'empID', $this->input->post('empID'),'employee');
 			
 			if($query)
 			{
@@ -3060,10 +3074,10 @@ class Manage extends CI_Controller {
 			}
 		}
 		$data['pageTitle']	=	"Edit employee";
-		$data['dept']		=	$this->Commonsql_model->select('tbldept',array('dbentrystateID'=>3,'active'=>1));
-		$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID'=>3,'active'=>1));
-		$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID'=>3,'active'=>1));
-		$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID'=>3,'active'=>1));
+		$data['dept']		=	$this->Commonsql_model->select('tbldept',array('dbentrystateID >'=>STATEID,'active'=>1));
+		$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID >'=>STATEID,'active'=>1));
+		$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID >'=>STATEID,'active'=>1));
+		$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID >'=>STATEID,'active'=>1));
 		$data['view']		=	$this->Commonsql_model->select('tblemployee',array('empID'=>$this->uri->segment(2)));
 		$this->load->view('admin/employee/edit_employee',$data);
 	}
@@ -3075,10 +3089,10 @@ class Manage extends CI_Controller {
 			redirect();
 		}
 		$data['pageTitle']	=	"View employee";
-		$data['dept']		=	$this->Commonsql_model->select('tbldept',array('dbentrystateID'=>3,'active'=>1));
-		$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID'=>3,'active'=>1));
-		$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID'=>3,'active'=>1));
-		$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID'=>3,'active'=>1));
+		$data['dept']		=	$this->Commonsql_model->select('tbldept',array('dbentrystateID >'=>STATEID,'active'=>1));
+		$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID >'=>STATEID,'active'=>1));
+		$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID >'=>STATEID,'active'=>1));
+		$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID >'=>STATEID,'active'=>1));
 		$data['view']		=	$this->Commonsql_model->select('tblemployee',array('empID'=>$this->uri->segment(2)));
 		$this->load->view('admin/employee/view_employee',$data);
 	}
@@ -3162,7 +3176,7 @@ class Manage extends CI_Controller {
 							
 			$whereData	=	array('empID'	=>	$this->input->post('empID'));
 			
-			$query		= updateTable('tblemployee', $whereData, $values_mod , 1,'empID', $this->input->post('empID'));
+			$query		= updateTable('tblemployee', $whereData, $values_mod , 1,'empID', $this->input->post('empID'),'employee');
 			
 			if($query)
 			{
@@ -3198,10 +3212,10 @@ class Manage extends CI_Controller {
 		{
 			$data['pageTitle']	=	"View employee";
 			$data['table']		=	"Designation";
-			$data['dept']		=	$this->Commonsql_model->select('tbldept',array('dbentrystateID'=>3,'active'=>1));
-			$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID'=>3,'active'=>1));
-			$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID'=>3,'active'=>1));
-			$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID'=>3,'active'=>1));
+			$data['dept']		=	$this->Commonsql_model->select('tbldept',array('dbentrystateID >'=>STATEID,'active'=>1));
+			$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID >'=>STATEID,'active'=>1));
+			$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID >'=>STATEID,'active'=>1));
+			$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID >'=>STATEID,'active'=>1));
 			$data['view']		=	$this->Commonsql_model->select('tblemployee_mod',array('emp_modID'=>$this->uri->segment(3)));
 			$this->load->view('admin/employee/approve_employee',$data);
 		}
@@ -3209,16 +3223,17 @@ class Manage extends CI_Controller {
 		{
 			$data['pageTitle']	=	"View employee";
 			$data['table']		=	"employee";
-			$data['dept']		=	$this->Commonsql_model->select('tbldept',array('dbentrystateID'=>3,'active'=>1));
-			$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID'=>3,'active'=>1));
-			$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID'=>3,'active'=>1));
-			$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID'=>3,'active'=>1));
+			$data['dept']		=	$this->Commonsql_model->select('tbldept',array('dbentrystateID >'=>STATEID,'active'=>1));
+			$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID >'=>STATEID,'active'=>1));
+			$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID >'=>STATEID,'active'=>1));
+			$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID >'=>STATEID,'active'=>1));
 			$data['view']		=	$this->Commonsql_model->select('tblemployee',array('empID'=>$this->uri->segment(2)));
 			$this->load->view('admin/employee/approve_employee',$data);
 		}
 	}
 	function approve_employee_json()
 	{
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
 		$result	=	$this->Commonsql_model->select_all_employee_mod_state($this->uri->segment(3));
 		//echo $this->db->last_query();
 		$output = array();$i=1;$j=1;
@@ -3452,7 +3467,9 @@ class Manage extends CI_Controller {
 	}
 	function driver_json()
 	{
-		$result	=	$this->Commonsql_model->select_all_driver_state();
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
+		$result					=	$this->Commonsql_model->select_all_driver_state();
+		$pagealterpermission 	=	pagealterpermission('driver', $alterPermission = '');
 		//echo $this->db->last_query();exit;
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
@@ -3503,7 +3520,7 @@ class Manage extends CI_Controller {
 				{
 					$view			 			=	'';
 				}
-				if(checkpageaccess('driver',1,'approve'))
+				if(selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('driver',1,'approve'))
 				{
 					$APPROVE			 			=	history_html("approve_driver/".$value->driverID);
 				}
@@ -3514,7 +3531,7 @@ class Manage extends CI_Controller {
 				}
 				if(checkpageaccess('driver',1,'delete'))
 				{
-					$active	=	disable_approve_deactive_html("'".base_url()."manage/driver/".$value->driverID."','0'");
+					$active	=	status_main_table($value->driverID,'driverID','driver','driver',1);
 				}
 				else
 				{
@@ -3527,7 +3544,7 @@ class Manage extends CI_Controller {
 				$view			 =	'';
 				if(checkpageaccess('driver',1,'delete'))
 				{
-					$active	=	enable_approve_deactive_html("'".base_url()."manage/driver/".$value->driverID."','1'");
+					$active	=	status_main_table($value->driverID,'driverID','driver','driver',0);
 				}
 				else
 				{
@@ -3535,7 +3552,7 @@ class Manage extends CI_Controller {
 				}
 				
 			}
-			if(checkpageaccess('driver',1,'modify'))
+			if(selfAllowed($pagealterpermission, 'selfEditAllowed', $value->createby) && checkpageaccess('driver',1,'modify'))
 			{
 				$edit	=	edit_html("edit_driver/".$value->driverID);
 			}
@@ -3584,7 +3601,7 @@ class Manage extends CI_Controller {
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$contactID	=	insertTable('tblcontactdetails', $contact_values,0);
+			$contactID	=	insertTable('tblcontactdetails', $contact_values,0,'driver');
 			
 			$values=array('contactID'					=>	$contactID,
 							'sex'						=>	$this->input->post('sex'),
@@ -3597,7 +3614,7 @@ class Manage extends CI_Controller {
 							'createby'					=>	$this->session->userdata('SESS_userId'),
 							'active'					=>	1);
 							
-			$query	=	insertTable('tbldriver', $values,1,'driverID');
+			$query	=	insertTable('tbldriver', $values,1,'driverID','driver');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Driver Successfully  Added...!');
@@ -3653,7 +3670,7 @@ class Manage extends CI_Controller {
 							
 			$whereData1	=	array('contactID'	=>	$this->input->post('contactID'));
 			
-			$query1		= updateTable('tblcontactdetails', $whereData1, $contact_values , 1,'contactID', $this->input->post('contactID'));
+			$query1		= updateTable('tblcontactdetails', $whereData1, $contact_values , 1,'contactID', $this->input->post('contactID'),'driver');
 			
 			$values_mod=array('contactID'				=>	$this->input->post('contactID'),
 							'sex'						=>	$this->input->post('sex'),
@@ -3669,7 +3686,7 @@ class Manage extends CI_Controller {
 							
 			$whereData	=	array('driverID'	=>	$this->input->post('driverID'));
 			
-			$query		= updateTable('tbldriver', $whereData, $values_mod , 1,'driverID', $this->input->post('driverID'));
+			$query		= updateTable('tbldriver', $whereData, $values_mod , 1,'driverID', $this->input->post('driverID'),'driver');
 			
 			if($query || $query1)
 			{
@@ -3737,7 +3754,7 @@ class Manage extends CI_Controller {
 							
 			$whereData1	=	array('contactID'	=>	$this->input->post('contactID'));
 			
-			$query1		= updateTable('tblcontactdetails', $whereData1, $contact_values , 1,'contactID', $this->input->post('contactID'));
+			$query1		= updateTable('tblcontactdetails', $whereData1, $contact_values , 1,'contactID', $this->input->post('contactID'),'driver');
 			
 			$values_mod=array('contactID'				=>	$this->input->post('contactID'),
 							'sex'						=>	$this->input->post('sex'),
@@ -3753,7 +3770,7 @@ class Manage extends CI_Controller {
 							
 			$whereData	=	array('driverID'	=>	$this->input->post('driverID'));
 			
-			$query		= updateTable('tbldriver', $whereData, $values_mod , 1,'driverID', $this->input->post('driverID'));
+			$query		= updateTable('tbldriver', $whereData, $values_mod , 1,'driverID', $this->input->post('driverID'),'driver');
 			
 			if($query || $query1)
 			{
@@ -3802,6 +3819,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_driver_json()
 	{
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
 		$result	=	$this->Commonsql_model->select_all_driver_mod_state($this->uri->segment(3));
 		//echo $this->db->last_query();
 		$output = array();$i=1;$j=1;
@@ -4006,7 +4024,9 @@ class Manage extends CI_Controller {
 	}
 	function vehicleowner_json()
 	{
-		$result	=	$this->Commonsql_model->select_all_vowner_state();
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
+		$result					=	$this->Commonsql_model->select_all_vowner_state();
+		$pagealterpermission	=	pagealterpermission('vehicleowner', $alterPermission = '');
 		//echo $this->db->last_query();exit;
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
@@ -4052,7 +4072,7 @@ class Manage extends CI_Controller {
 				{
 					$view			 			=	'';
 				}
-				if(checkpageaccess('vehicleowner',1,'approve'))
+				if(selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('vehicleowner',1,'approve'))
 				{
 					$APPROVE			 			=	history_html("approve_vehicleowner/".$value->ownerID);
 				}
@@ -4061,9 +4081,9 @@ class Manage extends CI_Controller {
 					$APPROVE			 			= "";
 					
 				}
-				if(checkpageaccess('vehicleowner',1,'delete'))
+				if(selfAllowed($pagealterpermission, 'selfEditAllowed', $value->createby) && checkpageaccess('vehicleowner',1,'delete'))
 				{
-					$active	=	disable_approve_deactive_html("'".base_url()."manage/vehicleowner/".$value->ownerID."','0'");
+					$active	=	status_main_table($value->ownerID,'ownerID','vehicleowner','vehicleowner',1);
 				}
 				else
 				{
@@ -4074,9 +4094,9 @@ class Manage extends CI_Controller {
 			{
 				$APPROVE		=	'';
 				$view		=	'';
-				if(checkpageaccess('vehicleowner',1,'delete'))
+				if(selfAllowed($pagealterpermission, 'selfEditAllowed', $value->createby) && checkpageaccess('vehicleowner',1,'delete'))
 				{
-					$active	=	enable_approve_deactive_html("'".base_url()."manage/vehicleowner/".$value->ownerID."','1'");
+					$active	=	status_main_table($value->ownerID,'ownerID','vehicleowner','vehicleowner',0);
 				}
 				else
 				{
@@ -4126,7 +4146,7 @@ class Manage extends CI_Controller {
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
-				$contactID	=	insertTable('tblcontactdetails', $contact_values,0);
+				$contactID	=	insertTable('tblcontactdetails', $contact_values,0,'vehicleowner');
 				
 			$values=array('contactID'				=>	$contactID,
 							'contactPer1'		=>	$this->input->post('name'),
@@ -4135,7 +4155,7 @@ class Manage extends CI_Controller {
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$query	=	insertTable('tblvehicleowner', $values,0);
+			$query	=	insertTable('tblvehicleowner', $values,0,'vehicleowner');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Vehicle Owner Successfully  Added...!');
@@ -4178,7 +4198,7 @@ class Manage extends CI_Controller {
 								'active'			=>	1);
 								
 				$contactID_whereData	=	array('contactID'	=>	$this->input->post('contactID'));
-			$query1		= updateTable('tblcontactdetails', $contactID_whereData, $contact_values , 1,'contactID', $this->input->post('contactID'));
+			$query1		= updateTable('tblcontactdetails', $contactID_whereData, $contact_values , 1,'contactID', $this->input->post('contactID'),'vehicleowner');
 				
 			$values=array('contactID'			=>	$this->input->post('contactID'),
 							'contactPer1'		=>	$this->input->post('name'),
@@ -4189,7 +4209,7 @@ class Manage extends CI_Controller {
 							
 							
 			$whereData	=	array('ownerID'	=>	$this->input->post('ownerID'));
-			$query		= updateTable('tblvehicleowner', $whereData, $values , 1,'ownerID', $this->input->post('ownerID'));
+			$query		= updateTable('tblvehicleowner', $whereData, $values , 1,'ownerID', $this->input->post('ownerID'),'vehicleowner');
 			if($query || $query1)
 			{
 				$this->session->set_userdata('suc','Vehicle Owner Successfully  Updated...!');
@@ -4246,7 +4266,7 @@ class Manage extends CI_Controller {
 								
 								
 				$contactID_whereData	=	array('contactID'	=>	$this->input->post('contactID'));
-			$query1		= updateTable('tblcontactdetails', $contactID_whereData, $contact_values , 1,'contactID', $this->input->post('contactID'));
+			$query1		= updateTable('tblcontactdetails', $contactID_whereData, $contact_values , 1,'contactID', $this->input->post('contactID'),'vehicleowner');
 			//echo $this->db->last_query();exit;
 				
 			$values=array('contactID'			=>	$this->input->post('contactID'),
@@ -4258,7 +4278,7 @@ class Manage extends CI_Controller {
 							
 							
 				$whereData	=	array('ownerID'	=>	$this->input->post('ownerID'));
-				$query		= updateTable('tblvehicleowner', $whereData, $values , 1,'ownerID', $this->input->post('ownerID'));
+				$query		= updateTable('tblvehicleowner', $whereData, $values , 1,'ownerID', $this->input->post('ownerID'),'vehicleowner');
 			
 				
 				if($query || $query1)
@@ -4309,6 +4329,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_vehicleowner_json()
 	{
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
 		$result	=	$this->Commonsql_model->select_all_vowner_mod_state($this->uri->segment(3));
 		//echo $this->db->last_query();exit;
 		$output = array();$i=1;$j=1;
@@ -4347,7 +4368,7 @@ class Manage extends CI_Controller {
 			
 			if($value->active==1)
 			{
-				if($j++==1)
+				if($j++>0)
 				{
 					if(checkpageaccess('vehicleowner',1,'approve'))
 					{
@@ -4405,17 +4426,26 @@ class Manage extends CI_Controller {
 	}
 	function vehicleowner_mod_approve()
 	{
-		//$mod_id	=	$this->uri->segment(3);
-		//$data	=	$this->Commonsql_model->select('tblvehicleowner_mod',array('owner_modID'=>$mod_id));
-		////if($data->num_rows()>0)
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
+		if(!checkpageaccess('vehicleowner',1,'approve'))
 		{
-			/*$val	=	$data->row();
+			redirect();
+		}
+		$mod_id	=	$this->uri->segment(3);
+		$data	=	$this->Commonsql_model->select('tblvehicleowner_mod',array('owner_modID'=>$mod_id));
+		if($data->num_rows()>0)
+		{
+			$val	=	$data->row();
 			
-				$values		=array('name'		=>	$val->name,
-								'description'		=>	$val->description,
-								'dbentrystateID'	=>	3,
-								'approvedby'			=>	$this->session->userdata('SESS_userId'),
-								'approvedon'			=>	date('Y-m-d h:i:s'));
+				
+				$values=array('contactID'		=>	$val->contactID,
+							'contactPer1'		=>	$val->contactPer1,
+							'contactPer2'		=>	$val->contactPer2,
+							
+							'dbentrystateID'			=>	3,
+							'approvedby'				=>	$this->session->userdata('SESS_userId'),
+							'approvedon'				=>	date('Y-m-d h:i:s'));
+								
 							
 				$cond		=	array('ownerID'	=>	$val->ownerID);
 				
@@ -4425,23 +4455,20 @@ class Manage extends CI_Controller {
 							
 				$cond_mod	=	array('owner_modID'	=>	$mod_id);
 				$upt		=	$this->Commonsql_model->updateTable('tblvehicleowner', $cond , $values);
-				$upt_m		=	$this->Commonsql_model->updateTable('tblvehicleowner_mod', $cond_mod , $values_mod);*/
+				$upt_m		=	$this->Commonsql_model->updateTable('tblvehicleowner_mod', $cond_mod , $values_mod);
 				//echo $this->db->last_query();exit;
-				//if(1)
-				//{
+				if($upt)
+				{
 					$this->session->set_userdata('suc','Approved Successfully  Finished...!');
-					redirect('approve_vehicleowner/'.$this->uri->segment(3));
+					redirect('approve_vehicleowner/'.$val->ownerID);
 					
-			//	}
-				//else
-				//{
-				//	$this->session->set_userdata('err','Error Please try again..!');
-				//	redirect('approve_vehicleowner/'.$val->ownerID);
-				//}
-							
-							
-						
-		}
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('approve_vehicleowner/'.$val->ownerID);
+				}
+			}
 	}
 	/***********************************************************************************************************************************/
 	function vehicleagent()
@@ -4475,7 +4502,9 @@ class Manage extends CI_Controller {
 	}
 	function vehicleagent_json()
 	{
-		$result	=	$this->Commonsql_model->select_all_vagent_state();
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
+		$result					=	$this->Commonsql_model->select_all_vagent_state();
+		$pagealterpermission 	=	pagealterpermission('vehicleagent', $alterPermission = '');
 		//echo $this->db->last_query();exit;
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
@@ -4521,7 +4550,7 @@ class Manage extends CI_Controller {
 				{
 					$view			 			=	'';
 				}
-				if(checkpageaccess('vehicleagent',1,'approve'))
+				if(selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('vehicleagent',1,'approve'))
 				{
 					$APPROVE			 			=	history_html("approve_vehicleagent/".$value->agentID);
 				}
@@ -4532,7 +4561,7 @@ class Manage extends CI_Controller {
 				}
 				if(checkpageaccess('vehicleagent',1,'delete'))
 				{
-					$active	=	disable_approve_deactive_html("'".base_url()."manage/vehicleagent/".$value->agentID."','0'");
+					$active	=	status_main_table($value->agentID,'agentID','vehicleagent','vehicleagent',1);
 				}
 				else
 				{
@@ -4545,7 +4574,7 @@ class Manage extends CI_Controller {
 				$view		=	'';
 				if(checkpageaccess('vehicleagent',1,'delete'))
 				{
-					$active	=	enable_approve_deactive_html("'".base_url()."manage/vehicleagent/".$value->agentID."','1'");
+					$active	=	status_main_table($value->agentID,'agentID','vehicleagent','vehicleagent',0);
 				}
 				else
 				{
@@ -4553,7 +4582,7 @@ class Manage extends CI_Controller {
 				}
 				
 			}
-			if(checkpageaccess('vehicleagent',1,'modify'))
+			if(selfAllowed($pagealterpermission, 'selfEditAllowed', $value->createby) && checkpageaccess('vehicleagent',1,'modify'))
 			{
 				$edit	=	edit_html("edit_vehicleagent/".$value->agentID);
 			}
@@ -4595,7 +4624,7 @@ class Manage extends CI_Controller {
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
-				$contactID	=	insertTable('tblcontactdetails', $contact_values,0);
+				$contactID	=	insertTable('tblcontactdetails', $contact_values,0,'vehicleagent');
 				
 			$values=array('contactID'				=>	$contactID,
 							'loadingadvno'		=>	$this->input->post('loadingadvno'),
@@ -4603,7 +4632,7 @@ class Manage extends CI_Controller {
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$query	=	insertTable('tblvehicleagent', $values,0);
+			$query	=	insertTable('tblvehicleagent', $values,0,'vehicleagent');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Vehicle Owner Successfully  Added...!');
@@ -4646,7 +4675,7 @@ class Manage extends CI_Controller {
 								'active'			=>	1);
 								
 				$contactID_whereData	=	array('contactID'	=>	$this->input->post('contactID'));
-			$query1		= updateTable('tblcontactdetails', $contactID_whereData, $contact_values , 1,'contactID', $this->input->post('contactID'));
+			$query1		= updateTable('tblcontactdetails', $contactID_whereData, $contact_values , 1,'contactID', $this->input->post('contactID'),'vehicleagent');
 				
 			$values=array('contactID'			=>	$this->input->post('contactID'),
 							'loadingadvno'		=>	$this->input->post('loadingadvno'),
@@ -4713,7 +4742,7 @@ class Manage extends CI_Controller {
 								
 								
 				$contactID_whereData	=	array('contactID'	=>	$this->input->post('contactID'));
-			$query1		= updateTable('tblcontactdetails', $contactID_whereData, $contact_values , 1,'contactID', $this->input->post('contactID'));
+			$query1		= updateTable('tblcontactdetails', $contactID_whereData, $contact_values , 1,'contactID', $this->input->post('contactID'),'vehicleagent');
 			//echo $this->db->last_query();exit;
 				
 			$values=array('contactID'			=>	$this->input->post('contactID'),
@@ -4775,6 +4804,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_vehicleagent_json()
 	{
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
 		$result	=	$this->Commonsql_model->select_all_vagent_mod_state($this->uri->segment(3));
 		//echo $this->db->last_query();exit;
 		$output = array();$i=1;$j=1;
@@ -4813,7 +4843,7 @@ class Manage extends CI_Controller {
 			
 			if($value->active==1)
 			{
-				if($j++==1)
+				if($j++>0)
 				{
 					if(checkpageaccess('vehicleagent',1,'approve'))
 					{
@@ -4869,6 +4899,51 @@ class Manage extends CI_Controller {
 		}
 		 echo json_encode(array('data'=>$output), true);
 	}
+	function vehicleagent_mod_approve()
+	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
+		if(!checkpageaccess('vehicleagent',1,'approve'))
+		{
+			redirect();
+		}
+		$mod_id	=	$this->uri->segment(3);
+		$data	=	$this->Commonsql_model->select('tblvehicleagent_mod',array('agent_modID'=>$mod_id));
+		if($data->num_rows()>0)
+		{
+			$val	=	$data->row();
+			
+				
+				$values=array('contactID'				=>	$val->contactID,
+							'loadingadvno'				=>	$val->loadingadvno,
+							
+							'dbentrystateID'			=>	3,
+							'approvedby'				=>	$this->session->userdata('SESS_userId'),
+							'approvedon'				=>	date('Y-m-d h:i:s'));
+								
+							
+				$cond		=	array('agentID'	=>	$val->agentID);
+				
+				$values_mod	=	array('dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond_mod	=	array('agent_modID'	=>	$mod_id);
+				$upt		=	$this->Commonsql_model->updateTable('tblvehicleagent', $cond , $values);
+				$upt_m		=	$this->Commonsql_model->updateTable('tblvehicleagent_mod', $cond_mod , $values_mod);
+				//echo $this->db->last_query();exit;
+				if($upt)
+				{
+					$this->session->set_userdata('suc','Approved Successfully  Finished...!');
+					redirect('approve_vehicleagent/'.$val->agentID);
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('approve_vehicleagent/'.$val->agentID);
+				}
+			}
+	}
 	/***********************************************************************************************************************************/
 	function consignor()
 	{
@@ -4900,7 +4975,9 @@ class Manage extends CI_Controller {
 	}
 	function consignor_json()
 	{
-		$result	=	$this->Commonsql_model->select_conginor_state();
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
+		$result					=	$this->Commonsql_model->select_conginor_state();
+		$pagealterpermission 	=	pagealterpermission('contract-consignor', $alterPermission = '');
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
@@ -4946,7 +5023,7 @@ class Manage extends CI_Controller {
 				{
 					$view			 			=	'';
 				}
-				if(checkpageaccess('contract-consignor',1,'approve'))
+				if(selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('contract-consignor',1,'approve'))
 				{
 					$Approve		=	history_html("approve-consignor/".$value->consignorID);
 				}
@@ -4957,7 +5034,7 @@ class Manage extends CI_Controller {
 				}
 				if(checkpageaccess('contract-consignor',1,'delete'))
 				{
-					$active	=	disable_approve_deactive_html("'".base_url()."manage/consignor/".$value->consignorID."','0'");
+					$active	=	status_main_table($value->consignorID,'consignorID','consignor','contract-consignor',1);
 				}
 				else
 				{
@@ -4970,7 +5047,7 @@ class Manage extends CI_Controller {
 				$Approve		=	'';
 				if(checkpageaccess('contract-consignor',1,'delete'))
 				{
-					$active	=	enable_approve_deactive_html("'".base_url()."manage/consignor/".$value->consignorID."','1'");
+					$active	=	status_main_table($value->consignorID,'consignorID','consignor','contract-consignor',0);
 				}
 				else
 				{
@@ -4978,7 +5055,7 @@ class Manage extends CI_Controller {
 				}
 				
 			}
-			if(checkpageaccess('contract-consignor',1,'modify'))
+			if(selfAllowed($pagealterpermission, 'selfEditAllowed', $value->createby) && checkpageaccess('contract-consignor',1,'modify'))
 			{
 				$edit	=	edit_html("edit-consignor/".$value->consignorID);
 			}
@@ -5020,7 +5097,7 @@ class Manage extends CI_Controller {
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
-				$contactID	=	insertTable('tblcontactdetails', $contact_values,0);
+				$contactID	=	insertTable('tblcontactdetails', $contact_values,0,'contract-consignor');
 			
 			
 			$values_cons=array('contactID'		=>	$contactID,
@@ -5031,7 +5108,7 @@ class Manage extends CI_Controller {
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$consignorID	=	insertTable('tblconsignor', $values_cons,0);
+			$consignorID	=	insertTable('tblconsignor', $values_cons,0,'contract-consignor');
 			
 			
 			
@@ -5081,7 +5158,7 @@ class Manage extends CI_Controller {
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$query1		= updateTables('tblcontactdetails', $contac_wh, $contact_values , 1,'contactID', $this->input->post('contactID'));
+			$query1		= updateTables('tblcontactdetails', $contac_wh, $contact_values , 1,'contactID', $this->input->post('contactID'),'contract-consignor');
 			
 			$values_cons=array('contactID'		=>	$this->input->post('contactID'),
 							'contactPer1'		=>	$this->input->post('name'),
@@ -5091,7 +5168,7 @@ class Manage extends CI_Controller {
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$query2		= updateTables('tblconsignor', $whereData, $values_cons , 1,'consignorID', $this->input->post('consignorID'));
+			$query2		= updateTables('tblconsignor', $whereData, $values_cons , 1,'consignorID', $this->input->post('consignorID'),'contract-consignor');
 			
 			if($query1 || $query2 )
 			{
@@ -5204,6 +5281,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_consignor_json()
 	{
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
 		$result	=	$this->Commonsql_model->select_all_consigonr_mod_state($this->uri->segment(3));
 		//echo $this->db->last_query();exit;
 		$output = array();$i=1;$j=1;
@@ -5242,7 +5320,7 @@ class Manage extends CI_Controller {
 			
 			if($value->active==1)
 			{
-				if($j++==1)
+				if($j++>0)
 				{
 					if(checkpageaccess('consignor',1,'approve'))
 					{
@@ -5279,8 +5357,6 @@ class Manage extends CI_Controller {
 				{
 					$active	=	"";
 				}
-				
-				
 			}
 			
 			if(checkpageaccess('consignor',1,'modify'))
@@ -5297,6 +5373,53 @@ class Manage extends CI_Controller {
 			$output[] =$vaules;
 		}
 		 echo json_encode(array('data'=>$output), true);
+	}
+	function consignor_mod_approve()
+	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
+		if(!checkpageaccess('consignor',1,'approve'))
+		{
+			redirect();
+		}
+		$mod_id	=	$this->uri->segment(3);
+		$data	=	$this->Commonsql_model->select('tblconsignor_mod',array('consignor_modID'=>$mod_id));
+		if($data->num_rows()>0)
+		{
+			$val	=	$data->row();
+			
+				
+				$values=array('contactID'				=>	$val->contactID,
+							'contactPer1'				=>	$val->name,
+							'contactPer2'				=>	$val->contactPer2,
+							'csttinno'					=>	$val->csttinno,
+							
+							'dbentrystateID'			=>	3,
+							'approvedby'				=>	$this->session->userdata('SESS_userId'),
+							'approvedon'				=>	date('Y-m-d h:i:s'));
+								
+							
+				$cond		=	array('consignorID'	=>	$val->consignorID);
+				
+				$values_mod	=	array('dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond_mod	=	array('consignor_modID'	=>	$mod_id);
+				$upt		=	$this->Commonsql_model->updateTable('tblconsignor', $cond , $values);
+				$upt_m		=	$this->Commonsql_model->updateTable('tblconsignor_mod', $cond_mod , $values_mod);
+				//echo $this->db->last_query();exit;
+				if($upt)
+				{
+					$this->session->set_userdata('suc','Approved Successfully  Finished...!');
+					redirect('approve-consignor/'.$val->consignorID);
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('approve-consignor/'.$val->consignorID);
+				}
+			}
 	}
 	/***********************************************************************************************************************************/
 	function contract_consignor()
@@ -5329,6 +5452,7 @@ class Manage extends CI_Controller {
 	}
 	function contract_consignor_json()
 	{
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
 		$result	=	$this->Commonsql_model->select_conginor_contract_state();
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
@@ -5764,6 +5888,7 @@ class Manage extends CI_Controller {
 	}
 	function approve_contract_consignor_json()
 	{
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
 		$result	=	$this->Commonsql_model->select_conginor_contract_mod($this->uri->segment(3));
 		//echo $this->db->last_query();exit;
 		$output = array();$i=1;

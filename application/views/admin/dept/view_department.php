@@ -49,7 +49,8 @@
                                 <!-- tile header -->
                                 <div class="tile-header bg-greensea  dvd dvd-btm">
                                     <h1 class="custom-font"><strong>View </strong> Department</h1>
-                                     <?php if(checkpageaccess('department',1,'modify')){?>
+                                     <?php $pagealterpermission = pagealterpermission('department', $alterPermission = '');
+									 if(selfAllowed($pagealterpermission, 'selfEditAllowed', $v->createby) && checkpageaccess('department',1,'modify')){?>
                                     <ul class="controls">
                                         
                                        <li><a href="<?= base_url()?>edit_department/<?=$this->uri->segment(2)?>" title="Edit Department" role="button" tabindex="0" data-toggle='tooltip' data-placement='top' data-original-title='Click to Update' >Update  <i class="fa fa-pencil-square-o"></i></a></li>

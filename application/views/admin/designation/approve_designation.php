@@ -15,7 +15,7 @@
 
                     <div class="pageheader">
 
-                        <h2>Designation Approve</h2>
+                        <h2>Designation History</h2>
 
                         <div class="page-bar">
 
@@ -27,7 +27,7 @@
                                     <a href="<?= base_url()?>designation">Designation</a>
                                 </li>
                                 <li>
-                                    <a href="javascript::">Approve Designation</a>
+                                    <a href="javascript::">Designation History</a>
                                 </li>
                             </ul>
                             

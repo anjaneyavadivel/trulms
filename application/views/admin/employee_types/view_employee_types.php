@@ -59,7 +59,8 @@
                                 <!-- tile header -->
                                 <div class="tile-header bg-greensea  dvd dvd-btm">
                                     <h1 class="custom-font"><strong>Edit</strong> Employee Types</h1>
-                                     <?php if(checkpageaccess('employee_types',1,'modify')){?>
+                                     <?php $pagealterpermission = pagealterpermission('employee_types', $alterPermission = '');
+									 if(selfAllowed($pagealterpermission, 'selfEditAllowed', $v->createby) && checkpageaccess('employee_types',1,'modify')){?>
                                     <ul class="controls">
                                         
                                         <li><a href="<?= base_url()?>edit_employee_types/<?=$this->uri->segment(2)?>" title="Update Employee Types" role="button" tabindex="0" >Update  <i class="fa fa-pencil-square-o"></i></a></li>

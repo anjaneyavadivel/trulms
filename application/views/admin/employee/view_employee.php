@@ -31,7 +31,8 @@
           <!-- /tile header --> 
           <div class="tile-header dvd bg-greensea dvd-btm">
                                     <h1 class="custom-font"><strong>View Employee</strong> </h1>
-                                    <?php if(checkpageaccess('employee',1,'modify')){?>
+                                    <?php $pagealterpermission = pagealterpermission('department', $alterPermission = '');
+									 if(selfAllowed($pagealterpermission, 'selfEditAllowed', $v->createby) && checkpageaccess('employee',1,'modify')){?>
                                     <ul class="controls">
                                         
                                         <li><a href="<?= base_url()?>edit_employee/<?=$this->uri->segment(2)?>" title="Edit Employee" role="button" tabindex="0" >Edit  <i class="fa fa-pencil-square-o"></i></a></li>

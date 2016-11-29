@@ -355,11 +355,12 @@ class Commonsql_model extends CI_Model {
 	}
 	function select_all_employee_state()
 	{
-		$this->db->select('a.empID,a.empCode,a.empname,a.qualification,a.mobile,a.mailoffice,a.remarks,a.active,a.joiningdate,a.releavingdate,a.dbentrystateID,b.department,c.name,d.name as sta_name');
+		$this->db->select('a.empID,a.empCode,a.empname,a.qualification,a.mobile,a.mailoffice,a.remarks,a.active,a.joiningdate,a.releavingdate,a.dbentrystateID,a.createby,b.department,c.name,d.name as sta_name');
 		$this->db->from('tblemployee as a');
 		$this->db->join('tbldept as b','a.deptID=b.deptID','inner');
 		$this->db->join('tbldesignation as c','a.designation=c.desigID','inner');
 		$this->db->join('tbldbentrystates as d','a.dbentrystateID=d.dbentrystateID','inner');
+		$this->db->where('a.branchID',$this->session->userdata('SESS_userBranchID'));
 		$this->db->order_by('empID','desc');
 		$query	=	$this->db->get();
 		return $query;
@@ -371,6 +372,7 @@ class Commonsql_model extends CI_Model {
 		$this->db->join('tbldept as b','a.deptID=b.deptID','inner');
 		$this->db->join('tbldesignation as c','a.designation=c.desigID','inner');
 		$this->db->join('tbldbentrystates as d','a.dbentrystateID=d.dbentrystateID','inner');
+		$this->db->where('a.branchID',$this->session->userdata('SESS_userBranchID'));
 		$this->db->where('a.empID',$id);
 		$this->db->order_by('emp_modID','desc');
 		$query	=	$this->db->get();
@@ -378,7 +380,7 @@ class Commonsql_model extends CI_Model {
 	}
 	function select_all_driver_state()
 	{
-		$this->db->select('a.driverID,a.dlno,a.dlexpirydt,a.active,a.dbentrystateID,b.name,b.phone1,b.addressline1,d.name as sta_name');
+		$this->db->select('a.driverID,a.dlno,a.dlexpirydt,a.active,a.dbentrystateID,a.createby,b.name,b.phone1,b.addressline1,d.name as sta_name');
 		$this->db->from('tbldriver as a');
 		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
 		$this->db->join('tbldbentrystates as d','a.dbentrystateID=d.dbentrystateID','inner');
@@ -399,7 +401,7 @@ class Commonsql_model extends CI_Model {
 	}
 	function select_all_vowner_state()
 	{
-		$this->db->select('a.ownerID,a.contactPer1,a.active,a.dbentrystateID,b.companyName,b.phone1,d.name as sta_name');
+		$this->db->select('a.ownerID,a.contactPer1,a.active,a.dbentrystateID,a.createby,b.companyName,b.phone1,d.name as sta_name');
 		$this->db->from('tblvehicleowner as a');
 		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
 		$this->db->join('tbldbentrystates as d','a.dbentrystateID=d.dbentrystateID','inner');
@@ -504,7 +506,7 @@ class Commonsql_model extends CI_Model {
 	}
 	function select_all_vagent_state()
 	{
-		$this->db->select('a.agentID,a.active,a.dbentrystateID,b.name,b.companyName,b.phone1,d.name as sta_name');
+		$this->db->select('a.agentID,a.active,a.dbentrystateID,a.createby,b.name,b.companyName,b.phone1,d.name as sta_name');
 		$this->db->from('tblvehicleagent as a');
 		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
 		$this->db->join('tbldbentrystates as d','a.dbentrystateID=d.dbentrystateID','inner');

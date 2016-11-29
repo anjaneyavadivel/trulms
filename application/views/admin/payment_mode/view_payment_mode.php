@@ -44,7 +44,8 @@
           <!-- tile header -->
           <div class="tile-header bg-greensea  dvd dvd-btm">
             <h1 class="custom-font"><strong>View</strong> Payment Mode</h1>
-             <?php if(checkpageaccess('payment_mode',1,'modify')){?>
+             <?php $pagealterpermission = pagealterpermission('payment_mode', $alterPermission = '');
+									 if(selfAllowed($pagealterpermission, 'selfEditAllowed', $v->createby) && checkpageaccess('payment_mode',1,'modify')){?>
                                     <ul class="controls">
                                         
                                         <li><a href="<?= base_url()?>edit_payment_mode/<?=$this->uri->segment(2)?>" title="Update Payment Mode" role="button" tabindex="0" >Update  <i class="fa fa-pencil-square-o"></i></a></li>

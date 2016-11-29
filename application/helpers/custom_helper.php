@@ -882,14 +882,14 @@ if (!function_exists('enable_disable_approve_deactive_html')) {
 if (!function_exists('enable_approve_deactive_html')) {
 
     function enable_approve_deactive_html($onclick_values) {
-        return '<a href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" class="text-success text-uppercase text-strong text-sm mr-10" onclick="active_deactive_class(' . $onclick_values . ')"><i class="fa fa-clock-o" data-toggle="tooltip" data-placement="top" title data-original-title="Click to De-Active"></i></a>';
+        return '<a href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" class="text-success text-uppercase text-strong text-sm mr-10" onclick="active_deactive_class(' . $onclick_values . ')"><i class="fa fa-check-square" data-toggle="tooltip" data-placement="top" title data-original-title="Click to Active"></i></a>';
     }
 
 }
 if (!function_exists('approve_html')) {
 
     function approve_html($onclick_values) {
-        return '<a href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" class="text-primary text-uppercase text-strong text-sm mr-10" onclick="active_deactive_class(' . $onclick_values . ')"><i class="fa fa-clock-o" data-toggle="tooltip" data-placement="top" title data-original-title="Click to Approve"></i></a>';
+        return '<a href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" class="text-primary text-uppercase text-strong text-sm mr-10" onclick="active_deactive_class(' . $onclick_values . ')"><i class="fa fa-thumbs-o-up" data-toggle="tooltip" data-placement="top" title data-original-title="Click to Approve"></i></a>';
     }
 
 }

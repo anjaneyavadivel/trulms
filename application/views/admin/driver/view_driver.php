@@ -33,7 +33,8 @@
           <!-- /tile header --> 
           <div class="tile-header dvd bg-greensea dvd-btm">
                                     <h1 class="custom-font"><strong>Driver</strong> </h1>
-                                     <?php if(checkpageaccess('driver',1,'modify')){?>
+                                     <?php $pagealterpermission = pagealterpermission('driver', $alterPermission = '');
+									 if(selfAllowed($pagealterpermission, 'selfEditAllowed', $v->createby) && checkpageaccess('driver',1,'modify')){?>
                                     <ul class="controls">
                                         
                                         <li><a href="<?= base_url()?>edit_driver/<?=$this->uri->segment(2)?>" title="Edit driver" role="button" tabindex="0" >Edit  <i class="fa fa-pencil-square-o"></i></a></li>

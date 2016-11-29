@@ -12,12 +12,12 @@
 <section id="content">
   <div class="page page-forms-validate">
     <div class="pageheader">
-      <h2>Approve Payment Mode</h2>
+      <h2>Payment Mode History</h2>
       <div class="page-bar">
         <ul class="page-breadcrumb">
           <li> <a href="<?= base_url()?>"><i class="fa fa-home"></i> HOME</a> </li>
           <li> <a href="<?= base_url()?>payment_mode"> Payment Mode</a> </li>
-          <li> <a href="javascript::">Approve Payment Mode</a> </li>
+          <li> <a href="javascript::">Payment Mode History</a> </li>
         </ul>
       </div>
     </div>

@@ -15,7 +15,7 @@
 
                     <div class="pageheader">
 
-                        <h2>Approve Employee Types </h2>
+                        <h2>Employee Types History</h2>
 
                         <div class="page-bar">
 
@@ -29,7 +29,7 @@
                                 </li>
                                 
                                 <li>
-                                    <a href="javascript::">Approve Employee Types</a>
+                                    <a href="javascript::">Employee Types History</a>
                                 </li>
                             </ul>
                             

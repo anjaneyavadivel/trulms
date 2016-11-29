@@ -34,7 +34,8 @@
           <!-- /tile header --> 
           <div class="tile-header dvd bg-greensea dvd-btm">
                                     <h1 class="custom-font"><strong>Consignor</strong> </h1>
-                                     <?php if(checkpageaccess('consignor',1,'modify'))
+                                     <?php  $pagealterpermission = pagealterpermission('consignor', $alterPermission = '');
+									 if(selfAllowed($pagealterpermission, 'selfEditAllowed', $v->createby) && checkpageaccess('consignor',1,'modify'))
 										{
 											?>
                                         <li><a href="<?= base_url()?>edit-consignor" title="Edit Consignor" role="button" tabindex="0" >Edit  <i class="fa fa-pencil-square-o"></i></a></li>

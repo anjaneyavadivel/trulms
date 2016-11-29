@@ -15,7 +15,7 @@
 
                     <div class="pageheader">
 
-                        <h2>Approve Role </h2>
+                        <h2>Role History</h2>
 
                         <div class="page-bar">
 
@@ -27,7 +27,7 @@
                                     <a href="<?= base_url()?>role">Role</a>
                                 </li>
                                 <li>
-                                    <a href="javascript::">Approve Role</a>
+                                    <a href="javascript::">Role History</a>
                                 </li>
                             </ul>
                             

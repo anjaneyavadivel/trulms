@@ -15,7 +15,7 @@
 
                     <div class="pageheader">
 
-                        <h2>Approve Payment status </h2>
+                        <h2>Payment status History</h2>
 
                         <div class="page-bar">
 
@@ -27,7 +27,7 @@
                                     <a href="<?= base_url()?>payment_status"> Payment status</a>
                                 </li>
                                 <li>
-                                    <a href="javascript::">Approve Payment status</a>
+                                    <a href="javascript::">Payment status History</a>
                                 </li>
                             </ul>
                             

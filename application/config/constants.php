@@ -88,4 +88,5 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 
 define('MOD_STATUS', 1); 
+define('STATEID', 1); 
 

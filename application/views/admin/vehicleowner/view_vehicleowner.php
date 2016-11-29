@@ -35,7 +35,8 @@
           <!-- /tile header -->
           <div class="tile-header dvd bg-greensea dvd-btm">
             <h1 class="custom-font"><strong>Vehicle Owner</strong> </h1>
-              <?php if(checkpageaccess('vehicleowner',1,'modify')){?>
+              <?php $pagealterpermission = pagealterpermission('vehicleowner', $alterPermission = '');
+									 if(selfAllowed($pagealterpermission, 'selfEditAllowed', $v->createby) && checkpageaccess('vehicleowner',1,'modify')){?>
                                     <ul class="controls">
                                         
                                         <li><a href="<?= base_url()?>edit_vehicleowner/<?=$this->uri->segment(2)?>" title="Edit Vehicle Owner" role="button" tabindex="0" >Edit <i class="fa fa-pencil-square-o"></i></a></li>

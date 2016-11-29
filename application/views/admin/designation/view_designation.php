@@ -59,7 +59,8 @@
                                 <!-- tile header -->
                                 <div class="tile-header bg-greensea  dvd dvd-btm">
                                     <h1 class="custom-font"><strong>View</strong> Designation</h1>
-                                    <?php if(checkpageaccess('designation',1,'modify')){?>
+                                    <?php $pagealterpermission = pagealterpermission('designation', $alterPermission = '');
+									 if(selfAllowed($pagealterpermission, 'selfEditAllowed', $v->createby) && checkpageaccess('designation',1,'modify')){?>
                                     <ul class="controls">
                                         
                                         <li><a href="<?= base_url()?>edit_designation/<?=$this->uri->segment(2)?>" title="Edit Designation" role="button" tabindex="0" >Update  <i class="fa fa-pencil-square-o"></i></a></li>

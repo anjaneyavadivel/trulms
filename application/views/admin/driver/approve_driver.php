@@ -8,12 +8,12 @@
 <section id="content">
   <div class="page page-forms-validate">
     <div class="pageheader">
-      <h2>Approve Driver</h2>
+      <h2>Driver History</h2>
       <div class="page-bar">
         <ul class="page-breadcrumb">
           <li> <a href="<?= base_url()?>"><i class="fa fa-home"></i> HOME</a> </li>
           <li> <a href="<?= base_url()?>driver">Driver</a> </li>
-          <li> <a href="javascript::">Approve Driver</a> </li>
+          <li> <a href="javascript::">Driver History</a> </li>
         </ul>
       </div>
     </div>

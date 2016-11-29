@@ -62,7 +62,8 @@
                                 <!-- tile header -->
                                 <div class="tile-header bg-greensea  dvd dvd-btm">
                                     <h1 class="custom-font"><strong>View</strong> Role</h1>
-                                     <?php if(checkpageaccess('role',1,'modify')){?>
+                                     <?php $pagealterpermission = pagealterpermission('role', $alterPermission = '');
+									 if(selfAllowed($pagealterpermission, 'selfEditAllowed', $v->createby) && checkpageaccess('role',1,'modify')){?>
                                     <ul class="controls">
                                         
                                         <li><a href="<?= base_url()?>edit_role/<?=$this->uri->segment(2)?>" title="Edit Role" role="button" tabindex="0" >Edit  <i class="fa fa-pencil-square-o"></i></a></li>

@@ -15,7 +15,7 @@
 
                     <div class="pageheader">
 
-                        <h2>Department Approve </h2>
+                        <h2>Department History </h2>
 
                         <div class="page-bar">
 
