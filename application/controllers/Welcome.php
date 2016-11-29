@@ -71,6 +71,7 @@ class Welcome extends CI_Controller {
         $this->form_validation->set_rules('tbname', 'Data Tb', 'trim|required');
         $this->form_validation->set_rules('id', 'id', 'trim|required');
         $this->form_validation->set_rules('tbcol', 'tb col', 'trim|required');
+        $this->form_validation->set_rules('formname', 'form name', 'trim|required');
         if ($this->form_validation->run($this) == FALSE) {
             return FALSE;
         }
@@ -78,9 +79,10 @@ class Welcome extends CI_Controller {
         $table_name = 'tbl'.$this->input->post('tbname', TRUE);
         $id = $this->input->post('id', TRUE);
         $check_column = $this->input->post('tbcol', TRUE);
+        $formname = $this->input->post('formname', TRUE);
         $whereData = array($check_column => $id);
         $updateData = array('active' => $status);
-        $upt = updateTable($table_name, $whereData, $updateData, $isStoreMod = 1, $check_column, $id);
+        $upt = activeDeactiveTable($table_name, $whereData, $updateData, $isStoreMod = 1, $check_column, $id,$formname);
         if ($upt > 0) {
             if($status){
             $this->session->set_userdata('suc','Success! Activated successfully.');

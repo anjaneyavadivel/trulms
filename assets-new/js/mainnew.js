@@ -8,6 +8,7 @@ var Mainnew = function () {
             var id = 0;
             var tbname = 0;
             var tbcol = 0;
+            var formname = 0;
             //$('#skills-list').on('click', '.btn-pf-viewskill', function () {
 
             $('.checkfield').focusout(function (event) {
@@ -30,6 +31,7 @@ var Mainnew = function () {
                 id = $(this).attr('data-id');
                 tbname = $(this).attr('data-tb');
                 tbcol = $(this).attr('data-col');
+                formname = $(this).attr('data-fn');
                 if (type == 0) {
                     $('#confirmation-msg').html('Are you sure you would like to De-Active this record?');
                 } else {
@@ -44,7 +46,8 @@ var Mainnew = function () {
                     type: type,
                     id: id,
                     tbname: tbname,
-                    tbcol: tbcol
+                    tbcol: tbcol,
+                    formname: formname
                 }, function (res) {
                     if (res) {
                         $('.activedeactiveconf-close').trigger("click");

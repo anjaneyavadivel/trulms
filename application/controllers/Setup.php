@@ -120,7 +120,7 @@ class Setup extends CI_Controller {
                 redirect('add-form-master');
             }
         }
-        $whereData = array('dbentrystateID' => 3, 'active' => 1);
+        $whereData = array('dbentrystateID !=' => 3, 'active' => 1);
         $data['role'] = selectTable('tblrole', $whereData);
         $data['pageTitle'] = "Form";
         //$data['table'] = "Add Form";
@@ -178,9 +178,9 @@ class Setup extends CI_Controller {
                     
                     if (checkpageaccess('form-master', 1, 'delete')) {
                         if ($value->active == 1) {
-                            $active = '<a href="javascript:void(0)" data-tb="pages" data-val="0" data-id="' . $value->pageID . '"  data-col="pageID" role="button" tabindex="0" class="active-deactive-btn text-danger" data-toggle="tooltip" data-placement="top" title data-original-title="Click to De-Active"><i class="fa fa-times-circle"></i></a>&nbsp;';
+                            $active = '<a href="javascript:void(0)" data-tb="pages" data-fn="form-master" data-val="0" data-id="' . $value->pageID . '"  data-col="pageID" role="button" tabindex="0" class="active-deactive-btn text-danger" data-toggle="tooltip" data-placement="top" title data-original-title="Click to De-Active"><i class="fa fa-times-circle"></i></a>&nbsp;';
                         } else {
-                            $active = '<a href="javascript:void(0)" data-tb="pages" data-val="1" data-id="' . $value->pageID . '"  data-col="pageID" role="button" tabindex="0" class="active-deactive-btn text-success data-toggle="tooltip" data-placement="top" title data-original-title="Click to Active"><i class="fa fa-check-square"></i></a>&nbsp;';
+                            $active = '<a href="javascript:void(0)" data-tb="pages" data-fn="form-master" data-val="1" data-id="' . $value->pageID . '"  data-col="pageID" role="button" tabindex="0" class="active-deactive-btn text-success data-toggle="tooltip" data-placement="top" title data-original-title="Click to Active"><i class="fa fa-check-square"></i></a>&nbsp;';
                         }
                     }
                 }
@@ -266,7 +266,7 @@ class Setup extends CI_Controller {
                 redirect('edit-form-master/' . $pageID);
             }
         }
-        $whereData = array('dbentrystateID' => 3, 'active' => 1);
+        $whereData = array('dbentrystateID !=' => 0, 'active' => 1);
         $data['role'] = selectTable('tblrole', $whereData);
         $data['pageTitle'] = "Form Master";
         $data['pageID'] = $pageID;
@@ -288,7 +288,7 @@ class Setup extends CI_Controller {
             $data['pages'] = $this->Commonsql_model->select('tblpages', array('active' => 1, 'pageID' => $this->uri->segment(2)));
             $data['pagealt'] = $this->Commonsql_model->select('tblpagealterdetails', array('active' => 1, 'pageID' => $this->uri->segment(2)));
         }
-        $whereData = array('dbentrystateID' => 3, 'active' => 1);
+        $whereData = array('dbentrystateID !=' => 0, 'active' => 1);
         $data['role'] = selectTable('tblrole', $whereData);
         $this->load->view('admin/form_master/view_form_master', $data);
     }
@@ -584,7 +584,6 @@ class Setup extends CI_Controller {
             foreach ($accessrole as $rolID) {
                 $values = array('empID' => $empID,
                     'roleID' => $rolID,
-                    'dbentrystateID' => 0,
                     'createby' => $this->session->userdata('SESS_userId'),
                     'active' => 1);
 
@@ -606,9 +605,9 @@ class Setup extends CI_Controller {
             }
         }
         if ($userBranchID == 0) {
-            $whereData = array('temp.dbentrystateID' => 3, 'temp.active' => 1);
+            $whereData = array('temp.dbentrystateID !=' => 3, 'temp.active' => 1);
         } else {
-            $whereData = array('temp.branchID' => $userBranchID, 'temp.dbentrystateID' => 3, 'temp.active' => 1);
+            $whereData = array('temp.branchID' => $userBranchID, 'temp.dbentrystateID !=' => 3, 'temp.active' => 1);
         }
         $joins = array(
             array(
@@ -625,7 +624,7 @@ class Setup extends CI_Controller {
         $notInWhereData = array('temp.empID', $notinuser);
         $data['employee'] = get_joins('tblemployee AS temp', $columns, $joins, $whereData, $orWhereData = array(), $group = array(), $order = '', $having = '', $limit = array(), $result_way = 'all', $echo = 0, $inWhereData = array(), $notInWhereData);
 
-        $whereData = array('dbentrystateID' => 3, 'active' => 1);
+        $whereData = array('dbentrystateID !=' => 3, 'active' => 1);
         // Get user record
         $data['role'] = selectTable('tblrole', $whereData);
 
@@ -642,9 +641,9 @@ class Setup extends CI_Controller {
         $roleID = $this->uri->segment(2);
 
         if ($userBranchID == 0) {
-            $whereData = array('temp.dbentrystateID' => 3, 'temprole.empRoleMapID' => $roleID, 'temp.active' => 1);
+            $whereData = array('temp.dbentrystateID !=' => 3, 'temprole.empRoleMapID' => $roleID, 'temp.active' => 1);
         } else {
-            $whereData = array('temp.branchID' => $userBranchID, 'temprole.empRoleMapID' => $roleID, 'temprole.active' => 1, 'temp.dbentrystateID' => 3, 'temp.active' => 1);
+            $whereData = array('temp.branchID' => $userBranchID, 'temprole.empRoleMapID' => $roleID, 'temprole.active' => 1, 'temp.dbentrystateID !=' => 3, 'temp.active' => 1);
         }
         $joins = array(
             array(
@@ -668,11 +667,11 @@ class Setup extends CI_Controller {
         $columns = 'temprole.*,temp.empCode,temp.empname,tdes.name,tdept.department,trole.roleName';
         $data['employeeRolw'] = get_joins('tblemprolemap AS temprole', $columns, $joins, $whereData, $orWhereData = array(), $group = array(), $order = 'empRoleMapID DESC');
 
-        $whereData = array('dbentrystateID' => 3, 'active' => 1);
+        $whereData = array('dbentrystateID !=' => 3, 'active' => 1);
         // Get user record
         $data['role'] = selectTable('tblrole', $whereData);
         $employeeRolw = $data['employeeRolw']->row();
-        $whereData = array('active' => 1, 'empID' => $employeeRolw->empID, 'dbentrystateID' => 3);
+        $whereData = array('active' => 1, 'empID' => $employeeRolw->empID, 'dbentrystateID !=' => 3);
         $emprolemap = array(0);
         $emprole = selectTable('tblemprolemap', $whereData);
         if (isset($emprole) && $emprole->num_rows() > 0) {
@@ -719,7 +718,6 @@ class Setup extends CI_Controller {
                     } else {
                         $values = array('empID' => $tblemprolemap->empID,
                             'roleID' => $rolID,
-                            'dbentrystateID' => 0,
                             'createby' => $this->session->userdata('SESS_userId'),
                             'active' => 1);
 
@@ -731,9 +729,9 @@ class Setup extends CI_Controller {
             redirect('edit-employee-role/' . $empRoleMapID);
         }
         if ($userBranchID == 0) {
-            $whereData = array('temp.dbentrystateID' => 3, 'temprole.empRoleMapID' => $empRoleMapID, 'temp.active' => 1);
+            $whereData = array('temp.dbentrystateID !=' => 3, 'temprole.empRoleMapID' => $empRoleMapID, 'temp.active' => 1);
         } else {
-            $whereData = array('temp.branchID' => $userBranchID, 'temprole.empRoleMapID' => $empRoleMapID, 'temprole.active' => 1, 'temp.dbentrystateID' => 3, 'temp.active' => 1);
+            $whereData = array('temp.branchID' => $userBranchID, 'temprole.empRoleMapID' => $empRoleMapID, 'temprole.active' => 1, 'temp.dbentrystateID !=' => 3, 'temp.active' => 1);
         }
         $joins = array(
             array(
@@ -757,11 +755,11 @@ class Setup extends CI_Controller {
         $columns = 'temprole.*,temp.empCode,temp.empname,tdes.name,tdept.department,trole.roleName';
         $data['employeeRolw'] = get_joins('tblemployee AS temp', $columns, $joins, $whereData, $orWhereData = array(), $group = array(), $order = 'empRoleMapID DESC');
 
-        $whereData = array('dbentrystateID' => 3, 'active' => 1);
+        $whereData = array('dbentrystateID !=' => 3, 'active' => 1);
         // Get user record
         $data['role'] = selectTable('tblrole', $whereData);
         $employeeRolw = $data['employeeRolw']->row();
-        $whereData = array('active' => 1, 'empID' => $employeeRolw->empID, 'dbentrystateID' => 3);
+        $whereData = array('active' => 1, 'empID' => $employeeRolw->empID, 'dbentrystateID !=' => 3);
         $emprolemap = array(0);
         $emprole = selectTable('tblemprolemap', $whereData);
         if (isset($emprole) && $emprole->num_rows() > 0) {
@@ -1013,7 +1011,6 @@ class Setup extends CI_Controller {
                     'modifyEnabled' => $modifyEnabled,
                     'approveEnabled' => $approveEnabled,
                     'deleteEnabled' => $deleteEnabled,
-                    'dbentrystateID' => 0,
                     'createby' => $this->session->userdata('SESS_userId'),
                     'active' => 1);
 
@@ -1029,10 +1026,10 @@ class Setup extends CI_Controller {
             }
             return FALSE;
         }
-        $whereData = array('dbentrystateID' => 3, 'active' => 1);
+        $whereData = array('dbentrystateID !=' => 3, 'active' => 1);
         $data['pages'] = selectTable('tblpages', $whereData);
 
-        $whereData = array('dbentrystateID' => 3, 'active' => 1, 'roleID !=' => 1);
+        $whereData = array('dbentrystateID !=' => 3, 'active' => 1, 'roleID !=' => 1);
         $data['role'] = selectTable('tblrole', $whereData);
 
         $data['pageTitle'] = "Form Access";
@@ -1101,10 +1098,10 @@ class Setup extends CI_Controller {
         }
         extract($this->input->post());
 
-        $whereData = array('dbentrystateID' => 3, 'active' => 1);
+        $whereData = array('dbentrystateID !=' => 3, 'active' => 1);
         $data['pages'] = selectTable('tblpages', $whereData);
 
-        $whereData = array('dbentrystateID' => 3, 'active' => 1, 'roleID !=' => 1);
+        $whereData = array('dbentrystateID !=' => 3, 'active' => 1, 'roleID !=' => 1);
         $data['role'] = selectTable('tblrole', $whereData);
 
         $userBranchID = $this->session->userdata('SESS_userBranchID');
