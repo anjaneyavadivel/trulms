@@ -915,5 +915,20 @@ if (!function_exists('history_html')) {
     }
 
 }
+
+if (!function_exists('status_main_table')) {
+
+    function status_main_table($id,$column_name,$table,$module,$value) {
+		if($value==1)
+		{
+        return '<a href="javascript:void(0)" data-tb="'.$table.'" data-fn="'.$module.'" data-val="0" data-id="' . $id . '"  data-col="'.$column_name.'" role="button" tabindex="0" class="active-deactive-btn text-danger" data-toggle="tooltip" data-placement="top" title data-original-title="Click to De-Active"><i class="fa fa-times-circle"></i></a>&nbsp;';
+		}
+		else
+		{
+			return '<a href="javascript:void(0)" data-tb="'.$table.'" data-fn="'.$module.'" data-val="1" data-id="' . $id . '"  data-col="'.$column_name.'" role="button" tabindex="0" class="active-deactive-btn text-success data-toggle="tooltip" data-placement="top" title data-original-title="Click to Active"><i class="fa fa-check-square"></i></a>&nbsp;';
+		}
+    }
+
+}
 /* End of file custom_helper.php */
 ?>

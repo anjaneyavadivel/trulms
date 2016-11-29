@@ -87,6 +87,8 @@ class Manage extends CI_Controller {
 	}
 	function department_json()
 	{
+		if (!$this->session->userdata('SESS_userId') || !checkpageaccess('department', 1, 'view')) {return FALSE; }
+		$pagealterpermission = pagealterpermission('department', $alterPermission = '');
 		$result	=	$this->Commonsql_model->select_all_state('tbldept','deptID');
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
@@ -130,7 +132,7 @@ class Manage extends CI_Controller {
 				{
 					$view			 			=	'';
 				}
-				if(checkpageaccess('department',1,'approve'))
+				if(selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('department',1,'approve'))
 				{
 					$APPROVE			 			=	history_html("approve_department/".$value->deptID);
 				}
@@ -141,7 +143,7 @@ class Manage extends CI_Controller {
 				}
 				if(checkpageaccess('department',1,'delete'))
 				{
-					$active	=	disable_approve_deactive_html("'".base_url()."manage/department/".$value->deptID."','0'");
+					$active	=	status_main_table($value->deptID,'deptID','dept','department',1);
 				}
 				else
 				{
@@ -154,7 +156,7 @@ class Manage extends CI_Controller {
 				$view			 =	'';
 				if(checkpageaccess('department',1,'delete'))
 				{
-					$active	=	enable_approve_deactive_html("'".base_url()."manage/department/".$value->deptID."','1'");
+					$active	=	status_main_table($value->deptID,'deptID','dept','department',0);
 				}
 				else
 				{
@@ -192,7 +194,7 @@ class Manage extends CI_Controller {
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$query	=	insertTable('tbldept', $values,1,'deptID');
+			$query	=	insertTable('tbldept', $values,1,'deptID','department');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Department Successfully  Added...!');
@@ -255,7 +257,7 @@ class Manage extends CI_Controller {
 							
 			$whereData	=	array('deptID'	=>	$this->input->post('deptID'));
 			
-			$query		= updateTable('tbldept', $whereData, $values_mod , 1,'deptID', $this->input->post('deptID'));
+			$query		= updateTable('tbldept', $whereData, $values_mod , 1,'deptID', $this->input->post('deptID'),'department');
 			
 			if($query)
 			{

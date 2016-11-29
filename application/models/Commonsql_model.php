@@ -306,6 +306,11 @@ class Commonsql_model extends CI_Model {
 		$this->db->select('a.*,b.name');
 		$this->db->from($table.' as a');
 		$this->db->join('tbldbentrystates as b','a.dbentrystateID=b.dbentrystateID','inner');
+		$userBranchID = $this->session->userdata('SESS_userBranchID');
+        if ($userBranchID == 0) {
+        } else {
+         $this->db->where( array('active' => 1));
+        }
 		if($feild !='')
 		$this->db->order_by($feild,'desc');
 		$query	=	$this->db->get();
@@ -317,6 +322,11 @@ class Commonsql_model extends CI_Model {
 		$this->db->select('a.*,b.name as state_names');
 		$this->db->from($table.' as a');
 		$this->db->join('tbldbentrystates as b','a.dbentrystateID=b.dbentrystateID','inner');
+		$userBranchID = $this->session->userdata('SESS_userBranchID');
+        if ($userBranchID == 0) {
+        } else {
+         $this->db->where( array('active' => 1));
+        }
 		if($feild !='')
 		$this->db->order_by($feild,'desc');
 		$query	=	$this->db->get();
