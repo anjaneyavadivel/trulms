@@ -918,7 +918,7 @@ class Setup extends CI_Controller {
         if (isset($employeeRolw) && $employeeRolw->num_rows() > 0) {
             foreach ($employeeRolw->result() as $value) {
                 $vaules = array();
-                $vaules['ID'] = $value->empRoleMapID;
+                $vaules['ID'] = $value->empRoleMap_modID;
                 $vaules['createdon'] = date("d-m-Y", strtotime($value->createdon));
                 $vaules['empCode'] = $value->empCode;
                 $vaules['empname'] = $value->empname;
@@ -946,10 +946,10 @@ class Setup extends CI_Controller {
                 $active = '';
                 $edit = '';
                 if (checkpageaccess('employee-role', 1, 'view')) {
-                    $view = "<a href='" . base_url() . "view-employee-role-history/" . $value->empRoleMapID . "'role='button' tabindex='0' class='edit mr-5' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-file-text-o'></i></a>&nbsp;";
+                    $view = "<a href='" . base_url() . "view-employee-role-history/" . $value->empRoleMap_modID . "'role='button' tabindex='0' class='edit mr-5' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-file-text-o'></i></a>&nbsp;";
                 }
                 if (selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('employee-role', 1, 'approve')) {
-                    $APPROVE = approve_html("'" . base_url() . "employee-role-mod-approve/" . $value->empRoleMapID . "','2'");
+                    $APPROVE = approve_html("'" . base_url() . "employee-role-mod-approve/" . $value->empRoleMap_modID . "','2'");
                 }
                 $vaules['Action'] = $view . $edit . $APPROVE . $active;
 
@@ -964,7 +964,7 @@ class Setup extends CI_Controller {
         if (!$this->session->userdata('SESS_userId')) {
             redirect(base_url() . "login");
         }
-        $mod_id = $this->uri->segment(3);
+        $mod_id = $this->uri->segment(2);
         $data = $this->Commonsql_model->select('tblemprolemap_mod', array('empRoleMap_modID' => $mod_id));
         if ($data->num_rows() > 0) {
             $val = $data->row();
@@ -974,15 +974,13 @@ class Setup extends CI_Controller {
                 'dbentrystateID' => 3,
                 'approvedby' => $this->session->userdata('SESS_userId'),
                 'approvedon' => date('Y-m-d h:i:s'));
-
             $cond = array('empRoleMapID' => $val->empRoleMapID);
+            $upt = $this->Commonsql_model->updateTable('tblemprolemap', $cond, $values);
 
             $values_mod = array('dbentrystateID' => 3,
                 'approvedby' => $this->session->userdata('SESS_userId'),
                 'approvedon' => date('Y-m-d h:i:s'));
-
             $cond_mod = array('empRoleMap_modID' => $mod_id);
-            $upt = $this->Commonsql_model->updateTable('tblemprolemap', $cond, $values);
             $upt_m = $this->Commonsql_model->updateTable('tblemprolemap_mod', $cond_mod, $values_mod);
             //echo $this->db->last_query();exit;
             if ($upt) {
@@ -1000,12 +998,12 @@ class Setup extends CI_Controller {
             redirect(base_url() . "login");
         }
         $userBranchID = $this->session->userdata('SESS_userBranchID');
-        $roleID = $this->uri->segment(2);
+        $empRoleMap_modID = $this->uri->segment(2);
 
         if ($userBranchID == 0) {
-            $whereData = array('temprole.empRoleMap_modID' => $roleID);
+            $whereData = array('temprole.empRoleMap_modID' => $empRoleMap_modID);
         } else {
-            $whereData = array('temp.branchID' => $userBranchID, 'temprole.empRoleMap_modID' => $roleID, 'temprole.active' => 1, 'temp.active' => 1);
+            $whereData = array('temp.branchID' => $userBranchID, 'temprole.empRoleMap_modID' => $empRoleMap_modID, 'temprole.active' => 1, 'temp.active' => 1);
         }
         $joins = array(
             array(
