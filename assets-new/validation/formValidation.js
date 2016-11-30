@@ -75,6 +75,27 @@ var FormValidation = function ()
                     return false;
                 }
             });
+            
+            $("#add-edit-employee-role").validate({
+                rules: {
+                    empID: {
+                        required: true
+                    },
+                    'accessrole[]': {
+                        required: true
+                    },
+                },
+                messages: {
+                    url: {
+                        required: "This field is required",
+                        remote: "Already exists this one...",
+                    },
+                },
+                submitHandler: function (form) {
+                    $('#formsubmiting').trigger('click');
+                    return false;
+                }
+            });
 
         }
 

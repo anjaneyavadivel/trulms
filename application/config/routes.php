@@ -84,9 +84,12 @@ $route['view-form-alter-history/(:num)'] = 'setup/view_form_alter_history/$1';
 $route['employee-role'] = 'setup/employee_role';
 $route['employee-role-json'] = 'setup/employee_role_json';
 $route['add-employee-role'] = 'setup/add_employee_role';
+$route['edit-employee-role/(:num)'] = 'setup/edit_employee_role/$1';
 $route['view-employee-role/(:num)'] = 'setup/view_employee_role/$1';
 $route['approve-employee-role/(:num)'] = 'setup/approve_employee_role/$1';
 $route['approve-employee-role-json/(:num)'] = 'setup/approve_employee_role_json/$1';
+$route['view-employee-role-history/(:num)'] = 'setup/view_employee_role_history/$1';
+$route['employee-role-mod-approve/(:num)/(:num)'] = 'setup/employee_role_mod_approve/$1/$2';
 
 
 $route['form-access'] = 'setup/form_access';

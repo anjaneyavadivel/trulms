@@ -67,6 +67,7 @@
                                                 <th>Designation</th>
                                                 <th>Department</th>
                                                 <th>Access Role</th>
+                                                <th>State</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>

@@ -24,7 +24,7 @@
 
         <!-- row -->
         <div class="row"> 
-            <?= form_open_multipart(base_url() . 'add-employee-role', array('id' => 'form4', 'role' => 'form', 'data-parsley-validate' => '')); ?>
+            <?= form_open_multipart(base_url() . 'add-employee-role', array('id' => 'add-edit-employee-role', 'role' => 'form', 'data-parsley-validate' => '')); ?>
             <!-- col -->
             <?php $this->load->view('admin/msg') ?>
             <div class="col-md-12">
@@ -48,39 +48,41 @@
                                 <select name="empID" id="empID" tabindex="3" required class="form-control chosen-select">
                                     <option value=""></option>
                                     <?php
-                                    if (isset($employee) && $employee->num_rows() > 0){
+                                    if (isset($employee) && $employee->num_rows() > 0) {
                                         foreach ($employee->result() AS $emp) {
                                             ?>
-                                    <option value="<?= $emp->empID ?>"><?= ucwords($emp->empCode .' / '.$emp->empname .' / '.$emp->department .' / '.$emp->name);?></option>
+                                            <option value="<?= $emp->empID ?>"><?= ucwords($emp->empCode . ' / ' . $emp->empname . ' / ' . $emp->department . ' / ' . $emp->name); ?></option>
                                             <?php
-                                    }}
+                                        }
+                                    }
                                     ?>
 
                                 </select>
                             </div>
-                            
+
                         </div>
 
                         <div class="row">
                             <hr class="line-dashed line-full"/>
                             <div class="form-group">
                                 <label class="col-sm-12 control-label">Access Role <span class="required">*</span></label>
-                                 <?php
-                                    if (isset($role) && $role->num_rows() > 0){
-                                        foreach ($role->result() AS $rol) {
-                                            ?>
-                                <div class="col-sm-2">
+                                <?php
+                                if (isset($role) && $role->num_rows() > 0) {
+                                    foreach ($role->result() AS $rol) {
+                                        ?>
+                                        <div class="col-sm-2">
 
-                                    <label class="checkbox checkbox-custom-alt">
-                                        <input type="checkbox" name="accessrole[]" 
+                                            <label class="checkbox checkbox-custom-alt">
+                                                <input type="checkbox" name="accessrole[]" 
                                                        data-parsley-trigger="change"
                                                        required value="<?= $rol->roleID ?>"><i></i> <?= $rol->roleName ?>
-                                    </label>
+                                            </label>
 
-                                </div>
-                                <?php
-                                    }}
-                                    ?>
+                                        </div>
+                                        <?php
+                                    }
+                                }
+                                ?>
                             </div>
 
                         </div>
@@ -106,8 +108,11 @@
                         <!-- tile footer -->
                         <div class="tile-footer text-right bg-tr-black lter dvd dvd-top"> 
                             <!-- SUBMIT BUTTON -->
-                                     <a href="<?=base_url().'employee-role'?>" class="btn btn-warning "><i class="fa fa-hand-o-left"></i> Go Back</a>
-                            <input type="submit" class="btn btn-greensea" id="form4Submit" value="Add" name="save">
+                            <a  href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="active_deactive_class('<?= base_url() ?>employee-role', '3')" class="btn btn-warning"><i class="fa fa-hand-o-left"></i> Go Back</a> 
+
+                            <input type="submit" class="btn bg-greensea" id="formSubmit" value="Add" >
+                            <a  href="javascript::" data-toggle="modal" data-target="#form-submit" id="formsubmiting" data-options="splash-2 splash-ef-11" role="button" tabindex="0"  class="btn btn-greensea" style="display:none">Submit</a>
+                            <input type="submit" class="btn btn-default" id="new_button" onclick="form_submit('add-edit-employee-role')" value="Submit" style="display:none" >
                         </div>
                         <!-- /tile footer --> 
 

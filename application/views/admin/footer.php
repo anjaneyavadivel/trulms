@@ -447,8 +447,6 @@ if (isset($table)) {
             <?php } else if ($segment1 == 'employee-role') {
                 ?>
         var table = $('#basic-usage').DataTable({
-        "processing": true,
-        "serverSide": true,
         "ajax": '<?php echo base_url() ?>employee-role-json',
         "columns": [
         {"data": "ID"},
@@ -457,11 +455,12 @@ if (isset($table)) {
         {"data": "name"},
         {"data": "department"},
         {"data": "roleName"},
+        {"data": "state"},
         {"data": "active"},
         {"data": "Action"}
         ],
         "aoColumnDefs": [
-        {'bSortable': false, 'aTargets': [7]}
+        {'bSortable': false, 'aTargets': [8]}
         ],
         "order": [[0, 'desc']],
         "dom": 'Rlfrtip',
@@ -481,11 +480,12 @@ if (isset($table)) {
         {"data": "name"},
         {"data": "department"},
         {"data": "roleName"},
+        {"data": "state"},
         {"data": "active"},
         {"data": "Action"}
         ],
         "aoColumnDefs": [
-        {'bSortable': false, 'aTargets': [7]}
+        {'bSortable': false, 'aTargets': [9]}
         ],
         "order": [[0, 'desc']],
         "dom": 'Rlfrtip',
@@ -883,7 +883,7 @@ if (isset($table)) {
     <script src="<?= base_url() ?>assets/js/jquery.validate.min.js"></script>
     <script src="<?= base_url() ?>assets-new/js/vaildation-function.js"></script>
 
-    <?php if ($segment1 == 'add-form-master'||$segment1 == 'edit-form-master') {
+    <?php if ($segment1 == 'add-form-master'||$segment1 == 'edit-form-master'||$segment1 == 'add-employee-role'||$segment1 == 'edit-employee-role') {
         ?>
         <script src="<?= base_url() ?>assets-new/validation/formValidation.js"></script>
          <script>

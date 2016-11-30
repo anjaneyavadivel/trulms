@@ -168,7 +168,7 @@ function activdeactiveclass(url, type)
     }
     else if (type == 3)
     {
-        $('#confirmation-msg1').html('Are you sure you would like to Back From this page?');
+        $('#confirmation-msg1').html('Are you sure you would like to Go Back from this page?');
     }
     else
     {

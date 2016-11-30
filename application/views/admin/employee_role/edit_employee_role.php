@@ -15,7 +15,7 @@
 
         <div class="pageheader">
 
-            <h2>Edit Employee Role Setup</h2>
+            <h2>Update Employee Role Setup</h2>
 
             <div class="page-bar">
 
@@ -27,7 +27,7 @@
                         <a href="<?= base_url() ?>employee-role">Employee Role Setup</a>
                     </li>
                     <li>
-                        <a href="javascript::">Edit Employee Role Setup</a>
+                        <a href="javascript::">Update Employee Role Setup</a>
                     </li>
                 </ul>
 
@@ -42,9 +42,11 @@
             <div class="col-md-12">
                 <?php $this->load->view('admin/msg') ?>
             </div>
-            <?= form_open_multipart(base_url() . 'edit-employee-role/'.$empRoleMapID, array('id' => 'form4', 'role' => 'form', 'data-parsley-validate' => '')); ?>
-            <?php if (isset($employeeRolw) && $employeeRolw->num_rows() > 0) {
-                $v = $employeeRolw->row(); ?>
+            <?= form_open_multipart(base_url() . 'edit-employee-role/' . $empRoleMapID, array('id' => 'add-edit-employee-role', 'role' => 'form', 'data-parsley-validate' => '')); ?>
+            <?php
+            if (isset($employeeRolw) && $employeeRolw->num_rows() > 0) {
+                $v = $employeeRolw->row();
+                ?>
 
 
                 <!-- col -->
@@ -68,7 +70,7 @@
                                     <label for="empID">Employee Code / Name / Department / Designation <span class="required">*</span></label>
                                     <select name="empID" id="empID" tabindex="3" required class="form-control " disabled="">
                                         <option value="<?= $v->empID ?>"><?= ucwords($v->empCode . ' / ' . $v->empname . ' / ' . $v->department . ' / ' . $v->name); ?></option>
-                                                
+
                                     </select>
                                 </div>
 
@@ -81,14 +83,17 @@
                                     <?php
                                     if (isset($role) && $role->num_rows() > 0) {
                                         foreach ($role->result() AS $rol) {
-                                                                                        
                                             ?>
                                             <div class="col-sm-2">
 
                                                 <label class="checkbox checkbox-custom-alt">
                                                     <input type="checkbox" name="accessrole[]" 
                                                            data-parsley-trigger="change"
-                                                           required value="<?= $rol->roleID ?>" <?php if(in_array($rol->roleID,$emprolemap)){echo 'checked';}?>><i></i> <?= $rol->roleName ?>
+                                                           required value="<?= $rol->roleID ?>" <?php
+                                                           if (in_array($rol->roleID, $emprolemap)) {
+                                                               echo 'checked';
+                                                           }
+                                                           ?>><i></i> <?= $rol->roleName ?>
                                                 </label>
 
                                             </div>
@@ -108,32 +113,35 @@
 
                 </div>
                 <!-- /col -->
-<div class="col-md-12"> 
+                <div class="col-md-12"> 
 
-                <!-- tile --> 
+                    <!-- tile --> 
 
-                <!-- tile -->
-                <section class="tile"> 
+                    <!-- tile -->
+                    <section class="tile"> 
 
-                    <!-- tile body -->
-                    <div class="tile-body"> 
+                        <!-- tile body -->
+                        <div class="tile-body"> 
 
-                        <!-- tile footer -->
-                        <div class="tile-footer text-right bg-tr-black lter dvd dvd-top"> 
-                            <!-- SUBMIT BUTTON -->
-                                          <a href="<?=base_url().'employee-role'?>" class="btn btn-warning "><i class="fa fa-hand-o-left"></i> Go Back</a>
-                        <input type="submit" class="btn btn-greensea" id="form4Submit" value="Update" name="save">
+                            <!-- tile footer -->
+                            <div class="tile-footer text-right bg-tr-black lter dvd dvd-top"> 
+                                <!-- SUBMIT BUTTON -->
+                                <a  href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="active_deactive_class('<?= base_url() ?>employee-role', '3')" class="btn btn-warning"><i class="fa fa-hand-o-left"></i> Go Back</a> 
+
+                                <input type="submit" class="btn bg-greensea" id="formSubmit" value="Update" >
+                                <a  href="javascript::" data-toggle="modal" data-target="#form-edit-submit" id="formsubmiting" data-options="splash-2 splash-ef-11" role="button" tabindex="0"  class="btn btn-greensea" style="display:none">Submit</a>
+                                <input type="submit" class="btn btn-default" id="new_button" onclick="form_submit('add-edit-employee-role')" value="Submit" style="display:none" >
+                            </div>
+                            <!-- /tile footer --> 
+
                         </div>
-                        <!-- /tile footer --> 
+                        <!-- /tile body --> 
 
-                    </div>
-                    <!-- /tile body --> 
+                    </section>
+                    <!-- /tile --> 
 
-                </section>
-                <!-- /tile --> 
-
-            </div>
-                 <?php echo form_close(); ?> 
+                </div>
+                <?php echo form_close(); ?> 
             <?php } else { ?>
 
                 No Records Found
@@ -157,5 +165,4 @@
 
 </div>
 <!--/ Application Content -->
-<?php
-$this->load->view('admin/footer')?>
+<?php $this->load->view('admin/footer') ?>

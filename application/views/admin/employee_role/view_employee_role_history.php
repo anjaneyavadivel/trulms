@@ -27,7 +27,10 @@
                         <a href="<?= base_url() ?>employee-role">Employee Role Setup</a>
                     </li>
                     <li>
-                        <a href="javascript::">View Employee Role Setup</a>
+                        <a href="<?= base_url() ?>approve-employee-role/<?=$empRoleMapID?>">Employee Role Setup History</a>
+                    </li>
+                    <li>
+                        <a href="javascript::">View Employee Role History</a>
                     </li>
                 </ul>
 
@@ -125,7 +128,7 @@
                         <!-- tile footer -->
                         <div class="tile-footer text-right bg-tr-black lter dvd dvd-top"> 
                             <!-- SUBMIT BUTTON -->
-                                          <a href="<?=base_url().'employee-role'?>" class="btn btn-warning "><i class="fa fa-hand-o-left"></i> Go Back</a>
+                                          <a href="<?= base_url() ?>approve-employee-role/<?=$empRoleMapID?>" class="btn btn-warning "><i class="fa fa-hand-o-left"></i> Go Back</a>
                         </div>
                         <!-- /tile footer --> 
 

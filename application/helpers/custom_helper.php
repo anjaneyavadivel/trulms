@@ -875,28 +875,28 @@ if (!function_exists('group_dh_time_ago')) {
 if (!function_exists('enable_disable_approve_deactive_html')) {
 
     function disable_approve_deactive_html($onclick_values) {
-        return '<a href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" class=" text-danger text-uppercase text-strong text-sm mr-10 " onclick="active_deactive_class(' . $onclick_values . ')"><i class="fa fa-times-circle" data-toggle="tooltip" data-placement="top" title data-original-title="Click to De-Active"></i></a>';
+        return '<a href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" class=" text-danger text-uppercase text-strong mr-5 " onclick="active_deactive_class(' . $onclick_values . ')"><i class="fa fa-times-circle" data-toggle="tooltip" data-placement="top" title data-original-title="Click to De-Active"></i></a>';
     }
 
 }
 if (!function_exists('enable_approve_deactive_html')) {
 
     function enable_approve_deactive_html($onclick_values) {
-        return '<a href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" class="text-success text-uppercase text-strong text-sm mr-10" onclick="active_deactive_class(' . $onclick_values . ')"><i class="fa fa-check-square" data-toggle="tooltip" data-placement="top" title data-original-title="Click to Active"></i></a>';
+        return '<a href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" class="text-success text-uppercase text-strong mr-5 " onclick="active_deactive_class(' . $onclick_values . ')"><i class="fa fa-check-square" data-toggle="tooltip" data-placement="top" title data-original-title="Click to Active"></i></a>';
     }
 
 }
 if (!function_exists('approve_html')) {
 
     function approve_html($onclick_values) {
-        return '<a href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" class="text-primary text-uppercase text-strong text-sm mr-10" onclick="active_deactive_class(' . $onclick_values . ')"><i class="fa fa-thumbs-o-up" data-toggle="tooltip" data-placement="top" title data-original-title="Click to Approve"></i></a>';
+        return '<a href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" class="text-primary text-uppercase text-strong mr-5 " onclick="active_deactive_class(' . $onclick_values . ')"><i class="fa fa-thumbs-o-up" data-toggle="tooltip" data-placement="top" title data-original-title="Click to Approve"></i></a>';
     }
 
 }
 if (!function_exists('edit_html')) {
 
     function edit_html($link_and_id) {
-        return "<a href='" . base_url() . $link_and_id . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'class='edit'  data-toggle='tooltip' data-placement='top' title data-original-title='Click to Update'><i class='fa fa-edit'></i></a>";
+        return "<a href='" . base_url() . $link_and_id . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong mr-5 'class='edit'  data-toggle='tooltip' data-placement='top' title data-original-title='Click to Update'><i class='fa fa-edit'></i></a>";
         ;
     }
 
@@ -904,14 +904,14 @@ if (!function_exists('edit_html')) {
 if (!function_exists('view_html')) {
 
     function view_html($link_and_id) {
-        return "<a href='" . base_url() . $link_and_id . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10' class='edit' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-file-text-o'></i></a>";
+        return "<a href='" . base_url() . $link_and_id . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong mr-5 ' class='edit' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-file-text-o'></i></a>";
     }
 
 }
 if (!function_exists('history_html')) {
 
     function history_html($link_and_id) {
-        return "<a href='" . base_url() . $link_and_id . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong text-sm mr-10'class='edit' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View History'><i class='fa fa-clock-o'></i></a>";
+        return "<a href='" . base_url() . $link_and_id . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong mr-5 'class='edit' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View History'><i class='fa fa-clock-o'></i></a>";
     }
 
 }

@@ -237,7 +237,6 @@
                             <div class="tile-footer text-right bg-tr-black lter dvd dvd-top"> 
                                 <!-- SUBMIT BUTTON -->
                                <a  href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="active_deactive_class('<?= base_url() ?>form-master', '3')" class="btn btn-warning"><i class="fa fa-hand-o-left"></i> Go Back</a> 
-<!--                            <input type="submit" class="btn btn-greensea" id="form4Submit" value="Add Form" name="save">-->
 
                             <input type="submit" class="btn bg-greensea" id="formSubmit" value="Update" >
                             <a  href="javascript::" data-toggle="modal" data-target="#form-edit-submit" id="formsubmiting" data-options="splash-2 splash-ef-11" role="button" tabindex="0"  class="btn btn-greensea" style="display:none">Submit</a>
