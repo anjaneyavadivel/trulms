@@ -384,6 +384,7 @@ if (isset($table)) {
         {"data": "parentID"},
         {"data": "menuCaption"},
         {"data": "url"},
+        {"data": "dbentrystateID"},
         {"data": "active"},
         {"data": "Action"}
         ],
@@ -407,6 +408,7 @@ if (isset($table)) {
         {"data": "menuCaption"},
         {"data": "url"},
         {"data": "createby"},
+        {"data": "state"},
         {"data": "active"},
         {"data": "Action"}
         ],
@@ -429,6 +431,7 @@ if (isset($table)) {
         {"data": "isSelfEditAllowed"},
         {"data": "isSelfApprovalAllowed"},
         {"data": "createby"},
+        {"data": "state"},
         {"data": "active"},
         {"data": "Action"}
         ],

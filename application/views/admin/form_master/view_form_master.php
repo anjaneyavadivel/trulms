@@ -122,7 +122,7 @@
                             <!-- /tile header --> 
                             <div class="tile-header bg-greensea dvd dvd-btm">
                                 <h1 class="custom-font"><strong>Page Alter Details</strong> </h1>
-        <?php if (checkpageaccess('form-master', 1, 'modify')) { ?>
+        <?php if (selfAllowed($pagealterpermission, 'selfEditAllowed', $v1->createby) && checkpageaccess('form-master', 1, 'modify')) { ?>
                                     <ul class="controls">
 
                                         <li><a href="<?= base_url() ?>edit-form-master/<?= $this->uri->segment(2) ?>" title="Edit <?= $pageTitle ?>" role="button" tabindex="0" >Update Form Master  <i class="fa fa-edit"></i></a></li>

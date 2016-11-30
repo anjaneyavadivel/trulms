@@ -61,11 +61,11 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Updated Date</th>
-                                        <th>Create Approve</th>
-                                        <th>Modify Approve</th>
-                                        <th>Self Edit Allowed</th>
-                                        <th>Self Approval Allowed</th>
+                                        <th>Menu Name</th>
+                                        <th>Form Name</th>
+                                        <th>Url</th>
                                         <th>Updated By</th>
+                                        <th>State</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -91,15 +91,17 @@
                     <!-- tile body -->
                     <div class="tile-body">
                         <div class="table-responsive">
-                            <table class="table table-custom" id="basic-usage">
+                            <table class="table table-custom" id="basic-usage1">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
                                         <th>Updated Date</th>
-                                        <th>Menu Name</th>
-                                        <th>Form Name</th>
-                                        <th>Url</th>
+                                        <th>Create Approve</th>
+                                        <th>Modify Approve</th>
+                                        <th>Self Edit Allowed</th>
+                                        <th>Self Approval Allowed</th>
                                         <th>Updated By</th>
+                                        <th>State</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>

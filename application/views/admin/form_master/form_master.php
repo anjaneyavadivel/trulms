@@ -65,6 +65,7 @@
                                         <th>Menu Name</th>
                                         <th>Form Name</th>
                                         <th>Url</th>
+                                        <th>State</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>

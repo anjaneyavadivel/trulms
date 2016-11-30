@@ -70,19 +70,23 @@ if (!function_exists('updateTable')) {
         $CI = & get_instance();
         $CI->load->model('commonsql_model');
         $pagealterpermission=array();
+        $tembTable=array();
         if($pageUrlName!=''){
             $pagealterpermission = pagealterpermission($pageUrlName, $alterPermission='');
         }
         if (!empty($pagealterpermission) && isset($pagealterpermission['modifyApproveRequired'])) {
                 $updateData['dbentrystateID']=2;
+                //$tembTable=$updateData;$tembTable[$modIdName]=$modId;
         }  else {
                 $updateData['dbentrystateID']=3;
                 $resultData = $CI->commonsql_model->updateTable($tableName, $whereData, $updateData);
         }
 		//echo $CI->db->last_query();exit;
         if($isStoreMod==1){
-            $updateData[$modIdName]=$modId;
-            $insertmodid = $CI->commonsql_model->insert_table($tableName.'_mod', $updateData);
+            $tembTable = selectTable($tableName, $whereData)->first_row('array');
+            $tembTable3 = array_replace($tembTable, $updateData);
+            //$tembTable[$modIdName]=$modId;
+            $insertmodid = $CI->commonsql_model->insert_table($tableName.'_mod', $tembTable3);
             return $insertmodid;
 			//echo $CI->db->last_query();exit;
         }
@@ -97,19 +101,23 @@ if (!function_exists('updateTables')) {
         $CI = & get_instance();
         $CI->load->model('commonsql_model');
         $pagealterpermission=array();
+        $tembTable=array();
         if($pageUrlName!=''){
             $pagealterpermission = pagealterpermission($pageUrlName, $alterPermission='');
         }
         if (!empty($pagealterpermission) && isset($pagealterpermission['modifyApproveRequired'])) {
                 $updateData['dbentrystateID']=2;
+                //$tembTable=$updateData;$tembTable[$modIdName]=$modId;
         }  else {
                 $updateData['dbentrystateID']=3;
                 $resultData = $CI->commonsql_model->updateTable($tableName, $whereData, $updateData);
         }
 		//echo $CI->db->last_query();exit;
         if($isStoreMod==1){
-            $updateData[$modIdName]=$modId;
-            $insertmodid = $CI->commonsql_model->insert_table($tableName.'_mod', $updateData);
+            $tembTable = selectTable($tableName, $whereData)->first_row('array');
+            $tembTable3 = array_replace($tembTable, $updateData);
+            //$tembTable[$modIdName]=$modId;
+            $insertmodid = $CI->commonsql_model->insert_table($tableName.'_mod', $tembTable3);
             return $insertmodid;
 			//echo $CI->db->last_query();exit;
         }
@@ -128,11 +136,13 @@ if (!function_exists('activeDeactiveTable')) {
         $CI = & get_instance();
         $CI->load->model('commonsql_model');
         $pagealterpermission=array();
+        $tembTable=array();
         if($pageUrlName!=''){
             $pagealterpermission = pagealterpermission($pageUrlName, $alterPermission='');
         }
         if (!empty($pagealterpermission) && isset($pagealterpermission['modifyApproveRequired'])) {
                 $updateData['dbentrystateID']=2;
+                //$tembTable=$updateData;$tembTable[$modIdName]=$modId;
         }  else {
                 $updateData['dbentrystateID']=3;
                 $resultData = $CI->commonsql_model->updateTable($tableName, $whereData, $updateData);
@@ -140,8 +150,9 @@ if (!function_exists('activeDeactiveTable')) {
 		//echo $CI->db->last_query();exit;
         if($isStoreMod==1){
             $tembTable = selectTable($tableName, $whereData)->first_row('array');
+            $tembTable3 = array_replace($tembTable, $updateData);
             //$tembTable[$modIdName]=$modId;
-            $insertmodid = $CI->commonsql_model->insert_table($tableName.'_mod', $tembTable);
+            $insertmodid = $CI->commonsql_model->insert_table($tableName.'_mod', $tembTable3);
             return $insertmodid;
 			//echo $CI->db->last_query();exit;
         }

@@ -140,7 +140,16 @@ class Setup extends CI_Controller {
             $whereData = array('active' => 1);
         }
         // Get user record
-        $pages = selectTable('tblpages', $whereData);
+        $joins = array(
+            array(
+                'table' => 'tbldbentrystates',
+                'condition' => 'tbldbentrystates.dbentrystateID = tblpages.dbentrystateID',
+                'jointype' => 'LEFT'
+            ),
+        );
+        $columns = 'tblpages.*,tbldbentrystates.name AS statename';
+        $pages = get_joins('tblpages', $columns, $joins, $whereData, $orWhereData = array(), $group = array(), $order = 'pageID DESC');
+
         if (isset($pages) && $pages->num_rows() > 0) {
             foreach ($pages->result() as $value) {
                 $vaules = array();
@@ -161,8 +170,23 @@ class Setup extends CI_Controller {
                 } else {
                     $row = '<span class="label bg-red">De-Active</span>';
                 }
-
                 $vaules['active'] = $row;
+                if ($value->dbentrystateID == 0) 
+                {
+                        $vaules['dbentrystateID'] 			= 	'<span class="label bg-danger">'.$value->statename.'</span>';
+                }
+                elseif ($value->dbentrystateID == 1) 
+                {
+                        $vaules['dbentrystateID'] 			= 	'<span class="label bg-warning">'.$value->statename.'</span>';
+                }
+                elseif ($value->dbentrystateID == 2) 
+                {
+                        $vaules['dbentrystateID'] 			= 	'<span class="label bg-info">'.$value->statename.'</span>';
+                }
+                else
+                {
+                        $vaules['dbentrystateID'] 			= 	'<span class="label bg-greensea">'.$value->statename.'</span>';
+                }
                 $view = '';
                 $APPROVE = '';
                 $active = '';
@@ -290,6 +314,7 @@ class Setup extends CI_Controller {
         }
         $whereData = array('dbentrystateID !=' => 0, 'active' => 1);
         $data['role'] = selectTable('tblrole', $whereData);
+        $data['pagealterpermission'] = pagealterpermission('form-master', $alterPermission = '');
         $this->load->view('admin/form_master/view_form_master', $data);
     }
 
@@ -316,15 +341,19 @@ class Setup extends CI_Controller {
         } else {
             $whereData = array('tlpagemod.pageID' => $pageID, 'tlpagemod.active' => 1);
         }
-        // Get user record
         $joins = array(
             array(
                 'table' => 'tblemployee AS tlemp',
                 'condition' => 'tlemp.empID = tlpagemod.createby',
                 'jointype' => 'LEFT'
             ),
+            array(
+                'table' => 'tbldbentrystates',
+                'condition' => 'tbldbentrystates.dbentrystateID = tlpagemod.dbentrystateID',
+                'jointype' => 'LEFT'
+            ),
         );
-        $columns = 'tlpagemod.*,tlemp.empname';
+        $columns = 'tlpagemod.*,tlemp.empname,tbldbentrystates.name AS statename';
         $pages = get_joins('tblpages_mod AS tlpagemod', $columns, $joins, $whereData, $orWhereData = array(), $group = array(), $order = 'page_modID DESC');
 
         if (isset($pages) && $pages->num_rows() > 0) {
@@ -344,6 +373,22 @@ class Setup extends CI_Controller {
                 $vaules['menuCaption'] = $value->menuCaption;
                 $vaules['url'] = $value->url;
                 $vaules['createby'] = $value->empname;
+                if ($value->dbentrystateID == 0) 
+                {
+                        $vaules['state'] 			= 	'<span class="label bg-danger">'.$value->statename.'</span>';
+                }
+                elseif ($value->dbentrystateID == 1) 
+                {
+                        $vaules['state'] 			= 	'<span class="label bg-warning">'.$value->statename.'</span>';
+                }
+                elseif ($value->dbentrystateID == 2) 
+                {
+                        $vaules['state'] 			= 	'<span class="label bg-info">'.$value->statename.'</span>';
+                }
+                else
+                {
+                        $vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->statename.'</span>';
+                }
                 if ($value->active == 1) {
                     $row = '<span class="label bg-greensea">Active</span>';
                 } else {
@@ -388,6 +433,24 @@ class Setup extends CI_Controller {
         $this->load->view('admin/form_master/view_form_master_history', $data);
     }
 
+    function view_form_alter_history() {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-master', 1, 'approve')) {
+            redirect(base_url() . "login");
+        }
+        $userBranchID = $this->session->userdata('SESS_userBranchID');
+        $data['pageTitle'] = "View Page Alter Details";
+        if ($userBranchID == 0) {
+            //$data['pages'] = $this->Commonsql_model->select('tblpages_mod', array('page_modID' => $this->uri->segment(2)));
+            $data['pagealt'] = $this->Commonsql_model->select('tblpagealterdetails_mod', array('pageAlterDetails_modID' => $this->uri->segment(2)));
+        } else {
+            //$data['pages'] = $this->Commonsql_model->select('tblpages_mod', array('active' => 1, 'page_modID' => $this->uri->segment(2)));
+            $data['pagealt'] = $this->Commonsql_model->select('tblpagealterdetails_mod', array('active' => 1, 'pageAlterDetails_modID' => $this->uri->segment(2)));
+        }
+        $v = $data['pagealt']->row();
+        $data['pagesID'] = $v->pageID;
+        $this->load->view('admin/form_master/view_form_alter_history', $data);
+    }
+
     function approve_page_alter_json($pageID = '') {
         if (trim($pageID) == '' || !$this->session->userdata('SESS_userId') || !checkpageaccess('form-master', 1, 'approve')) {
             return FALSE;
@@ -406,8 +469,13 @@ class Setup extends CI_Controller {
                 'condition' => 'tlemp.empID = tlpagealtmod.createby',
                 'jointype' => 'LEFT'
             ),
+            array(
+                'table' => 'tbldbentrystates',
+                'condition' => 'tbldbentrystates.dbentrystateID = tlpagealtmod.dbentrystateID',
+                'jointype' => 'LEFT'
+            ),
         );
-        $columns = 'tlpagealtmod.*,tlemp.empname';
+        $columns = 'tlpagealtmod.*,tlemp.empname,tbldbentrystates.name AS statename';
         $pages = get_joins('tblpagealterdetails_mod AS tlpagealtmod', $columns, $joins, $whereData, $orWhereData = array(), $group = array(), $order = 'pageAlterDetails_modID DESC');
 
         if (isset($pages) && $pages->num_rows() > 0) {
@@ -436,6 +504,22 @@ class Setup extends CI_Controller {
                     $vaules['isSelfApprovalAllowed'] = 'No';
                 }
                 $vaules['createby'] = $value->empname;
+                if ($value->dbentrystateID == 0) 
+                {
+                        $vaules['state'] 			= 	'<span class="label bg-danger">'.$value->statename.'</span>';
+                }
+                elseif ($value->dbentrystateID == 1) 
+                {
+                        $vaules['state'] 			= 	'<span class="label bg-warning">'.$value->statename.'</span>';
+                }
+                elseif ($value->dbentrystateID == 2) 
+                {
+                        $vaules['state'] 			= 	'<span class="label bg-info">'.$value->statename.'</span>';
+                }
+                else
+                {
+                        $vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->statename.'</span>';
+                }
                 if ($value->active == 1) {
                     $row = '<span class="label bg-greensea">Active</span>';
                 } else {
