@@ -501,11 +501,12 @@ if (isset($table)) {
         {"data": "ID"},
         {"data": "menuCaption"},
         {"data": "roleName"},
+        {"data": "state"},
         {"data": "active"},
         {"data": "Action"}
         ],
         "aoColumnDefs": [
-        {'bSortable': false, 'aTargets': [4]}
+        {'bSortable': false, 'aTargets': [5]}
         ],
         "order": [[0, 'desc']],
         "dom": 'Rlfrtip',

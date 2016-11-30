@@ -78,6 +78,7 @@ var Mainnew = function () {
                     $('#ajaxLoadDiv').html(res);
                     $('.chosen-select').chosen();
                     $('#form4').parsley();
+                    $('html, body').animate({scrollTop: $("#ajaxLoadDiv").offset().top - 50}, 500);
                     //$(".chosen-select").trigger("chosen:updated");
                     //$(".chosen-select").trigger("liszt:updated");
                     // }
@@ -145,6 +146,7 @@ var Mainnew = function () {
                     $('#ajaxLoadDiv').html(res);
                     $('.chosen-select').chosen();
                     $('#form4').parsley();
+                    $('html, body').animate({scrollTop: $("#ajaxLoadDiv").offset().top - 50}, 500);
                     //$(".chosen-select").trigger("chosen:updated");
                     //$(".chosen-select").trigger("liszt:updated");
                     // }

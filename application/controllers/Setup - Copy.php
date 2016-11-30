@@ -204,7 +204,7 @@ class Setup extends CI_Controller {
                         if ($value->active == 1) {
                             $active = '<a href="javascript:void(0)" data-tb="pages" data-fn="form-master" data-val="0" data-id="' . $value->pageID . '"  data-col="pageID" role="button" tabindex="0" class="active-deactive-btn text-danger" data-toggle="tooltip" data-placement="top" title data-original-title="Click to De-Active"><i class="fa fa-times-circle"></i></a>&nbsp;';
                         } else {
-                            $active = '<a href="javascript:void(0)" data-tb="pages" data-fn="form-master" data-val="1" data-id="' . $value->pageID . '"  data-col="pageID" role="button" tabindex="0" class="active-deactive-btn text-success data-toggle="tooltip" data-placement="top" title data-original-title="Click to Active"><i class="fa fa-check-square"></i></a>&nbsp;';
+                            $active = '<a href="javascript:void(0)" data-tb="pages" data-fn="form-master" data-val="1" data-id="' . $value->pageID . '"  data-col="pageID" role="button" tabindex="0" class="active-deactive-btn text-success" data-toggle="tooltip" data-placement="top" title data-original-title="Click to Active"><i class="fa fa-check-square"></i></a>&nbsp;';
                         }
                     }
                 }

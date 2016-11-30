@@ -64,6 +64,7 @@
                                                 <th>ID</th>
                                                 <th>Form Name</th>
                                                 <th>Access Role</th>
+                                                <th>State</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
