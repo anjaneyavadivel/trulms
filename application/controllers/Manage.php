@@ -5566,7 +5566,6 @@ class Manage extends CI_Controller {
 			if (is_numeric($this->input->post('name'))) 
 			{
 				$contactID	=	$this->input->post('name');
-				//echo $this->input->post('name');exit;
 			}
 			else
 			{
@@ -5890,7 +5889,6 @@ class Manage extends CI_Controller {
 	{
 		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
 		$result	=	$this->Commonsql_model->select_conginor_contract_mod($this->uri->segment(3));
-		//echo $this->db->last_query();exit;
 		$output = array();$i=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
@@ -5976,11 +5974,6 @@ class Manage extends CI_Controller {
 					$this->session->set_userdata('err','Error Please try again..!');
 					redirect('approve-contract-consignor/'.$val->employetypeID);
 				}
-				/*else
-				{
-					$this->session->set_userdata('err','Error Please try again..!');
-					redirect('approve-contract-consignor/'.$val->employetypeID);
-				}*/
 						
 		}
 	}
