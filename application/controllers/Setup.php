@@ -113,7 +113,7 @@ class Setup extends CI_Controller {
 
             $pageAlterDetailsID = insertTable('tblpagealterdetails', $values, 1, 'pageAlterDetailsID');
             if ($pageID > 0 && $pageAlterDetailsID > 0) {
-                $this->session->set_userdata('suc', 'Form successfully added...!');
+                $this->session->set_userdata('suc', 'Form Master successfully added...!');
                 redirect('add-form-master');
             } else {
                 $this->session->set_userdata('err', 'Error! Please try again..!');
@@ -532,18 +532,6 @@ class Setup extends CI_Controller {
         if (!$this->session->userdata('SESS_userId') || !checkpageaccess('employee-role', 1, 'view')) {
             redirect(base_url() . "login");
         }
-//        if ($_POST) {
-//            $whereData = array('empRoleMapID' => $this->uri->segment(3));
-//            $updateData = array('active' => $this->uri->segment(4));
-//            $upt = updateTable('tblemprolemap', $whereData, $updateData, $isStoreMod = 1, $modIdName = 'empRoleMapID', $modId = $this->uri->segment(3));
-//            if ($upt) {
-//                $this->session->set_userdata('suc', 'Eployee Role Setup status successfully changed...!');
-//                redirect('employee-role');
-//            } else {
-//                $this->session->set_userdata('err', 'Error Please try again..!');
-//                redirect('employee-role');
-//            }
-//        }
 
         $data['pageTitle'] = "Employee Role";
         $data['table'] = "Employee Role";
@@ -670,7 +658,7 @@ class Setup extends CI_Controller {
                 $empRoleMapID = insertTable('tblemprolemap', $values, 1, 'empRoleMapID', 'employee-role');
             }
             if ($empRoleMapID > 0) {
-                $this->session->set_userdata('suc', 'Form successfully added...!');
+                $this->session->set_userdata('suc', 'Eployee Role Setup successfully added...!');
             } else {
                 $this->session->set_userdata('err', 'Error! Please try again..!');
             }
@@ -857,18 +845,6 @@ class Setup extends CI_Controller {
         if (!$this->session->userdata('SESS_userId') || !checkpageaccess('employee-role', 1, 'approve')) {
             redirect(base_url() . "login");
         }
-//        if ($_POST) {
-//            $whereData = array('empRoleMapID' => $this->uri->segment(3));
-//            $updateData = array('active' => $this->uri->segment(4));
-//            $upt = updateTable('tblemprolemap', $whereData, $updateData, $isStoreMod = 1, $modIdName = 'empRoleMapID', $modId = $this->uri->segment(3));
-//            if ($upt) {
-//                $this->session->set_userdata('suc', 'Eployee Role Setup status successfully changed...!');
-//                redirect('approve-employee-role/' . $employee_role_id);
-//            } else {
-//                $this->session->set_userdata('err', 'Error Please try again..!');
-//                redirect('approve-employee-role/' . $employee_role_id);
-//            }
-//        }
 
         $data['pageTitle'] = "Employee Role";
         $data['table'] = "Employee Role";
@@ -925,6 +901,7 @@ class Setup extends CI_Controller {
                 $vaules['name'] = $value->name;
                 $vaules['department'] = $value->department;
                 $vaules['roleName'] = $value->roleName;
+                $vaules['createby'] = $value->empname;
                 if ($value->dbentrystateID == 0) {
                     $vaules['state'] = '<span class="label bg-danger">' . $value->statename . '</span>';
                 } elseif ($value->dbentrystateID == 1) {
@@ -984,7 +961,7 @@ class Setup extends CI_Controller {
             $upt_m = $this->Commonsql_model->updateTable('tblemprolemap_mod', $cond_mod, $values_mod);
             //echo $this->db->last_query();exit;
             if ($upt) {
-                $this->session->set_userdata('suc', 'Approved Successfully  Finished...!');
+                $this->session->set_userdata('suc', 'Eployee Role Setup successfully approved...!');
                 redirect('approve-employee-role/' . $val->empRoleMapID);
             } else {
                 $this->session->set_userdata('err', 'Error Please try again..!');
@@ -1051,18 +1028,6 @@ class Setup extends CI_Controller {
         if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-access', 1, 'view')) {
             redirect(base_url() . "login");
         }
-//        if ($_POST) {
-//            $whereData = array('pageRoleMappingID' => $this->uri->segment(3));
-//            $updateData = array('active' => $this->uri->segment(4));
-//            $upt = updateTable('tblpageroleaccessmap', $whereData, $updateData, $isStoreMod = 1, $modIdName = 'pageRoleMappingID', $modId = $this->uri->segment(3));
-//            if ($upt) {
-//                $this->session->set_userdata('suc', 'Form Access status successfully changed...!');
-//                redirect('form-access');
-//            } else {
-//                $this->session->set_userdata('err', 'Error Please try again..!');
-//                redirect('form-access');
-//            }
-//        }
 
         $data['pageTitle'] = "Form Access";
         $data['table'] = "Form Access";
@@ -1098,7 +1063,7 @@ class Setup extends CI_Controller {
             ),
         );
         $columns = 'tpram.*,tr.roleName,tp.menuCaption,tbldbentrystates.name AS statename';
-        $employeeRolw = get_joins('tblpageroleaccessmap AS tpram', $columns, $joins, $whereData = array(), $orWhereData = array(), $group = array(), $order = 'pageRoleMappingID DESC');
+        $employeeRolw = get_joins('tblpageroleaccessmap AS tpram', $columns, $joins, $whereData, $orWhereData = array(), $group = array(), $order = 'pageRoleMappingID DESC');
 
         if (isset($employeeRolw) && $employeeRolw->num_rows() > 0) {
             foreach ($employeeRolw->result() as $value) {
@@ -1130,7 +1095,7 @@ class Setup extends CI_Controller {
                     $view = "<a href='javascript:void(0);' data-val='" . $value->pageRoleMappingID . "'  data-ur='view-form-access' data-vur='view-form-access' id='editviewcallform-btn' role='button' tabindex='0'  class='editviewcallform-btn edit mr-5'  data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-file-text-o'></i></a>";
                 }
                 if (selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('form-access', 1, 'approve')) {
-                    $APPROVE = "<a href='javascript:void(0);' data-val='" . $value->pageRoleMappingID . "'  data-ur='approve-form-access' id='editviewcallform-btn' role='button' tabindex='0' class='editviewcallform-btn edit mr-5  data-toggle='tooltip' data-placement='top' title data-original-title='Click to View History'><i class='fa fa-clock-o'></i></a>&nbsp;";
+                    $APPROVE = "<a href='" . base_url() . "form-access-history/" . $value->pageRoleMappingID . "'role='button' tabindex='0' class='edit mr-5' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View History'><i class='fa fa-clock-o'></i></a>&nbsp;";
                 }
 
                 if (selfAllowed($pagealterpermission, 'selfEditAllowed', $value->createby) && checkpageaccess('form-access', 1, 'modify')) {
@@ -1190,7 +1155,7 @@ class Setup extends CI_Controller {
                     'deleteEnabled' => $deleteEnabled,
                     'createby' => $this->session->userdata('SESS_userId'),
                     'active' => 1);
-                $pageRoleMappingID = updateTable('tblpageroleaccessmap', $whereData, $updateData, $isStoreMod = 1, $modIdName = 'pageRoleMappingID', $modId = $accessmap->pageRoleMappingID);
+                $pageRoleMappingID = updateTable('tblpageroleaccessmap', $whereData, $updateData, $isStoreMod = 1, $modIdName = 'pageRoleMappingID', $modId = $accessmap->pageRoleMappingID,'form-access');
             } else {
                 $values = array('pageID' => $pageID,
                     'roleID' => $roleID,
@@ -1202,7 +1167,7 @@ class Setup extends CI_Controller {
                     'createby' => $this->session->userdata('SESS_userId'),
                     'active' => 1);
 
-                $pageRoleMappingID = insertTable('tblpageroleaccessmap', $values, 1, 'pageRoleMappingID');
+                $pageRoleMappingID = insertTable('tblpageroleaccessmap', $values, 1, 'pageRoleMappingID','form-access');
             }
 
             if ($pageRoleMappingID > 0) {
@@ -1261,7 +1226,7 @@ class Setup extends CI_Controller {
                     'deleteEnabled' => $deleteEnabled,
                     'createby' => $this->session->userdata('SESS_userId'),
                     'active' => 1);
-                $pageRoleMappingID = updateTable('tblpageroleaccessmap', $whereData, $updateData, $isStoreMod = 1, $modIdName = 'pageRoleMappingID', $modId = $accessmap->pageRoleMappingID);
+                $pageRoleMappingID = updateTable('tblpageroleaccessmap', $whereData, $updateData, $isStoreMod = 1, $modIdName = 'pageRoleMappingID', $modId = $accessmap->pageRoleMappingID,'form-access');
             }
 
             if ($pageRoleMappingID > 0) {
@@ -1305,4 +1270,165 @@ class Setup extends CI_Controller {
         $this->load->view('admin/form_access/' . $viewurl, $data);
     }
 
+    function form_access_history() {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-access', 1, 'view')) {
+            redirect(base_url() . "login");
+        }
+
+        $data['pageTitle'] = "Form Access Setup";
+        $data['table'] = "Form Access Setup";
+        $this->load->view('admin/form_access/form_access_history', $data);
+    }
+
+    function form_access_history_json($mod_id = '') {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-access', 1, 'view') || $mod_id=='') {
+            return FALSE;
+        }
+        $pagealterpermission = pagealterpermission('form-access', $alterPermission = '');
+        $userBranchID = $this->session->userdata('SESS_userBranchID');
+        $output = array();
+        if ($userBranchID == 0) {
+            $whereData = array('tpram.pageRoleMappingID' => $mod_id);
+        } else {
+            $whereData = array('tpram.active' => 1);
+        }
+        $joins = array(
+            array(
+                'table' => 'tblemployee AS tlemp',
+                'condition' => 'tlemp.empID = tpram.createby',
+                'jointype' => 'LEFT'
+            ),
+            array(
+                'table' => 'tblpages AS tp',
+                'condition' => 'tp.pageID = tpram.pageID',
+                'jointype' => 'LEFT'
+            ), array(
+                'table' => 'tblrole AS tr',
+                'condition' => 'tr.roleID = tpram.roleID',
+                'jointype' => 'LEFT'
+            ),
+            array(
+                'table' => 'tbldbentrystates',
+                'condition' => 'tbldbentrystates.dbentrystateID = tpram.dbentrystateID',
+                'jointype' => 'LEFT'
+            ),
+        );
+        $columns = 'tpram.*,tlemp.empname,tr.roleName,tp.menuCaption,tbldbentrystates.name AS statename';
+        $employeeRolw = get_joins('tblpageroleaccessmap_mod AS tpram', $columns, $joins, $whereData, $orWhereData = array(), $group = array(), $order = 'pageRoleMapping_modID DESC');
+
+        if (isset($employeeRolw) && $employeeRolw->num_rows() > 0) {
+            foreach ($employeeRolw->result() as $value) {
+                $vaules = array();
+                $vaules['ID'] = $value->pageRoleMapping_modID;
+                $vaules['createdon'] = date("d-m-Y", strtotime($value->createdon));
+                $vaules['menuCaption'] = $value->menuCaption;
+                $vaules['roleName'] = $value->roleName;
+                $vaules['createby'] = $value->empname;
+                if ($value->dbentrystateID == 0) {
+                    $vaules['state'] = '<span class="label bg-danger">' . $value->statename . '</span>';
+                } elseif ($value->dbentrystateID == 1) {
+                    $vaules['state'] = '<span class="label bg-warning">' . $value->statename . '</span>';
+                } elseif ($value->dbentrystateID == 2) {
+                    $vaules['state'] = '<span class="label bg-info">' . $value->statename . '</span>';
+                } else {
+                    $vaules['state'] = '<span class="label bg-greensea">' . $value->statename . '</span>';
+                }
+                if ($value->active == 1) {
+                    $row = '<span class="label bg-greensea">Active</span>';
+                } else {
+                    $row = '<span class="label bg-red">De-Active</span>';
+                }
+
+                $vaules['active'] = $row;
+                $view = '';
+                $APPROVE = '';
+                $active = '';
+                $edit = '';
+                if (checkpageaccess('form-access', 1, 'view')) {
+                    $view = "<a href='javascript:void(0);' data-val='" . $value->pageRoleMapping_modID . "'  data-ur='view-form-access-history' data-vur='view-form-access-history' id='editviewcallform-btn' role='button' tabindex='0'  class='editviewcallform-btn edit mr-5'  data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-file-text-o'></i></a>";
+                }
+                if (selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('form-access', 1, 'approve')) {
+                    $APPROVE = approve_html("'" . base_url() . "form-access-mod-approve/" . $value->pageRoleMapping_modID . "','2'");
+                }
+                $vaules['Action'] = $view . $edit . $APPROVE . $active;
+
+
+                $output[] = $vaules;
+            }
+        }
+
+        echo json_encode(array('data' => $output), true);
+    }
+    
+    function view_form_access_history() {
+        if (!$this->session->userdata('SESS_userId') || !checkpageaccess('form-access', 1, 'view')) {
+            return FALSE;
+        }
+        $pagealterpermission = pagealterpermission('form-access', $alterPermission = '');
+        $this->form_validation->set_rules('id', 'ID', 'trim|required');
+        $this->form_validation->set_rules('viewurl', 'ViewUrl', 'trim|required');
+        if ($this->form_validation->run($this) == FALSE) {
+            //$this->session->set_userdata('err', validation_errors());
+            echo 'Error! ' . validation_errors();
+            return FALSE;
+        }
+        extract($this->input->post());
+
+        $whereData = array('dbentrystateID  >=' => 2, 'active' => 1);
+        $data['pages'] = selectTable('tblpages', $whereData);
+
+        $whereData = array('dbentrystateID >=' => 2, 'active' => 1, 'roleID !=' => 1);
+        $data['role'] = selectTable('tblrole', $whereData);
+
+        $userBranchID = $this->session->userdata('SESS_userBranchID');
+        if ($userBranchID == 0) {
+            $whereData = array('pageRoleMapping_modID' => $id);
+        } else {
+            $whereData = array('pageRoleMapping_modID' => $id, 'active' => 1);
+        }
+        $data['pageroleaccessmap'] = selectTable('tblpageroleaccessmap_mod', $whereData);
+
+        $data['pageTitle'] = "Form Access Setup";
+        $data['pageRoleMapping_modID'] = $id;
+        $data['pagealterpermission'] = $pagealterpermission;
+        $this->load->view('admin/form_access/' . $viewurl, $data);
+    }
+    function form_access_mod_approve() {
+        if (!$this->session->userdata('SESS_userId')) {
+            redirect(base_url() . "login");
+        }
+        $mod_id = $this->uri->segment(2);
+        $data = $this->Commonsql_model->select('tblpageroleaccessmap_mod', array('pageRoleMapping_modID' => $mod_id));
+        if ($data->num_rows() > 0) {
+            $val = $data->row();
+
+            $values = array('pageRoleMappingID' => $val->pageRoleMappingID,
+                'pageID' => $val->pageID,
+                'roleID' => $val->roleID,
+                'createEnabled' => $val->createEnabled,
+                'viewEnabled' => $val->viewEnabled,
+                'modifyEnabled' => $val->modifyEnabled,
+                'approveEnabled' => $val->approveEnabled,
+                'deleteEnabled' => $val->deleteEnabled,
+                'dbentrystateID' => 3,
+                'approvedby' => $this->session->userdata('SESS_userId'),
+                'approvedon' => date('Y-m-d h:i:s'));
+            $cond = array('pageRoleMappingID' => $val->pageRoleMappingID);
+            $upt = $this->Commonsql_model->updateTable('tblpageroleaccessmap', $cond, $values);
+
+            $values_mod = array('dbentrystateID' => 3,
+                'approvedby' => $this->session->userdata('SESS_userId'),
+                'approvedon' => date('Y-m-d h:i:s'));
+            $cond_mod = array('pageRoleMapping_modID' => $mod_id);
+            $upt_m = $this->Commonsql_model->updateTable('tblpageroleaccessmap_mod', $cond_mod, $values_mod);
+            //echo $this->db->last_query();exit;
+            if ($upt) {
+                $this->session->set_userdata('suc', 'Form Access Setup successfully approved...!');
+                redirect('form-access-history/' . $val->pageRoleMappingID);
+            } else {
+                $this->session->set_userdata('err', 'Error Please try again..!');
+                redirect('form-access-history/' . $val->pageRoleMappingID);
+            }
+        }
+    }
 }

@@ -39,7 +39,7 @@
         <!-- project main css files -->
         <link rel="stylesheet" href="<?= base_url(); ?>assets/css/main.css">
         <!--/ stylesheets -->
-        <?php if ($segment1 == 'add-employee-role' || $segment1=='form-access'){ ?>
+        <?php if ($segment1 == 'add-employee-role' || $segment1=='form-access'||$segment1 == 'form-access-history'){ ?>
             <link rel="stylesheet" href="<?= base_url()?>assets/js/vendor/chosen/chosen.css">
         <?php } ?>
 

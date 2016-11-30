@@ -480,6 +480,7 @@ if (isset($table)) {
         {"data": "name"},
         {"data": "department"},
         {"data": "roleName"},
+        {"data": "createby"},
         {"data": "state"},
         {"data": "active"},
         {"data": "Action"}
@@ -501,6 +502,29 @@ if (isset($table)) {
         {"data": "ID"},
         {"data": "menuCaption"},
         {"data": "roleName"},
+        {"data": "state"},
+        {"data": "active"},
+        {"data": "Action"}
+        ],
+        "aoColumnDefs": [
+        {'bSortable': false, 'aTargets': [5]}
+        ],
+        "order": [[0, 'desc']],
+        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
+        });
+            <?php } else if ($segment1 == 'form-access-history') {
+                ?>
+        var table = $('#basic-usage').DataTable({
+        "ajax": '<?php echo base_url() ?>form-access-history-json/<?php echo $this->uri->segment(2) ?>',
+        "columns": [
+        {"data": "ID"},
+        {"data": "createdon"},
+        {"data": "menuCaption"},
+        {"data": "roleName"},
+        {"data": "createby"},
         {"data": "state"},
         {"data": "active"},
         {"data": "Action"}
@@ -842,7 +866,7 @@ if (isset($table)) {
             });
         </script>
     <?php } ?>
-    <?php if ($segment1 == 'form-access') {
+    <?php if ($segment1 == 'form-access'||$segment1 == 'form-access-history') {
         ?>
         <script src="<?= base_url() ?>/assets/js/vendor/parsley/parsley.min.js"></script>
         <script src="<?= base_url() ?>assets/js/vendor/chosen/chosen.jquery.min.js"></script>

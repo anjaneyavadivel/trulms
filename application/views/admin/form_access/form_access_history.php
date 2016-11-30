@@ -24,11 +24,11 @@
                                <li>
                                     <a href="<?= base_url()?>"><i class="fa fa-home"></i> Home</a>
                                 </li>
-                               <li>
-                                    <a href="<?= base_url()?>employee-role"><?=$pageTitle?></a>
+                                <li>
+                                    <a href="<?= base_url()?>form-access"><?=$pageTitle?></a>
                                 </li>
                                 <li>
-                                    <a href="#"><?=$pageTitle?> History</a>
+                                    <a href="#"><?=$pageTitle?> Setup</a>
                                 </li>
                                 
                             </ul>
@@ -36,13 +36,12 @@
                         </div>
 
                     </div>
-
+<?php $this->load->view('admin/msg')?>
+                            <div class="col-md-12" id="ajaxLoadDiv"></div>
                     <!-- row -->
                     <div class="row">
                         <!-- col -->
                         <div class="col-md-12">
-
-<?php $this->load->view('admin/msg')?>
                             <!-- tile -->
                             <section class="tile">
 
@@ -59,11 +58,8 @@
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Updated On</th>
-                                                <th>Employee Code</th>
-                                                <th>Employee Name</th>
-                                                <th>Designation</th>
-                                                <th>Department</th>
+                                                <th>Updated Date</th>
+                                                <th>Form Name</th>
                                                 <th>Access Role</th>
                                                 <th>Updated By</th>
                                                 <th>State</th>

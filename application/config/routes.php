@@ -97,7 +97,12 @@ $route['form-access-json'] = 'setup/form_access_json';
 $route['add-form-access'] = 'setup/add_form_access';
 $route['view-form-access'] = 'setup/view_form_access';
 $route['edit-form-access/(:num)'] = 'setup/edit_form_access/$1';
-/*******************************************manage Controller*****************************/
+$route['form-access-history/(:num)'] = 'setup/form_access_history/$1';
+$route['form-access-history-json/(:num)'] = 'setup/form_access_history_json/$1';
+//$route['view-form-access-history/(:num)'] = 'setup/view_form_access_history/$1';
+$route['form-access-mod-approve/(:num)/(:num)'] = 'setup/form_access_mod_approve/$1/$2';
+$route['view-form-access-history'] = 'setup/view_form_access_history';
+/*******************************************manage view_form_access_history*****************************/
 
 $route['lock-screeen'] 								=		'manage/lock_screeen';
 
