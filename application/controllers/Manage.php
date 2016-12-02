@@ -171,7 +171,7 @@ class Manage extends CI_Controller {
 			{
 				$edit	=	"";
 			}
-			$vaules['Action'] 			=	$view.$APPROVE.$edit.$active;
+			$vaules['Action'] 			=	$view.$edit.$APPROVE.$active;
 			
 			$output[] =$vaules;
 		}
@@ -619,7 +619,7 @@ class Manage extends CI_Controller {
 			{
 				$edit	=	"";
 			}
-			$vaules['Action'] 			=	$view.$APPROVE.$edit.$active;
+			$vaules['Action'] 			=	$view.$edit.$APPROVE.$active;
 			
 			$output[] =$vaules;
 		}
@@ -1063,7 +1063,7 @@ class Manage extends CI_Controller {
 			{
 				$edit	=	"";
 			}
-			$vaules['Action'] 			=	$view.$APPROVE.$edit.$active;
+			$vaules['Action'] 			=	$view.$edit.$APPROVE.$active;
 			
 			$output[] =$vaules;
 		}
@@ -1510,7 +1510,7 @@ class Manage extends CI_Controller {
 			{
 				$edit	=	"";
 			}
-			$vaules['Action'] 			=	$view.$APPROVE.$edit.$active;
+			$vaules['Action'] 			=	$view.$edit.$APPROVE.$active;
 			
 			$output[] =$vaules;
 		}
@@ -1958,7 +1958,7 @@ class Manage extends CI_Controller {
 			{
 				$edit	=	"";
 			}
-			$vaules['Action'] 			=	$view.$APPROVE.$edit.$active;
+			$vaules['Action'] 			=	$view.$edit.$APPROVE.$active;
 			
 			$output[] =$vaules;
 		}
@@ -2406,7 +2406,7 @@ class Manage extends CI_Controller {
 			{
 				$edit	=	"";
 			}
-			$vaules['Action'] 			=	$view.$Approve.$edit.$active;
+			$vaules['Action'] 			=	$view.$edit.$Approve.$active;
 			
 			$output[] =$vaules;
 		}
@@ -2886,7 +2886,7 @@ class Manage extends CI_Controller {
 			{
 				$edit	=	"";
 			}
-			$vaules['Action'] 			=	$view.$APPROVE.$edit.$active;
+			$vaules['Action'] 			=	$view.$edit.$APPROVE.$active;
 			
 			$output[] =$vaules;
 		}
@@ -2899,7 +2899,7 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
 			
 			$photo=$_FILES['photo']['name'];
@@ -2907,8 +2907,7 @@ class Manage extends CI_Controller {
 			$proof2=$_FILES['proof2']['name'];
 			if($photo!='')
 			{
-				$uploadpath="./uploads/photo/".$photo;
-				move_uploaded_file($_FILES['photo']['tmp_name'], $uploadpath);
+				$this->up_thumb();
 			}
 			if($proof1!='')
 			{
@@ -2920,7 +2919,7 @@ class Manage extends CI_Controller {
 				$uploadpath="./uploads/proof/".$proof1;
 				move_uploaded_file($_FILES['proof2']['tmp_name'], $uploadpath);
 			}
-			$values=array('empCode'						=>	$this->input->post('empCode'),
+			$values=array('empCode'						=>	'',
 							'empname'					=>	$this->input->post('empname'),
 							'branchID'					=>	$this->session->userdata('SESS_userBranchID'),
 							
@@ -2986,15 +2985,14 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
 			$photo=$_FILES['photo']['name'];
 			$proof1=$_FILES['proof1']['name'];
 			$proof2=$_FILES['proof2']['name'];
 			if($photo!='')
 			{
-				$uploadpath="./uploads/photo/".$photo;
-				move_uploaded_file($_FILES['photo']['tmp_name'], $uploadpath);
+				$this->up_thumb();
 			}
 			else
 			{
@@ -3018,7 +3016,7 @@ class Manage extends CI_Controller {
 			{
 				$proof2	=	$this->input->post('proof21');
 			}
-				$values_mod=array('empCode'				=>	$this->input->post('empCode'),
+				$values_mod=array('empCode'				=>	'',
 							'empname'					=>	$this->input->post('empname'),
 							'branchID'					=>	$this->session->userdata('SESS_userBranchID'),
 							
@@ -3103,15 +3101,14 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
 			$photo=$_FILES['photo']['name'];
 			$proof1=$_FILES['proof1']['name'];
 			$proof2=$_FILES['proof2']['name'];
 			if($photo!='')
 			{
-				$uploadpath="./uploads/photo/".$photo;
-				move_uploaded_file($_FILES['photo']['tmp_name'], $uploadpath);
+				$this->up_thumb();
 			}
 			else
 			{
@@ -3135,9 +3132,9 @@ class Manage extends CI_Controller {
 			{
 				$proof2	=	$this->input->post('proof21');
 			}
-				$values_mod=array('empCode'						=>	$this->input->post('empCode'),
+				$values_mod=array('empCode'				=>	'',
 							'empname'					=>	$this->input->post('empname'),
-							'branchID'					=>	$this->input->post('branchID'),
+							'branchID'					=>	$this->session->userdata('SESS_userBranchID'),
 							
 							'dob'						=>	date('Y-m-d',strtotime($this->input->post('dob'))),
 							'sex'						=>	$this->input->post('sex'),
@@ -3231,6 +3228,53 @@ class Manage extends CI_Controller {
 			$this->load->view('admin/employee/approve_employee',$data);
 		}
 	}
+	function up_thumb()
+	{
+		$i=0;
+		if(isset($_FILES['photo']) && $_FILES['photo']['tmp_name'] != '')
+		{
+			$sizes = array();
+			$sizes['400'] = 400;
+			$sizes['200'] = 200;
+			
+			$prefix =date('ymdhis');
+			list(,,$type) = getimagesize($_FILES['photo']['tmp_name']);
+			$type = image_type_to_extension($type);
+			
+			move_uploaded_file($_FILES['photo']['tmp_name'], 'uploads/photo/'.$prefix.$type);
+				
+			$t = 'imagecreatefrom'.$type;
+			$t = str_replace('.','',$t);
+			$img = $t('uploads/photo/'.$prefix.$type);
+			//echo $prefix.'<hr>';
+			foreach($sizes as $k=>$v)
+			{
+				$width = imagesx( $img );
+				$height = imagesy( $img );
+				
+				$new_width = $v;
+				$new_height = floor( $height * ( $v / $width ) );
+				
+				$tmp_img = imagecreatetruecolor( $new_width, $new_height );
+				imagealphablending( $tmp_img, false );
+				imagesavealpha( $tmp_img, true );
+				imagecopyresized( $tmp_img, $img, 0, 0, 0, 0, $new_width, $new_height, $width, $height );
+				
+				$c = 'image'.$type;
+				$c = str_replace('.','',$c);
+				if($k==400)
+				{
+					$c( $tmp_img, 'uploads/photo/medium/'.$prefix.$type );
+				}
+				else
+				{
+					$c( $tmp_img, 'uploads/photo/thumbnail/'.$prefix.$type );
+				}
+			
+			}
+			
+		}
+	}
 	function approve_employee_json()
 	{
 		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
@@ -3298,7 +3342,7 @@ class Manage extends CI_Controller {
 			
 			if($value->active==1)
 			{
-				if($j++==1)
+				if($j++>0)
 				{
 					if(checkpageaccess('employee',1,'approve'))
 					{
@@ -3429,6 +3473,47 @@ class Manage extends CI_Controller {
 							
 						
 		}
+	}
+	function profile_crop()
+	{
+		if($_POST)
+		{
+				$values =json_decode($this->input->post('putData'),true);
+				$this->load->helper('path');
+                $source_image = realpath(APPPATH . '../uploads/photo/baby.jpg' );
+				//echo $source_image.'<br>';
+                //crop it
+                $data['x'] = $values['x'];
+                $data['y'] = $values['y'];
+                $data['w'] = $values['width'];
+                $data['h'] = $values['height'];
+                $this->load->library('image_lib');
+                $config = array();
+                $config['image_library'] = 'gd2';
+                $config['source_image'] = $source_image; //full path for the source image
+                $config['maintain_ratio'] = FALSE;
+                $config['width'] = $data['w'];
+                $config['height'] = $data['h'];
+                $config['x_axis'] = $data['x'];
+                $config['y_axis'] = $data['y'];
+                //Initialize the new config
+                $this->image_lib->initialize($config);
+                //Rotate the image
+                if (!$this->image_lib->crop()) 
+				{
+                    $this->session->set_userdata('err',$this->image_lib->display_errors());
+					redirect('profile_crop');
+                }
+				else
+				{
+					$this->session->set_userdata('suc','Crop Successfully  Finished...!');
+					redirect('profile_crop');
+				}
+				
+               
+		}
+		$data['pageTitle']	=	"Profile Crop";
+		$this->load->view('admin/employee/img_crop',$data);
 	}
 	/***********************************************************************************************************************************/
 	function driver()
@@ -3561,7 +3646,7 @@ class Manage extends CI_Controller {
 				$edit	=	"";
 			}
 				
-			$vaules['Action'] 			=	$view.$APPROVE.$edit.$active;
+			$vaules['Action'] 			=	$view.$edit.$APPROVE.$active;
 			
 			$output[] =$vaules;
 		}
@@ -4113,7 +4198,7 @@ class Manage extends CI_Controller {
 				$edit	=	"";
 			}
 				
-			$vaules['Action'] 			=	$view.$APPROVE.$edit.$active;
+			$vaules['Action'] 			=	$view.$edit.$APPROVE.$active;
 			
 			$output[] =$vaules;
 		}
@@ -4591,7 +4676,7 @@ class Manage extends CI_Controller {
 				$edit	=	"";
 			}
 				
-			$vaules['Action'] 			=	$view.$APPROVE.$edit.$active;
+			$vaules['Action'] 			=	$view.$edit.$APPROVE.$active;
 			
 			$output[] =$vaules;
 		}
@@ -5064,7 +5149,7 @@ class Manage extends CI_Controller {
 				$edit	=	"";
 			}
 				
-			$vaules['Action'] 			=	$view.$Approve.$edit.$active;
+			$vaules['Action'] 			=	$view.$edit.$Approve.$active;
 			
 			$output[] =$vaules;
 		}
@@ -5548,7 +5633,7 @@ class Manage extends CI_Controller {
 				$edit	=	"";
 			}
 				
-			$vaules['Action'] 			=	$view.$Approve.$edit.$active;
+			$vaules['Action'] 			=	$view.$edit.$Approve.$active;
 			
 			$output[] =$vaules;
 		}

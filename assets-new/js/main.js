@@ -47,7 +47,7 @@ $.validator.addMethod("loginRegex", function(value, element)
 {
    return this.optional(element) || /^[\w\d\s-]+$/i.test(value);
    //return this.optional(element) || /^[a-z0-9\\-]+$/i.test(value); -----for login script
-}, "Department must contain only letters, numbers, or dashes.");
+}, "Name must contain only letters, numbers, or dashes.");
 var vaildation	=	'_vaildation';	
  $("#add_depatment").validate({
 			rules: {
@@ -336,6 +336,114 @@ var vaildation	=	'_vaildation';
 					required:"This field is required",
 					remote:"Already Exists this one..!",
 				},
+			},
+			 submitHandler: function (form) {
+				$('#form_submiting').trigger('click');
+				 return false;
+			 }
+		});
+		$("#add_employee").validate({
+			rules: {
+				empname: {
+					required: true,
+					maxlength: 29,
+					loginRegex:true,
+				},
+				sex:{
+					required: true,
+				},
+				fathername:{
+					required: true,
+					maxlength: 29,
+					loginRegex:true,
+				},
+				deptid:{
+					required: true,
+				},
+				designation:{
+					required: true,
+				},
+				employeetype:{
+					required: true,
+				},
+				mobile:{
+					required: true,
+					maxlength: 13,
+				},
+				city:{
+					required: true,
+					maxlength: 50,
+				},
+				state:{
+					required: true,
+					maxlength: 50,
+				},
+				country:{
+					required: true,
+					maxlength: 50,
+				},
+				joiningdate:{
+					required: true,
+				},
+				reportingto:{
+					required: true,
+				},
+				photo:{
+					required: true,
+				},
+			},
+			 submitHandler: function (form) {
+				$('#form_submiting').trigger('click');
+				 return false;
+			 }
+		});
+		$("#edit_employee").validate({
+			rules: {
+				empname: {
+					required: true,
+					maxlength: 29,
+					loginRegex:true,
+				},
+				sex:{
+					required: true,
+				},
+				fathername:{
+					required: true,
+					maxlength: 29,
+					loginRegex:true,
+				},
+				deptid:{
+					required: true,
+				},
+				designation:{
+					required: true,
+				},
+				employeetype:{
+					required: true,
+				},
+				mobile:{
+					required: true,
+					maxlength: 13,
+				},
+				city:{
+					required: true,
+					maxlength: 50,
+				},
+				state:{
+					required: true,
+					maxlength: 50,
+				},
+				country:{
+					required: true,
+					maxlength: 50,
+				},
+				joiningdate:{
+					required: true,
+				},
+				reportingto:{
+					required: true,
+				},
+				
 			},
 			 submitHandler: function (form) {
 				$('#form_submiting').trigger('click');

@@ -21,6 +21,7 @@
         <link rel="stylesheet" href="<?= base_url(); ?>assets/css/vendor/animate.css">
         <link rel="stylesheet" href="<?= base_url(); ?>assets/css/vendor/font-awesome.min.css">
         <link rel="stylesheet" href="<?= base_url(); ?>assets/js/vendor/animsition/css/animsition.min.css">
+        <link rel="stylesheet" href="<?=base_url()?>assets/js/vendor/cropper/cropper.min.css">
         <?php
         $segment1 = $this->uri->segment(1);
         if (isset($table)) {
