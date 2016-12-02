@@ -72,7 +72,7 @@
                                 <div class="tile-footer text-right bg-tr-black lter dvd dvd-top">
                                     <!-- SUBMIT BUTTON -->
                                    <a  href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="active_deactive_class('<?= base_url()?>department','3')" class="btn btn-warning"><i class="fa fa-hand-o-left"></i> Go Back</a>
-                                    <input type="submit" class="btn bg-greensea" id="add_form" value="Add Department" >
+                                    <input type="submit" class="btn bg-greensea" id="add_form" value="Add Employee" >
                                    
                                    <a  href="javascript::" data-toggle="modal" data-target="#form-submit" id="form_submiting" data-options="splash-2 splash-ef-11" role="button" tabindex="0"  class="btn btn-greensea" style="display:none">Submit</a>
                                     <input type="submit" class="btn btn-default" id="new_button" onclick="form_submit('add_depatment')" value="Submit" style="display:none" >

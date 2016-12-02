@@ -84,7 +84,7 @@
                                     <input type="submit" class="btn bg-greensea" id="add_form" value="Update" >
                                    
                                    <a  href="javascript::" data-toggle="modal" data-target="#form-submit" id="form_submiting" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="form_action_msg(1)"  class="btn btn-greensea" style="display:none">Submit</a>
-                                    <input type="submit" class="btn btn-default" id="new_button" onclick="form_submit('edit_depatment')" value="Submit" style="display:none" >
+                                    <input type="submit" class="btn btn-default" id="new_button" onclick="form_submit('edit_employee')" value="Submit" style="display:none" >
                                 </div>
                                 <!-- /tile footer -->
 
