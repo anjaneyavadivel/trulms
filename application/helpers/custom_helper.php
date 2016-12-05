@@ -904,7 +904,7 @@ if (!function_exists('edit_html')) {
 if (!function_exists('view_html')) {
 
     function view_html($link_and_id) {
-        return "<a href='" . base_url() . $link_and_id . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong mr-5 ' class='edit' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-file-text-o'></i></a>";
+        return "<a href='" . base_url() . $link_and_id . "'role='button' tabindex='0' class='edit text-primary text-uppercase text-strong mr-5 ' class='edit' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-eye'></i></a>";
     }
 
 }
