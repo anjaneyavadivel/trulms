@@ -545,6 +545,17 @@ class Commonsql_model extends CI_Model {
 		$query	=	$this->db->get();
 		return $query;
 	}
+	public function where_in($tableName, $whereData = array(), $showField = array('*'), $inField = '', $inWhereData = array())
+	{
+        $this->db->select($showField);
+        $this->db->from($tableName);
+        $this->db->where_in($inField, $inWhereData);
+		if(!empty($whereData))
+		$this->db->where($whereData);
+        $query = $this->db->get();
+
+        return $query;
+    }
 
 }
 

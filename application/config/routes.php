@@ -181,6 +181,7 @@ $route['approve-consignor/([a-zA-Z0-9---_%])+/([a-zA-Z0-9---_%])+'] 		=		'manage
 $route['employee'] 									=		'manage/employee';
 $route['profile_crop'] 								=		'manage/profile_crop';
 $route['add_employee'] 								=		'manage/add_employee';
+$route['reporting_to'] 								=		'manage/reporting_to';
 $route['edit_employee/([a-zA-Z0-9---_%])+'] 		=		'manage/edit_employee/$1';
 $route['view_employee/([a-zA-Z0-9---_%])+'] 		=		'manage/view_employee/$1';
 $route['approve_employee/([a-zA-Z0-9---_%])+'] 		=		'manage/approve_employee/$1';

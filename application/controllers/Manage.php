@@ -2975,8 +2975,47 @@ class Manage extends CI_Controller {
 		$data['desig']		=	$this->Commonsql_model->select('tbldesignation',array('dbentrystateID >'=>STATEID,'active'=>1));
 		$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID >'=>STATEID,'active'=>1));
 		$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID >'=>STATEID,'active'=>1));
+		$data['role']		=	$this->Commonsql_model->select('tblrole',array('dbentrystateID >'=>STATEID,'active'=>1));
 		$data['pageTitle']	=	"Add employee";
 		$this->load->view('admin/employee/add_employee',$data);
+	}
+	function reporting_to()
+	{
+		$id			=	$this->input->post('id');
+		$role		=	$this->Commonsql_model->select('tblemprolemap',array('dbentrystateID >'=>STATEID,'active'=>1,'roleID'=>$id));
+		$emplyoee_id=	array();
+		if($role->num_rows()>0)
+		{
+			foreach($role->result() as $rr)
+			{
+				$emplyoee_id[]	=	$rr->empID;
+			}
+		}
+		if(!empty($emplyoee_id))
+		{
+			$emplyoee	=	$this->Commonsql_model->where_in('tblemployee', array('branchID'=>$this->session->userdata('SESS_userBranchID'),'dbentrystateID >'=>STATEID,'active'=>1),'empID,empname', 'empID', $emplyoee_id);
+			
+			?>
+            <option value="">-- Select Employee --</option>
+            <?php
+			//echo $this->db->last_query();exit;
+			if($emplyoee->num_rows()>0)
+			{
+				foreach($emplyoee->result() as $emp)
+				{
+					?>
+                      <option value="<?=$emp->empID?>"><?=$emp->empname?></option>
+                    <?php
+				}
+			}
+		}
+		else
+		{
+			?>
+            <option value="">-- Select Employee --</option>
+            <?php
+		}
+		
 	}
 	function edit_employee()
 	{
@@ -3077,6 +3116,7 @@ class Manage extends CI_Controller {
 		$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID >'=>STATEID,'active'=>1));
 		$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID >'=>STATEID,'active'=>1));
 		$data['view']		=	$this->Commonsql_model->select('tblemployee',array('empID'=>$this->uri->segment(2)));
+		$data['role']		=	$this->Commonsql_model->select('tblrole',array('dbentrystateID >'=>STATEID,'active'=>1));
 		$this->load->view('admin/employee/edit_employee',$data);
 	}
 	function view_employee()
@@ -3092,6 +3132,7 @@ class Manage extends CI_Controller {
 		$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID >'=>STATEID,'active'=>1));
 		$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID >'=>STATEID,'active'=>1));
 		$data['view']		=	$this->Commonsql_model->select('tblemployee',array('empID'=>$this->uri->segment(2)));
+		$data['role']		=	$this->Commonsql_model->select('tblrole',array('dbentrystateID >'=>STATEID,'active'=>1));
 		$this->load->view('admin/employee/view_employee',$data);
 	}
 	function approve_employee()
@@ -3214,6 +3255,7 @@ class Manage extends CI_Controller {
 			$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID >'=>STATEID,'active'=>1));
 			$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID >'=>STATEID,'active'=>1));
 			$data['view']		=	$this->Commonsql_model->select('tblemployee_mod',array('emp_modID'=>$this->uri->segment(3)));
+			$data['role']		=	$this->Commonsql_model->select('tblrole',array('dbentrystateID >'=>STATEID,'active'=>1));
 			$this->load->view('admin/employee/approve_employee',$data);
 		}
 		else
@@ -3225,6 +3267,7 @@ class Manage extends CI_Controller {
 			$data['etype']		=	$this->Commonsql_model->select('tblemployetypes',array('dbentrystateID >'=>STATEID,'active'=>1));
 			$data['branch']		=	$this->Commonsql_model->select('tblbranch',array('dbentrystateID >'=>STATEID,'active'=>1));
 			$data['view']		=	$this->Commonsql_model->select('tblemployee',array('empID'=>$this->uri->segment(2)));
+			$data['role']		=	$this->Commonsql_model->select('tblrole',array('dbentrystateID >'=>STATEID,'active'=>1));
 			$this->load->view('admin/employee/approve_employee',$data);
 		}
 	}
@@ -3237,7 +3280,7 @@ class Manage extends CI_Controller {
 			$sizes['400'] = 400;
 			$sizes['200'] = 200;
 			
-			$prefix =date('ymdhis');
+			$prefix =$_FILES['photo']['name'];
 			list(,,$type) = getimagesize($_FILES['photo']['tmp_name']);
 			$type = image_type_to_extension($type);
 			
@@ -3246,7 +3289,6 @@ class Manage extends CI_Controller {
 			$t = 'imagecreatefrom'.$type;
 			$t = str_replace('.','',$t);
 			$img = $t('uploads/photo/'.$prefix.$type);
-			//echo $prefix.'<hr>';
 			foreach($sizes as $k=>$v)
 			{
 				$width = imagesx( $img );

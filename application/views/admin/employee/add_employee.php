@@ -208,20 +208,51 @@
                 </ul>
               </div>
               
-              
-               <div class="form-group col-md-3">
-                <label for="name">Reporting to <span class="required">*</span></label>
-                <input type="text" name="reportingto" id="reportingto" required class="form-control" placeholder=" Enter Reporting to" >
-                <ul class="parsley-errors-list" id="parsley-id-8057">
-                </ul>
-              </div>
-               <div class="form-group col-md-3">
+              <div class="form-group col-md-3">
                 <label for="contactemail">Remarks </label>
                 <input type="text" name="remarks" id="remarks" placeholder=" Enter Remarks" class="form-control" >
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
-             
+              </div>
+              <div class="row">
+               <div class="form-group col-md-3">
+                <label for="name">Reporting to (ROLE)<span class="required">*</span></label>
+                <select  name="role" id="role" required class="form-control" onchange="employe_role(this.value)" >
+                <option value="">-- Select Role --</option>
+             <?php if(isset($role) && $role->num_rows()>0)
+				foreach($role->result() as $roles)
+				{
+					?>
+                    <option value="<?=$roles->roleID?>"><?=$roles->roleName?></option>
+                    <?php
+				}
+				?>
+                </select>
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+              
+              <div class="form-group col-md-3">
+                <label for="name">Reporting to <span class="required">*</span></label>
+                <select  name="reportingto" id="reportingto" required class="form-control" >
+                <option value="">-- Select Employee --</option>
+            
+                </select>
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+               
+             <div class="form-group col-md-3">
+                <label for="contactemail">Releaving Date </label>
+               
+                 <input type="text" name="releavingdate" id="releavingdate" class="form-control datepicker "  placeholder="MM-DD-YYYY" data-format="L" >
+                <ul class="parsley-errors-list" id="parsley-id-1328">
+                </ul>
+              </div>
+              </div>
+              <div class="row">
+              
                <div class="form-group col-md-3">
                 <label for="name">Photo <span class="required">*</span></label>
                 <input type="file" name="photo" id="photo" class="form-control" required  placeholder=" Enter Mail Personal ">
@@ -240,22 +271,9 @@
                 <ul class="parsley-errors-list" id="parsley-id-1328">
                 </ul>
               </div>
-            
-              
-            </div>
-            <div class="row">
-            <div class="form-group col-md-3">
-                <label for="contactemail">Releaving Date </label>
-               
-                 <input type="text" name="releavingdate" id="releavingdate" class="form-control datepicker "  placeholder="MM-DD-YYYY" data-format="L" >
-                <ul class="parsley-errors-list" id="parsley-id-1328">
-                </ul>
-              </div>
-             
-             
               
               <!-- tile footer -->
-            <div class="tile-footer text-right bg-tr-black lter col-md-9 dvd dvd-top"> 
+            <div class="tile-footer text-right bg-tr-black lter col-md-3 dvd dvd-top"> 
               <!-- SUBMIT BUTTON -->
               <!-- <a  href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="active_deactive_class('<?= base_url()?>employee','3')" class="btn btn-warning"><i class="fa fa-hand-o-left"></i> Go Back</a>-->
                <a  href="<?= base_url()?>employee"  class="btn btn-warning"><i class="fa fa-hand-o-left"></i> Go Back</a>
@@ -289,3 +307,17 @@
 </div>
 <!--/ Application Content -->
 <?php $this->load->view('admin/footer')?>
+<script>
+function employe_role(id)
+{
+	$.ajax({
+		type: 'POST',
+		data:"id="+id,
+		url:"<?=base_url()?>reporting_to",
+		success:function(html)
+		{
+			$('#reportingto').html(html);
+		}
+	});
+}
+</script>

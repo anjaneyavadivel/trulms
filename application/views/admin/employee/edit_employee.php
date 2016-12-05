@@ -31,6 +31,7 @@
 
                         <!-- row -->
                         <div class="row">
+                         <?php $this->load->view('admin/msg')?>
 
                             <!-- col -->
                             <div class="col-md-3">
@@ -47,13 +48,13 @@
 											if (@getimagesize($img_url))
 											{
 												?>
-												 <img class="img-circle" src="<?=$img_url?>" alt="profile photo">
+												<a href="<?=base_url()?>profile_crop" title="Crop Image"> <img class="img-circle" src="<?=$img_url?>" alt="profile photo"></a>
 												 <?php
 											}
 											else
 											{
 												?>
-												 <img class="img-circle" src="<?=base_url()?>uploads/photo/no_image.jpg" alt="profile photo">
+												 <img class="img-circle" src="<?=base_url()?>uploads/photo/no_image.jpg" title="No Image" alt="profile photo">
 												<?php 
 											}
 											?>
@@ -129,7 +130,8 @@
 
                                                     <div class="wrap-reset">
 
-                                                        <form class="profile-settings">
+                                                        <?=form_open_multipart(base_url().'edit_employee/'.$v->empID,array('id'=>'edit_employee','role'=>'form'));?>
+                                                          <input type="hidden" name="empID" id="empID"  value="<?=$v->empID?>">
 
                                                             <div class="row">
                                                                 <div class="form-group col-md-12 legend">
@@ -311,19 +313,100 @@
                                                             </ul>
                                                           </div>
                                                           
-                                                          
-                                                           <div class="form-group col-md-3">
-                                                            <label for="name">Reporting to <span class="required">*</span></label>
-                                                            <input type="text" name="reportingto" id="reportingto" required class="form-control" placeholder=" Enter Reporting to"   value="<?=$v->reportingto?>">
-                                                            <ul class="parsley-errors-list" id="parsley-id-8057">
-                                                            </ul>
-                                                          </div>
-                                                           <div class="form-group col-md-3">
+                                                          <div class="form-group col-md-3">
                                                             <label for="contactemail">Remarks </label>
                                                             <input type="text" name="remarks" id="remarks" placeholder=" Enter Remarks" class="form-control"  value="<?=$v->remarks?>">
                                                             <ul class="parsley-errors-list" id="parsley-id-1328">
                                                             </ul>
                                                           </div>
+                                                          
+                                                          <?php 
+														 
+														  $id	=	$v->reportingto;
+		$roled		=	$this->Commonsql_model->select('tblemprolemap',array('dbentrystateID >'=>STATEID,'active'=>1));
+		$emplyoee_id=	array();
+		if($roled->num_rows()>0)
+		{
+			foreach($roled->result() as $rr)
+			{
+				$emplyoee_id[]	=	$rr->empID;
+			}
+		}
+		$emp_role=0;
+		if(!empty($emplyoee_id))
+		{
+			$emplyoee	=	$this->Commonsql_model->where_in('tblemployee', array('branchID'=>$this->session->userdata('SESS_userBranchID'),'dbentrystateID >'=>STATEID,'active'=>1),'empID,empname', 'empID', $emplyoee_id);
+			if($emplyoee->num_rows()>0)
+					{
+						foreach($emplyoee->result() as $emp)
+						{
+							 if($v->reportingto==$emp->empID)
+							 {
+								 $emp_role=$emp->empID;
+							 }
+						}
+					}
+		}
+														  
+  ?>
+                                                             <div class="form-group col-md-3">
+                <label for="name">Reporting to (ROLE)<span class="required">*</span></label>
+                <select  name="role" id="role" required class="form-control" onchange="employe_role(this.value)" >
+                <option value="">-- Select Role --</option>
+             <?php if(isset($role) && $role->num_rows()>0)
+				foreach($role->result() as $roles)
+				{
+					?>
+                    <option value="<?=$roles->roleID?>"<?php if($roles->roleID==$emp_role){?> selected="selected"<?php }?>><?=$roles->roleName?></option>
+                    <?php
+				}
+				?>
+                </select>
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+              
+          		<div class="form-group col-md-3">
+                <label for="name">Reporting to <span class="required">*</span></label>
+                <select  name="reportingto" id="reportingto" required class="form-control" >
+                <?php
+				if(!empty($emplyoee_id))
+				{
+					?>
+					<option value="">-- Select Employee --</option>
+					<?php
+					if($emplyoee->num_rows()>0)
+					{
+						foreach($emplyoee->result() as $emp)
+						{
+							?>
+							  <option value="<?=$emp->empID?>"<?php if($v->reportingto==$emp->empID){?> selected="selected"<?php }?>><?=$emp->empname?></option>
+							<?php
+						}
+					}
+				}
+				else
+				{
+					?>
+					<option value="">-- Select Employee --</option>
+					<?php
+				}
+				?>
+            
+                </select>
+                <ul class="parsley-errors-list" id="parsley-id-8057">
+                </ul>
+              </div>
+                                                          <div class="form-group col-md-3">
+                                                            <label for="contactemail">Releaving Date </label>
+                                                           
+                                                             <input type="text" name="releavingdate" id="releavingdate" class="form-control datepicker "  placeholder="MM-DD-YYYY" data-format="L"  value="<?=date('m-d-Y',strtotime($v->releavingdate))?>">
+                                                            <ul class="parsley-errors-list" id="parsley-id-1328">
+                                                            </ul>
+                                                          </div>
+                                                          </div>
+                                                          <div class="row">
+                                                           
                                                           <div class="form-group col-md-3">
                                                             <label for="name">Photo <span class="required">*</span></label>
                                                             <input type="file" name="photo" id="photo" class="form-control"  placeholder=" Enter Mail Personal " >
@@ -346,44 +429,46 @@
                                                             </ul>
                                                           </div>
                                                           
-                                                          
-                                                        
-                                                          
                                                         </div>
                                                         <div class="row">
-                                                        <div class="form-group col-md-3">
-                                                            <label for="contactemail">Releaving Date </label>
-                                                           
-                                                             <input type="text" name="releavingdate" id="releavingdate" class="form-control datepicker "  placeholder="MM-DD-YYYY" data-format="L"  value="<?=date('m-d-Y',strtotime($v->releavingdate))?>">
-                                                            <ul class="parsley-errors-list" id="parsley-id-1328">
-                                                            </ul>
-                                                          </div>
+                                                        
                                                          
                                                          <div class="form-group col-md-3">
                                                           
                                                             
-                                                            <img src="<?=base_url()?>uploads/photo/<?=$v->photo?>" height="70" width="70" />
+                                                            <img src="<?=base_url()?>uploads/photo/thumbnail/<?=$v->photo?>" height="70" width="70" />
                                                             <ul class="parsley-errors-list" id="parsley-id-8057">
                                                             </ul>
                                                           </div>
                                                           <div class="form-group col-md-3">
                                                            
                                                             
-                                                            <img src="<?=base_url()?>uploads/proof/<?=$v->proof1?>" height="70" width="70" />
+                                                            <img src="<?=base_url()?>uploads/proof/thumbnail/<?=$v->proof1?>" height="70" width="70" />
                                                             <ul class="parsley-errors-list" id="parsley-id-8057">
                                                             </ul>
                                                           </div>
                                                           <div class="form-group col-md-3">
                                                            
-                                                            <img src="<?=base_url()?>uploads/proof/<?=$v->proof2?>" height="70" width="70" />
+                                                            <img src="<?=base_url()?>uploads/proof/thumbnail/<?=$v->proof2?>" height="70" width="70" />
                                                             <ul class="parsley-errors-list" id="parsley-id-1328">
                                                             </ul>
                                                           </div>
+                                                          </div>
+                                                           <div class="row">
+                                                          <div class="tile-footer text-right bg-tr-black lter col-md-12 dvd dvd-top"> 
+              <!-- SUBMIT BUTTON -->
+              <!-- <a  href="javascript::" data-toggle="modal" data-target="#active-deactive1" data-options="splash-2 splash-ef-11" role="button" tabindex="0" onclick="active_deactive_class('<?= base_url()?>employee','3')" class="btn btn-warning"><i class="fa fa-hand-o-left"></i> Go Back</a>-->
+               <a  href="<?= base_url()?>employee"  class="btn btn-warning"><i class="fa fa-hand-o-left"></i> Go Back</a>
+               <input type="submit" class="btn bg-greensea" id="add_form" value="Update Department" >
+                                   
+                                   <a  href="javascript::" data-toggle="modal" data-target="#form-submit" id="form_submiting" data-options="splash-2 splash-ef-11" role="button" tabindex="0"  class="btn btn-greensea" style="display:none">Submit</a>
+                                    <input type="submit" class="btn btn-default" id="new_button" onclick="form_submit('edit_employee')" value="Submit" style="display:none" >
+            </div>
                                                           
                                                           <!-- tile footer -->
                                                         </div>
 
-                                                        </form>
+                                                         <?php echo form_close(); ?> 
 
                                                     </div>
 
@@ -421,3 +506,17 @@
 </div>
 <!--/ Application Content -->
 <?php $this->load->view('admin/footer')?>
+<script>
+function employe_role(id)
+{
+	$.ajax({
+		type: 'POST',
+		data:"id="+id,
+		url:"<?=base_url()?>reporting_to",
+		success:function(html)
+		{
+			$('#reportingto').html(html);
+		}
+	});
+}
+</script>
