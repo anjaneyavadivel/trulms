@@ -48,7 +48,11 @@
                                 <!-- tile header -->
                                 <div class="tile-header bg-greensea  dvd dvd-btm">
                                     <h1 class="custom-font"><strong><?=$pageTitle?></strong> History</h1>
-                                </div>
+                                       <ul class="controls">
+                                        
+                                        <li><a href="<?= base_url()?>form-access" title="Add <?=$pageTitle?>"  role="button" tabindex="0" ><i class="fa fa-hand-o-left"></i> Go Back</a></li>
+                                    </ul>
+          </div>
                                 <!-- /tile header -->
 
                                 <!-- tile body -->

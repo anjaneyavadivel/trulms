@@ -49,7 +49,11 @@
                     <!-- tile header -->
                     <div class="tile-header bg-greensea dvd dvd-btm">
                         <h1 class="custom-font"><strong><?= $pageTitle ?></strong> History</h1>
-
+                 <ul class="controls">
+                                        
+                                        <li><a href="<?= base_url()?>form-master" title="Add <?=$pageTitle?>"  role="button" tabindex="0" ><i class="fa fa-hand-o-left"></i> Go Back</a></li>
+                                    </ul>
+                   
                     </div>
                     <!-- /tile header -->
 
@@ -84,7 +88,11 @@
                     <!-- tile header -->
                     <div class="tile-header bg-greensea dvd dvd-btm">
                         <h1 class="custom-font"><strong><?= $pageTitle1 ?></strong> History</h1>
-
+       <ul class="controls">
+                                        
+                                        <li><a href="<?= base_url()?>form-master" title="Add <?=$pageTitle?>"  role="button" tabindex="0" ><i class="fa fa-hand-o-left"></i> Go Back</a></li>
+                                    </ul>
+          
                     </div>
                     <!-- /tile header -->
 

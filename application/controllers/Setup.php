@@ -185,7 +185,7 @@ class Setup extends CI_Controller {
                 $active = '';
                 $edit = '';
                 if (checkpageaccess('form-master', 1, 'view')) {
-                    $view = "<a href='" . base_url() . "view-form-master/" . $value->pageID . "'role='button' tabindex='0' class='edit' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-file-text-o'></i></a>&nbsp;";
+                    $view = "<a href='" . base_url() . "view-form-master/" . $value->pageID . "'role='button' tabindex='0' class='edit' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-eye'></i></a>&nbsp;";
                 }
                 if (selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('form-master', 1, 'approve')) {
                     $APPROVE = "<a href='" . base_url() . "approve-form-master-list/" . $value->pageID . "'role='button' tabindex='0' class='edit' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View History'><i class='fa fa-clock-o'></i></a>&nbsp;";
@@ -609,7 +609,7 @@ class Setup extends CI_Controller {
                 $active = '';
                 $edit = '';
                 if (checkpageaccess('employee-role', 1, 'view')) {
-                    $view = "<a href='" . base_url() . "view-employee-role/" . $value->empRoleMapID . "'role='button' tabindex='0' class='edit' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-file-text-o'></i></a>&nbsp;";
+                    $view = "<a href='" . base_url() . "view-employee-role/" . $value->empRoleMapID . "'role='button' tabindex='0' class='edit' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-eye'></i></a>&nbsp;";
                 }
                 if (selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('employee-role', 1, 'approve')) {
                     $APPROVE = "<a href='" . base_url() . "approve-employee-role/" . $value->empRoleMapID . "'role='button' tabindex='0' class='edit' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View History'><i class='fa fa-clock-o'></i></a>&nbsp;";
@@ -923,7 +923,7 @@ class Setup extends CI_Controller {
                 $active = '';
                 $edit = '';
                 if (checkpageaccess('employee-role', 1, 'view')) {
-                    $view = "<a href='" . base_url() . "view-employee-role-history/" . $value->empRoleMap_modID . "'role='button' tabindex='0' class='edit mr-5' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-file-text-o'></i></a>&nbsp;";
+                    $view = "<a href='" . base_url() . "view-employee-role-history/" . $value->empRoleMap_modID . "'role='button' tabindex='0' class='edit mr-5' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-eye'></i></a>&nbsp;";
                 }
                 if (selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('employee-role', 1, 'approve')) {
                     $APPROVE = approve_html("'" . base_url() . "employee-role-mod-approve/" . $value->empRoleMap_modID . "','2'");
@@ -1092,7 +1092,7 @@ class Setup extends CI_Controller {
                 $active = '';
                 $edit = '';
                 if (checkpageaccess('form-access', 1, 'view')) {
-                    $view = "<a href='javascript:void(0);' data-val='" . $value->pageRoleMappingID . "'  data-ur='view-form-access' data-vur='view-form-access' id='editviewcallform-btn' role='button' tabindex='0'  class='editviewcallform-btn edit mr-5'  data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-file-text-o'></i></a>";
+                    $view = "<a href='javascript:void(0);' data-val='" . $value->pageRoleMappingID . "'  data-ur='view-form-access' data-vur='view-form-access' id='editviewcallform-btn' role='button' tabindex='0'  class='editviewcallform-btn edit mr-5'  data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-eye'></i></a>";
                 }
                 if (selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('form-access', 1, 'approve')) {
                     $APPROVE = "<a href='" . base_url() . "form-access-history/" . $value->pageRoleMappingID . "'role='button' tabindex='0' class='edit mr-5' data-toggle='tooltip' data-placement='top' title data-original-title='Click to View History'><i class='fa fa-clock-o'></i></a>&nbsp;";
@@ -1345,7 +1345,7 @@ class Setup extends CI_Controller {
                 $active = '';
                 $edit = '';
                 if (checkpageaccess('form-access', 1, 'view')) {
-                    $view = "<a href='javascript:void(0);' data-val='" . $value->pageRoleMapping_modID . "'  data-ur='view-form-access-history' data-vur='view-form-access-history' id='editviewcallform-btn' role='button' tabindex='0'  class='editviewcallform-btn edit mr-5'  data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-file-text-o'></i></a>";
+                    $view = "<a href='javascript:void(0);' data-val='" . $value->pageRoleMapping_modID . "'  data-ur='view-form-access-history' data-vur='view-form-access-history' id='editviewcallform-btn' role='button' tabindex='0'  class='editviewcallform-btn edit mr-5'  data-toggle='tooltip' data-placement='top' title data-original-title='Click to View'><i class='fa fa-eye'></i></a>";
                 }
                 if (selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('form-access', 1, 'approve')) {
                     $APPROVE = approve_html("'" . base_url() . "form-access-mod-approve/" . $value->pageRoleMapping_modID . "','2'");
