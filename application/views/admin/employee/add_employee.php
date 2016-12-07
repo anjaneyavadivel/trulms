@@ -38,7 +38,7 @@
             <div class="row">
               
               <div class="form-group col-md-3">
-                <label for="name">Name <span class="required">*</span> </label>
+                <label for="name">Employee Name <span class="required">*</span> </label>
                 <input type="text" name="empname" id="empname" class="form-control" placeholder="Enter Employee Name " required="" >
                 <ul class="parsley-errors-list" id="parsley-id-8057">
                 </ul>

@@ -2901,7 +2901,24 @@ class Manage extends CI_Controller {
 		}
 		if($_POST)
 		{
-			
+            $this->form_validation->set_rules('empname', 'Employee Name', 'trim|required');
+			$this->form_validation->set_rules('sex', 'Gender', 'trim|required');
+			$this->form_validation->set_rules('fathername', 'Father name', 'trim|required');
+			$this->form_validation->set_rules('deptid', 'Department', 'trim|required');
+			$this->form_validation->set_rules('designation', 'Designation', 'trim|required');
+			$this->form_validation->set_rules('employeetype', 'Employee type', 'trim|required');
+			$this->form_validation->set_rules('mobile', 'Mobile Number', 'trim|required');
+			$this->form_validation->set_rules('empname', 'Company Name', 'trim|required');
+			$this->form_validation->set_rules('addressline1', 'Address 1', 'trim|required');
+			$this->form_validation->set_rules('city', 'City', 'trim|required');
+			$this->form_validation->set_rules('state', 'state', 'trim|required');
+			$this->form_validation->set_rules('country', 'Country', 'trim|required');
+			$this->form_validation->set_rules('joiningdate', 'Joining Date', 'trim|required');
+			$this->form_validation->set_rules('reportingto', 'Reporting to', 'trim|required');
+            if ($this->form_validation->run($this) == FALSE) {
+                $this->session->set_userdata('err', validation_errors());
+                redirect('add_employee');
+            }
 			$photo=$_FILES['photo']['name'];
 			$proof1=$_FILES['proof1']['name'];
 			$proof2=$_FILES['proof2']['name'];
@@ -3026,6 +3043,24 @@ class Manage extends CI_Controller {
 		}
 		if($_POST)
 		{
+			$this->form_validation->set_rules('empname', 'Employee Name', 'trim|required');
+			$this->form_validation->set_rules('sex', 'Gender', 'trim|required');
+			$this->form_validation->set_rules('fathername', 'Father name', 'trim|required');
+			$this->form_validation->set_rules('deptid', 'Department', 'trim|required');
+			$this->form_validation->set_rules('designation', 'Designation', 'trim|required');
+			$this->form_validation->set_rules('employeetype', 'Employee type', 'trim|required');
+			$this->form_validation->set_rules('mobile', 'Mobile Number', 'trim|required');
+			$this->form_validation->set_rules('empname', 'Company Name', 'trim|required');
+			$this->form_validation->set_rules('addressline1', 'Address 1', 'trim|required');
+			$this->form_validation->set_rules('city', 'City', 'trim|required');
+			$this->form_validation->set_rules('state', 'state', 'trim|required');
+			$this->form_validation->set_rules('country', 'Country', 'trim|required');
+			$this->form_validation->set_rules('joiningdate', 'Joining Date', 'trim|required');
+			$this->form_validation->set_rules('reportingto', 'Reporting to', 'trim|required');
+            if ($this->form_validation->run($this) == FALSE) {
+                $this->session->set_userdata('err', validation_errors());
+                redirect('edit_employee/'.$this->input->post('empID'));
+            }
 			$photo=$_FILES['photo']['name'];
 			$proof1=$_FILES['proof1']['name'];
 			$proof2=$_FILES['proof2']['name'];
@@ -3144,6 +3179,24 @@ class Manage extends CI_Controller {
 		}
 		if($_POST)
 		{
+			$this->form_validation->set_rules('empname', 'Employee Name', 'trim|required');
+			$this->form_validation->set_rules('sex', 'Gender', 'trim|required');
+			$this->form_validation->set_rules('fathername', 'Father name', 'trim|required');
+			$this->form_validation->set_rules('deptid', 'Department', 'trim|required');
+			$this->form_validation->set_rules('designation', 'Designation', 'trim|required');
+			$this->form_validation->set_rules('employeetype', 'Employee type', 'trim|required');
+			$this->form_validation->set_rules('mobile', 'Mobile Number', 'trim|required');
+			$this->form_validation->set_rules('empname', 'Company Name', 'trim|required');
+			$this->form_validation->set_rules('addressline1', 'Address 1', 'trim|required');
+			$this->form_validation->set_rules('city', 'City', 'trim|required');
+			$this->form_validation->set_rules('state', 'state', 'trim|required');
+			$this->form_validation->set_rules('country', 'Country', 'trim|required');
+			$this->form_validation->set_rules('joiningdate', 'Joining Date', 'trim|required');
+			$this->form_validation->set_rules('reportingto', 'Reporting to', 'trim|required');
+            if ($this->form_validation->run($this) == FALSE) {
+                $this->session->set_userdata('err', validation_errors());
+                redirect('approve_employee/'.$this->input->post('empID'));
+            }
 			$photo=$_FILES['photo']['name'];
 			$proof1=$_FILES['proof1']['name'];
 			$proof2=$_FILES['proof2']['name'];
@@ -3701,14 +3754,30 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
-			
+			$this->form_validation->set_rules('dlno', 'Lisense No', 'trim|required');
+			$this->form_validation->set_rules('sex', 'Gender', 'trim|required');
+			/*contact details*/
+			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+            $this->form_validation->set_rules('companyName', 'Company Name', 'trim|required');
+			$this->form_validation->set_rules('addressline1', 'Address 1', 'trim|required');
+			$this->form_validation->set_rules('city', 'City', 'trim|required');
+			$this->form_validation->set_rules('state', 'state', 'trim|required');
+			$this->form_validation->set_rules('country', 'Country', 'trim|required');
+            if ($this->form_validation->run($this) == FALSE) {
+                $this->session->set_userdata('err', validation_errors());
+                redirect('add_driver');
+            }
 			$dlImage=$_FILES['dlImage']['name'];
 			if($dlImage!='')
 			{
 				$uploadpath="./uploads/photo/".$dlImage;
 				move_uploaded_file($_FILES['dlImage']['tmp_name'], $uploadpath);
+			}
+			else
+			{
+				$dlImage='';
 			}
 			
 			$contact_values=array('name'		=>	$this->input->post('name'),
@@ -3764,8 +3833,21 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
+			$this->form_validation->set_rules('dlno', 'Lisense No', 'trim|required');
+			$this->form_validation->set_rules('sex', 'Gender', 'trim|required');
+			/*contact details*/
+			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+            $this->form_validation->set_rules('companyName', 'Company Name', 'trim|required');
+			$this->form_validation->set_rules('addressline1', 'Address 1', 'trim|required');
+			$this->form_validation->set_rules('city', 'City', 'trim|required');
+			$this->form_validation->set_rules('state', 'state', 'trim|required');
+			$this->form_validation->set_rules('country', 'Country', 'trim|required');
+            if ($this->form_validation->run($this) == FALSE) {
+                $this->session->set_userdata('err', validation_errors());
+                redirect('edit_driver/'.$this->input->post('driverID'));
+            }
 			$dlImage=$_FILES['dlImage']['name'];
 			if($dlImage!='')
 			{
@@ -3849,8 +3931,21 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
+			$this->form_validation->set_rules('dlno', 'Lisense No', 'trim|required');
+			$this->form_validation->set_rules('sex', 'Gender', 'trim|required');
+			/*contact details*/
+			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+            $this->form_validation->set_rules('companyName', 'Company Name', 'trim|required');
+			$this->form_validation->set_rules('addressline1', 'Address 1', 'trim|required');
+			$this->form_validation->set_rules('city', 'City', 'trim|required');
+			$this->form_validation->set_rules('state', 'state', 'trim|required');
+			$this->form_validation->set_rules('country', 'Country', 'trim|required');
+            if ($this->form_validation->run($this) == FALSE) {
+                $this->session->set_userdata('err', validation_errors());
+                redirect('approve_driver/'.$this->input->post('driverID'));
+            }
 			$dlImage=$_FILES['dlImage']['name'];
 			if($dlImage!='')
 			{
@@ -3988,7 +4083,7 @@ class Manage extends CI_Controller {
 			
 			if($value->active==1)
 			{
-				if($j++==1)
+				if($j>0)
 				{
 					if(checkpageaccess('driver',1,'approve'))
 					{
@@ -4253,8 +4348,19 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
+			/*contact details*/
+			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+            $this->form_validation->set_rules('companyName', 'Company Name', 'trim|required');
+			$this->form_validation->set_rules('addressline1', 'Address 1', 'trim|required');
+			$this->form_validation->set_rules('city', 'City', 'trim|required');
+			$this->form_validation->set_rules('state', 'state', 'trim|required');
+			$this->form_validation->set_rules('country', 'Country', 'trim|required');
+            if ($this->form_validation->run($this) == FALSE) {
+                $this->session->set_userdata('err', validation_errors());
+                redirect('add_vehicleowner');
+            }
 			//echo "hi";exit;
 			$contact_values=array('name'		=>	$this->input->post('name'),
 								'companyName'		=>	$this->input->post('companyName'),
@@ -4305,8 +4411,19 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
+			/*contact details*/
+			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+            $this->form_validation->set_rules('companyName', 'Company Name', 'trim|required');
+			$this->form_validation->set_rules('addressline1', 'Address 1', 'trim|required');
+			$this->form_validation->set_rules('city', 'City', 'trim|required');
+			$this->form_validation->set_rules('state', 'state', 'trim|required');
+			$this->form_validation->set_rules('country', 'Country', 'trim|required');
+            if ($this->form_validation->run($this) == FALSE) {
+                $this->session->set_userdata('err', validation_errors());
+                redirect('edit_vehicleowner/'.$this->input->post('ownerID'));
+            }
 				$contact_values=array('name'		=>	$this->input->post('name'),
 								'companyName'		=>	$this->input->post('companyName'),
 								'addressline1'		=>	$this->input->post('addressline1'),
@@ -4371,8 +4488,19 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
+			/*contact details*/
+			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+            $this->form_validation->set_rules('companyName', 'Company Name', 'trim|required');
+			$this->form_validation->set_rules('addressline1', 'Address 1', 'trim|required');
+			$this->form_validation->set_rules('city', 'City', 'trim|required');
+			$this->form_validation->set_rules('state', 'state', 'trim|required');
+			$this->form_validation->set_rules('country', 'Country', 'trim|required');
+            if ($this->form_validation->run($this) == FALSE) {
+                $this->session->set_userdata('err', validation_errors());
+                redirect('approve_vehicleowner/'.$this->input->post('ownerID'));
+            }
 			
 				$contact_values=array('name'		=>	$this->input->post('name'),
 								'companyName'		=>	$this->input->post('companyName'),
@@ -4731,8 +4859,19 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
+			/*contact details*/
+			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+            $this->form_validation->set_rules('companyName', 'Company Name', 'trim|required');
+			$this->form_validation->set_rules('addressline1', 'Address 1', 'trim|required');
+			$this->form_validation->set_rules('city', 'City', 'trim|required');
+			$this->form_validation->set_rules('state', 'state', 'trim|required');
+			$this->form_validation->set_rules('country', 'Country', 'trim|required');
+            if ($this->form_validation->run($this) == FALSE) {
+                $this->session->set_userdata('err', validation_errors());
+                redirect('add_vehicleagent');
+            }
 			//echo "hi";exit;
 			$contact_values=array('name'		=>	$this->input->post('name'),
 								'companyName'		=>	$this->input->post('companyName'),
@@ -4763,13 +4902,13 @@ class Manage extends CI_Controller {
 			if($query)
 			{
 				$this->session->set_userdata('suc','Vehicle Owner Successfully  Added...!');
-				redirect('manage/add_vehicleagent');
+				redirect('add_vehicleagent');
 				
 			}
 			else
 			{
 				$this->session->set_userdata('err','Error Please try again..!');
-				redirect('manage/add_vehicleagent');
+				redirect('add_vehicleagent');
 			}
 		}
 		$data['pageTitle']	=	"Add Designation";
@@ -4782,8 +4921,19 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
+			/*contact details*/
+			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+            $this->form_validation->set_rules('companyName', 'Company Name', 'trim|required');
+			$this->form_validation->set_rules('addressline1', 'Address 1', 'trim|required');
+			$this->form_validation->set_rules('city', 'City', 'trim|required');
+			$this->form_validation->set_rules('state', 'state', 'trim|required');
+			$this->form_validation->set_rules('country', 'Country', 'trim|required');
+            if ($this->form_validation->run($this) == FALSE) {
+                $this->session->set_userdata('err', validation_errors());
+                redirect('edit_vehicleagent/'.$this->input->post('agentID'));
+            }
 				$contact_values=array('name'		=>	$this->input->post('name'),
 								'companyName'		=>	$this->input->post('companyName'),
 								'addressline1'		=>	$this->input->post('addressline1'),
@@ -4847,8 +4997,19 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
+			/*contact details*/
+			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+            $this->form_validation->set_rules('companyName', 'Company Name', 'trim|required');
+			$this->form_validation->set_rules('addressline1', 'Address 1', 'trim|required');
+			$this->form_validation->set_rules('city', 'City', 'trim|required');
+			$this->form_validation->set_rules('state', 'state', 'trim|required');
+			$this->form_validation->set_rules('country', 'Country', 'trim|required');
+            if ($this->form_validation->run($this) == FALSE) {
+                $this->session->set_userdata('err', validation_errors());
+                redirect('approve_vehicleagent/'.$this->input->post('agentID'));
+            }
 			
 				$contact_values=array('name'		=>	$this->input->post('name'),
 								'companyName'		=>	$this->input->post('companyName'),
@@ -5204,8 +5365,19 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
+			/*contact details*/
+			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+            $this->form_validation->set_rules('companyName', 'Company Name', 'trim|required');
+			$this->form_validation->set_rules('addressline1', 'Address 1', 'trim|required');
+			$this->form_validation->set_rules('city', 'City', 'trim|required');
+			$this->form_validation->set_rules('state', 'state', 'trim|required');
+			$this->form_validation->set_rules('country', 'Country', 'trim|required');
+            if ($this->form_validation->run($this) == FALSE) {
+                $this->session->set_userdata('err', validation_errors());
+                redirect('add-consignor');
+            }
 			
 				$contact_values=array('name'		=>	$this->input->post('name'),
 								'companyName'		=>	$this->input->post('companyName'),
@@ -5264,8 +5436,19 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
+			/*contact details*/
+			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+            $this->form_validation->set_rules('companyName', 'Company Name', 'trim|required');
+			$this->form_validation->set_rules('addressline1', 'Address 1', 'trim|required');
+			$this->form_validation->set_rules('city', 'City', 'trim|required');
+			$this->form_validation->set_rules('state', 'state', 'trim|required');
+			$this->form_validation->set_rules('country', 'Country', 'trim|required');
+            if ($this->form_validation->run($this) == FALSE) {
+                $this->session->set_userdata('err', validation_errors());
+                redirect('edit-consignor/'.$this->input->post('consignorID'));
+            }
 			$whereData	= array('consignorID'=>$this->input->post('consignorID'));
 			$contac_wh	= array('contactID'=>$this->input->post('contactID'));
 			$contact_values=array('name'		=>	$this->input->post('name'),
@@ -5327,8 +5510,19 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
+			/*contact details*/
+			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+            $this->form_validation->set_rules('companyName', 'Company Name', 'trim|required');
+			$this->form_validation->set_rules('addressline1', 'Address 1', 'trim|required');
+			$this->form_validation->set_rules('city', 'City', 'trim|required');
+			$this->form_validation->set_rules('state', 'state', 'trim|required');
+			$this->form_validation->set_rules('country', 'Country', 'trim|required');
+            if ($this->form_validation->run($this) == FALSE) {
+                $this->session->set_userdata('err', validation_errors());
+                redirect('approve-consignor/'.$this->input->post('consignorID'));
+            }
 			$whereData	= array('consignorID'=>$this->input->post('consignorID'));
 			$contac_wh	= array('contactID'=>$this->input->post('contactID'));
 			$contact_values=array('name'		=>	$this->input->post('name'),

@@ -450,4 +450,84 @@ var vaildation	=	'_vaildation';
 				 return false;
 			 }
 		});
+		$("#add_driver").validate({
+			rules: {
+				dlno: {
+					required: true,
+					maxlength: 49,
+					loginRegex:true,
+				},
+				sex:{
+					required: true,
+				},
+				/*contact details*/
+				name:{
+					required: true,
+					maxlength: 49,
+					loginRegex:true,
+				},
+				companyName:{
+					required: true,
+					maxlength: 49,
+					loginRegex:true,
+				},
+				addressline1:{
+					required: true,
+					maxlength: 99,
+					loginRegex:true,
+				},
+				city:{
+					required: true,
+					maxlength: 50,
+				},
+				state:{
+					required: true,
+					maxlength: 50,
+				},
+				country:{
+					required: true,
+					maxlength: 50,
+				},
+			},
+			 submitHandler: function (form) {
+				$('#form_submiting').trigger('click');
+				 return false;
+			 }
+		});
+		$("#add_vehicleowner").validate({
+			rules: {
+				/*contact details*/
+				name:{
+					required: true,
+					maxlength: 49,
+					loginRegex:true,
+				},
+				companyName:{
+					required: true,
+					maxlength: 49,
+					loginRegex:true,
+				},
+				addressline1:{
+					required: true,
+					maxlength: 99,
+					loginRegex:true,
+				},
+				city:{
+					required: true,
+					maxlength: 50,
+				},
+				state:{
+					required: true,
+					maxlength: 50,
+				},
+				country:{
+					required: true,
+					maxlength: 50,
+				},
+			},
+			 submitHandler: function (form) {
+				$('#form_submiting').trigger('click');
+				 return false;
+			 }
+		});
 });
