@@ -432,6 +432,7 @@
                                             <thead>
                                             <tr>
                                                <th>ID</th>
+                                               <th>Updated Date</th>
                                                 <th>Code</th>
                                                 <th>Name</th>
                                                 <th>Qualification</th>
@@ -445,7 +446,7 @@
                                                 <th>Joining Date</th>
                                                 
                                                 <th>Releaving Date</th>
-                                               
+                                               <th>Updated By</th>
                                                <th>State</th>
                                                 <th>Status</th>
                                                 <th>Action</th>

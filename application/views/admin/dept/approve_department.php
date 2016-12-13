@@ -68,8 +68,10 @@
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
+                                                <th>Updated Date</th>
                                                 <th>Department</th>
                                                 <th>Description</th>
+                                                <th>Updated By</th>
                                                 <th>State</th>
                                                 <th>Status</th>
                                                 <th>Action</th>

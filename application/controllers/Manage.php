@@ -364,7 +364,7 @@ class Manage extends CI_Controller {
 	function approve_department_json()
 	{
 		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
-		$result	=	$this->Commonsql_model->select_desc_state('tbldept_mod',array('deptID'=>$this->uri->segment(3)),'dept_modID');
+		$result	=	$this->Commonsql_model->select_desc_state('tbldept_mod',array('a.deptID'=>$this->uri->segment(3)),'dept_modID');
 		//echo $this->db->last_query();
 		$output = array();$i=1;$j=1;
 		foreach($result->result() as  $value) {
@@ -398,8 +398,9 @@ class Manage extends CI_Controller {
 			{
 				$row = '<span class="label bg-red">De-Active</span>';
 			}
-			$vaules['active'] = $row;
-			
+			$vaules['active']	= $row;
+			$vaules['upt_date'] =	date('d-m-Y',strtotime($value->createdate));
+			$vaules['upt_by'] 	=	$value->empname;
 			if($value->active==1)
 			{
 				if($j++==0)
@@ -846,7 +847,8 @@ class Manage extends CI_Controller {
 				$row = '<span class="label bg-red">De-Active</span>';
 			}
 			$vaules['active'] = $row;
-			
+			$vaules['upt_date'] =	date('d-m-Y',strtotime($value->createdate));
+			$vaules['upt_by'] 	=	$value->empname;
 			if($value->active==1)
 			{
 				if($j++==1)
@@ -1291,7 +1293,8 @@ class Manage extends CI_Controller {
 				$row = '<span class="label bg-red">De-Active</span>';
 			}
 			$vaules['active'] = $row;
-			
+			$vaules['upt_date'] =	date('d-m-Y',strtotime($value->createdate));
+			$vaules['upt_by'] 	=	$value->empname;
 			if($value->active==1)
 			{
 				if($j++==1)
@@ -1738,7 +1741,8 @@ class Manage extends CI_Controller {
 				$row = '<span class="label bg-red">De-Active</span>';
 			}
 			$vaules['active'] = $row;
-			
+			$vaules['upt_date'] =	date('d-m-Y',strtotime($value->createdate));
+			$vaules['upt_by'] 	=	$value->empname;
 			if($value->active==1)
 			{
 				if($j++>0)
@@ -2186,7 +2190,8 @@ class Manage extends CI_Controller {
 				$row = '<span class="label bg-red">De-Active</span>';
 			}
 			$vaules['active'] = $row;
-			
+			$vaules['upt_date'] =	date('d-m-Y',strtotime($value->createdate));
+			$vaules['upt_by'] 	=	$value->empname;
 			if($value->active==1)
 			{
 				if($j++>0)
@@ -2601,7 +2606,7 @@ class Manage extends CI_Controller {
 	{
 		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
 		$result	=	$this->Commonsql_model->select_desc_state('tblemployetypes_mod',array('employetypeID'=>$this->uri->segment(3)),'employetype_modID');
-		//echo $this->db->last_query();
+		//echo $this->db->last_query();exit;
 		$output = array();
 		$i=1;$j=1;
 		foreach($result->result() as  $value) {
@@ -2636,7 +2641,8 @@ class Manage extends CI_Controller {
 				$row = '<span class="label bg-red">De-Active</span>';
 			}
 			$vaules['active'] = $row;
-			
+			$vaules['upt_date'] =	date('d-m-Y',strtotime($value->createdon));
+			$vaules['upt_by'] 	=	$value->empname;
 			if($value->active==1)
 			{
 				if($j++>0)
@@ -3374,7 +3380,7 @@ class Manage extends CI_Controller {
 	{
 		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
 		$result	=	$this->Commonsql_model->select_all_employee_mod_state($this->uri->segment(3));
-		//echo $this->db->last_query();
+		//echo $this->db->last_query();exit;
 		$output = array();$i=1;$j=1;
 		foreach($result->result() as  $value) {
 			$vaules=array();
@@ -3390,6 +3396,8 @@ class Manage extends CI_Controller {
 			$vaules['mailoffice'] 		= 	$value->mailoffice;
 			$vaules['remarks'] 			= 	$value->remarks;
 			
+			$vaules['upt_date'] =	date('d-m-Y',strtotime($value->createdon));
+			$vaules['upt_by'] 	=	$value->empname;
 			
 			if('1970-01-01'==$value->joiningdate || $value->joiningdate=='')
 			{
@@ -4054,6 +4062,10 @@ class Manage extends CI_Controller {
 			
 			$vaules['dlno'] 			= 	$value->dlno;
 			$vaules['dlexpirydt'] 		= 	date('m-d-Y',strtotime($value->dlexpirydt));
+			
+			$vaules['upt_date'] =	date('d-m-Y',strtotime($value->createdon));
+			$vaules['upt_by'] 	=	$value->empname;
+			
 			if ($value->dbentrystateID == 0) 
 			{
 				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->sta_name.'</span>';
@@ -5611,7 +5623,8 @@ class Manage extends CI_Controller {
 			$vaules['ID']			=	$value->consignor_modID;
 			$vaules['name'] 		= 	$value->name;
 			
-			
+			$vaules['upt_date'] =	date('d-m-Y',strtotime($value->createdon));
+			$vaules['upt_by'] 	=	$value->empname;
 			if ($value->dbentrystateID == 0) 
 			{
 				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->sta_name.'</span>';

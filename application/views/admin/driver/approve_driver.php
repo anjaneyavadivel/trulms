@@ -252,13 +252,14 @@
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
+                                                 <th>Updated Date</th>
                                                 <th>Name</th>
                                                 <th>Address</th>
                                                 
                                                 <th>Phone no</th>
                                                 <th>Driving Liscense</th>
                                                 <th>Expiry Date</th>
-                                                
+                                                <th>Updated By</th>
                                                 <th>State</th>
                                                 <th>Status</th>
                                                 <th>Action</th>

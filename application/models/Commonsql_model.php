@@ -335,9 +335,10 @@ class Commonsql_model extends CI_Model {
 	}
 	function select_desc_state($table,$condtion,$feild)
 	{
-		$this->db->select('a.*,b.name');
+		$this->db->select('a.*,b.name,c.empname');
 		$this->db->from($table.' as a');
 		$this->db->join('tbldbentrystates as b','a.dbentrystateID=b.dbentrystateID','inner');
+		$this->db->join('tblemployee as c','a.createby=c.empID','inner');
 		$this->db->where($condtion);
 		$this->db->order_by($feild,'desc');
 		$query	=	$this->db->get();
@@ -345,9 +346,10 @@ class Commonsql_model extends CI_Model {
 	}
 	function select_desc_state_confilct($table,$condtion,$feild)
 	{
-		$this->db->select('a.*,b.name as state_names');
+		$this->db->select('a.*,b.name as state_names,c.empname');
 		$this->db->from($table.' as a');
 		$this->db->join('tbldbentrystates as b','a.dbentrystateID=b.dbentrystateID','inner');
+		$this->db->join('tblemployee as c','a.createby=c.empID','inner');
 		$this->db->where($condtion);
 		$this->db->order_by($feild,'desc');
 		$query	=	$this->db->get();
@@ -360,6 +362,7 @@ class Commonsql_model extends CI_Model {
 		$this->db->join('tbldept as b','a.deptID=b.deptID','inner');
 		$this->db->join('tbldesignation as c','a.designation=c.desigID','inner');
 		$this->db->join('tbldbentrystates as d','a.dbentrystateID=d.dbentrystateID','inner');
+		if($this->session->userdata('SESS_userBranchID')>0)
 		$this->db->where('a.branchID',$this->session->userdata('SESS_userBranchID'));
 		$this->db->order_by('empID','desc');
 		$query	=	$this->db->get();
@@ -367,11 +370,13 @@ class Commonsql_model extends CI_Model {
 	}
 	function select_all_employee_mod_state($id)
 	{
-		$this->db->select('a.emp_modID,a.empID,a.empCode,a.empname,a.qualification,a.mobile,a.mailoffice,a.remarks,a.active,a.joiningdate,a.releavingdate,a.dbentrystateID,b.department,c.name,d.name as sta_name');
+		$this->db->select('a.emp_modID,a.createdon,a.empID,a.empCode,a.empname,a.qualification,a.mobile,a.mailoffice,a.remarks,a.active,a.joiningdate,a.releavingdate,a.dbentrystateID,b.department,c.name,d.name as sta_name,f.empname');
 		$this->db->from('tblemployee_mod as a');
 		$this->db->join('tbldept as b','a.deptID=b.deptID','inner');
 		$this->db->join('tbldesignation as c','a.designation=c.desigID','inner');
 		$this->db->join('tbldbentrystates as d','a.dbentrystateID=d.dbentrystateID','inner');
+		$this->db->join('tblemployee as f','a.createby=f.empID','left');
+		if($this->session->userdata('SESS_userBranchID')>0)
 		$this->db->where('a.branchID',$this->session->userdata('SESS_userBranchID'));
 		$this->db->where('a.empID',$id);
 		$this->db->order_by('emp_modID','desc');
@@ -390,10 +395,11 @@ class Commonsql_model extends CI_Model {
 	}
 	function select_all_driver_mod_state($id)
 	{
-		$this->db->select('a.driver_modID,a.driverID,a.dlno,a.dlexpirydt,a.active,a.dbentrystateID,b.name,b.phone1,b.addressline1,d.name as sta_name');
+		$this->db->select('a.driver_modID,a.createdon,a.driverID,a.dlno,a.dlexpirydt,a.active,a.dbentrystateID,b.name,b.phone1,b.addressline1,d.name as sta_name,f.empname');
 		$this->db->from('tbldriver_mod as a');
 		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
 		$this->db->join('tbldbentrystates as d','a.dbentrystateID=d.dbentrystateID','inner');
+		$this->db->join('tblemployee as f','a.createby=f.empID','left');
 		$this->db->where('a.driverID',$id);
 		$this->db->order_by('driver_modID','desc');
 		$query	=	$this->db->get();
@@ -486,10 +492,11 @@ class Commonsql_model extends CI_Model {
 	}
 	function select_all_consigonr_mod_state($id)
 	{
-		$this->db->select('a.*,b.name,b.companyName,b.phone1,d.name as sta_name');
+		$this->db->select('a.*,b.name,b.companyName,b.phone1,d.name as sta_name,f.empname');
 		$this->db->from('tblconsignor_mod as a');
 		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
 		$this->db->join('tbldbentrystates as d','a.dbentrystateID=d.dbentrystateID','inner');
+		$this->db->join('tblemployee as f','a.createby=f.empID','left');
 		$this->db->where('a.consignorID',$id);
 		$this->db->order_by('a.consignor_modID','desc');
 		$query	=	$this->db->get();

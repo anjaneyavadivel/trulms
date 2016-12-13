@@ -254,8 +254,10 @@ if (isset($table)) {
                     "ajax": '<?php echo base_url() ?>manage/approve_department_json/<?php echo $this->uri->segment(2) ?>',
                         "columns": [
                             {"data": "ID"},
+							{"data": "upt_date"},
                             {"data": "name"},
                             {"data": "description"},
+							{"data": "upt_by"},
                             {"data": "state"},
                             {"data": "active"},
                             {"data": "Action"}
@@ -275,8 +277,10 @@ if (isset($table)) {
                 "ajax": '<?php echo base_url() ?>manage/approve_designation_json/<?php echo $this->uri->segment(2) ?>',
                             "columns": [
                                 {"data": "ID"},
+								{"data": "upt_date"},
                                 {"data": "name"},
                                 {"data": "description"},
+								{"data": "upt_by"},
                                 {"data": "state"},
                                 {"data": "active"},
                                 {"data": "Action"}
@@ -296,8 +300,10 @@ if (isset($table)) {
                 "ajax": '<?php echo base_url() ?>manage/approve_role_json/<?php echo $this->uri->segment(2) ?>',
                             "columns": [
                                 {"data": "ID"},
+								{"data": "upt_date"},
                                 {"data": "name"},
                                 {"data": "description"},
+								{"data": "upt_by"},
                                 {"data": "state"},
                                 {"data": "active"},
                                 {"data": "Action"}
@@ -317,8 +323,10 @@ if (isset($table)) {
             "ajax": '<?php echo base_url() ?>manage/approve_payment_mode_json/<?php echo $this->uri->segment(2) ?>',
                         "columns": [
                             {"data": "ID"},
+							{"data": "upt_date"},
                             {"data": "name"},
                             {"data": "description"},
+							{"data": "upt_by"},
                             {"data": "state"},
                             {"data": "active"},
                             {"data": "Action"}
@@ -339,8 +347,10 @@ if (isset($table)) {
                     "ajax": '<?php echo base_url() ?>manage/approve_payment_status_json/<?php echo $this->uri->segment(2) ?>',
                     "columns": [
                     {"data": "ID"},
+					{"data": "upt_date"},
                     {"data": "name"},
                     {"data": "description"},
+					{"data": "upt_by"},
                     {"data": "state"},
                     {"data": "active"},
                     {"data": "Action"}
@@ -360,8 +370,10 @@ if (isset($table)) {
         "ajax": '<?php echo base_url() ?>manage/approve_employee_types_json/<?php echo $this->uri->segment(2) ?>',
         "columns": [
         {"data": "ID"},
+		{"data": "upt_date"},
         {"data": "name"},
         {"data": "description"},
+		{"data": "upt_by"},
         {"data": "state"},
         {"data": "active"},
         {"data": "Action"}
@@ -571,6 +583,7 @@ if (isset($table)) {
         "ajax": '<?php echo base_url() ?>manage/employee_json',
         "columns": [
         {"data": "ID"},
+		
         {"data": "empCode"},
         {"data": "empname"},
         {"data": "qualification"},
@@ -600,6 +613,7 @@ if (isset($table)) {
         "ajax": '<?php echo base_url() ?>manage/approve_employee_json/<?php echo $this->uri->segment(2) ?>',
         "columns": [
         {"data": "ID"},
+		{"data": "upt_date"},
         {"data": "empCode"},
         {"data": "empname"},
         {"data": "qualification"},
@@ -610,6 +624,7 @@ if (isset($table)) {
         {"data": "remarks"},
         {"data": "joiningdate"},
         {"data": "releavingdate"},
+		{"data": "upt_by"},
         {"data": "state"},
         {"data": "active"},
         {"data": "Action"}
@@ -653,11 +668,13 @@ if (isset($table)) {
         "ajax": '<?php echo base_url() ?>manage/approve_driver_json/<?php echo $this->uri->segment(2) ?>',
         "columns": [
         {"data": "ID"},
+		{"data": "upt_date"},
         {"data": "name"},
         {"data": "addressline1"},
         {"data": "phone1"},
         {"data": "dlno"},
         {"data": "dlexpirydt"},
+		{"data": "upt_by"},
         {"data": "state"},
         {"data": "active"},
         {"data": "Action"}
@@ -766,7 +783,9 @@ if (isset($table)) {
         "ajax": '<?php echo base_url() ?>manage/approve_consignor_json/<?php echo $this->uri->segment(2) ?>',
                 "columns": [
                     {"data": "ID"},
+					{"data": "upt_date"},
                     {"data": "name"},
+					{"data": "upt_by"},
                     {"data": "state"},
                     {"data": "active"},
                     {"data": "Action"}
