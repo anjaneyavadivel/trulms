@@ -2479,7 +2479,7 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
 				$this->form_validation->set_rules('typename', 'Employee Types Name', 'trim|required');
 				if ($this->form_validation->run($this) == FALSE) {
@@ -2493,8 +2493,8 @@ class Manage extends CI_Controller {
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
-			$whereData	=	array('employetypeID'	=>	$this->input->post('employetypeID'),'employee_types');
-			$query		= updateTable('tblemployetypes', $whereData, $values , 1,'employetypeID', $this->input->post('employetypeID'));
+			$whereData	=	array('employetypeID'	=>	$this->input->post('employetypeID'));
+			$query		= updateTable('tblemployetypes', $whereData, $values , 1,'employetypeID', $this->input->post('employetypeID'),'employee_types');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Employee Types Successfully  Updated...!');
@@ -2529,7 +2529,7 @@ class Manage extends CI_Controller {
 		{
 			redirect();
 		}
-		if($this->input->post('save'))
+		if($_POST)
 		{
 			
 			$check 	=	$this->Commonsql_model->select('tblemployetypes',array('employetypeID'	=>	$this->input->post('employetypeID'),'typename'		=>	$this->input->post('typename'),

@@ -327,7 +327,7 @@ var vaildation	=	'_vaildation';
 					remote:{
 					 type:"post",
 					 url:base_path+"edit_employee_types"+vaildation,
-					 data: { 'payStatusID': $('#payStatusID').val() },
+					 data: { 'employetypeID': $('#employetypeID').val() },
 				 },
 				},
 			},
