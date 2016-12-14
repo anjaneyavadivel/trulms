@@ -1,6 +1,6 @@
 	
 <?php $this->load->view('admin/sidebar')?>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
   <style>
   .custom-combobox {
     position: relative;
@@ -71,7 +71,7 @@
            
               <div class="form-group name_class col-md-3" style="padding:0px;">
                 <label for="name">Name <span class="required">*</span></label><br />
-                <select  name="name" id="combobox" required class="form-control" onchange="fetch_contact_details(this.value)" >
+                <select  name="name" id="combobox" required class="form-control"  >
                 <option value="">-- Select Name --</option>
                 <?php if(isset($view) && $view->num_rows()>0)
 				foreach($view->result() as $v)
@@ -601,7 +601,7 @@
     </script>
 
  
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="<?= base_url() ?>assets/js/jquery-ui.js"></script>
   <script>
   $( function() {
     $.widget( "custom.combobox", {

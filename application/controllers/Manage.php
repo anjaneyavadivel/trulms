@@ -4738,6 +4738,591 @@ class Manage extends CI_Controller {
 			}
 	}
 	/***********************************************************************************************************************************/
+	function vehicle()
+	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
+		if($this->uri->segment(3))
+		{
+			$whereData	=	array('ownerID'	=>	$this->uri->segment(3));
+			$updateData	=	array('active'	=>	$this->uri->segment(4));
+			$upt	=	$this->Commonsql_model->updateTable('tblvehicleowner', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','Designation Status Successfully  Changed...!');
+				redirect('vehicle');
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('vehicle');
+			}
+		}
+		else
+		{
+			$data['pageTitle']	=	"Designation";
+			$data['table']		=	"Designation";
+			$this->load->view('admin/vehicle/vehicle',$data);
+		}
+	}
+	function vehicle_json()
+	{
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
+		$result					=	$this->Commonsql_model->select_all_vehicle_state();
+		$pagealterpermission	=	pagealterpermission('vehicle', $alterPermission = '');
+		//echo $this->db->last_query();exit;
+		$output = array();$i=1;
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['ID']				=	$value->vehicleID;
+			$vaules['vehno'] 			= 	$value->vehno;
+			$vaules['name'] 			= 	$value->contactPer1;
+			$vaules['companyName'] 		= 	$value->companyName;
+			$vaules['phone1'] 			= 	$value->phone1;
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->sta_name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->sta_name.'</span>';
+			}
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
+			
+			if($value->active==1)
+			{
+				if(checkpageaccess('vehicleowner',1,'view'))
+				{
+					$view			 			=	view_html("view_vehicle/".$value->vehicleID);
+				}
+				else
+				{
+					$view			 			=	'';
+				}
+				if(selfAllowed($pagealterpermission, 'selfApprovalAllowed', $value->createby) && checkpageaccess('vehicle',1,'approve'))
+				{
+					$APPROVE			 			=	history_html("approve_vehicle/".$value->vehicleID);
+				}
+				else
+				{
+					$APPROVE			 			= "";
+					
+				}
+				if(selfAllowed($pagealterpermission, 'selfEditAllowed', $value->createby) && checkpageaccess('vehicle',1,'delete'))
+				{
+					$active	=	status_main_table($value->ownerID,'ownerID','vehicleowner','vehicle',1);
+				}
+				else
+				{
+					$active	=	'';
+				}
+			}
+			else
+			{
+				$APPROVE		=	'';
+				$view		=	'';
+				if(selfAllowed($pagealterpermission, 'selfEditAllowed', $value->createby) && checkpageaccess('vehicle',1,'delete'))
+				{
+					$active	=	status_main_table($value->ownerID,'ownerID','vehicleowner','vehicle',0);
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
+			}
+			if(checkpageaccess('vehicle',1,'modify'))
+			{
+				$edit	=	edit_html("edit_vehicle/".$value->vehicleID);
+			}
+			else
+			{
+				$edit	=	"";
+			}
+				
+			$vaules['Action'] 			=	$view.$edit.$APPROVE.$active;
+			
+			$output[] =$vaules;
+		}
+		 echo json_encode(array('data'=>$output), true);
+	}
+	function add_vehicle()
+	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
+		if(!checkpageaccess('vehicle',1,'create'))
+		{
+			redirect();
+		}
+		if($_POST)
+		{
+			/*contact details*/
+			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+            $this->form_validation->set_rules('companyName', 'Company Name', 'trim|required');
+			$this->form_validation->set_rules('addressline1', 'Address 1', 'trim|required');
+			$this->form_validation->set_rules('city', 'City', 'trim|required');
+			$this->form_validation->set_rules('state', 'state', 'trim|required');
+			$this->form_validation->set_rules('country', 'Country', 'trim|required');
+			$this->form_validation->set_rules('vehno', 'Vehicle number', 'trim|required');
+			$this->form_validation->set_rules('vehmake', 'Vehicle make', 'trim|required');
+			$this->form_validation->set_rules('roadpermitno', 'Road permit number', 'trim|required');
+			$this->form_validation->set_rules('validity', 'Validity', 'trim|required');
+			$this->form_validation->set_rules('insurancepolicydtls', 'Insurance policy details', 'trim|required');
+            if ($this->form_validation->run($this) == FALSE) {
+                $this->session->set_userdata('err', validation_errors());
+                redirect('add_vehicle');
+            }
+			//echo "hi";exit;
+			if (is_numeric($this->input->post('name'))) 
+			{
+				$ownerid	=	$this->input->post('name');
+			}
+			else
+			{
+				$contact_values=array('name'		=>	$this->input->post('name'),
+									'companyName'		=>	$this->input->post('companyName'),
+									'addressline1'		=>	$this->input->post('addressline1'),
+									'addressline2'		=>	$this->input->post('addressline2'),
+									'city'				=>	$this->input->post('city'),
+									'state'				=>	$this->input->post('state'),
+									'country'			=>	$this->input->post('country'),
+									'email1'			=>	$this->input->post('email1'),
+									'email2'			=>	$this->input->post('email2'),
+									'phone1'			=>	$this->input->post('phone1'),
+									'phone2'			=>	$this->input->post('phone2'),
+									'fax'				=>	$this->input->post('fax'),
+									'website'			=>	$this->input->post('website'),
+									'dbentrystateID'	=>	3,
+									'createby'			=>	$this->session->userdata('SESS_userId'),
+									'active'			=>	1);
+									
+					$contactID	=	insertTable('tblcontactdetails', $contact_values,0,'vehicle');
+					
+				$values=array('contactID'				=>	$contactID,
+								'contactPer1'		=>	$this->input->post('name'),
+								'contactPer2'		=>	$this->input->post('contactPer2'),
+								'dbentrystateID'	=>	0,
+								'createby'			=>	$this->session->userdata('SESS_userId'),
+								'active'			=>	1);
+								
+				$ownerid	=	insertTable('tblvehicleowner', $values,0,'vehicle');
+			}
+			
+				$vehicle_values	=	array('vehno'					=>	$this->input->post('vehno'),
+											'vehmake'				=>	$this->input->post('vehmake'),
+											'roadpermitno'			=>	$this->input->post('roadpermitno'),
+											'validity'				=>	date('Y-m-d',strtotime($this->input->post('validity'))),
+											'insurancepolicydtls'	=>	$this->input->post('insurancepolicydtls'),
+											'ownerid'				=>	$ownerid,
+											'dbentrystateID'		=>	0,
+											'createby'				=>	$this->session->userdata('SESS_userId'),
+											'active'				=>	1
+											);
+				$query	=	insertTable('tblvehicle', $vehicle_values,0,'vehicle');
+			if($query)
+			{
+				$this->session->set_userdata('suc','Vehicle  Successfully  Added...!');
+				redirect('manage/add_vehicle');
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('manage/add_vehicle');
+			}
+		}
+		$data['pageTitle']	=	"Add vehicle";
+		$data['view']		=	$this->Commonsql_model->select_exist_vehicle();
+		$this->load->view('admin/vehicle/add_vehicle',$data);
+	}
+	function vehicle_details()
+	{
+		$data['view'] 	=	$this->Commonsql_model->select('tblcontactdetails',array('companyName'	=>	$this->input->post('name')));
+		$this->load->View('admin/vehicle/vehicle_details',$data);
+	}
+	function edit_vehicle()
+	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
+		if(!checkpageaccess('vehicle',1,'modify'))
+		{
+			redirect();
+		}
+		if($_POST)
+		{
+			/*contact details*/
+			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+            $this->form_validation->set_rules('companyName', 'Company Name', 'trim|required');
+			$this->form_validation->set_rules('addressline1', 'Address 1', 'trim|required');
+			$this->form_validation->set_rules('city', 'City', 'trim|required');
+			$this->form_validation->set_rules('state', 'state', 'trim|required');
+			$this->form_validation->set_rules('country', 'Country', 'trim|required');
+			
+			$this->form_validation->set_rules('vehno', 'Vehicle number', 'trim|required');
+			$this->form_validation->set_rules('vehmake', 'Vehicle make', 'trim|required');
+			$this->form_validation->set_rules('roadpermitno', 'Road permit number', 'trim|required');
+			$this->form_validation->set_rules('validity', 'Validity', 'trim|required');
+			$this->form_validation->set_rules('insurancepolicydtls', 'Insurance policy details', 'trim|required');
+            if ($this->form_validation->run($this) == FALSE) {
+                $this->session->set_userdata('err', validation_errors());
+                redirect('edit_vehicle/'.$this->input->post('vehicleID'));
+            }
+				$contact_values=array('name'		=>	$this->input->post('name'),
+								'companyName'		=>	$this->input->post('companyName'),
+								'addressline1'		=>	$this->input->post('addressline1'),
+								'addressline2'		=>	$this->input->post('addressline2'),
+								'city'				=>	$this->input->post('city'),
+								'state'				=>	$this->input->post('state'),
+								'country'			=>	$this->input->post('country'),
+								'email1'			=>	$this->input->post('email1'),
+								'email2'			=>	$this->input->post('email2'),
+								'phone1'			=>	$this->input->post('phone1'),
+								'phone2'			=>	$this->input->post('phone2'),
+								'fax'				=>	$this->input->post('fax'),
+								'website'			=>	$this->input->post('website'),
+								'dbentrystateID'	=>	0,
+								'createby'			=>	$this->session->userdata('SESS_userId'),
+								'active'			=>	1);
+								
+				$contactID_whereData	=	array('contactID'	=>	$this->input->post('contactID'));
+			$query1		= updateTable('tblcontactdetails', $contactID_whereData, $contact_values , 1,'contactID', $this->input->post('contactID'),'vehicle');
+				
+			$values=array('contactID'			=>	$this->input->post('contactID'),
+							'contactPer1'		=>	$this->input->post('name'),
+							'contactPer2'		=>	$this->input->post('contactPer2'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+							
+			$whereData	=	array('ownerID'	=>	$this->input->post('ownerID'));
+			$query		= updateTable('tblvehicleowner', $whereData, $values , 1,'ownerID', $this->input->post('ownerID'),'vehicle');
+			
+			$vehicle_values	=	array('vehno'						=>	$this->input->post('vehno'),
+											'vehmake'				=>	$this->input->post('vehmake'),
+											'roadpermitno'			=>	$this->input->post('roadpermitno'),
+											'validity'				=>	date('Y-m-d',strtotime($this->input->post('validity'))),
+											'insurancepolicydtls'	=>	$this->input->post('insurancepolicydtls'),
+											'ownerid'				=>	$this->input->post('ownerID'),
+											'dbentrystateID'		=>	0,
+											'createby'				=>	$this->session->userdata('SESS_userId'),
+											'active'				=>	1
+											);
+				$whereData1	=	array('vehicleID'	=>	$this->input->post('vehicleID'));
+				$query2	=	updateTable('tblvehicle',$whereData1, $vehicle_values,1,'vehicleID',$this->input->post('vehicleID'),'vehicle');
+				
+				
+			if($query || $query1 || $query2)
+			{
+				$this->session->set_userdata('suc','Vehicle  Successfully  Updated...!');
+				redirect('edit_vehicle/'.$this->input->post('vehicleID'));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('edit_vehicle/'.$this->input->post('vehicleID'));
+			}
+		}
+		$data['pageTitle']	=	"Edit Designation";
+		$data['view']		=	$this->Commonsql_model->select_all_vehicle_edit($this->uri->segment(2));
+		$data['compa']		=	$this->Commonsql_model->select_exist_vehicle();
+		$this->load->view('admin/vehicle/edit_vehicle',$data);
+	}
+	function view_vehicle()
+	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
+		if(!checkpageaccess('vehicle',1,'view'))
+		{
+			redirect();
+		}
+		$data['pageTitle']	=	"View Designation";
+		$data['view']		=	$this->Commonsql_model->select_all_vowner_edit($this->uri->segment(2));
+		$this->load->view('admin/vehicle/view_vehicle',$data);
+	}
+	function approve_vehicle()
+	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
+		if(!checkpageaccess('vehicle',1,'approve'))
+		{
+			redirect();
+		}
+		if($_POST)
+		{
+			/*contact details*/
+			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+            $this->form_validation->set_rules('companyName', 'Company Name', 'trim|required');
+			$this->form_validation->set_rules('addressline1', 'Address 1', 'trim|required');
+			$this->form_validation->set_rules('city', 'City', 'trim|required');
+			$this->form_validation->set_rules('state', 'state', 'trim|required');
+			$this->form_validation->set_rules('country', 'Country', 'trim|required');
+			$this->form_validation->set_rules('vehno', 'Vehicle number', 'trim|required');
+			$this->form_validation->set_rules('vehmake', 'Vehicle make', 'trim|required');
+			$this->form_validation->set_rules('roadpermitno', 'Road permit number', 'trim|required');
+			$this->form_validation->set_rules('validity', 'Validity', 'trim|required');
+			$this->form_validation->set_rules('insurancepolicydtls', 'Insurance policy details', 'trim|required');
+            if ($this->form_validation->run($this) == FALSE) {
+                $this->session->set_userdata('err', validation_errors());
+                redirect('approve_vehicle/'.$this->input->post('ownerID'));
+            }
+			
+				$contact_values=array('name'		=>	$this->input->post('name'),
+								'companyName'		=>	$this->input->post('companyName'),
+								'addressline1'		=>	$this->input->post('addressline1'),
+								'addressline2'		=>	$this->input->post('addressline2'),
+								'city'				=>	$this->input->post('city'),
+								'state'				=>	$this->input->post('state'),
+								'country'			=>	$this->input->post('country'),
+								'email1'			=>	$this->input->post('emailss'),
+								'email2'			=>	$this->input->post('email2'),
+								'phone1'			=>	$this->input->post('phone1'),
+								'phone2'			=>	$this->input->post('phone2'),
+								'fax'				=>	$this->input->post('fax'),
+								'website'			=>	$this->input->post('website'),
+								'dbentrystateID'	=>	0,
+								'createby'			=>	$this->session->userdata('SESS_userId'),
+								'active'			=>	1);
+								
+								
+				$contactID_whereData	=	array('contactID'	=>	$this->input->post('contactID'));
+			$query1		= updateTable('tblcontactdetails', $contactID_whereData, $contact_values , 1,'contactID', $this->input->post('contactID'),'vehicle');
+			//echo $this->db->last_query();exit;
+				
+			$values=array('contactID'			=>	$this->input->post('contactID'),
+							'contactPer1'		=>	$this->input->post('name'),
+							'contactPer2'		=>	$this->input->post('contactPer2'),
+							'dbentrystateID'	=>	0,
+							'createby'			=>	$this->session->userdata('SESS_userId'),
+							'active'			=>	1);
+							
+							
+				$whereData	=	array('ownerID'	=>	$this->input->post('ownerID'));
+				$query		= updateTable('tblvehicleowner', $whereData, $values , 1,'ownerID', $this->input->post('ownerID'),'vehicle');
+			
+				
+				$vehicle_values	=	array('vehno'						=>	$this->input->post('vehno'),
+											'vehmake'				=>	$this->input->post('vehmake'),
+											'roadpermitno'			=>	$this->input->post('roadpermitno'),
+											'validity'				=>	date('Y-m-d',strtotime($this->input->post('validity'))),
+											'insurancepolicydtls'	=>	$this->input->post('insurancepolicydtls'),
+											'ownerid'				=>	$this->input->post('ownerID'),
+											'dbentrystateID'		=>	0,
+											'createby'				=>	$this->session->userdata('SESS_userId'),
+											'active'				=>	1
+											);
+				$whereData1	=	array('vehicleID'	=>	$this->input->post('vehicleID'));
+				$query2	=	updateTable('tblvehicle',$whereData1, $vehicle_values,1,'vehicleID',$this->input->post('vehicleID'),'vehicle');
+				
+				
+				if($query || $query1 || $query2)
+				{
+					$this->session->set_userdata('suc','vehicle Successfully  Updated...!');
+					redirect('approve_vehicle/'.$this->input->post('ownerID'));
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('approve_vehicle/'.$this->input->post('ownerID'));
+				}
+			
+		}
+		if($this->uri->segment(4))
+		{
+			$whereData	=	array('owner_modID'	=>	$this->uri->segment(4));
+			$updateData	=	array('active'	=>	$this->uri->segment(5));
+			$upt	=	$this->Commonsql_model->updateTable('tblvehicleowner_mod', $whereData , $updateData);
+			//echo $this->db->last_query();exit;
+			if($upt)
+			{
+				$this->session->set_userdata('suc','Designation Status Successfully  Changed...!');
+				redirect('approve_vehicle/'.$this->uri->segment(3));
+				
+			}
+			else
+			{
+				$this->session->set_userdata('err','Error Please try again..!');
+				redirect('approve_vehicle/'.$this->uri->segment(3));
+			}
+		}
+		else if($this->uri->segment(3))
+		{
+			$data['pageTitle']	=	"View vehicle";
+			$data['table']		=	"Designation";
+			$data['view']		=	$this->Commonsql_model->select_all_vowner_mod($this->uri->segment(3));
+			$this->load->view('admin/vehicle/approve_vehicle',$data);
+		}
+		else
+		{
+			$data['pageTitle']	=	"View vehicle";
+			$data['table']		=	"Designation";
+			$data['view']		=	$this->Commonsql_model->select_all_vehicle_edit($this->uri->segment(2));
+			$this->load->view('admin/vehicle/approve_vehicle',$data);
+		}
+	}
+	function approve_vehicle_json()
+	{
+		if (!$this->session->userdata('SESS_userId')) {return FALSE; }
+		$result	=	$this->Commonsql_model->select_all_vehicle_mod_state($this->uri->segment(3));
+		//echo $this->db->last_query();exit;
+		$output = array();$i=1;$j=1;
+		foreach($result->result() as  $value) {
+			$vaules=array();
+			$vaules['ID']				=	$value->vehicle_modID;
+			$vaules['vehno'] 			= 	$value->vehno;
+			$vaules['name'] 			= 	$value->contactPer1;
+			$vaules['companyName'] 		= 	$value->companyName;
+			$vaules['phone1'] 			= 	$value->phone1;
+			$vaules['upt_date'] =	date('d-m-Y',strtotime($value->createdon));
+			$vaules['upt_by'] 	=	$value->empname;
+			if ($value->dbentrystateID == 0) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-danger">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 1) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-warning">'.$value->sta_name.'</span>';
+			}
+			elseif ($value->dbentrystateID == 2) 
+			{
+				$vaules['state'] 			= 	'<span class="label bg-info">'.$value->sta_name.'</span>';
+			}
+			else
+			{
+				$vaules['state'] 			= 	'<span class="label bg-greensea">'.$value->sta_name.'</span>';
+			}
+			if ($value->active == 1) 
+			{
+              
+			  $row = '<span class="label bg-greensea">Active</span>';
+			}
+			else
+			{
+				$row = '<span class="label bg-red">De-Active</span>';
+			}
+			$vaules['active'] = $row;
+			
+			if($value->active==1)
+			{
+				if($j++>0)
+				{
+					if(checkpageaccess('vehicle',1,'approve'))
+					{
+						$Approve	=	approve_html("'".base_url()."manage/vehicle_mod_approve/".$value->vehicle_modID."','2'");
+					}
+					else
+					{
+						$Approve			 			= "";
+						
+					}
+					
+				}
+				else
+				{
+					$Approve	=	'';
+				}
+				if(checkpageaccess('vehicle',1,'delete'))
+				{
+					$active	=	disable_approve_deactive_html("'".base_url()."manage/approve_vehicle/".$value->vehicleID."/".$value->vehicle_modID."','0'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
+			}
+			else
+			{
+				$Approve		=	'';
+				if(checkpageaccess('vehicle',1,'delete'))
+				{
+					$active	=	enable_approve_deactive_html("'".base_url()."manage/approve_vehicle/".$value->vehicleID."/".$value->vehicle_modID."','1'");
+				}
+				else
+				{
+					$active	=	'';
+				}
+				
+			}
+			
+			if(checkpageaccess('vehicle',1,'modify'))
+			{
+				$edit	=	edit_html("approve_vehicle/".$value->vehicleID.'/'.$value->vehicle_modID);
+			}
+			else
+			{
+				$edit	=	"";
+			}
+				
+			$vaules['Action'] 			=	$Approve.$edit.$active;
+			
+			$output[] =$vaules;
+		}
+		 echo json_encode(array('data'=>$output), true);
+	}
+	function vehicle_mod_approve()
+	{
+		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}
+		if(!checkpageaccess('vehicle',1,'approve'))
+		{
+			redirect();
+		}
+		$mod_id	=	$this->uri->segment(3);
+		$data	=	$this->Commonsql_model->select('tblvehicleowner_mod',array('owner_modID'=>$mod_id));
+		if($data->num_rows()>0)
+		{
+			$val	=	$data->row();
+			
+				
+				$values=array('contactID'		=>	$val->contactID,
+							'contactPer1'		=>	$val->contactPer1,
+							'contactPer2'		=>	$val->contactPer2,
+							
+							'dbentrystateID'			=>	3,
+							'approvedby'				=>	$this->session->userdata('SESS_userId'),
+							'approvedon'				=>	date('Y-m-d h:i:s'));
+								
+							
+				$cond		=	array('ownerID'	=>	$val->ownerID);
+				
+				$values_mod	=	array('dbentrystateID'	=>	3,
+								'approvedby'			=>	$this->session->userdata('SESS_userId'),
+								'approvedon'			=>	date('Y-m-d h:i:s'));
+							
+				$cond_mod	=	array('owner_modID'	=>	$mod_id);
+				$upt		=	$this->Commonsql_model->updateTable('tblvehicleowner', $cond , $values);
+				$upt_m		=	$this->Commonsql_model->updateTable('tblvehicleowner_mod', $cond_mod , $values_mod);
+				//echo $this->db->last_query();exit;
+				if($upt)
+				{
+					$this->session->set_userdata('suc','Approved Successfully  Finished...!');
+					redirect('approve_vehicle/'.$val->ownerID);
+					
+				}
+				else
+				{
+					$this->session->set_userdata('err','Error Please try again..!');
+					redirect('approve_vehicle/'.$val->ownerID);
+				}
+			}
+	}
+	/***********************************************************************************************************************************/
 	function vehicleagent()
 	{
 		if(!$this->session->userdata('SESS_userId')){ redirect(base_url() . "login");}

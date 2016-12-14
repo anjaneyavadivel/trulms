@@ -212,6 +212,16 @@ class Commonsql_model extends CI_Model {
 		$query	=	$this->db->get();
 		return $query;
 	}
+	function select_exist_vehicle($cond=array())
+	{
+		$this->db->select('d.contactID,d.companyName');
+		$this->db->from('tblvehicleowner as a');
+		$this->db->join('tblcontactdetails as d','a.contactID=d.contactID','inner');
+		$this->db->where('a.active',1);
+		$this->db->order_by('a.ownerID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
 	function select_all_employee()
 	{
 		$this->db->select('a.empID,a.empCode,a.empname,a.qualification,a.mobile,a.mailoffice,a.remarks,a.active,a.joiningdate,a.releavingdate,b.department,c.name');
@@ -412,6 +422,43 @@ class Commonsql_model extends CI_Model {
 		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
 		$this->db->join('tbldbentrystates as d','a.dbentrystateID=d.dbentrystateID','inner');
 		$this->db->order_by('ownerID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_all_vehicle_state()
+	{
+		/*SELECT * FROM tblvehicle as a INNER join tblvehicleowner as b on a.ownerid=b.ownerID INNER join tblcontactdetails as c on c.contactID=b.contactID INNER join tbldbentrystates as d on a.dbentrystateID=d.dbentrystateID ORDER by a.vehicleID DESC*/
+		$this->db->select('a.ownerID,a.contactPer1,e.vehicleID,e.vehno,e.active,e.dbentrystateID,e.createby,b.companyName,b.phone1,d.name as sta_name');
+		$this->db->from('tblvehicle as e');
+		$this->db->join('tblvehicleowner as a','e.ownerid=a.ownerID','inner');
+		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
+		$this->db->join('tbldbentrystates as d','e.dbentrystateID=d.dbentrystateID','inner');
+		$this->db->order_by('vehicleID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	function select_all_vehicle_mod_state($id)
+	{
+		$this->db->select('e.vehicle_modID,e.createdon,a.ownerID,a.contactPer1,e.vehicleID,e.vehno,e.active,e.dbentrystateID,e.createby,b.companyName,b.phone1,d.name as sta_name,f.empname');
+		$this->db->from('tblvehicle_mod as e');
+		$this->db->join('tblvehicleowner as a','e.ownerid=a.ownerID','inner');
+		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
+		$this->db->join('tbldbentrystates as d','a.dbentrystateID=d.dbentrystateID','inner');
+		$this->db->join('tblemployee as f','e.createby=f.empID','inner');
+		$this->db->where('e.vehicleID',$id);
+		$this->db->order_by('e.vehicle_modID','desc');
+		$query	=	$this->db->get();
+		return $query;
+	}
+	
+	function select_all_vehicle_edit($id)
+	{
+		$this->db->select('*');
+		$this->db->from('tblvehicle as e');
+		$this->db->join('tblvehicleowner as a','e.ownerid=a.ownerID','inner');
+		$this->db->join('tblcontactdetails as b','b.contactID=a.contactID','inner');
+		$this->db->where('e.vehicleID',$id);
+		$this->db->order_by('vehicleID','desc');
 		$query	=	$this->db->get();
 		return $query;
 	}

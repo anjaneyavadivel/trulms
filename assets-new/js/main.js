@@ -530,4 +530,59 @@ var vaildation	=	'_vaildation';
 				 return false;
 			 }
 		});
+		$("#add_vehicle").validate({
+			rules: {
+				/*contact details*/
+				name:{
+					required: true,
+					maxlength: 49,
+					loginRegex:true,
+				},
+				companyName:{
+					required: true,
+					maxlength: 49,
+					loginRegex:true,
+				},
+				addressline1:{
+					required: true,
+					maxlength: 99,
+					loginRegex:true,
+				},
+				city:{
+					required: true,
+					maxlength: 50,
+				},
+				state:{
+					required: true,
+					maxlength: 50,
+				},
+				country:{
+					required: true,
+					maxlength: 50,
+				},
+				vehno:{
+					required: true,
+					maxlength: 50,
+				},
+				vehmake:{
+					required: true,
+					maxlength: 50,
+				},
+				roadpermitno:{
+					required: true,
+					maxlength: 50,
+				},
+				validity:{
+					required: true,
+				},
+				insurancepolicydtls:{
+					required: true,
+					
+				},
+			},
+			 submitHandler: function (form) {
+				$('#form_submiting').trigger('click');
+				 return false;
+			 }
+		});
 });

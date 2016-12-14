@@ -735,6 +735,54 @@ if (isset($table)) {
                         MINOVATE.extra.tooltip();
                     }
         });
+		 <?php } else if ($segment1 == 'vehicle') {
+                ?>
+        var table = $('#basic-usage').DataTable({
+        "ajax": '<?php echo base_url() ?>manage/vehicle_json',
+        "columns": [
+        {"data": "ID"},
+		 {"data": "vehno"},
+        {"data": "name"},
+        {"data": "companyName"},
+        {"data": "phone1"},
+        {"data": "state"},
+        {"data": "active"},
+        {"data": "Action"}
+        ],
+        "aoColumnDefs": [
+        {'bSortable': false, 'aTargets': ["no-sort"]}
+        ],
+        "order": [[0, 'desc']],
+        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
+        });
+		 <?php } else if ($segment1 == 'approve_vehicle') {
+                ?>
+        var table = $('#basic-usage').DataTable({
+        "ajax": '<?php echo base_url() ?>manage/approve_vehicle_json/<?php echo $this->uri->segment(2) ?>',
+        "columns": [
+        {"data": "ID"},
+		{"data": "upt_date"},
+		{"data": "vehno"},
+        {"data": "name"},
+        {"data": "companyName"},
+        {"data": "phone1"},
+		{"data": "upt_by"},
+        {"data": "state"},
+        {"data": "active"},
+        {"data": "Action"}
+        ],
+        "aoColumnDefs": [
+        {'bSortable': false, 'aTargets': ["no-sort"]}
+        ],
+        "order": [[0, 'desc']],
+        "dom": 'Rlfrtip',
+                    "fnDrawCallback": function () {
+                        MINOVATE.extra.tooltip();
+                    }
+        });
             <?php } else if ($segment1 == 'approve_vehicleowner') {
                 ?>
         var table = $('#basic-usage').DataTable({
