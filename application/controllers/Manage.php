@@ -190,7 +190,6 @@ class Manage extends CI_Controller {
             }
 			$values=array('department'			=>	$this->input->post('department'),
 							'description'		=>	$this->input->post('description'),
-							'dbentrystateID'	=>	0,
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -251,7 +250,6 @@ class Manage extends CI_Controller {
 				}
 				$values_mod=array('department'		=>	$this->input->post('department'),
 							'description'		=>	$this->input->post('description'),
-							'dbentrystateID'	=>	0,
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -302,7 +300,7 @@ class Manage extends CI_Controller {
 			{
 					$values_mod=array('department'		=>	$this->input->post('department'),
 								'description'		=>	$this->input->post('description'),
-								'dbentrystateID'	=>	0,
+								
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
@@ -642,11 +640,10 @@ class Manage extends CI_Controller {
 			}
 			$values=array('name'				=>	$this->input->post('name'),
 							'description'		=>	$this->input->post('description'),
-							'dbentrystateID'	=>	0,
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$query	=	insertTable('tbldesignation', $values,0,'designation');
+			$query	=	insertTable('tbldesignation', $values,1,'designation');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Designation Successfully  Added...!');
@@ -702,7 +699,6 @@ class Manage extends CI_Controller {
 				}
 				$values=array('name'			=>	$this->input->post('name'),
 							'description'		=>	$this->input->post('description'),
-							'dbentrystateID'	=>	0,
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -751,7 +747,6 @@ class Manage extends CI_Controller {
 			{
 					$values_mod=array('name'		=>	$this->input->post('name'),
 								'description'		=>	$this->input->post('description'),
-								'dbentrystateID'	=>	0,
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
@@ -1088,11 +1083,10 @@ class Manage extends CI_Controller {
 			}
 			$values=array('roleName'				=>	$this->input->post('roleName'),
 							'description'		=>	$this->input->post('description'),
-							'dbentrystateID'	=>	0,
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$query	=	insertTable('tblrole', $values,0,'role');
+			$query	=	insertTable('tblrole', $values,1,'role');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Role Successfully  Added...!');
@@ -1148,7 +1142,6 @@ class Manage extends CI_Controller {
 				}
 				$values=array('roleName'			=>	$this->input->post('roleName'),
 								'description'		=>	$this->input->post('description'),
-								'dbentrystateID'	=>	0,
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 			
@@ -1197,7 +1190,6 @@ class Manage extends CI_Controller {
 			{
 					$values_mod=array('roleName'		=>	$this->input->post('roleName'),
 								'description'		=>	$this->input->post('description'),
-								'dbentrystateID'	=>	0,
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
@@ -1535,11 +1527,10 @@ class Manage extends CI_Controller {
 			}
 			$values=array('paymentMode'				=>	$this->input->post('paymentMode'),
 							'description'		=>	$this->input->post('description'),
-							'dbentrystateID'	=>	0,
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$query	=	insertTable('tblpaymentmode', $values,0,'payment_mode');
+			$query	=	insertTable('tblpaymentmode', $values,1,'payment_mode');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Payment Mode Successfully  Added...!');
@@ -1596,7 +1587,6 @@ class Manage extends CI_Controller {
 				$values=array('paymentMode'				=>	$this->input->post('paymentMode'),
 								'description'		=>	$this->input->post('description'),
 								'paymentModeID'	=>	$this->input->post('paymentModeID'),
-								'dbentrystateID'	=>	0,
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
@@ -1645,7 +1635,7 @@ class Manage extends CI_Controller {
 			{
 					$values_mod=array('paymentMode'		=>	$this->input->post('paymentMode'),
 								'description'		=>	$this->input->post('description'),
-								'dbentrystateID'	=>	0,
+								
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
@@ -1984,11 +1974,10 @@ class Manage extends CI_Controller {
 			}
 			$values=array('payStatus'				=>	$this->input->post('payStatus'),
 							'description'		=>	$this->input->post('description'),
-							'dbentrystateID'	=>	0,
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$query	=	insertTable('tblpaymentstatus', $values,0,'payment_status');
+			$query	=	insertTable('tblpaymentstatus', $values,1,'payment_status');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Payment Status Successfully  Added...!');
@@ -2044,7 +2033,7 @@ class Manage extends CI_Controller {
 				}
 				$values=array('payStatus'				=>	$this->input->post('payStatus'),
 								'description'		=>	$this->input->post('description'),
-								'dbentrystateID'	=>	0,
+								
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
@@ -2093,7 +2082,6 @@ class Manage extends CI_Controller {
 			{
 					$values_mod=array('payStatus'		=>	$this->input->post('payStatus'),
 								'description'		=>	$this->input->post('description'),
-								'dbentrystateID'	=>	0,
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
@@ -2433,11 +2421,10 @@ class Manage extends CI_Controller {
 			}
 			$values=array('typename'				=>	$this->input->post('typename'),
 							'description'		=>	$this->input->post('description'),
-							'dbentrystateID'	=>	0,
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$query	=	insertTable('tblemployetypes', $values,0,'employee_types');
+			$query	=	insertTable('tblemployetypes', $values,1,'employee_types');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Employee Types Successfully  Added...!');
@@ -2494,7 +2481,6 @@ class Manage extends CI_Controller {
 				$values=array('typename'				=>	$this->input->post('typename'),
 								'description'		=>	$this->input->post('description'),
 								'employetypeID'		=>	$this->input->post('employetypeID'),
-								'dbentrystateID'	=>	0,
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
@@ -2543,7 +2529,6 @@ class Manage extends CI_Controller {
 			{
 					$values_mod=array('typename'		=>	$this->input->post('typename'),
 								'description'		=>	$this->input->post('description'),
-								'dbentrystateID'	=>	0,
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
@@ -2977,7 +2962,6 @@ class Manage extends CI_Controller {
 							'remarks'					=>	$this->input->post('remarks'),
 							'releavingdate'				=>	date('Y-m-d',strtotime($this->input->post('releavingdate'))),
 							
-							'dbentrystateID'			=>	0,
 							'createby'					=>	$this->session->userdata('SESS_userId'),
 							'active'					=>	1);
 							
@@ -3131,7 +3115,6 @@ class Manage extends CI_Controller {
 							'remarks'					=>	$this->input->post('remarks'),
 							'releavingdate'				=>	date('Y-m-d',strtotime($this->input->post('releavingdate'))),
 							
-							'dbentrystateID'			=>	0,
 							'createby'					=>	$this->session->userdata('SESS_userId'),
 							'active'					=>	1);
 							
@@ -3267,7 +3250,6 @@ class Manage extends CI_Controller {
 							'remarks'					=>	$this->input->post('remarks'),
 							'releavingdate'				=>	date('Y-m-d',strtotime($this->input->post('releavingdate'))),
 							
-							'dbentrystateID'			=>	0,
 							'createby'					=>	$this->session->userdata('SESS_userId'),
 							'active'					=>	1);
 							
@@ -3801,11 +3783,10 @@ class Manage extends CI_Controller {
 							'phone2'			=>	$this->input->post('phone2'),
 							'fax'				=>	$this->input->post('fax'),
 							'website'			=>	$this->input->post('website'),
-							'dbentrystateID'	=>	0,
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$contactID	=	insertTable('tblcontactdetails', $contact_values,0,'driver');
+			$contactID	=	insertTable('tblcontactdetails', $contact_values,1,'driver');
 			
 			$values=array('contactID'					=>	$contactID,
 							'sex'						=>	$this->input->post('sex'),
@@ -3814,7 +3795,6 @@ class Manage extends CI_Controller {
 							'dlexpirydt'				=>	date('Y-m-d',strtotime($this->input->post('dlexpirydt'))),
 							'dlImage'					=>	$dlImage,
 							
-							'dbentrystateID'			=>	0,
 							'createby'					=>	$this->session->userdata('SESS_userId'),
 							'active'					=>	1);
 							
@@ -3881,7 +3861,7 @@ class Manage extends CI_Controller {
 							'phone2'			=>	$this->input->post('phone2'),
 							'fax'				=>	$this->input->post('fax'),
 							'website'			=>	$this->input->post('website'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -3896,7 +3876,6 @@ class Manage extends CI_Controller {
 							'dlexpirydt'				=>	date('Y-m-d',strtotime($this->input->post('dlexpirydt'))),
 							'dlImage'					=>	$dlImage,
 							
-							'dbentrystateID'			=>	0,
 							'createby'					=>	$this->session->userdata('SESS_userId'),
 							'active'					=>	1);
 							
@@ -3978,7 +3957,6 @@ class Manage extends CI_Controller {
 							'phone2'			=>	$this->input->post('phone2'),
 							'fax'				=>	$this->input->post('fax'),
 							'website'			=>	$this->input->post('website'),
-							'dbentrystateID'	=>	0,
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -3993,7 +3971,6 @@ class Manage extends CI_Controller {
 							'dlexpirydt'				=>	date('Y-m-d',strtotime($this->input->post('dlexpirydt'))),
 							'dlImage'					=>	$dlImage,
 							
-							'dbentrystateID'			=>	0,
 							'createby'					=>	$this->session->userdata('SESS_userId'),
 							'active'					=>	1);
 							
@@ -4387,20 +4364,20 @@ class Manage extends CI_Controller {
 								'phone2'			=>	$this->input->post('phone2'),
 								'fax'				=>	$this->input->post('fax'),
 								'website'			=>	$this->input->post('website'),
-								'dbentrystateID'	=>	3,
+								
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
-				$contactID	=	insertTable('tblcontactdetails', $contact_values,0,'vehicleowner');
+				$contactID	=	insertTable('tblcontactdetails', $contact_values,1,'vehicleowner');
 				
 			$values=array('contactID'				=>	$contactID,
 							'contactPer1'		=>	$this->input->post('name'),
 							'contactPer2'		=>	$this->input->post('contactPer2'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$query	=	insertTable('tblvehicleowner', $values,0,'vehicleowner');
+			$query	=	insertTable('tblvehicleowner', $values,1,'vehicleowner');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Vehicle Owner Successfully  Added...!');
@@ -4449,7 +4426,7 @@ class Manage extends CI_Controller {
 								'phone2'			=>	$this->input->post('phone2'),
 								'fax'				=>	$this->input->post('fax'),
 								'website'			=>	$this->input->post('website'),
-								'dbentrystateID'	=>	0,
+								
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
@@ -4459,7 +4436,7 @@ class Manage extends CI_Controller {
 			$values=array('contactID'			=>	$this->input->post('contactID'),
 							'contactPer1'		=>	$this->input->post('name'),
 							'contactPer2'		=>	$this->input->post('contactPer2'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -4527,7 +4504,7 @@ class Manage extends CI_Controller {
 								'phone2'			=>	$this->input->post('phone2'),
 								'fax'				=>	$this->input->post('fax'),
 								'website'			=>	$this->input->post('website'),
-								'dbentrystateID'	=>	0,
+								
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
@@ -4539,7 +4516,7 @@ class Manage extends CI_Controller {
 			$values=array('contactID'			=>	$this->input->post('contactID'),
 							'contactPer1'		=>	$this->input->post('name'),
 							'contactPer2'		=>	$this->input->post('contactPer2'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -4909,20 +4886,20 @@ class Manage extends CI_Controller {
 									'phone2'			=>	$this->input->post('phone2'),
 									'fax'				=>	$this->input->post('fax'),
 									'website'			=>	$this->input->post('website'),
-									'dbentrystateID'	=>	3,
+									
 									'createby'			=>	$this->session->userdata('SESS_userId'),
 									'active'			=>	1);
 									
-					$contactID	=	insertTable('tblcontactdetails', $contact_values,0,'vehicle');
+					$contactID	=	insertTable('tblcontactdetails', $contact_values,1,'vehicle');
 					
 				$values=array('contactID'				=>	$contactID,
 								'contactPer1'		=>	$this->input->post('name'),
 								'contactPer2'		=>	$this->input->post('contactPer2'),
-								'dbentrystateID'	=>	0,
+								
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
-				$ownerid	=	insertTable('tblvehicleowner', $values,0,'vehicle');
+				$ownerid	=	insertTable('tblvehicleowner', $values,1,'vehicle');
 			}
 			
 				$vehicle_values	=	array('vehno'					=>	$this->input->post('vehno'),
@@ -4931,11 +4908,11 @@ class Manage extends CI_Controller {
 											'validity'				=>	date('Y-m-d',strtotime($this->input->post('validity'))),
 											'insurancepolicydtls'	=>	$this->input->post('insurancepolicydtls'),
 											'ownerid'				=>	$ownerid,
-											'dbentrystateID'		=>	0,
+											
 											'createby'				=>	$this->session->userdata('SESS_userId'),
 											'active'				=>	1
 											);
-				$query	=	insertTable('tblvehicle', $vehicle_values,0,'vehicle');
+				$query	=	insertTable('tblvehicle', $vehicle_values,1,'vehicle');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Vehicle  Successfully  Added...!');
@@ -4996,7 +4973,7 @@ class Manage extends CI_Controller {
 								'phone2'			=>	$this->input->post('phone2'),
 								'fax'				=>	$this->input->post('fax'),
 								'website'			=>	$this->input->post('website'),
-								'dbentrystateID'	=>	0,
+								
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
@@ -5006,7 +4983,7 @@ class Manage extends CI_Controller {
 			$values=array('contactID'			=>	$this->input->post('contactID'),
 							'contactPer1'		=>	$this->input->post('name'),
 							'contactPer2'		=>	$this->input->post('contactPer2'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -5020,7 +4997,7 @@ class Manage extends CI_Controller {
 											'validity'				=>	date('Y-m-d',strtotime($this->input->post('validity'))),
 											'insurancepolicydtls'	=>	$this->input->post('insurancepolicydtls'),
 											'ownerid'				=>	$this->input->post('ownerID'),
-											'dbentrystateID'		=>	0,
+											
 											'createby'				=>	$this->session->userdata('SESS_userId'),
 											'active'				=>	1
 											);
@@ -5095,7 +5072,7 @@ class Manage extends CI_Controller {
 								'phone2'			=>	$this->input->post('phone2'),
 								'fax'				=>	$this->input->post('fax'),
 								'website'			=>	$this->input->post('website'),
-								'dbentrystateID'	=>	0,
+								
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
@@ -5107,7 +5084,7 @@ class Manage extends CI_Controller {
 			$values=array('contactID'			=>	$this->input->post('contactID'),
 							'contactPer1'		=>	$this->input->post('name'),
 							'contactPer2'		=>	$this->input->post('contactPer2'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -5122,7 +5099,7 @@ class Manage extends CI_Controller {
 											'validity'				=>	date('Y-m-d',strtotime($this->input->post('validity'))),
 											'insurancepolicydtls'	=>	$this->input->post('insurancepolicydtls'),
 											'ownerid'				=>	$this->input->post('ownerID'),
-											'dbentrystateID'		=>	0,
+											
 											'createby'				=>	$this->session->userdata('SESS_userId'),
 											'active'				=>	1
 											);
@@ -5487,15 +5464,15 @@ class Manage extends CI_Controller {
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
-				$contactID	=	insertTable('tblcontactdetails', $contact_values,0,'vehicleagent');
+				$contactID	=	insertTable('tblcontactdetails', $contact_values,1,'vehicleagent');
 				
 			$values=array('contactID'				=>	$contactID,
 							'loadingadvno'		=>	$this->input->post('loadingadvno'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$query	=	insertTable('tblvehicleagent', $values,0,'vehicleagent');
+			$query	=	insertTable('tblvehicleagent', $values,1,'vehicleagent');
 			if($query)
 			{
 				$this->session->set_userdata('suc','Vehicle Owner Successfully  Added...!');
@@ -5544,7 +5521,7 @@ class Manage extends CI_Controller {
 								'phone2'			=>	$this->input->post('phone2'),
 								'fax'				=>	$this->input->post('fax'),
 								'website'			=>	$this->input->post('website'),
-								'dbentrystateID'	=>	0,
+								
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
@@ -5553,7 +5530,7 @@ class Manage extends CI_Controller {
 				
 			$values=array('contactID'			=>	$this->input->post('contactID'),
 							'loadingadvno'		=>	$this->input->post('loadingadvno'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -5621,7 +5598,7 @@ class Manage extends CI_Controller {
 								'phone2'			=>	$this->input->post('phone2'),
 								'fax'				=>	$this->input->post('fax'),
 								'website'			=>	$this->input->post('website'),
-								'dbentrystateID'	=>	0,
+								
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
@@ -5632,7 +5609,7 @@ class Manage extends CI_Controller {
 				
 			$values=array('contactID'			=>	$this->input->post('contactID'),
 							'loadingadvno'		=>	$this->input->post('loadingadvno'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -5989,22 +5966,22 @@ class Manage extends CI_Controller {
 								'phone2'			=>	$this->input->post('phone2'),
 								'fax'				=>	$this->input->post('fax'),
 								'website'			=>	$this->input->post('website'),
-								'dbentrystateID'	=>	0,
+								
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
-				$contactID	=	insertTable('tblcontactdetails', $contact_values,0,'contract-consignor');
+				$contactID	=	insertTable('tblcontactdetails', $contact_values,1,'contract-consignor');
 			
 			
 			$values_cons=array('contactID'		=>	$contactID,
 							'contactPer1'		=>	$this->input->post('name'),
 							'contactPer1'		=>	$this->input->post('contactPer2'),
 							'csttinno'			=>	$this->input->post('csttinno'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$consignorID	=	insertTable('tblconsignor', $values_cons,0,'contract-consignor');
+			$consignorID	=	insertTable('tblconsignor', $values_cons,1,'contract-consignor');
 			
 			
 			
@@ -6061,7 +6038,7 @@ class Manage extends CI_Controller {
 							'phone2'			=>	$this->input->post('phone2'),
 							'fax'				=>	$this->input->post('fax'),
 							'website'			=>	$this->input->post('website'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -6071,7 +6048,7 @@ class Manage extends CI_Controller {
 							'contactPer1'		=>	$this->input->post('name'),
 							'contactPer2'		=>	$this->input->post('contactPer2'),
 							'csttinno'			=>	$this->input->post('csttinno'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -6135,7 +6112,7 @@ class Manage extends CI_Controller {
 							'phone2'			=>	$this->input->post('phone2'),
 							'fax'				=>	$this->input->post('fax'),
 							'website'			=>	$this->input->post('website'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -6145,7 +6122,7 @@ class Manage extends CI_Controller {
 							'contactPer1'		=>	$this->input->post('name'),
 							'contactPer2'		=>	$this->input->post('contactPer2'),
 							'csttinno'			=>	$this->input->post('csttinno'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -6501,22 +6478,22 @@ class Manage extends CI_Controller {
 								'phone2'			=>	$this->input->post('phone2'),
 								'fax'				=>	$this->input->post('fax'),
 								'website'			=>	$this->input->post('website'),
-								'dbentrystateID'	=>	0,
+								
 								'createby'			=>	$this->session->userdata('SESS_userId'),
 								'active'			=>	1);
 								
-				$contactID	=	insertTable('tblcontactdetails', $contact_values,0);
+				$contactID	=	insertTable('tblcontactdetails', $contact_values,1);
 			}
 			
 			$values_cons=array('contactID'		=>	$contactID,
 							'contactPer1'		=>	$this->input->post('name'),
 							'contactPer1'		=>	$this->input->post('contactPer2'),
 							'csttinno'			=>	$this->input->post('csttinno'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$consignorID	=	insertTable('tblconsignor', $values_cons,0);
+			$consignorID	=	insertTable('tblconsignor', $values_cons,1);
 			
 			$values=array('contractCode'		=>	$this->input->post('contractCode'),
 							'consignorID'		=>	$consignorID,
@@ -6532,11 +6509,11 @@ class Manage extends CI_Controller {
 							'miscType'			=>	$this->input->post('miscType'),
 							'dated'				=>	date('Y-m-d',strtotime($this->input->post('dated'))),
 							'signedby'			=>	$this->input->post('signedby'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
-			$contractID	=	insertTable('tblcontract', $values,0);
+			$contractID	=	insertTable('tblcontract', $values,1);
 			
 			$values_map=array('contractVerID'		=>	1,
 							'contractID'			=>	$contractID,
@@ -6551,11 +6528,11 @@ class Manage extends CI_Controller {
 							'MISCCharges'			=>	$this->input->post('MISCCharges'),
 							'serivceTax'			=>	$this->input->post('serivceTax'),
 							'grandTotal'			=>	$this->input->post('grandTotal'),
-							'dbentrystateID'		=>	0,
+							
 							'createby'				=>	$this->session->userdata('SESS_userId'),
 							'active'				=>	1);
 							
-			$contractVersionMapID	=	insertTable('tblcontractversionmap', $values_map,0);
+			$contractVersionMapID	=	insertTable('tblcontractversionmap', $values_map,1);
 			
 			if($contractID)
 			{
@@ -6606,7 +6583,7 @@ class Manage extends CI_Controller {
 							'phone2'			=>	$this->input->post('phone2'),
 							'fax'				=>	$this->input->post('fax'),
 							'website'			=>	$this->input->post('website'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -6616,7 +6593,7 @@ class Manage extends CI_Controller {
 							'contactPer1'		=>	$this->input->post('name'),
 							'contactPer2'		=>	$this->input->post('contactPer2'),
 							'csttinno'			=>	$this->input->post('csttinno'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -6636,7 +6613,7 @@ class Manage extends CI_Controller {
 							'miscType'			=>	$this->input->post('miscType'),
 							'dated'				=>	date('Y-m-d',strtotime($this->input->post('dated'))),
 							'signedby'			=>	$this->input->post('signedby'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -6655,7 +6632,7 @@ class Manage extends CI_Controller {
 							'MISCCharges'			=>	$this->input->post('MISCCharges'),
 							'serivceTax'			=>	$this->input->post('serivceTax'),
 							'grandTotal'			=>	$this->input->post('grandTotal'),
-							'dbentrystateID'		=>	0,
+							
 							'createby'				=>	$this->session->userdata('SESS_userId'),
 							'active'				=>	1);
 							
@@ -6704,7 +6681,7 @@ class Manage extends CI_Controller {
 							'phone2'			=>	$this->input->post('phone2'),
 							'fax'				=>	$this->input->post('fax'),
 							'website'			=>	$this->input->post('website'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -6714,7 +6691,7 @@ class Manage extends CI_Controller {
 							'contactPer1'		=>	$this->input->post('name'),
 							'contactPer2'		=>	$this->input->post('contactPer2'),
 							'csttinno'			=>	$this->input->post('csttinno'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -6734,7 +6711,7 @@ class Manage extends CI_Controller {
 							'miscType'			=>	$this->input->post('miscType'),
 							'dated'				=>	date('Y-m-d',strtotime($this->input->post('dated'))),
 							'signedby'			=>	$this->input->post('signedby'),
-							'dbentrystateID'	=>	0,
+							
 							'createby'			=>	$this->session->userdata('SESS_userId'),
 							'active'			=>	1);
 							
@@ -6753,7 +6730,7 @@ class Manage extends CI_Controller {
 							'MISCCharges'			=>	$this->input->post('MISCCharges'),
 							'serivceTax'			=>	$this->input->post('serivceTax'),
 							'grandTotal'			=>	$this->input->post('grandTotal'),
-							'dbentrystateID'		=>	0,
+							
 							'createby'				=>	$this->session->userdata('SESS_userId'),
 							'active'				=>	1);
 							
