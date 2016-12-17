@@ -1103,12 +1103,12 @@ class Setup extends CI_Controller {
 
                     if (checkpageaccess('form-access', 1, 'delete')) {
                         if ($value->active == 1) {
-                            $active = '<a href="javascript:void(0)" data-tb="pageroleaccessmap" data-val="0" data-id="' . $value->pageRoleMappingID . '"  data-col="pageRoleMappingID" role="button" tabindex="0" class="active-deactive-btn text-danger mr-5 " data-toggle="tooltip" data-placement="top" title data-original-title="Click to De-Active"><i class="fa fa-times-circle"></i></a>&nbsp;';
+                            $active = '<a href="javascript:void(0)" data-tb="pageroleaccessmap" data-fn="form-access" data-val="0" data-id="' . $value->pageRoleMappingID . '"  data-col="pageRoleMappingID" role="button" tabindex="0" class="active-deactive-btn text-danger" data-toggle="tooltip" data-placement="top" title data-original-title="Click to De-Active"><i class="fa fa-times-circle"></i></a>&nbsp;';
                         } else {
-                            $active = '<a href="javascript:void(0)" data-tb="pageroleaccessmap" data-val="1" data-id="' . $value->pageRoleMappingID . '"  data-col="pageRoleMappingID" role="button" tabindex="0" class="active-deactive-btn text-success mr-5" data-toggle="tooltip" data-placement="top" title data-original-title="Click to Active"><i class="fa fa-check-square"></i></a>&nbsp;';
+                            $active = '<a href="javascript:void(0)" data-tb="pageroleaccessmap" data-fn="form-access" data-val="1" data-id="' . $value->pageRoleMappingID . '"  data-col="pageRoleMappingID" role="button" tabindex="0" class="active-deactive-btn text-success data-toggle="tooltip" data-placement="top" title data-original-title="Click to Active"><i class="fa fa-check-square"></i></a>&nbsp;';
                         }
                     }
-                }
+               }
                 $vaules['Action'] = $view . $edit . $APPROVE . $active;
 
 
