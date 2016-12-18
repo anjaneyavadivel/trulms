@@ -2927,6 +2927,11 @@ class Manage extends CI_Controller {
 				$uploadpath="./uploads/proof/".$proof1;
 				move_uploaded_file($_FILES['proof2']['tmp_name'], $uploadpath);
 			}
+			if($this->session->userdata('SESS_userBranchID')==0)
+			$SESS_userBranchID=1;
+			else
+			$SESS_userBranchID=$this->session->userdata('SESS_userBranchID');
+			
 			$values=array('empCode'						=>	'',
 							'empname'					=>	$this->input->post('empname'),
 							'branchID'					=>	$this->session->userdata('SESS_userBranchID'),

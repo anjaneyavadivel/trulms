@@ -40,6 +40,7 @@ $('.submit-form-btn').click(function(){
 	$('#new_button').trigger('click');
 });
 function form_submit(val){
+	//alert(val);
 	document.getElementById(val).submit();
 }
 $('#add_form').click(function(){
