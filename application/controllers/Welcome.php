@@ -149,6 +149,29 @@ class Welcome extends CI_Controller {
                             }
                         }
                     }
+                    $proxyIP='';$deviceIP='';
+                    // get proxy IP
+                    if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])){
+                        $proxyIP = $_SERVER['HTTP_X_FORWARDED_FOR'];
+                    } 
+                    // get device IP
+                    if (isset($_SERVER['REMOTE_ADDR'])){
+                        $deviceIP = $_SERVER['REMOTE_ADDR'];
+                    }
+                    //detect Device type
+                    if($this->_detectDevice()=='Mobile'){$isMobile=1;}else{$isMobile=0;}
+                    
+                    $values = array(
+                        'empID' => $userview['empID'],
+                        'deviceIP' => $deviceIP,
+                        'proxyIP' => $proxyIP,
+                        'deviceMAC' => '',
+                        'browser' => $_SERVER['HTTP_USER_AGENT'],
+                        'platform' => php_uname(),
+                        'isMobile' => $isMobile,
+                        'isCrawler' => '',
+                        'active' => 1);
+                    $loginhistoryID = insertsingalTable('tblloginhistory', $values);
                     // set role array format in session 
                     $this->session->set_userdata('SESS_userRole', $role);
                     // set session for page role access
@@ -179,5 +202,22 @@ class Welcome extends CI_Controller {
         redirect(base_url() . "login");
     }
     
+    function _detectDevice(){
+	$userAgent = $_SERVER["HTTP_USER_AGENT"];
+	$devicesTypes = array(
+            "computer" => array("msie 10", "msie 9", "msie 8", "windows.*firefox", "windows.*chrome", "x11.*chrome", "x11.*firefox", "macintosh.*chrome", "macintosh.*firefox", "opera"),
+            "tablet"   => array("tablet", "android", "ipad", "tablet.*firefox"),
+            "mobile"   => array("mobile ", "android.*mobile", "iphone", "ipod", "opera mobi", "opera mini"),
+            "bot"      => array("googlebot", "mediapartners-google", "adsbot-google", "duckduckbot", "msnbot", "bingbot", "ask", "facebook", "yahoo", "addthis")
+        );
+ 	foreach($devicesTypes as $deviceType => $devices) {           
+            foreach($devices as $device) {
+                if(preg_match("/" . $device . "/i", $userAgent)) {
+                    $deviceName = $deviceType;
+                }
+            }
+        }
+        return ucfirst($deviceName);
+    }
     
 }
