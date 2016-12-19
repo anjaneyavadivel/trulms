@@ -2970,7 +2970,15 @@ class Manage extends CI_Controller {
 							'createby'					=>	$this->session->userdata('SESS_userId'),
 							'active'					=>	1);
 							
-			$query	=	insertTable('tblemployee', $values,1,'empID','employee');
+			$empID	=	insertTable('tblemployee', $values,1,'empID','employee');
+			
+			$values=array(	'empID'						=>	$empID,
+							'mobile'					=>	$this->input->post('mobile'),
+							'mailoffice'				=>	$this->input->post('mailoffice'),
+							'createby'					=>	$this->session->userdata('SESS_userId'),
+							'active'					=>	1);
+							
+			$query	=	insertTable('tbllogin', $values,0,'empID','employee');
 			if($query)
 			{
 				$this->session->set_userdata('suc','employee Successfully  Added...!');
