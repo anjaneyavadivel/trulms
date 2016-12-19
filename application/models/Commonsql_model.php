@@ -319,7 +319,8 @@ class Commonsql_model extends CI_Model {
 		$userBranchID = $this->session->userdata('SESS_userBranchID');
         if ($userBranchID == 0) {
         } else {
-         $this->db->where( array('active' => 1));
+         $this->db->where( array('a.active' => 1));
+		  $this->db->where( array('b.active' => 1));
         }
 		if($feild !='')
 		$this->db->order_by($feild,'desc');
@@ -335,7 +336,8 @@ class Commonsql_model extends CI_Model {
 		$userBranchID = $this->session->userdata('SESS_userBranchID');
         if ($userBranchID == 0) {
         } else {
-         $this->db->where( array('active' => 1));
+         $this->db->where( array('a.active' => 1));
+		  $this->db->where( array('b.active' => 1));
         }
 		if($feild !='')
 		$this->db->order_by($feild,'desc');

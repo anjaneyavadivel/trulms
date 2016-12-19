@@ -60,7 +60,13 @@
 											?>
                                         </div>
                                         <h4 class="mb-0"><strong><?=$v->empname?></strong></h4>
-                                        <span class="text-muted">Project Manager</span>
+                                        <span class="text-muted"><?php if(isset($desig) && $desig->num_rows()>0)
+                                                            foreach($desig->result() as $dep)
+                                                            {
+                                                                if($v->designation==$dep->desigID){?><?=$dep->name?>
+                                                                <?php }
+                                                            }
+                                                            ?></span>
                                         
 
                                     </div>
