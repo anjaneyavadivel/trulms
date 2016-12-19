@@ -35,7 +35,15 @@
             </div>
 
         </div>
-        
+        <?php
+       
+//        $ip = $_SERVER['REMOTE_ADDR'];
+//        $cmd = "arp -a " . $ip;
+//$status = 0;
+//$return = [];
+//exec($cmd, $return, $status);
+//var_dump($status, $return);
+    ?>ll
         <p class="lead">This is the small sidebar layout template.</p>
         <?php
         echo "Loging User Role: ";

@@ -36,6 +36,17 @@ if (!function_exists('insertTable')) {
 
 }
 
+if (!function_exists('insertsingalTable')) {
+
+    function insertsingalTable($tableName, $tableData) {
+        $CI = & get_instance();
+        $CI->load->model('commonsql_model');
+        $insertid = $CI->commonsql_model->insert_table($tableName, $tableData);
+        return $insertid;
+    }
+
+}
+
 /* get the data to table
  * $result = selectTable($tableName, $whereData = array(),$showField = array('*'), $orWhereData=array(), $group = array(), $order = '', $having = '', $limit =array(), $result_way = 'all', $echo = 0);
 
