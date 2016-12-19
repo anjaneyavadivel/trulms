@@ -2932,9 +2932,11 @@ class Manage extends CI_Controller {
 			else
 			$SESS_userBranchID=$this->session->userdata('SESS_userBranchID');
 			
+			$mailoffice	=	$this->input->post('mailoffice');
+			
 			$values=array('empCode'						=>	'',
 							'empname'					=>	$this->input->post('empname'),
-							'branchID'					=>	$this->session->userdata('SESS_userBranchID'),
+							'branchID'					=>	$SESS_userBranchID,
 							
 							'dob'						=>	date('Y-m-d',strtotime($this->input->post('dob'))),
 							'sex'						=>	$this->input->post('sex'),
@@ -2949,7 +2951,7 @@ class Manage extends CI_Controller {
 							'emergencycontactperson'	=>	$this->input->post('emergencycontactperson'),
 							
 							'emergencycontact'			=>	$this->input->post('emergencycontact'),
-							'mailoffice'				=>	$this->input->post('mailoffice'),
+							'mailoffice'				=>	$mailoffice,
 							'mailpersonal'				=>	$this->input->post('mailpersonal'),
 							
 							'addressline1'				=>	$this->input->post('addressline1'),
@@ -2973,14 +2975,24 @@ class Manage extends CI_Controller {
 			$empID	=	insertTable('tblemployee', $values,1,'empID','employee');
 			
 			$values=array(	'empID'						=>	$empID,
-							'mobile'					=>	$this->input->post('mobile'),
-							'mailoffice'				=>	$this->input->post('mailoffice'),
+							'phone_number'				=>	$this->input->post('mobile'),
+							'username'					=>	$mailoffice,
+							'dbentrystateID'			=>	3,
 							'createby'					=>	$this->session->userdata('SESS_userId'),
 							'active'					=>	1);
 							
 			$query	=	insertTable('tbllogin', $values,0,'empID','employee');
+			$pword	=	$query.rand(1001, 9999);;
+			$this->load->library('encrypt');
+			$upt	=	$this->Commonsql_model->updateTable('tbllogin', array('loginID'=>$query) ,  array('password'=>do_hash(do_hash(do_hash($pword)))));
 			if($query)
 			{
+				if($mailoffice!='')
+				{
+					$datas['pword']	=	$pword;
+					$message		=	$this->load->view('admin/mail/password',$datas,true);
+					$upt			=	$this->Commonsql_model->email_sent_user($mailoffice,"TruLms Password",$message);
+				}
 				$this->session->set_userdata('suc','employee Successfully  Added...!');
 				redirect('add_employee');
 				
