@@ -136,6 +136,19 @@ if (!function_exists('updateTables')) {
     }
 
 }
+
+if (!function_exists('updatesingalTables')) {
+
+    function updatesingalTables($tableName, $whereData = array(), $updateData = array()) {
+        $CI = & get_instance();
+        $CI->load->model('commonsql_model');
+        
+        $resultData = $CI->commonsql_model->updateTable($tableName, $whereData, $updateData);
+        
+        return $resultData;
+    }
+
+}
 /* update the data to table
  * $tableName -> Name of the table
  * $whereData -> Array -> where fields

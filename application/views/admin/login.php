@@ -53,14 +53,8 @@
 
 
                     <h2 class="text-light text-greensea">Log In</h2>
-                     <?php if(isset($error) && $error==1){?>
-                    <div class="alert alert-lightred hideclass">
-                        <?=$error_msg?> 
-                    </div>
-<!--                    <div class="alert alert-success hideclass">
-                        <?=$error_msg?> 
-                    </div>-->
-                    <?php }?>
+                    <?php $this->load->view('admin/msg')?>
+                
                     <?=form_open_multipart(base_url().'login',array('id'=>'form-login','class'=>'form-validation mt-20','data-parsley-validate'=>''));?>
                         <div class="form-group">
                             <input type="text" name="username" id="username" class="form-control underline-input" required placeholder="Email ID / Phone No" data-parsley-email-phone="#username">
