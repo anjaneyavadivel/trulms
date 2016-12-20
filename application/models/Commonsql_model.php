@@ -612,6 +612,26 @@ class Commonsql_model extends CI_Model {
 
         return $query;
     }
+	function email_sent_user($to,$sub,$mesg)
+	{
+		
+		$this->load->library('email');
+		$this->load->library('user_agent');
+		$config['charset'] = 'utf-8';
+		$config['wordwrap'] = TRUE;
+		$config['mailtype'] = 'html';
+		$this->email->initialize($config);	
+		$this->email->from('contact@trulms.com','TruLms Team');
+		$this->email->to($to); 	
+		// $this->email->cc(ADMIN_EMAIL); 
+		//$this->email->bcc(SUPPORT_EMAIL);				
+		$this->email->subject($sub);	  
+		
+		$this->email->message($mesg);	
+		$query	=$this->email->send();
+		return $query;
+	
+	}
 
 }
 
